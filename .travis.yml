@@ -2,7 +2,3 @@ language: java
 script: mvn clean test
 jdk:
   - oraclejdk11
- notifications:
-  email:
-    recipients:
-      -jucampana@alumno.unlam.edu.ar
