@@ -14,6 +14,7 @@ public interface ServicioLogin {
 	Boolean validarPassLenght(Usuario usuario);
 	
 	Boolean validarPass(Usuario usuario);
+
 	
 	
 }
