@@ -3,7 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.*;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,14 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class ControladorLogin {
+public class ControladorUsuario {
 
-	private ServicioLogin servicioLogin;
+	private ServicioUsuario servicioUsuario;
 	private ServicioSession servicioSession;
 
 	@Autowired
-	public ControladorLogin(ServicioLogin servicioLogin,ServicioSession servicioSession){
-		this.servicioLogin = servicioLogin;
+	public ControladorUsuario(ServicioUsuario servicioUsuario,ServicioSession servicioSession){
+		this.servicioUsuario = servicioUsuario;
 		this.servicioSession = servicioSession;
 	}
 
@@ -50,7 +50,7 @@ public class ControladorLogin {
 	public ModelAndView validarLogin(@ModelAttribute("datosUsuario") Usuario datosUsuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 
-		Usuario usuarioBuscado = servicioLogin.loginUsuario(datosUsuario.getEmail(), datosUsuario.getPassword());
+		Usuario usuarioBuscado = servicioUsuario.loginUsuario(datosUsuario.getEmail(), datosUsuario.getPassword());
 		if (usuarioBuscado != null) {
 			servicioSession.setUserId(usuarioBuscado.getId(), request);
 			return new ModelAndView("redirect:/home");
@@ -83,7 +83,7 @@ public class ControladorLogin {
 		String mensaje="Se Registro Exitosamente";
 			
 		try {
-            servicioLogin.registrarUsuario(datosUsuario);
+            servicioUsuario.registrarUsuario(datosUsuario);
         } catch (EmailEnUsoException eeue) {
         	mensaje="El Email ya esta en uso";
         	
@@ -104,14 +104,31 @@ public class ControladorLogin {
 			
 	}
 	
+	
+	public ModelAndView verPerfil(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+		
+		ModelMap model = new ModelMap();
+		Long sess = servicioSession.getUserId(request);
+		
+		if(sess==null) {
+			redirectAttributes.addFlashAttribute("mensaje","No puede ver su perfil sin estar logueado");
+			return new ModelAndView("redirect:/home");
+		}
+		
+		Usuario encontrado = this.servicioUsuario.getUsuario(sess);
+		
+		model.put("datosUsuario", encontrado);
+		
+		return new ModelAndView("perfil-usuario", model);
+	}
+	
+	
 	@RequestMapping(path = "/logout", method = RequestMethod.GET)
     public ModelAndView guardarUsuario(HttpServletRequest request) {
         request.getSession().invalidate();
         return new ModelAndView("redirect:/home");
     }
 	
-	
-
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView goHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
@@ -127,6 +144,9 @@ public class ControladorLogin {
 	public ModelAndView inicio() {
 		return new ModelAndView("redirect:/login");
 	}
+
+
+	
 	
 	
 }
