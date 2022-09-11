@@ -9,12 +9,12 @@ import ar.edu.unlam.tallerweb1.exceptions.PasswordsDiferentesException;
 
 @Service("servicioLogin")
 @Transactional
-public class ServicioLoginImpl implements ServicioLogin {
+public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	private RepositorioUsuario repositorioUsuario;
 
 	@Autowired
-	public ServicioLoginImpl(RepositorioUsuario repositorioUsuario){
+	public ServicioUsuarioImpl(RepositorioUsuario repositorioUsuario){
 		this.repositorioUsuario = repositorioUsuario;
 	}
 
@@ -55,6 +55,13 @@ public class ServicioLoginImpl implements ServicioLogin {
 			return true;
 		
 		return false;
+	}
+
+	@Override
+	public Usuario getUsuario(Long Id) {
+		
+		return this.repositorioUsuario.getUsuario(Id);
+		
 	}
 	
 	

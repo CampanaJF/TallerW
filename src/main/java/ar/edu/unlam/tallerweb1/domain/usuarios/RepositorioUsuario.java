@@ -14,4 +14,6 @@ public interface RepositorioUsuario {
 	void modificar(Usuario usuario);
 
 	Boolean buscarEmail(Usuario usuario);
+
+	Usuario getUsuario(Long Id);
 }
