@@ -104,7 +104,7 @@ public class ControladorUsuario {
 			
 	}
 	
-	
+	@RequestMapping(path = "/perfil", method = RequestMethod.GET)
 	public ModelAndView verPerfil(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
 		
 		ModelMap model = new ModelMap();

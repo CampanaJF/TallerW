@@ -10,6 +10,8 @@
 	<title>CineClub</title>
 	
 	<body>
+
+	<%@include file="header.jsp"%>
 	
 	
 		<c:if test="${not empty mensaje}">
