@@ -21,7 +21,7 @@
            
             <form:input path="password" type="password" id="password" class="form-control"/>
             
-            <form:input path="password" type="rePassword" id="rePassword" class="form-control"/>
+            <form:input path="passwordRe" type="password" id="passwordRe" class="form-control"/>
 
             <button id="btn-registrarme" class="btn btn-lg btn-primary btn-block" Type="Submit"/>Registrarme</button>
             

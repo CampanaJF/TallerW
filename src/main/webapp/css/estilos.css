@@ -33,3 +33,7 @@ transition: color .15s ease-in-out,background-color .15s ease-in-out,border-colo
 .nav-text:hover{
     color:#b83b3b !important;
 }
+
+.alertbg{
+  background-color: #b41717;
+}

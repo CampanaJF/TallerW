@@ -15,8 +15,8 @@
 	
 	
 		<c:if test="${not empty mensaje}">
-	    <div>
-	        <p>${mensaje}</p> 	
+	    <div class="p-1 alertbg">
+	        <h5 class="text-center text-white">${mensaje}</h5> 	
 	    </div>
 	    </c:if>
     
