@@ -37,3 +37,17 @@ transition: color .15s ease-in-out,background-color .15s ease-in-out,border-colo
 .alertbg{
   background-color: #b41717;
 }
+
+.bgColor{
+  background-color: #232222;
+}
+
+.btnBeeg{
+  width: 10em;
+  height: 5em;
+}
+
+.portadaPelicula{
+  width: 29em !important;
+  height: 39em !important;
+}
