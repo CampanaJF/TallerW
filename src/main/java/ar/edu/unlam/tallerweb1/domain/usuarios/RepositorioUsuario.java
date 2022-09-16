@@ -13,7 +13,7 @@ public interface RepositorioUsuario {
     
 	void modificar(Usuario usuario);
 
-	Boolean buscarEmail(Usuario usuario);
+	Boolean validarEmail(String email);
 
 	Usuario getUsuario(Long Id);
 }

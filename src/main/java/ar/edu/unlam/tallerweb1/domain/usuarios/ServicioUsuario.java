@@ -1,22 +1,19 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
-
 // Interface que define los metodos del Servicio de Usuarios.
 public interface ServicioUsuario {
 
 	Usuario loginUsuario(String email, String password);
 	
-	void registrarUsuario(Usuario usuario);
+	void registrarUsuario(String email, String password, String passwordRe, String nombre);
 	
-	Boolean validarEmail(Usuario usuario);
+	Boolean validarEmail(String email);
 	
-	Boolean validarPassLenght(Usuario usuario);
+	Boolean validarPassLenght(String password);
 	
-	Boolean validarPass(Usuario usuario);
+	Boolean validarPass(String password,String passwordRe);
 	
 	Usuario getUsuario(Long id);
 
-	
 	
 }
