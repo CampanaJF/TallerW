@@ -65,14 +65,47 @@
 			  </div>
 	
 		</section>
-		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
-			
+		
+			<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
+		
 			<article class="col-lg-4 col-xl-3 mt-4 ">
-				<div class="container ">
-				<img class="pelicula"src="img/peliculas/30-noches-con-mi-ex.jpg" alt="">
-			</div>
+				<div class="contenedor-carta">
+					<div class="carta">
+						<div class="carta-delantera bg-dark">
+							<img class="pelicula" src="img/peliculas/30-noches-con-mi-ex.jpg" alt="">
+						</div>
+						<div class="carta-trasera p-0 m-0 ">
+						<div class="container d-flex justify-content-center flex-column pt-5 ">
+							<div class="col-lg-12">
+								<i class="bi bi-clock text-light"></i>
+								<p class="text-light ml-2">Duraci&oacute;n: 95 min</p>
+							</div>
+							<div class="col-lg-12">
+								
+							<i class="bi bi-emoji-smile text-light"></i>
+								<p class="text-light">Calificaci&oacute;n: +13</p>
+							</div>
+							<div class="col-lg-12">
+								<i class="bi bi-film text-light"></i>
+								<p class="text-light">Categoria: Comedia</p>
+							</div>
+							
+							<p class="text-light">Tipo: 2D</p>
+							<p class="text-light">Fecha De Estreno: 11/08/2022</p>
+						</div>
+					
+						</div>
+					</div>
+					
+					
+				<div class="container ">	
+					
+				</div>
 				<h6 class="text-light text-center mt-3">30 noches con mi ex</p>
+					<button class="btn btn-lg text-light" id="comprarEntradas">Comprar Entradas</button>
 			</article>
+
+			<!--
 			<article class="col-lg-4 col-xl-3  mt-4">
 				<div class="container">
 					<img class="pelicula" src="img/peliculas/barbaro.jpg" alt="">
@@ -92,7 +125,7 @@
 				</div>
 					<h6 class="text-light text-center mt-3">Carajita</p>
 			</article>
-		
+		-->
 		</section>
 
 
