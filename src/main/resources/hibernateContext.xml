@@ -38,7 +38,7 @@
 
 		<property name="packagesToScan">
 			<list>
-				<value>ar.edu.unlam.tallerweb1.modelo</value>
+				<value>ar.edu.unlam.tallerweb1.domain</value>
 			</list>
 		</property>
 	</bean>

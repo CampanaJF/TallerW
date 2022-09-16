@@ -59,10 +59,10 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	}
 	
 	@Override
-	public Boolean buscarEmail(Usuario usuario) {
+	public Boolean validarEmail(String email) {
 		
 		final Session session = sessionFactory.getCurrentSession();
-		Criterion rest1 = Restrictions.eq("email", usuario.getEmail());
+		Criterion rest1 = Restrictions.eq("email", email);
 
 		Usuario encontrado = (Usuario) session.createCriteria(Usuario.class).add(rest1).uniqueResult();
 		

@@ -20,8 +20,6 @@ public class Usuario {
 	
 	private String password;
 	
-	private String passwordRe;
-	
 	private String rol;
 	
 	@Column(columnDefinition = "boolean default false")
@@ -71,10 +69,5 @@ public class Usuario {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getPasswordRe() {
-		return passwordRe;
-	}
-	public void setPasswordRe(String passwordRe) {
-		this.passwordRe = passwordRe;
-	}
+
 }
