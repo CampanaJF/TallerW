@@ -1,3 +1,7 @@
+.header{
+  background-color:#070707;
+}
+
 .buttonA:hover {
     color: rgb(255, 255, 255) !important;
     background-color: #d64c4c;

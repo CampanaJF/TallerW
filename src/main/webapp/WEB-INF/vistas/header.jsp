@@ -1,4 +1,4 @@
-<header class="p-3 bg-dark text-white">
+<header class="p-3 header text-white">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -8,7 +8,7 @@
 
         <ul class="ps-3 nav col-12 col-lg-auto me-lg-3 mb-2 justify-content-center mb-md-0">
           <li><a href="home" class="nav-link px-2 text-secondary">Inicio</a></li>
-          <li><a href="#" class="nav-link px-2 text-white nav-text">Cartelera</a></li>
+          <li><a href="cartelera" class="nav-link px-2 text-white nav-text">Cartelera</a></li>
           <li><a href="#" class="nav-link px-2 text-white nav-text">Goloton</a></li>
         </ul>
 
