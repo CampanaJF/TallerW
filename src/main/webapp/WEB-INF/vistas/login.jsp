@@ -7,34 +7,37 @@
 
 	<%@include file="head.jsp"%>
 	
-	<body>
-		<div class = "container">
-			<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-		
-				<form:form action="validar-login" method="POST" modelAttribute="datosUsuario">
-				
-			    	<h3 class="form-signin-heading">Taller Web I</h3>
-
-
-		
-					<form:input path="email" id="email" type="email" class="form-control" />
-					<form:input path="password" type="password" id="password" class="form-control"/>     		  
-					
-					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Login</button>
-					
-				</form:form>
-				
-				<a href="registrarme">Registrarme</a>
-				
-				<c:if test="${not empty error}">
-			        <h4><span>${error}</span></h4>
-			        <br>
-		        </c:if>
-		        
-				${msg}
-				
+	<body class="bgColor">
+	
+	<c:if test="${not empty error}">
+			<div class="p-1 alertbg">
+				<h5 class="text-center text-white">${error}</h5> 	
 			</div>
+	 	</c:if>
+	
+	<main class="mt-3 form-signin">
+	  <form:form action="validar-login" method="POST" modelAttribute="datosUsuario">
+	  	
+	  	<a class="row" href="home">
+		<img class="mb-4" src="<c:url value="/icons/popcorn-movie-cinema-svgrepo-com.svg"/>" alt="" width="72" height="57">
+		</a>
+		<h1 class="text-white text-center h3 mb-3 fw-normal">Ingrese sus datos</h1>
+
+		<div class="form-floating">
+		  <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+		  <label for="floatingInput">Correo</label>
 		</div>
+		<div class="form-floating">
+		  <form:input type="password" path="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+		  <label for="floatingPassword">Contraseña</label>
+		</div>
+
+		<button class="w-100 buttonA btn-lg btn-primary" type="submit">Ingresar</button>
+	  </form:form>
+	  
+	  <a class="text-center nav-link px-2 text-white nav-text" href="registrarme">Registrarme</a>
+					        
+	</main>
 		
 		<%@include file="footer.jsp"%>
 		

@@ -1,6 +1,6 @@
 <footer>
 
-<p>prueba</p>
+
 
 </footer>
 

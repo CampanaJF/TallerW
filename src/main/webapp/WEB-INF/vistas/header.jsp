@@ -1,7 +1,7 @@
 <header class="p-3 header text-white">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <a href="home" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <img src="icons/favicon.ico" class="bi me-2" width="40" height="32" role="img" aria-label="CineClub"></img>
           <span class="fs-4 pe-3">CineClub</span>
         </a>

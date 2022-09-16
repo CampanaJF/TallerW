@@ -18,7 +18,8 @@
 
 			<div class="col">
 				<div class="text-center"> 
-					<img class="img-fluid portadaPelicula" src="<c:url value="/img/backtothefuture.jpg"/>">
+					<img class="img-fluid portadaPelicula" 
+					src="<c:url value="/img/peliculas/backtothefuture.jpg"/>">
 				</div>
 			</div>
 
