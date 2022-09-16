@@ -27,6 +27,7 @@
 		  <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
 		  <label for="floatingInput">Correo</label>
 		</div>
+		
 		<div class="form-floating">
 		  <form:input type="password" path="password" class="form-control" id="floatingPassword" placeholder="Password"/>
 		  <label for="floatingPassword">Contraseña</label>
@@ -35,7 +36,7 @@
 		<button class="w-100 buttonA btn-lg btn-primary" type="submit">Ingresar</button>
 	  </form:form>
 	  
-	  <a class="text-center nav-link px-2 text-white nav-text" href="registrarme">Registrarme</a>
+	  <a class="text-center nav-link px-2 text-white nav-text" href="registrarme">¿No tenes una cuenta? Registrate aca</a>
 					        
 	</main>
 		

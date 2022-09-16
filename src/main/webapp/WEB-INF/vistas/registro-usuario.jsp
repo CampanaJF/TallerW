@@ -7,33 +7,50 @@
 
 <%@include file="head.jsp"%>
 
-<body>
-<div class = "container">
-    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-    
+<body class="bgColor">
+
+	<c:if test="${not empty mensaje}">
+		<div class="p-1 alertbg">
+			<h5 class="text-center text-white">${mensaje}</h5> 	
+		</div>
+	</c:if>
+	
+<main class="mt-3 form-signin">
+
         <form:form action="procesarRegistro" method="POST" modelAttribute="datosUsuario">
-            <h3 class="form-signin-heading">Nuevo Usuario</h3>
-
-
-            <form:input path="email" name="email" id="email" class="form-control"/>
             
-            <form:input path="nombre" name="nombre" id="nombre" class="form-control"/>
+            <a class="row" href="home">
+			<img class="mb-4" src="<c:url value="/icons/popcorn-movie-cinema-svgrepo-com.svg"/>" alt="" width="72" height="57">
+			</a>
+			<h1 class="text-white text-center h3 mb-3 fw-normal">Nuevo Usuario</h1>
+
+			<div class="form-floating">
+			  <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+			  <label for="floatingInput">Correo</label>
+			</div>
+			
+			<div class="form-floating">
+			  <form:input type="text" path="nombre" class="form-control" id="floatingInput"/>
+			  <label for="floatingInput">Nombre</label>
+			</div>
+            
+	         <div class="form-floating">
+			  <form:input type="password" path="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+			  <label for="floatingPassword">Contraseña</label>
+			</div>
+		
+			<div class="form-floating">
+			  <form:input type="password" path="passwordRe" class="form-control" id="floatingPassword" placeholder="Password"/>
+			  <label for="floatingPassword">Repita su Contraseña</label>
+			</div>
            
-            <form:input path="password" type="password" id="password" class="form-control"/>
-            
-            <form:input path="passwordRe" type="password" id="passwordRe" class="form-control"/>
+          <button class="mt-2 w-100 buttonA btn-lg btn-primary" type="submit">Ingresar</button>
+	  </form:form>
+	  
+	  <a class="text-center nav-link px-2 text-white nav-text" href="login">¿Ya tenes una cuenta? Ingresa aca</a>
 
-            <button id="btn-registrarme" class="btn btn-lg btn-primary btn-block" Type="Submit"/>Registrarme</button>
-            
-        </form:form>
-
-        <c:if test="${not empty mensaje}">
-            <h4><span>${mensaje}</span></h4>
-            <br>
-        </c:if>
-    </div>
-</div>
-
+</main>
+  
 <%@include file="footer.jsp"%>
 </body>
 </html>
