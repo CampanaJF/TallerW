@@ -67,23 +67,24 @@ public class ControladorPelicula {
 		return new ModelAndView("resultado-busqueda",model);
 	}
 
-	public ModelAndView comprarTicket(HttpServletRequest request) {
+	@RequestMapping(path = "/comprar-entrada", method = RequestMethod.GET)
+	public ModelAndView comprarEntrada(HttpServletRequest request) {
 		Long userId = this.servicioSession.getUserId(request);
 		
-		String ticket = "tickettt";
+		String entrada = "entradaaa";
 				
 		ModelMap model = new ModelMap();
 			
 		if (userId==null) {
-			model.put("ticket", ticket);
+			model.put("entrada", entrada);
 			
-			return new ModelAndView("comprar-ticket",model);
+			return new ModelAndView("comprar-entrada",model);
         }
 				
 		model.put("usuario", userId);
-		model.put("ticket", ticket);
+		model.put("entrada", entrada);
 		
-		return new ModelAndView("comprar-ticket",model);
+		return new ModelAndView("comprar-entrada",model);
 	}
 	
 	

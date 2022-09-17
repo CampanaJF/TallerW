@@ -7,7 +7,7 @@
 
 	<%@include file="head.jsp"%>
 	
-	<title>${ticket}</title>
+	<title>${entrada}</title>
 	
 <body>
 

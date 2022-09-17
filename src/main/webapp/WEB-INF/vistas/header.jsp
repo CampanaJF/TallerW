@@ -22,7 +22,7 @@
         <div class="text-end">
         
           <a href="login"><button type="button" class="btn btn-outline-light me-2">Ingresar</button></a>
-          <a href="registrarme"><button type="button" class="buttonA">Registrarme</button></a>
+          <a href="registrarme"><button type="button" class="btn buttonA">Registrarme</button></a>
           
         </div>
           

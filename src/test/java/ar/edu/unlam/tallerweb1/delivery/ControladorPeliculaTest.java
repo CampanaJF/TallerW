@@ -39,20 +39,20 @@ public class ControladorPeliculaTest {
 	@Test
 	public void queSePuedaComprarUnTicketDePelicula(){
 		
-    	whenSeQuiereComprarUnTicket();
+    	whenSeQuiereComprarUnaEntrada();
     	
-    	thenSePuedeComprarUnTicket();
+    	thenSePuedeComprarUnaEntrada();
 	
 	}
 	
-	private void whenSeQuiereComprarUnTicket() {
+	private void whenSeQuiereComprarUnaEntrada() {
 		mocksSessionRequests();
 		
-		mav = this.controladorPelicula.comprarTicket(mockRequest);
+		mav = this.controladorPelicula.comprarEntrada(mockRequest);
 		
 	}
 
-	private void thenSePuedeComprarUnTicket() {
+	private void thenSePuedeComprarUnaEntrada() {
 		assertThat(mav.getViewName()).isEqualTo("comprar-ticket");
 		
 	}

@@ -28,7 +28,7 @@
 				<h4>Steven Spielberg</h4>
 				<h5 class="pb-3">Michael J. Fox - Christopher Lloyd</h5>
 				
-				<button type="button" class="btnBeeg buttonA">Comprar Entradas</button>
+				<a href="comprar-ticket" type="button" class="btn-lg btn buttonA">Comprar Entradas</a>
 				
 			</div>
 
