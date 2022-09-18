@@ -3,6 +3,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Sala {
@@ -15,6 +16,7 @@ public class Sala {
 	
 	private String cine;
 	
+	@ManyToOne
 	private TipoSala tipoSala;
 	
 	private Long asientosTotales;

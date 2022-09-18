@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 @Entity
 public class Entrada {
@@ -21,6 +21,8 @@ public class Entrada {
 	
 	@ManyToOne
 	private Funcion funcion;
+	
+	private Double precio;
 	
 	private String pelicula;
 	
@@ -84,6 +86,14 @@ public class Entrada {
 
 	public void setDetalles(String detalles) {
 		this.detalles = detalles;
+	}
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
 	}
 	
 	

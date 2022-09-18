@@ -30,7 +30,49 @@ public class Funcion {
 	
 	@Enumerated(EnumType.STRING)
 	private Lenguaje lenguaje;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
+
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
+	public Boolean getSubtitulos() {
+		return subtitulos;
+	}
+
+	public void setSubtitulos(Boolean subtitulos) {
+		this.subtitulos = subtitulos;
+	}
+
+	public Lenguaje getLenguaje() {
+		return lenguaje;
+	}
+
+	public void setLenguaje(Lenguaje lenguaje) {
+		this.lenguaje = lenguaje;
+	}
 	
 	// horario tbd private Date fecha;
+	
+	
 
 }

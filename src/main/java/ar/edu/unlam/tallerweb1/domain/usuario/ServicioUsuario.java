@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.usuarios;
+package ar.edu.unlam.tallerweb1.domain.usuario;
 
 // Interface que define los metodos del Servicio de Usuarios.
 public interface ServicioUsuario {
