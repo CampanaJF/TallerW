@@ -2,7 +2,7 @@ package ar.edu.unlam.tallerweb1.domain.entrada;
 
 import java.util.List;
 
-public interface RepositorioEntrada {
+public interface ServicioEntrada {
 
 	void comprarEntrada(Entrada entrada);
 	

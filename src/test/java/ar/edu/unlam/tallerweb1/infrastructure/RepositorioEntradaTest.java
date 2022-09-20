@@ -42,8 +42,8 @@ public class RepositorioEntradaTest extends SpringTest {
 
     	whenSeCompraUnaEntrada(E1);
     	
-    	assertThat(repositorioEntrada.getEntrada(E1.getId())).isNotNull();
-    	assertThat(repositorioEntrada.getEntrada(E1.getId()).getPelicula()).isEqualTo("Indiana Jones");
+    	assertThat(repositorioEntrada.getEntrada(E1.getId(),F1.getId())).isNotNull();
+    	assertThat(repositorioEntrada.getEntrada(E1.getId(),F1.getId()).getPelicula()).isEqualTo("Indiana Jones");
  	
     }
 	
