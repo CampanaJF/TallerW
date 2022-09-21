@@ -1,7 +1,5 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -9,6 +7,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import ar.edu.unlam.tallerweb1.domain.usuario.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 // implelemtacion del repositorio de usuarios, la anotacion @Repository indica a Spring que esta clase es un componente que debe
 // ser manejado por el framework, debe indicarse en applicationContext que busque en el paquete ar.edu.unlam.tallerweb1.dao
@@ -59,10 +60,10 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	}
 	
 	@Override
-	public Boolean buscarEmail(Usuario usuario) {
+	public Boolean validarEmail(String email) {
 		
 		final Session session = sessionFactory.getCurrentSession();
-		Criterion rest1 = Restrictions.eq("email", usuario.getEmail());
+		Criterion rest1 = Restrictions.eq("email", email);
 
 		Usuario encontrado = (Usuario) session.createCriteria(Usuario.class).add(rest1).uniqueResult();
 		

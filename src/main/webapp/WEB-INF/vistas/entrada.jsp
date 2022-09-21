@@ -2,17 +2,18 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>	
 
 	<%@include file="head.jsp"%>
 	
-	<title>${ticket}</title>
+	<title>CineClub</title>
 	
-<body>
+	<h1>${entrada.funcion.pelicula.titulo}</h1>
+	
+	<body>
+
+	<%@include file="header.jsp"%>
 
 
-<%@include file="footer.jsp"%>
-
+	<%@include file="footer.jsp"%>
 </body>
 </html>

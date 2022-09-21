@@ -1,6 +1,6 @@
-package ar.edu.unlam.tallerweb1.domain.usuarios;
+package ar.edu.unlam.tallerweb1.domain.usuario;
 
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
 public interface RepositorioUsuario {
@@ -13,7 +13,7 @@ public interface RepositorioUsuario {
     
 	void modificar(Usuario usuario);
 
-	Boolean buscarEmail(Usuario usuario);
+	Boolean validarEmail(String email);
 
 	Usuario getUsuario(Long Id);
 }

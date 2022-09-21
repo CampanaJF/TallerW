@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.usuarios;
+package ar.edu.unlam.tallerweb1.domain.usuario;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,8 +19,6 @@ public class Usuario {
 	private String nombre;
 	
 	private String password;
-	
-	private String passwordRe;
 	
 	private String rol;
 	
@@ -71,10 +69,5 @@ public class Usuario {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getPasswordRe() {
-		return passwordRe;
-	}
-	public void setPasswordRe(String passwordRe) {
-		this.passwordRe = passwordRe;
-	}
+
 }
