@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RepositorioEntrada {
 
-	void comprarEntrada(Entrada entrada);
+	Entrada comprarEntrada(Entrada entrada);
 	
 	Entrada getEntrada(Long uId,Long fId);
 

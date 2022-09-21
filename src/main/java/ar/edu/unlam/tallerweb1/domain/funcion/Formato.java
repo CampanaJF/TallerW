@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.sala;
+package ar.edu.unlam.tallerweb1.domain.funcion;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class TipoSala {
+public class Formato {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

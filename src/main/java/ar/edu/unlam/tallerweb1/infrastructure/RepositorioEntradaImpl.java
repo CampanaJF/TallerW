@@ -39,9 +39,11 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 
 	@Override
-	public void comprarEntrada(Entrada entrada) {
+	public Entrada comprarEntrada(Entrada entrada) {
 		
 		sessionFactory.getCurrentSession().save(entrada);
+		
+		return entrada;
 		
 	}
 

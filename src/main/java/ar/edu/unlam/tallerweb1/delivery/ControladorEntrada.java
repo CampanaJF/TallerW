@@ -26,7 +26,7 @@ public class ControladorEntrada {
 		this.servicioEntrada=servicioEntrada;
 	}
 	
-	@RequestMapping(path = "/entrada", method = RequestMethod.GET)
+	@RequestMapping(path = "/comprar-entrada", method = RequestMethod.GET)
 	public ModelAndView prepararEntrada(HttpServletRequest request) {
 		
 		Long sess = servicioSession.getUserId(request);
@@ -38,15 +38,13 @@ public class ControladorEntrada {
 		return new ModelAndView ("comprar-entrada",model);
 	}
 	
-	@RequestMapping(path = "/comprar-entrada", method = RequestMethod.POST)
+	@RequestMapping(path = "/procesar-compra-entrada", method = RequestMethod.POST)
 	public ModelAndView comprarEntrada(@ModelAttribute("datosEntrada") Entrada datosEntrada,HttpServletRequest request) {
 		
 		Long sess = this.servicioSession.getUserId(request);
 				
-		this.servicioEntrada.comprarEntrada(datosEntrada);
+		Entrada entradaComprada = this.servicioEntrada.comprarEntrada(datosEntrada);
 		
-		Entrada entradaComprada = this.servicioEntrada.getEntrada(sess,datosEntrada.getFuncion().getId());
-			
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", sess);

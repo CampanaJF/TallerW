@@ -25,6 +25,11 @@ public class Funcion {
 	@ManyToOne
 	private Sala sala;
 	
+	@ManyToOne
+	private Formato formato;
+	
+	private Integer horario;
+	
 	@Column(columnDefinition = "boolean default false")
 	private Boolean subtitulos;
 	
@@ -53,6 +58,22 @@ public class Funcion {
 
 	public void setSala(Sala sala) {
 		this.sala = sala;
+	}
+	
+	public Formato getFormato() {
+		return formato;
+	}
+
+	public void setFormato(Formato formato) {
+		this.formato = formato;
+	}
+
+	public Integer getHorario() {
+		return horario;
+	}
+
+	public void setHorario(Integer horario) {
+		this.horario = horario;
 	}
 
 	public Boolean getSubtitulos() {

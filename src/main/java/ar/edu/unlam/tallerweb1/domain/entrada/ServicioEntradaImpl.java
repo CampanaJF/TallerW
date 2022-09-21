@@ -20,10 +20,10 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public void comprarEntrada(Entrada entrada) {
+	public Entrada comprarEntrada(Entrada entrada) {
 	
 	
-		this.repositorioEntrada.comprarEntrada(entrada);
+		return this.repositorioEntrada.comprarEntrada(entrada);
 		
 	}
 

@@ -1,24 +1,23 @@
 package ar.edu.unlam.tallerweb1.domain.sala;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class Sala {
-	
+public class Cine {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(unique=true)
 	private String nombre;
 	
-	@ManyToOne
-	private Cine cine;
-	
-	private Long asientosTotales;
-
+	@Column(unique=true)
+	private String locacion;
 
 	public Long getId() {
 		return id;
@@ -26,14 +25,6 @@ public class Sala {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getAsientos() {
-		return asientosTotales;
-	}
-
-	public void setAsientos(Long asientos) {
-		this.asientosTotales = asientos;
 	}
 
 	public String getNombre() {
@@ -44,12 +35,12 @@ public class Sala {
 		this.nombre = nombre;
 	}
 
-	public Cine getCine() {
-		return cine;
+	public String getLocacion() {
+		return locacion;
 	}
 
-	public void setCine(Cine cine) {
-		this.cine = cine;
+	public void setLocacion(String locacion) {
+		this.locacion = locacion;
 	}
 	
 	
