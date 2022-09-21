@@ -4,33 +4,14 @@
 
 .buttonA:hover {
     color: rgb(255, 255, 255) !important;
-    background-color: #d64c4c;
-    border-color: #d64c4c;
+    background-color: #d64c4c !important;
+    border-color: #d64c4c !important;
 }
 
 .buttonA{ 
-  display: inline-block;
-font-weight: 400;
-line-height: 1.5;
-color: white;
-text-align: center;
-text-decoration: none;
-vertical-align: middle;
-cursor: pointer;
--webkit-user-select: none;
--moz-user-select: none;
-user-select: none;
-background-color: #b41717;
-border: 1px solid transparent;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-border-color: #b41717;
-padding: .375rem .75rem;
-font-size: 1rem;
-border-radius: .25rem;
-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+color: white !important;
+background-color: #b41717 !important;
+border-color: #b41717 !important;
 }
 
 
