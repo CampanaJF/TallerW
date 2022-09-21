@@ -38,41 +38,41 @@
 				  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
 					<div class="accordion-body">
 						<section class="d-flex justify-content-space-around flex-wrap">
-							<div class="col-lg-4 mb-3">
+							<div class="mb-3">
 								<div class="chip">
 									<div class="chip-content text-light">Acci&oacute;n</div>
 									
 								  </div>
 							</div>
-							<div class="col-lg-4 mb-3">
+							<div class="mb-3">
 								<div class="chip" >
 									<div class="chip-content text-light pildora">Comedia</div>
 									
 								  </div>
 							</div>
-							<div class="col-lg-4 mb-3">
+							<div class="mb-3">
 								<div class="chip">
 									<div class="chip-content text-light ">Terror</div>
 
 								  </div>
 							</div>
-							<div class="col-lg-4 mb-3">
+							<div class="mb-3">
 								<div class="chip">
 								<div class="chip-content text-light ">Fantasia</div>
 							  </div>
 							</div>
 							
-							  <div class="col-lg-4 mb-3">
+							  <div class="mb-3">
 								<div class="chip">
 									<div class="chip-content text-light ">Escalofrios</div>
 								  </div>
 							  </div>
-							  <div class="col-lg-4 mb-3">
+							  <div class="mb-3">
 								<div class="chip">
 									<div class="chip-content text-light ">Anime</div>
 								  </div>
 							  </div>
-							  <div class="col-lg-4 mb-3">
+							  <div class="mb-3">
 								<div class="chip">
 									<div class="chip-content text-light ">Trama</div>
 								  </div>
@@ -85,32 +85,41 @@
 				<div class="accordion-item bg-dark">
 				  <h2 class="accordion-header" id="headingTwo">
 					<button class="accordion-button collapsed text-light bg-dark border border-danger mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-					  Actor
+					  Clasificaci&oacute;n
 					</button>
 				  </h2>
 				  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
 					<div class="accordion-body">
 						<section class="d-flex justify-content-space-around flex-wrap">
-						<div class="col-lg-4 mr-2 mb-3">
-							<div class="chip">
-								<div class="chip-content text-light ">Nathalie Emmanuel </div>
-							  </div>
-						  </div>
-						  <div class="col-lg-4 mb-3">
-							<div class="chip">
-								<div class="chip-content text-light ">Thomas Doherty</div>
-							  </div>
-						  </div>
-						  <div class="col-lg-4 mb-3">
-							<div class="chip">
-								<div class="chip-content text-light ">Trama</div>
-							  </div>
-						  </div>
-						  <div class="col-lg-4 mb-3">
-							<div class="chip">
-								<div class="chip-content text-light ">Adrian Suar</div>
-							  </div>
-						  </div>
+							<div class="mb-3">
+								<div class="chip" onclick="seleccionarGenero(this)" >
+									<div class="chip-content text-light pildora">ATP</div>
+										  </div>
+							</div>
+							<div class="mb-3">
+								<div class="chip" >
+									<div class="chip-content text-light pildora">+13</div>
+									
+								  </div>
+							</div><div class="mb-3">
+								<div class="chip" >
+									<div class="chip-content text-light pildora">+16</div>
+									
+								  </div>
+							</div>
+							<div class="mb-3">
+								<div class="chip" >
+									<div class="chip-content text-light pildora">+18</div>
+									
+								  </div>
+							</div>
+							<div class="mb-3">
+								<div class="chip" >
+									<div class="chip-content text-light pildora">R</div>
+									
+								  </div>
+							</div>
+						
 						</section>
 					</div>
 				  </div>
