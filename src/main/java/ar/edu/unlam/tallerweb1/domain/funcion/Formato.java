@@ -1,6 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.funcion;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +15,10 @@ public class Formato {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(unique=true)
 	private String tipo;
-
+	
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -29,6 +34,8 @@ public class Formato {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
 
 	
 }

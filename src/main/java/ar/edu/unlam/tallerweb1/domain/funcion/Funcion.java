@@ -9,8 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
-import ar.edu.unlam.tallerweb1.domain.sala.Sala;
 
 @Entity
 public class Funcion {
@@ -23,19 +24,22 @@ public class Funcion {
 	private Pelicula pelicula;
 	
 	@ManyToOne
+	private Cine cine;
+	
+	@ManyToOne
 	private Sala sala;
 	
 	@ManyToOne
 	private Formato formato;
-	
-	private Integer horario;
 	
 	@Column(columnDefinition = "boolean default false")
 	private Boolean subtitulos;
 	
 	@Enumerated(EnumType.STRING)
 	private Lenguaje lenguaje;
-
+	
+	private Integer horario;
+	
 	public Long getId() {
 		return id;
 	}
@@ -52,12 +56,12 @@ public class Funcion {
 		this.pelicula = pelicula;
 	}
 
-	public Sala getSala() {
-		return sala;
+	public Cine getCine() {
+		return cine;
 	}
 
-	public void setSala(Sala sala) {
-		this.sala = sala;
+	public void setCine(Cine cine) {
+		this.cine = cine;
 	}
 	
 	public Formato getFormato() {
@@ -91,6 +95,17 @@ public class Funcion {
 	public void setLenguaje(Lenguaje lenguaje) {
 		this.lenguaje = lenguaje;
 	}
+
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+	
+	
+	
 	
 	// horario tbd private Date fecha;
 	

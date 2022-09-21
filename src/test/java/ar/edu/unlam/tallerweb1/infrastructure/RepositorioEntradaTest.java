@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.RepositorioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
-import ar.edu.unlam.tallerweb1.domain.sala.Sala;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -28,7 +28,7 @@ public class RepositorioEntradaTest extends SpringTest {
     	
     	Pelicula P1 = givenPelicula("Indiana Jones");
     	
-    	Sala S1 = givenSala("Sala 5");
+    	Cine S1 = givenCine("Cinee");
     	
     	Funcion F1 = givenFuncion(P1,S1);
     	
@@ -60,10 +60,10 @@ public class RepositorioEntradaTest extends SpringTest {
 		return entrada;
 	}
 
-	private Sala givenSala(String nombreSala) {
-		Sala sala = new Sala();
-		sala.setNombre(nombreSala);
-		return sala;
+	private Cine givenCine(String nombreCine) {
+		Cine cine = new Cine();
+		cine.setNombre(nombreCine);
+		return cine;
 	}
 
 	private Pelicula givenPelicula(String titulo) {
@@ -72,10 +72,10 @@ public class RepositorioEntradaTest extends SpringTest {
 		return pelicula;
 	}
 
-	private Funcion givenFuncion(Pelicula pelicula, Sala sala) {
+	private Funcion givenFuncion(Pelicula pelicula, Cine cine) {
 		Funcion funcion = new Funcion();
 		funcion.setPelicula(pelicula);
-		funcion.setSala(sala);
+		funcion.setCine(cine);
 		return funcion;
 	}
 
