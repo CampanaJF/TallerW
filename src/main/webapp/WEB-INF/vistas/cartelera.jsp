@@ -23,16 +23,114 @@
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 	  <div class="modal-content">
-		<div class="modal-header">
-		  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		<div class="modal-header" id="modal-header">
+		  <h5 class="modal-title text-light" id="exampleModalLabel">Filtrar pelicula por:</h5>
+		  <button type="button" class="btn-close text-light cruz" data-bs-dismiss="modal" aria-label="Close"></button>
 		</div>
-		<div class="modal-body">
-		  ...
+		<div class="modal-body bg-dark">
+			<div class="accordion bg-dark" id="accordionExample">
+				<div class="accordion-item bg-dark">
+				  <h2 class="accordion-header" id="headingOne">
+					<button class="accordion-button bg-dark text-light border border-danger mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					  G&eacute;neros
+					</button>
+				  </h2>
+				  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+					<div class="accordion-body">
+						<section class="d-flex justify-content-space-around flex-wrap">
+							<div class="col-lg-4 mb-3">
+								<div class="chip">
+									<div class="chip-content text-light">Acci&oacute;n</div>
+									
+								  </div>
+							</div>
+							<div class="col-lg-4 mb-3">
+								<div class="chip" >
+									<div class="chip-content text-light pildora">Comedia</div>
+									
+								  </div>
+							</div>
+							<div class="col-lg-4 mb-3">
+								<div class="chip">
+									<div class="chip-content text-light ">Terror</div>
+
+								  </div>
+							</div>
+							<div class="col-lg-4 mb-3">
+								<div class="chip">
+								<div class="chip-content text-light ">Fantasia</div>
+							  </div>
+							</div>
+							
+							  <div class="col-lg-4 mb-3">
+								<div class="chip">
+									<div class="chip-content text-light ">Escalofrios</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-4 mb-3">
+								<div class="chip">
+									<div class="chip-content text-light ">Anime</div>
+								  </div>
+							  </div>
+							  <div class="col-lg-4 mb-3">
+								<div class="chip">
+									<div class="chip-content text-light ">Trama</div>
+								  </div>
+							  </div>
+				
+						</section>
+					</div>
+				  </div>
+				</div>
+				<div class="accordion-item bg-dark">
+				  <h2 class="accordion-header" id="headingTwo">
+					<button class="accordion-button collapsed text-light bg-dark border border-danger mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+					  Actor
+					</button>
+				  </h2>
+				  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+					<div class="accordion-body">
+						<section class="d-flex justify-content-space-around flex-wrap">
+						<div class="col-lg-4 mr-2 mb-3">
+							<div class="chip">
+								<div class="chip-content text-light ">Nathalie Emmanuel </div>
+							  </div>
+						  </div>
+						  <div class="col-lg-4 mb-3">
+							<div class="chip">
+								<div class="chip-content text-light ">Thomas Doherty</div>
+							  </div>
+						  </div>
+						  <div class="col-lg-4 mb-3">
+							<div class="chip">
+								<div class="chip-content text-light ">Trama</div>
+							  </div>
+						  </div>
+						  <div class="col-lg-4 mb-3">
+							<div class="chip">
+								<div class="chip-content text-light ">Adrian Suar</div>
+							  </div>
+						  </div>
+						</section>
+					</div>
+				  </div>
+				</div>
+				<div class="accordion-item bg-dark">
+				  <h2 class="accordion-header" id="headingThree">
+					<button class="accordion-button collapsed bg-dark text-light border border-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					  Director
+					</button>
+				  </h2>
+				  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+					<div class="accordion-body">
+					  <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+					</div>
+				  </div>
+				</div>
+			  </div>
 		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		  <button type="button" class="btn btn-primary">Save changes</button>
+		<div class="modal-footer" id="modal-footer">
+		  <button type="button" class="btn btn-danger">Guardar</button>
 		</div>
 	  </div>
 	</div>
@@ -85,12 +183,11 @@
 							<i class="bi bi-emoji-smile text-light"></i>
 								<p class="text-light">Calificaci&oacute;n: +13</p>
 							</div>
-							<div class="col-lg-12">
+							<div class="col-lg-12 mb-3">
 								<i class="bi bi-film text-light"></i>
 								<p class="text-light">Categoria: Comedia</p>
 							</div>
 							
-							<p class="text-light">Tipo: 2D</p>
 							<p class="text-light">Fecha De Estreno: 11/08/2022</p>
 						</div>
 					
