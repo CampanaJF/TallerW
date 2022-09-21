@@ -1,9 +1,10 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.*;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,7 +48,7 @@ public class ControladorUsuario {
 	}
 
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("datosUsuario") Usuario datosUsuario, HttpServletRequest request) {
+	public ModelAndView validarLogin(@ModelAttribute("datosUsuario") DatosUsuario datosUsuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 
 		Usuario usuarioBuscado = servicioUsuario.loginUsuario(datosUsuario.getEmail(), datosUsuario.getPassword());
@@ -72,19 +73,20 @@ public class ControladorUsuario {
 			return new ModelAndView("redirect:/home");
 		}
 		
-		model.put("datosUsuario", new Usuario());
+		model.put("datosUsuario", new DatosUsuario());
 		
 		return new ModelAndView("registro-usuario", model);
 	}
 	
 	@RequestMapping(path="/procesarRegistro",method=RequestMethod.POST)
 	public ModelAndView procesarRegistro(
-			@ModelAttribute("datosUsuario") Usuario datosUsuario, final RedirectAttributes redirectAttributes) {
+			@ModelAttribute("datosUsuario") DatosUsuario datosUsuario, final RedirectAttributes redirectAttributes) {
 		
 		String mensaje="¡Se Registro Exitosamente!";
 			
 		try {
-            servicioUsuario.registrarUsuario(datosUsuario);
+            servicioUsuario.registrarUsuario(datosUsuario.getEmail(),datosUsuario.getPassword(),
+            								 datosUsuario.getPasswordRe(),datosUsuario.getNombre());
         } catch (EmailEnUsoException eeue) {
         	mensaje="¡El Email ya esta en uso!";
         	

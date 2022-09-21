@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.usuarios;
+package ar.edu.unlam.tallerweb1.domain.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,34 +24,40 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	}
 
 	@Override
-	public void registrarUsuario(Usuario usuario) {
+	public void registrarUsuario(String email, String password, String passwordRe, String nombre) {
 
-		if(!validarEmail(usuario))
+		if(!validarEmail(email))
 			throw new EmailEnUsoException();
 		
-		if(!validarPass(usuario))
+		if(!validarPass(password,passwordRe))
 			throw new PasswordsDiferentesException();
 		
-		if(!validarPassLenght(usuario))
+		if(!validarPassLenght(password))
 			throw new PasswordLenghtException();
+		
+		Usuario nuevo = new Usuario();
+		nuevo.setEmail(email);
+		nuevo.setNombre(nombre);
+		nuevo.setPassword(password);
+		
 			
-		repositorioUsuario.guardar(usuario);
+		repositorioUsuario.guardar(nuevo);
 		
 	}
 	
 	@Override
-	public Boolean validarEmail(Usuario usuario) {
-		return repositorioUsuario.buscarEmail(usuario);
+	public Boolean validarEmail(String email) {
+		return repositorioUsuario.validarEmail(email);
 	}
 
 	@Override
-	public Boolean validarPassLenght(Usuario usuario) {
-		return usuario.getPassword().length()>12;	
+	public Boolean validarPassLenght(String password) {
+		return password.length()>12;	
 	}
 
 	@Override
-	public Boolean validarPass(Usuario usuario) {
-		if(usuario.getPassword()!=usuario.getPasswordRe())
+	public Boolean validarPass(String password,String passwordRe) {
+		if(password.equals(passwordRe))
 			return true;
 		
 		return false;

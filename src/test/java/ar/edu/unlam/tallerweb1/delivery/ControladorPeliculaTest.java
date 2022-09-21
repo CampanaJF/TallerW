@@ -36,26 +36,6 @@ public class ControladorPeliculaTest {
 	private ModelAndView mav = new ModelAndView();
 	
 	
-	@Test
-	public void queSePuedaComprarUnTicketDePelicula(){
-		
-    	whenSeQuiereComprarUnTicket();
-    	
-    	thenSePuedeComprarUnTicket();
-	
-	}
-	
-	private void whenSeQuiereComprarUnTicket() {
-		mocksSessionRequests();
-		
-		mav = this.controladorPelicula.comprarTicket(mockRequest);
-		
-	}
-
-	private void thenSePuedeComprarUnTicket() {
-		assertThat(mav.getViewName()).isEqualTo("comprar-ticket");
-		
-	}
 
 	@Test
 	public void queSePuedaBuscarUnaPelicula(){
