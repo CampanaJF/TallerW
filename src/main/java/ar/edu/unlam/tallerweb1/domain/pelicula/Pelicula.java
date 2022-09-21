@@ -22,7 +22,7 @@ public class Pelicula {
 
 	private String director;
 	
-	private String protegonista;
+	private String protagonista;
 
 	public Long getId() {
 		return id;
@@ -65,11 +65,11 @@ public class Pelicula {
 	}
 
 	public String getProtegonista() {
-		return protegonista;
+		return protagonista;
 	}
 
 	public void setProtegonista(String protegonista) {
-		this.protegonista = protegonista;
+		this.protagonista = protegonista;
 	}
 	
 	
