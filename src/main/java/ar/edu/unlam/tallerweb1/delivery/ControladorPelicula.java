@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
-import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
@@ -67,24 +67,7 @@ public class ControladorPelicula {
 		return new ModelAndView("resultado-busqueda",model);
 	}
 
-	public ModelAndView comprarTicket(HttpServletRequest request) {
-		Long userId = this.servicioSession.getUserId(request);
-		
-		String ticket = "tickettt";
-				
-		ModelMap model = new ModelMap();
-			
-		if (userId==null) {
-			model.put("ticket", ticket);
-			
-			return new ModelAndView("comprar-ticket",model);
-        }
-				
-		model.put("usuario", userId);
-		model.put("ticket", ticket);
-		
-		return new ModelAndView("comprar-ticket",model);
-	}
+	
 	
 	
 

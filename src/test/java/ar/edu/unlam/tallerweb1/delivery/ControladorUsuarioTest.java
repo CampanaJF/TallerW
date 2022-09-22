@@ -17,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations= "classpath:applicationContext.xml")

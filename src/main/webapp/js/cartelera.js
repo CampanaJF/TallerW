@@ -1,5 +1,5 @@
 
-
+AOS.init();
 
 function eliminarFiltro(capsula){
 console.log(capsula)
