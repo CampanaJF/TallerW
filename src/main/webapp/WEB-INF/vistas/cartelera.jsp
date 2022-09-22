@@ -194,7 +194,7 @@
 							</div>
 							<div class="col-lg-12 mb-3">
 								<i class="bi bi-film text-light"></i>
-								<p class="text-light">Categoria: Comedia</p>
+								<p class="text-light">Genero: Comedia</p>
 							</div>
 							
 							<p class="text-light">Fecha De Estreno: 11/08/2022</p>

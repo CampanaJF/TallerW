@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
-public class ServicioCarteleraTest {
+public class ServicioPeliculaTest {
 
 
 
@@ -18,8 +20,14 @@ public class ServicioCarteleraTest {
     //Preparacion
     List<Pelicula> peliculas=new ArrayList<Pelicula>();
 
-    ServicioCartelera servicioCartelera=mock(ServicioCartelera.class);
-    Pelicula pelicula=new Pelicula("Dragon ball Super",120,"ATP","22/9/2022");
+  
+    ServicioPelicula servicioCartelera=mock(ServicioPelicula.class);
+    Pelicula pelicula=new Pelicula();
+    pelicula.setTitulo("Dragon Ball");
+    //Agregar genero,calificacion,duracion 
+    
+    
+    
     peliculas.add(pelicula);
     when(servicioCartelera.obtenerPeliculas()).thenReturn(peliculas);
 
