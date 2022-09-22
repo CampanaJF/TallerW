@@ -28,6 +28,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 
 	@Override
 	public List<Funcion> getFuncionesDeUnCine(Long cine,Long pelicula) {
+		// ordenar por horario y  filtrar horarios repetidos una ves se implemente la clase definitiva para manejarlos
 		final Session session = sessionFactory.getCurrentSession();
 		Criterion rest1 = Restrictions.eq("cine.id", cine);
 		Criterion rest2 = Restrictions.eq("pelicula.id", pelicula);
