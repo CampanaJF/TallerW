@@ -14,7 +14,7 @@ public class ControladorCartelera {
 
     public ModelAndView irACartelera(){
     ModelMap model=new ModelMap();
-    
+
     return new ModelAndView("cartelera",model);
 }
 
