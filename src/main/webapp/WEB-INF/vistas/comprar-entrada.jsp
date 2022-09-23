@@ -10,6 +10,8 @@
 	<title>${entrada}</title>
 	
 <body class="bgColor">
+
+	<%@include file="header.jsp"%>
 	
 	<c:if test="${not empty error}">
 			<div class="p-1 alertbg">
@@ -17,32 +19,57 @@
 			</div>
 	 	</c:if>
 	
-	<main class="mt-3 form-signin">
-	  <form:form action="procesar-compra-entrada" method="POST" modelAttribute="datosEntrada">
-	  	
-	  	<a class="row" href="home">
-		<img class="mb-4" src="<c:url value="/icons/popcorn-movie-cinema-svgrepo-com.svg"/>" alt="" width="72" height="57">
-		</a>
-		<h1 class="text-white text-center h3 mb-3 fw-normal">Ingrese sus datos</h1>
-		
-		<form:select type="select" path="pelicula" />
+	<div class="container-md pt-2 pb-2">
+		<div class="row">
 
-		<div class="form-floating">
-		  <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
-		  <label for="floatingInput">Correo</label>
-		</div>
+			<div class="col">
+				<div class="text-center"> 
+					<img class="img-fluid portadaPelicula" 
+					src="<c:url value="/img/peliculas/backtothefuture.jpg"/>">
+				</div>
+			</div>
+
+			<div class="col align-self-center text-center text-white">
+				<h1>Back to the Future</h1>
+				<h4>Steven Spielberg</h4>
+				<h5 class="pb-3">Michael J. Fox - Christopher Lloyd</h5>
+				
+				<select class="form-select" aria-label="Default select example">
+				<option selected>Elija el Cine</option>
+				  
+				 <c:forEach items="${cines}" var="cines">
+				  
+				  <option value="${cines.cine.id}">${cines.cine.nombre}</option>
+				  
+				 </c:forEach>
+				 
+				 </select>
 		
-		<div class="form-floating">
-		  <form:input type="password" path="password" class="form-control" id="floatingPassword" placeholder="Password"/>
-		  <label for="floatingPassword">Contraseña</label>
+				
+				
+				
+				<%--  
+				<form:form action="procesar-compra-entrada" method="POST">
+				<form:select class="form-select" type="select" path="cine" />
+				<select class="form-select" aria-label="Default select example">
+				<option selected>Elija el Cine</option>
+				  
+				 <c:forEach items="${cines}" var="cines">
+				  
+				  <option value="${cines.id}">${cines.nombre}</option>
+				  
+				 </c:forEach>
+
+				</select>
+				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
+				</form:form>
+				--%>
+				
+			</div>
+
 		</div>
 
-		<button class="w-100 buttonA btn-lg btn-primary" type="submit">Ingresar</button>
-	  </form:form>
-	  
-	  <a class="text-center nav-link px-2 text-white nav-text" href="registrarme">¿No tenes una cuenta? Registrate aca</a>
-					        
-	</main>
+	</div>
 
 
 <%@include file="footer.jsp"%>

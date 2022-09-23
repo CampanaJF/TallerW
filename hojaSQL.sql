@@ -15,6 +15,9 @@ insert into formato (tipo) values
 				  ('Calle Falsa 123','Cine Numero 1'),
 				  ('Baker Street','Gran Cine');
 
+ insert into cine (locacion,nombre) values
+				  ('Ni idea jaja','Cine +');
+
 /* Se podria estandarizar la cantidad de asientos*/
 insert into sala (asientosTotales,nombreSala,cine_id) values
 				 (150,'Sala A',1),
@@ -31,6 +34,11 @@ insert into pelicula (director,poster,protagonista,sinopsis,titulo) values
  ('Steven Spielberg','raidersofthelostark','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
  biblical artefact known as the Ark of the Covenant. While doing so,
  he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark');
+ 
+ insert into cinepelicula(cine_id,pelicula_id) values
+						  (1,2),
+                          (2,1),
+                          (2,2);
  
 insert into funcion (horario,lenguaje,subtitulos,cine_id,pelicula_id,formato_id,sala_id) values
 					(13,'Castellano',false,1,1,1,1),
@@ -59,7 +67,9 @@ insert into formato (tipo) values
 				  ('Calle Falsa 123','Cine Numero 1'),
 				  ('Baker Street','Gran Cine');
 
-select * from cine;
+
+ insert into cine (locacion,nombre) values
+				  ('Ni idea jaja','Cine +');
 
 /* Se podria estandarizar la cantidad de asientos*/
 insert into sala (asientosTotales,nombreSala,cine_id) values
@@ -77,6 +87,12 @@ insert into pelicula (director,poster,protagonista,sinopsis,titulo) values
  ('Steven Spielberg','raidersofthelostark','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
  biblical artefact known as the Ark of the Covenant. While doing so,
  he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark');
+ 
+ 
+  insert into cinepelicula(cine_id,pelicula_id) values
+						  (1,2),
+                          (2,1),
+                          (2,2);
  
 insert into funcion (horario,lenguaje,subtitulos,cine_id,pelicula_id,formato_id,sala_id) values
 					(13,'Castellano',false,1,1,1,1),
