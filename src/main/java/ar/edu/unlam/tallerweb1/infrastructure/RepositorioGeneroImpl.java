@@ -25,6 +25,6 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
     public List<Genero> getGeneros() {
 
         Session session = sessionFactory.getCurrentSession();
-        return (List<Genero>) session.createSQLQuery("SELECT * FROM Genero");
+        return (List<Genero>) session.createSQLQuery("SELECT * FROM genero").list();
     }
 }
