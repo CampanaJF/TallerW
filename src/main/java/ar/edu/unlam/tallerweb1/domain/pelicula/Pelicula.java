@@ -1,12 +1,17 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
+import ar.edu.unlam.tallerweb1.domain.calificacionPelicula.CalificacionPelicula;
+import ar.edu.unlam.tallerweb1.domain.genero.Genero;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
-    @Entity
+@Entity
     public class Pelicula {
 
         @Id
@@ -23,6 +28,16 @@ import javax.persistence.Id;
         private String director;
 
         private String protagonista;
+
+        @ManyToOne
+        private Genero genero;
+
+        private Integer duracion;
+
+        @ManyToOne
+        private CalificacionPelicula calificacionPelicula;
+
+        private Date fechaEstreno;
 
         public Long getId() {
             return id;
@@ -72,4 +87,36 @@ import javax.persistence.Id;
             this.protagonista = protegonista;
         }
 
+
+        public Genero getGenero() {
+            return genero;
+        }
+
+        public void setGenero(Genero genero) {
+            this.genero = genero;
+        }
+
+        public Integer getDuracion() {
+            return duracion;
+        }
+
+        public void setDuracion(Integer duracion) {
+            this.duracion = duracion;
+        }
+
+        public CalificacionPelicula getCalificacionPelicula() {
+            return calificacionPelicula;
+        }
+
+        public void setCalificacionPelicula(CalificacionPelicula calificacionPelicula) {
+            this.calificacionPelicula = calificacionPelicula;
+        }
+
+        public Date getFechaEstreno() {
+            return fechaEstreno;
+        }
+
+        public void setFechaEstreno(Date fechaEstreno) {
+            this.fechaEstreno = fechaEstreno;
+        }
 }
