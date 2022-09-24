@@ -13,8 +13,8 @@ import java.util.List;
 @Controller
 public class ControladorGenero {
 
-    @Autowired
     private ServicioGenero servicioGenero;
+    @Autowired
     public ControladorGenero(ServicioGenero servicioGenero) {
         this.servicioGenero=servicioGenero;
     }

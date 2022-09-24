@@ -4,15 +4,12 @@ import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RepositorioGeneroTest extends SpringTest {
-
-    @Mock
     private RepositorioGenero repositorioGenero;
 
     @Test
