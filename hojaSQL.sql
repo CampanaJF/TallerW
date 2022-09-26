@@ -5,7 +5,7 @@ use cineclub;
 
 insert into usuario (email,nombre,password) values
 					('pacofranco45@gmail.com','Franco','1234'),
-                    ('mail@mail.com','main','1234'),
+                    ('mail@mail.com','Kiwawa','1234'),
                     ('admin','admin','admin');
 
 insert into formato (tipo) values
@@ -16,7 +16,7 @@ insert into formato (tipo) values
 				  ('Baker Street','Gran Cine');
 
  insert into cine (locacion,nombre) values
-				  ('Ni idea jaja','Cine +');
+				  ('Avenida Calle 979','El Grand');
 
 /* Se podria estandarizar la cantidad de asientos*/
 insert into sala (asientosTotales,nombreSala,cine_id) values
@@ -49,7 +49,11 @@ insert into funcion (horario,lenguaje,subtitulos,cine_id,pelicula_id,formato_id,
 insert into entrada (asiento,pelicula,funcion_id,usuario_id,precio) values
 			(1,'Indiana Jones: Raiders of the Lost Ark',3,2,1500.00),
             (1,'Back to the Future',1,2,2000.00);
-            
+    
+select * from entrada;
+
+delete from entrada where pelicula is null;    
+
 /* Test */            
 drop database cinetest;
 create schema cinetest; 
@@ -66,10 +70,6 @@ insert into formato (tipo) values
  insert into cine (locacion,nombre) values
 				  ('Calle Falsa 123','Cine Numero 1'),
 				  ('Baker Street','Gran Cine');
-
-
- insert into cine (locacion,nombre) values
-				  ('Ni idea jaja','Cine +');
 
 /* Se podria estandarizar la cantidad de asientos*/
 insert into sala (asientosTotales,nombreSala,cine_id) values

@@ -8,7 +8,7 @@ public interface ServicioEntrada {
 
 	Entrada comprarEntrada(DatosEntrada datosEntrada);
 	
-	Entrada getEntrada(Long uId,Long fId);
+	Entrada getEntrada(Long entrada);
 
 	List<Entrada> getEntradas(Long uId);
 }

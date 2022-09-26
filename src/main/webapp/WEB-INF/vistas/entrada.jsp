@@ -7,11 +7,15 @@
 	
 	<title>CineClub</title>
 	
-	<h1>${entrada.funcion.pelicula.titulo}</h1>
-	
 	<body>
 
 	<%@include file="header.jsp"%>
+	
+	<h1>${entrada.funcion.cine.nombre}</h1>
+	<h1>${entrada.funcion.pelicula.titulo}</h1>
+	<h1>${entrada.funcion.horario}</h1>
+	<h1>${entrada.funcion.sala.nombre}</h1>
+
 
 
 	<%@include file="footer.jsp"%>

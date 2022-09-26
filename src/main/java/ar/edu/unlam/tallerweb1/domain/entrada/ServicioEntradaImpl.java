@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
-import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
-import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 
 
 @Service("servicioEntrada")
@@ -30,8 +29,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 		entrada.setFuncion(datosEntrada.getFuncion());
 		entrada.setUsuario(datosEntrada.getUsuario());
-		// TO DO 
-		//entrada.setSala(funcion.getSala().getNombre());
 	
 		this.repositorioEntrada.comprarEntrada(entrada);
 		
@@ -40,9 +37,9 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public Entrada getEntrada(Long uId,Long fId) {
+	public Entrada getEntrada(Long entrada) {
 		
-		return this.repositorioEntrada.getEntrada(uId,fId);
+		return this.repositorioEntrada.getEntrada(entrada);
 		
 	}
 

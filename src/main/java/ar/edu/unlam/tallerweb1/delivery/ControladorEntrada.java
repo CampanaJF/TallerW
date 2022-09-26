@@ -10,10 +10,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
 import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
@@ -43,6 +43,8 @@ public class ControladorEntrada {
 		this.servicioCine = servicioCine;
 	}
 	
+	//TO DO - Agregar Control de sesion para que se deba estar logueado para comprar la entrada sino explota
+	
 	@RequestMapping(path = "/entrada-pelicula", method = RequestMethod.GET)
 	public ModelAndView entradaPelicula(HttpServletRequest request) {
 		
@@ -61,7 +63,7 @@ public class ControladorEntrada {
 	}
 	
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
-	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos ,
+	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos,
 									   	   HttpServletRequest request) {
 		
 		Long sess = this.servicioSession.getUserId(request);
@@ -76,16 +78,21 @@ public class ControladorEntrada {
 		model.put("usuario", sess);
 		model.put("funciones", funciones);
 		
+		model.addAttribute("datosEntrada", new DatosEntrada());
+		
 		
 		return new ModelAndView("entrada-preparacion",model);
 	}
 	
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
-	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,HttpServletRequest request) {
+	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
+									 HttpServletRequest request) {
 		
 		Long sess = this.servicioSession.getUserId(request);
 
 		Entrada entradaComprada = this.servicioEntrada.comprarEntrada(datosEntrada);
+		
+		entradaComprada = this.servicioEntrada.getEntrada(entradaComprada.getId());
 		
 		ModelMap model = new ModelMap();
 		
