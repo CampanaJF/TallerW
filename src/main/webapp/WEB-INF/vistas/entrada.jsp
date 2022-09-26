@@ -5,7 +5,7 @@
 
 	<%@include file="head.jsp"%>
 	
-	<title>CineClub</title>
+	<title class="bgColor">CineClub</title>
 	
 	<body>
 

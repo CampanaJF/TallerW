@@ -108,6 +108,7 @@ public class ControladorEntradaTest {
 		mocksSessionRequests();
 		
 		when(this.servicioEntrada.comprarEntrada(DE)).thenReturn(entrada);
+		when(this.servicioEntrada.getEntrada(entrada.getId())).thenReturn(entrada);
 		mav = this.controladorEntrada.entradaCompra(DE,mockRequest);	
 	}
 

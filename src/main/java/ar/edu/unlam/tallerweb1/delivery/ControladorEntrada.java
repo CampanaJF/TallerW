@@ -43,7 +43,11 @@ public class ControladorEntrada {
 		this.servicioCine = servicioCine;
 	}
 	
-	//TO DO - Agregar Control de sesion para que se deba estar logueado para comprar la entrada sino explota
+	/*TO DO - Agregar Control de sesion para que se deba estar logueado para comprar la entrada sino explota
+			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
+			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
+			
+	*/
 	
 	@RequestMapping(path = "/entrada-pelicula", method = RequestMethod.GET)
 	public ModelAndView entradaPelicula(HttpServletRequest request) {
