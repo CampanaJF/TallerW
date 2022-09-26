@@ -23,8 +23,10 @@ import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
+import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -34,9 +36,12 @@ public class ControladorEntradaTest {
 	
 	private final ServicioSession servicioSession = mock(ServicioSession.class);
 	private final ServicioEntrada servicioEntrada = mock(ServicioEntrada.class);
+	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
+	private final ServicioFuncion servicioFuncion = mock(ServicioFuncion.class);
 	private final ServicioCine servicioCine = mock(ServicioCine.class);
 	
-	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioSession,servicioEntrada,servicioCine);
+	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioSession,servicioEntrada,servicioUsuario,
+																					servicioFuncion,servicioCine);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
@@ -44,58 +49,108 @@ public class ControladorEntradaTest {
 	
 	private ModelAndView mav = new ModelAndView();
 	
-	@Test
-	public void queSeCompreLaEntrada() {
-		
-		Usuario U1 = givenUsuario(1L,"Nombre");
-		Funcion F1 = new Funcion();
-		F1.setId(1L);
-		Entrada entrada = givenEntrada(U1,F1);
-		
-		
-		whenSeCompraUnaEntrada(entrada);
-		
-		thenSeComproLaEntrada(entrada);
-	}
-	
-	private void whenSeCompraUnaEntrada(Entrada entrada) {
-		mocksSessionRequests();
-		
-		when(servicioEntrada.getEntrada(entrada.getUsuario().getId(),entrada.getFuncion().getId())).thenReturn(entrada);
-		mav = this.controladorEntrada.comprarEntrada(entrada,mockRequest);
-		
-		
-		
-	}
-
-	private void thenSeComproLaEntrada(Entrada entrada) {
-		assertThat(mav.getViewName()).isEqualTo("entrada");
-
-		
-	}
-	
 //	@Test
-//	public void queSeHayaElegidoUnCineYPuedaElegirElHorarioYFormatoParaComprarUnaEntradaDePelicula() {
-//		Cine C1 = givenCine("1");
-//
+//	public void queSeCompreLaEntrada() {
 //		
-//		whenSeQuiereElegirElFormatoYHorario(C1.getId());
+//		Usuario U1 = givenUsuario(1L,"Nombre");
+//		Funcion F1 = new Funcion();
+//		F1.setId(1L);
+//		Entrada entrada = givenEntrada(U1,F1);
 //		
-//		thenSeEligenElFormatoYHorario();
+//		
+//		whenSeCompraUnaEntrada(entrada);
+//		
+//		thenSeComproLaEntrada(entrada);
 //	}
-//
-//	private void thenSeEligenElFormatoYHorario() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	private void whenSeQuiereElegirElFormatoYHorario(Long cine) {
+//	
+//	private void whenSeCompraUnaEntrada(Entrada entrada) {
 //		mocksSessionRequests();
 //		
-//		when(servicioCine.getCines()).thenReturn(cines);
-//		mav = this.controladorEntrada.prepararEntrada(mockRequest);b
+//		when(servicioEntrada.getEntrada(entrada.getUsuario().getId(),entrada.getFuncion().getId())).thenReturn(entrada);
+//		mav = this.controladorEntrada.comprarEntrada(entrada,mockRequest);
+//		
+//		
 //		
 //	}
+//
+//	private void thenSeComproLaEntrada(Entrada entrada) {
+//		assertThat(mav.getViewName()).isEqualTo("entrada");
+//
+//		
+//	}
+	
+	@Test
+	public void queSeHayaCompradoLaEntradaExitosamente() {
+		
+		Cine C1 = givenCine("1");
+		Pelicula P1 = givenPelicula("peli",1L);
+		Funcion funcion = givenFuncion(C1,P1);
+		Usuario usuario = givenUsuario(1L,"Nombre");
+		
+		DatosEntrada DE = givenDatosEntrada(funcion,usuario);
+		
+		Entrada entrada = givenEntrada(usuario,funcion);
+		
+		whenSeSeleccionaLaFuncionDeseada(funcion,usuario,entrada,DE);
+		
+		thenSeCompraLaEntradaParaEsaFuncion();
+			
+	}
+	
+	private void thenSeCompraLaEntradaParaEsaFuncion() {
+		assertThat(mav.getViewName()).isEqualTo("entrada");
+		assertThat(mav.getModel().get("usuario")).isNotNull();
+		assertThat(mav.getModel().get("entrada")).isNotNull();
+		
+	}
+
+	private void whenSeSeleccionaLaFuncionDeseada(Funcion funcion, Usuario usuario, Entrada entrada,DatosEntrada DE) {
+		mocksSessionRequests();
+		
+		when(this.servicioEntrada.comprarEntrada(DE)).thenReturn(entrada);
+		mav = this.controladorEntrada.entradaCompra(DE,mockRequest);	
+	}
+
+	@Test
+	public void queSeHayaElegidoUnCineYPuedaElegirElHorarioYFormatoParaComprarUnaEntradaDePelicula() {
+		
+		Cine C1 = givenCine("1");
+		Pelicula P1 = givenPelicula("peli",1L);
+		
+		List <Funcion> funciones =  givenFuncionesParaEseCineYEsaPelicula(C1,P1);
+		
+		whenSeQuiereElegirElFormatoYHorario(C1.getId(),P1.getId(),funciones);
+		
+		thenSeEligenElFormatoYHorario(funciones);
+	}
+
+	private void thenSeEligenElFormatoYHorario(List<Funcion> funciones) {
+		 assertThat(mav.getViewName()).isEqualTo("entrada-preparacion");
+		 assertThat(mav.getModel().get("funciones")).isNotNull();
+		
+	}
+
+	private void whenSeQuiereElegirElFormatoYHorario(Long cine,Long pelicula,List<Funcion> funciones) {
+		mocksSessionRequests();
+		
+		when(servicioFuncion.getFuncionesDeUnCine(cine,pelicula)).thenReturn(funciones);
+		mav = this.controladorEntrada.entradaPreparacion(cine,pelicula,mockRequest);
+		
+	}
+	
+	private List<Funcion> givenFuncionesParaEseCineYEsaPelicula(Cine cine,Pelicula pelicula){
+		
+		Funcion F1 = givenFuncion(cine,pelicula);
+		Funcion F2 = givenFuncion(cine,pelicula);
+		Funcion F3 = givenFuncion(cine,pelicula);
+		
+		List <Funcion> funciones = new ArrayList();
+		funciones.add(F1);
+		funciones.add(F2);
+		funciones.add(F3);
+		
+		return funciones;
+	}
 
 	@Test
 	public void queSePuedaElegirElCineParaComprarUnaEntradaDePelicula(){
@@ -141,13 +196,13 @@ public class ControladorEntradaTest {
 		mocksSessionRequests();
 		
 		when(servicioCine.getCines(1L)).thenReturn(cines);
-		mav = this.controladorEntrada.prepararEntrada(mockRequest);
+		mav = this.controladorEntrada.entradaPelicula(mockRequest);
 		
 		
 	}
 
 	private void thenSePuedeElegirElCine(List<CinePelicula> cines) {
-		assertThat(mav.getViewName()).isEqualTo("comprar-entrada");
+		assertThat(mav.getViewName()).isEqualTo("entrada-pelicula");
 		 assertThat(mav.getModel().get("cines")).isEqualTo(cines);
 
 	}
@@ -158,10 +213,18 @@ public class ControladorEntradaTest {
 
 	 }
 	
+	private DatosEntrada givenDatosEntrada(Funcion funcion, Usuario usuario) {
+		DatosEntrada DE = new DatosEntrada();
+		DE.setFuncion(funcion);
+		DE.setUsuario(usuario);
+		return DE;
+	}
+	
 	private Cine givenCine(String string) {
 		Cine cine = new Cine();
 		cine.setId(new Random().nextLong());
 		cine.setNombre(string);
+		
 		return cine;
 	}
 	
@@ -169,6 +232,7 @@ public class ControladorEntradaTest {
 		Entrada entrada = new Entrada();
 		entrada.setFuncion(F1);
 		entrada.setUsuario(U1);
+		
 		return entrada;
 	}
 
@@ -176,6 +240,7 @@ public class ControladorEntradaTest {
     	Usuario usuario = new Usuario ();
     	usuario.setId(id);
     	usuario.setNombre(nombre);
+    	
     	return usuario;
     }
 	
@@ -183,7 +248,19 @@ public class ControladorEntradaTest {
 		Pelicula pelicula = new Pelicula();
 		pelicula.setId(id);
 		pelicula.setTitulo(titulo);
+		
 		return pelicula;
+	}
+	
+	private Funcion givenFuncion(Cine cine,Pelicula pelicula) {
+		Funcion funcion = new Funcion();
+		funcion.setCine(cine);
+		funcion.setPelicula(pelicula);
+		funcion.setHorario(new Random().nextInt());
+		funcion.setId(new Random().nextLong());
+		
+		return funcion;
+		
 	}
 
 }

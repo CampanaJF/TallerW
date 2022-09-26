@@ -24,4 +24,10 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		return this.repositorioFuncion.getFuncionesDeUnCine(cine,pelicula);
 	}
 
+	@Override
+	public Funcion getFuncion(Long funcionId) {
+
+		return this.repositorioFuncion.getFuncion(funcionId);
+	}
+
 }

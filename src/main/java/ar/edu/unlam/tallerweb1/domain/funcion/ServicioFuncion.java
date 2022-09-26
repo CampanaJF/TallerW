@@ -6,4 +6,6 @@ public interface ServicioFuncion {
 
 	List <Funcion> getFuncionesDeUnCine(Long cine,Long pelicula);
 
+	Funcion getFuncion(Long funcionId);
+
 }

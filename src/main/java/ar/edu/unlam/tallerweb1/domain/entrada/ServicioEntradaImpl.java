@@ -7,6 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
+import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 
 @Service("servicioEntrada")
 @Transactional
@@ -20,10 +24,18 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public Entrada comprarEntrada(Entrada entrada) {
+	public Entrada comprarEntrada(DatosEntrada datosEntrada) {
 	
+		Entrada entrada = new Entrada();
+		
+		entrada.setFuncion(datosEntrada.getFuncion());
+		entrada.setUsuario(datosEntrada.getUsuario());
+		// TO DO 
+		//entrada.setSala(funcion.getSala().getNombre());
 	
-		return this.repositorioEntrada.comprarEntrada(entrada);
+		this.repositorioEntrada.comprarEntrada(entrada);
+		
+		return entrada;
 		
 	}
 

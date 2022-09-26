@@ -1,11 +1,14 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
@@ -28,20 +31,22 @@ public class ServicioEntradaTest {
     	
     	Funcion F1 = givenFuncion(P1,S1);
     	
-    	Entrada E1 = givenEntrada(U1,F1);
-    			
-		whenSeCompraLaEntrada(E1);
+    	DatosEntrada DE = givenDatosEntrada(F1,U1);
+    		
+    	Entrada entrada = whenSeCompraLaEntrada(DE);
 		
-		thenSeComproLaEntrada(E1);
+		thenSeComproLaEntrada(entrada,F1);
 	}
 	
-	private void thenSeComproLaEntrada(Entrada E1) {
-		verify(repositorioEntrada,times(1)).comprarEntrada(E1);
+	private void thenSeComproLaEntrada(Entrada entrada,Funcion funcion) {
+		assertThat(entrada.getFuncion()).isEqualTo(funcion);
+
 		
 	}
 
-	private void whenSeCompraLaEntrada(Entrada E1) {
-		this.servicioEntrada.comprarEntrada(E1);
+	private Entrada whenSeCompraLaEntrada(DatosEntrada DE) {
+		
+		return this.servicioEntrada.comprarEntrada(DE);
 		
 	}
 	
@@ -49,34 +54,36 @@ public class ServicioEntradaTest {
 	public void queSePuedanComprarMultiplesEntradasParaUnaFuncion() {
 		
 		Usuario U1 = givenUsuario(2L,"A");
+		Usuario U2 = givenUsuario(3L,"B");
     	
     	Pelicula P1 = givenPelicula("Indiana Jones");
     	
-    	Cine S1 = givenCine("Sala 5");
+    	Cine S1 = givenCine("CINE 5");
     	
     	Funcion F1 = givenFuncion(P1,S1);
     	
-    	Entrada E1 = givenEntrada(U1,F1);
-    	Entrada E2 = givenEntrada(U1,F1);
-    	Entrada E3 = givenEntrada(U1,F1);
-    			
-		whenSeCompranLasEntradas(E1,E2,E3);
-		
+    	DatosEntrada DE1 = givenDatosEntrada(F1,U1);
+    	DatosEntrada DE2 = givenDatosEntrada(F1,U1);
+    	DatosEntrada DE3 = givenDatosEntrada(F1,U2);
+    	
+		Entrada E1 = whenSeCompranLasEntradas(DE1);
+    	Entrada E2 = whenSeCompranLasEntradas(DE2);
+    	Entrada E3 = whenSeCompranLasEntradas(DE3);
+    				
 		thenSeCompraronLasEntradas(E1,E2,E3);
 	}
 	
-	private void whenSeCompranLasEntradas(Entrada e1, Entrada e2, Entrada e3) {
-		this.servicioEntrada.comprarEntrada(e1);
-		this.servicioEntrada.comprarEntrada(e2);
-		this.servicioEntrada.comprarEntrada(e3);
-		
+	private Entrada whenSeCompranLasEntradas(DatosEntrada DE) {
+		Entrada entrada =this.servicioEntrada.comprarEntrada(DE);
+
+		return entrada;
 	}
 
 	private void thenSeCompraronLasEntradas(Entrada e1, Entrada e2, Entrada e3) {
-		verify(repositorioEntrada,times(1)).comprarEntrada(e1);
-		verify(repositorioEntrada,times(1)).comprarEntrada(e2);
-		verify(repositorioEntrada,times(1)).comprarEntrada(e3);
-		
+		assertThat(e1.getFuncion().getCine().getNombre()).isEqualTo("CINE 5");
+		assertThat(e2.getUsuario().getNombre()).isEqualTo("A");
+		assertThat(e3.getUsuario().getNombre()).isEqualTo("B");
+
 	}
 
 	@Test
@@ -124,6 +131,13 @@ public class ServicioEntradaTest {
 		Pelicula pelicula = new Pelicula();
 		pelicula.setTitulo(titulo);
 		return pelicula;
+	}
+	
+	private DatosEntrada givenDatosEntrada(Funcion funcion, Usuario usuario) {
+		DatosEntrada DE = new DatosEntrada();
+		DE.setFuncion(funcion);
+		DE.setUsuario(usuario);
+		return DE;
 	}
 
 	private Funcion givenFuncion(Pelicula pelicula, Cine cine) {
