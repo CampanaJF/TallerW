@@ -117,9 +117,14 @@ public class ControladorEntradaTest {
 		Cine C1 = givenCine("1");
 		Pelicula P1 = givenPelicula("peli",1L);
 		
+		DatosCine CD= new DatosCine();
+		
+		CD.setCine(C1.getId());
+		CD.setPelicula(P1.getId());
+		
 		List <Funcion> funciones =  givenFuncionesParaEseCineYEsaPelicula(C1,P1);
 		
-		whenSeQuiereElegirElFormatoYHorario(C1.getId(),P1.getId(),funciones);
+		whenSeQuiereElegirElFormatoYHorario(CD,funciones);
 		
 		thenSeEligenElFormatoYHorario(funciones);
 	}
@@ -130,11 +135,11 @@ public class ControladorEntradaTest {
 		
 	}
 
-	private void whenSeQuiereElegirElFormatoYHorario(Long cine,Long pelicula,List<Funcion> funciones) {
+	private void whenSeQuiereElegirElFormatoYHorario(DatosCine CD,List<Funcion> funciones) {
 		mocksSessionRequests();
 		
-		when(servicioFuncion.getFuncionesDeUnCine(cine,pelicula)).thenReturn(funciones);
-		mav = this.controladorEntrada.entradaPreparacion(cine,pelicula,mockRequest);
+		when(servicioFuncion.getFuncionesDeUnCine(CD.getCine(),CD.getPelicula())).thenReturn(funciones);
+		mav = this.controladorEntrada.entradaPreparacion(CD,mockRequest);
 		
 	}
 	

@@ -7,7 +7,7 @@
 
 	<%@include file="head.jsp"%>
 	
-	<title>${entrada}</title>
+	<title>${pelicula}</title>
 	
 <body class="bgColor">
 
@@ -34,36 +34,55 @@
 				<h4>Steven Spielberg</h4>
 				<h5 class="pb-3">Michael J. Fox - Christopher Lloyd</h5>
 				
-				<select class="form-select" aria-label="Default select example">
-				<option selected>Elija el Cine</option>
-				  
+				
+				<form:form action="entrada-preparacion" modelAttribute="datosCine" method="POST">
+					
+				<form:select class="form-select" path="cine" >
+							  
 				 <c:forEach items="${cines}" var="cines">
 				  
-				  <option value="${cines.cine.id}">${cines.cine.nombre}</option>
+				  <form:option value="${cines.cine.id}" label="${cines.cine.nombre}"/>
 				  
 				 </c:forEach>
 				 
-				 </select>
-		
+				</form:select>
+				
+				
+				<form:hidden path="pelicula" value="${pelicula}" />
+				
+				
+				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
+				
+				</form:form> 
+	
+	
+		<%-- 
+				<form:form action="entrada-preparacion" method="POST">
 				
 				
 				
-				<%--  
-				<form:form action="procesar-compra-entrada" method="POST">
-				<form:select class="form-select" type="select" path="cine" />
-				<select class="form-select" aria-label="Default select example">
-				<option selected>Elija el Cine</option>
-				  
+				<form:select class="form-select" path="cineId" >
+							  
 				 <c:forEach items="${cines}" var="cines">
 				  
-				  <option value="${cines.id}">${cines.nombre}</option>
+				  <form:option value="${cines.cine.id}" label="${cines.cine.nombre}"/>
 				  
 				 </c:forEach>
-
-				</select>
+				 
+				</form:select>
+				
+				
+				
+				<form:hidden path="peliculaId" value="${pelicula}" />
+				
+				
+				
 				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
-				</form:form>
+				
+				</form:form>   
+				
 				--%>
+				
 				
 			</div>
 

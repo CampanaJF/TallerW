@@ -53,20 +53,22 @@ public class ControladorEntrada {
 		
 		model.put("usuario", sess);
 		model.put("cines", cines);
+		model.put("pelicula",1L);
+		
+		model.addAttribute("datosCine", new DatosCine());
 		
 		return new ModelAndView ("entrada-pelicula",model);
 	}
 	
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
-	public ModelAndView entradaPreparacion(@RequestParam("peliculaId") Long peliculaId,
-										   @RequestParam("cineId") Long cineId,
+	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos ,
 									   	   HttpServletRequest request) {
 		
 		Long sess = this.servicioSession.getUserId(request);
 		
 		Usuario usuarioModel = this.servicioUsuario.getUsuario(sess);
 				
-		List <Funcion> funciones= this.servicioFuncion.getFuncionesDeUnCine(cineId,peliculaId);
+		List <Funcion> funciones= this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
 		
 		ModelMap model = new ModelMap();
 		
@@ -92,5 +94,26 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("entrada",model);
 	}
+	
+//	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
+//	public ModelAndView entradaPreparacion(@RequestParam("peliculaId") Long peliculaId,
+//										   @RequestParam("cineId") Long cineId,
+//									   	   HttpServletRequest request) {
+//		
+//		Long sess = this.servicioSession.getUserId(request);
+//		
+//		Usuario usuarioModel = this.servicioUsuario.getUsuario(sess);
+//				
+//		List <Funcion> funciones= this.servicioFuncion.getFuncionesDeUnCine(cineId,peliculaId);
+//		
+//		ModelMap model = new ModelMap();
+//		
+//		model.put("usuarioModel", usuarioModel);
+//		model.put("usuario", sess);
+//		model.put("funciones", funciones);
+//		
+//		
+//		return new ModelAndView("entrada-preparacion",model);
+//	}
 
 }
