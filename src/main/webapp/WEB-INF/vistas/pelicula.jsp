@@ -31,7 +31,16 @@
 				<a href="comprar-entrada" type="button" class="btn-lg btn buttonA">Comprar Entradas</a>
 				
 			</div>
-
+			<div class="text-light">
+				<h2>Comentarios</h2>
+				<form method="post" action="">
+					<hr>
+					Comentar:<br>
+					<input type="hidden" name="id" value="idUser">
+					<textarea name="comment_content" rows="2" cols="44" placeholder="Escriba un comentario..." required></textarea><br>
+					<input type="submit" name="comment" value="Comentar">
+				</form>
+			</div>
 		</div>
 
 	</div>

@@ -38,7 +38,7 @@ public class ControladorUsuario {
 		Long sess = servicioSession.getUserId(request);
 		
 		if(null!=sess) {
-			redirectAttributes.addFlashAttribute("mensaje","¡Ya esta Logueado!"); //permite redirect con model
+			redirectAttributes.addFlashAttribute("mensaje","ï¿½Ya esta Logueado!"); //permite redirect con model
 			return new ModelAndView("redirect:/home");
 		}
 
@@ -57,7 +57,7 @@ public class ControladorUsuario {
 			servicioSession.setUserId(usuarioBuscado.getId(), request);
 			return new ModelAndView("redirect:/home");
 		} else {
-			model.put("error", "¡Usuario o clave incorrecta!");
+			model.put("error", "ï¿½Usuario o clave incorrecta!");
 		}
 		return new ModelAndView("login", model);
 	}
@@ -69,7 +69,7 @@ public class ControladorUsuario {
 		ModelMap model = new ModelMap();
 		
 		if(null!=sess) {
-			redirectAttributes.addFlashAttribute("mensaje","¡Ya esta Logueado!");
+			redirectAttributes.addFlashAttribute("mensaje","ï¿½Ya esta Logueado!");
 			return new ModelAndView("redirect:/home");
 		}
 		
@@ -82,22 +82,22 @@ public class ControladorUsuario {
 	public ModelAndView procesarRegistro(
 			@ModelAttribute("datosUsuario") DatosUsuario datosUsuario, final RedirectAttributes redirectAttributes) {
 		
-		String mensaje="¡Se Registro Exitosamente!";
+		String mensaje="ï¿½Se Registro Exitosamente!";
 			
 		try {
             servicioUsuario.registrarUsuario(datosUsuario.getEmail(),datosUsuario.getPassword(),
             								 datosUsuario.getPasswordRe(),datosUsuario.getNombre());
         } catch (EmailEnUsoException eeue) {
-        	mensaje="¡El Email ya esta en uso!";
+        	mensaje="ï¿½El Email ya esta en uso!";
         	
         } catch (PasswordsDiferentesException pde) {
-        	mensaje="¡Las contraseñas son diferentes!";
+        	mensaje="ï¿½Las contraseï¿½as son diferentes!";
         	
         } catch (PasswordLenghtException ple) {
-        	mensaje="¡La contraseña debe tener almenos 12 caracteres!";
+        	mensaje="ï¿½La contraseï¿½a debe tener almenos 12 caracteres!";
         }
 		
-		if(mensaje!="¡Se Registro Exitosamente!") {
+		if(mensaje!="ï¿½Se Registro Exitosamente!") {
 			redirectAttributes.addFlashAttribute("mensaje",mensaje);
 			return new ModelAndView("redirect:/registrarme");
 		}
@@ -114,7 +114,7 @@ public class ControladorUsuario {
 		Long sess = servicioSession.getUserId(request);
 		
 		if(sess==null) {
-			redirectAttributes.addFlashAttribute("mensaje","¡No puede ver su perfil sin estar logueado!");
+			redirectAttributes.addFlashAttribute("mensaje","ï¿½No puede ver su perfil sin estar logueado!");
 			return new ModelAndView("redirect:/home");
 		}
 		

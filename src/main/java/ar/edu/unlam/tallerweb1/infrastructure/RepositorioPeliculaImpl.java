@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,12 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public List<Pelicula> getPeliculas() {
 		final Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Pelicula.class).list();
+	}
+
+	@Override
+	public List<Pelicula> buscarPeliculas(String titulo) {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class).add(Restrictions.ilike("titulo",titulo, MatchMode.ANYWHERE)).list();
 	}
 
 }
