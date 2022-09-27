@@ -27,15 +27,14 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 
 	@Override
-	public Entrada getEntrada(Long uId,Long fId) {
+	public Entrada getEntrada(Long entrada) {
 		
 		final Session session = sessionFactory.getCurrentSession();
 		
-		Criterion rest1 = Restrictions.eq("usuario.id", uId);
-		Criterion rest2 = Restrictions.eq("funcion.id", fId);
+		Criterion rest1 = Restrictions.eq("id", entrada);
 
 		return  (Entrada)session.createCriteria(Entrada.class)
-				.add(rest1).add(rest2).uniqueResult();	
+				.add(rest1).uniqueResult();	
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Random;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -42,8 +45,8 @@ public class RepositorioEntradaTest extends SpringTest {
 
     	whenSeCompraUnaEntrada(E1);
     	
-    	assertThat(repositorioEntrada.getEntrada(E1.getId(),F1.getId())).isNotNull();
-    	assertThat(repositorioEntrada.getEntrada(E1.getId(),F1.getId()).getPelicula()).isEqualTo("Indiana Jones");
+    	assertThat(repositorioEntrada.getEntrada(E1.getId())).isNotNull();
+    	assertThat(repositorioEntrada.getEntrada(E1.getId()).getPelicula()).isEqualTo("Indiana Jones");
  	
     }
 	
@@ -56,6 +59,7 @@ public class RepositorioEntradaTest extends SpringTest {
 		Entrada entrada = new Entrada();
 		entrada.setFuncion(F1);
 		entrada.setUsuario(U1);
+		entrada.setId(new Random().nextLong());
 		entrada.setPelicula(F1.getPelicula().getTitulo());
 		return entrada;
 	}

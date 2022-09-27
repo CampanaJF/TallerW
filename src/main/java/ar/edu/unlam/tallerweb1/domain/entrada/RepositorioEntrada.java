@@ -6,7 +6,7 @@ public interface RepositorioEntrada {
 
 	Entrada comprarEntrada(Entrada entrada);
 	
-	Entrada getEntrada(Long uId,Long fId);
+	Entrada getEntrada(Long entrada);
 
 	List<Entrada> getEntradas(Long uId);
 }

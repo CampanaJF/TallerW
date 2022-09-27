@@ -36,14 +36,11 @@
 
         <div class="text-end">
           
-          <ul class="ps-3 nav col-12 col-lg-auto me-lg-3 mb-2 justify-content-center mb-md-0">
-          
-	      <li><a href="perfil" class="nav-link px-2 text-white nav-text me-3">Mi Perfil</a></li>
+          <a href="perfil"><button type="button" class="btn btn-outline-light me-2">Mi Perfil</button></a>
          
-          <li><a href="logout"><button type="button" class="buttonA">Salir</button></a></li>
+          <a href="logout"><button type="button" class="btn buttonA">Salir</button></a>
           
-          </ul>
-          
+
         </div>
           
         </c:if>
