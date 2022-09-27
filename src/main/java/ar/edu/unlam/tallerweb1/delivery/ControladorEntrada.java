@@ -10,7 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -102,7 +102,49 @@ public class ControladorEntrada {
 		
 		model.put("usuario", sess);
 		model.put("entrada", entradaComprada);
+		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
+		return new ModelAndView("entrada",model);
+	}
+	
+	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
+	public ModelAndView misEntradas(HttpServletRequest request) {
+		
+		ModelMap model = new ModelMap();
+		
+		Long sess = this.servicioSession.getUserId(request);
+		
+		List<Entrada> entradas = this.servicioEntrada.getEntradas(sess);
+
+		if(entradas.isEmpty()) {
+			String mensaje = "No Has Comprado Nignuna Entrada";
+			
+			model.put("usuario", sess);
+			model.put("mensaje",mensaje);
+			
+			return new ModelAndView("mis-entradas",model);
+		}
+		
+		model.put("usuario", sess);
+		model.put("entradas", entradas);
+
+		
+		return new ModelAndView("mis-entradas",model);
+	}
+	
+	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
+	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request) {
+		
+		ModelMap model = new ModelMap();
+		
+		Long sess = this.servicioSession.getUserId(request);
+		
+		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
+
+	
+		model.put("usuario", sess);
+		model.put("entrada", entradaEncontrada);
+
 		return new ModelAndView("entrada",model);
 	}
 	
