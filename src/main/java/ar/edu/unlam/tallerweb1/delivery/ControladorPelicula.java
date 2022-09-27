@@ -54,27 +54,7 @@ public class ControladorPelicula {
 		
 		return new ModelAndView("pelicula",model);
 	}
-	/*** no sirve
-	@RequestMapping(path = "/resultado-busqueda", method = RequestMethod.GET)
-	public ModelAndView buscarPelicula(HttpServletRequest request) {
-		
-		Long userId = this.servicioSession.getUserId(request);
-		
-		String busqueda = "busqueda.exe";
-				
-		ModelMap model = new ModelMap();
-			
-		if (userId==null) {
-			model.put("busqueda", busqueda);
-			
-			return new ModelAndView("resultado-busqueda",model);
-        }
-				
-		model.put("usuario", userId);
-		model.put("busqueda", busqueda);
-		
-		return new ModelAndView("resultado-busqueda",model);
-	}*/
+
     @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value="titulo")String titulo, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
@@ -88,6 +68,7 @@ public class ControladorPelicula {
 
 		return new ModelAndView("pelicula-buscada",model);
 	}
+
     /**
     @RequestMapping(path = "/todas-las-peliculas", method = RequestMethod.GET)
 	public ModelAndView visualizarPeliculas() {

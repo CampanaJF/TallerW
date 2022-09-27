@@ -65,11 +65,11 @@ public class RepositorioPeliculaTest extends SpringTest {
 	@Transactional
 	@Rollback
 	public void alBuscarUnaPeliculaPorSuTituloMeDevuelveUno(){
-		//dado que existen peliculas
+
 		dadoQueHayPeliculasCargadas();
-		//cuando se busca la pelicula
+
 		List<Pelicula> peliculasList=cuandoConsultoPorLaPelicula("Back to the future");
-		//entonces se obtiene una pelicula
+
 		entoncesObtengoUnaPelicula(peliculasList, 1);
 	}
 	private void dadoQueHayPeliculasCargadas(){

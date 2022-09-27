@@ -42,31 +42,7 @@ public class ControladorPeliculaTest {
 
 
 	private ModelAndView mav = new ModelAndView();
-	
-	
 
-/***	@Test no sirve
-	public void queSePuedaBuscarUnaPelicula(){
-		
-    	whenSeBuscaUnaPelicula();
-    	
-    	thenSeVeLaPeliculaBuscada();
-	
-	}
-	
-	
-	private void whenSeBuscaUnaPelicula() {
-		mocksSessionRequests();
-		
-		mav = this.controladorPelicula.buscarPelicula(mockRequest);
-		
-	}
-	
-	private void thenSeVeLaPeliculaBuscada() {
-		assertThat(mav.getViewName()).isEqualTo("resultado-busqueda");
-		
-	}
-*/
 	@Test
 	public void queSePuedanVerLosDetallesDeUnaPelicula(){
 		
@@ -104,12 +80,8 @@ public class ControladorPeliculaTest {
 
 	@Test
 	public void alBuscarUnaPeliculaPorSuTituloMeDebeMostrarLaMisma(){
-
-	// dado que existe una pelicula
 		dadoQueExisteUnaPelicula();
-	// cuando busco una pelicula por su nombre
 		ModelAndView mav = cuandoBuscoUnaPeliculaPorSuNombre("Back to the future");
-	//entonces obtengo la vista
 		entoncesMeMuestraLaVista(mav, "pelicula-buscada");
 
 	}
@@ -118,48 +90,16 @@ public class ControladorPeliculaTest {
 	assertThat(mav.getViewName()).isEqualTo(vistaEsperada);
 	}
 
-	private void dadoQueExisteUnaPelicula(){
-
-         List<Pelicula> peliculas = new LinkedList<>();
-			Pelicula pelicula1 = new Pelicula();
-			pelicula1.setTitulo("Back to the future");
-			peliculas.add(pelicula1);
-
-		when(this.servicioPelicula.getPeliculas()).thenReturn(peliculas);
-
-	}
 	private ModelAndView cuandoBuscoUnaPeliculaPorSuNombre(String titulo){
 		return this.controladorPelicula.buscar(titulo, mockRequest);
 	}
+	private void dadoQueExisteUnaPelicula(){
+        List<Pelicula> peliculas = new LinkedList<>();
+		Pelicula pelicula1 = new Pelicula();
+		pelicula1.setTitulo("Back to the future");
+		peliculas.add(pelicula1);
 
-
-	/*****Para probar vista
-	@Test
-	public void queSePuedaObtenerUnaListaDePeliculasYVisualizarlas(){
-		dadoQueTenemosUnaListaDePeliculas( 5);
-		ModelAndView mav = cuandoAccedeALaPantallaDePeliculas();
-		entoncesMeMuestraLaVistaPeliculas(mav,"todas-peliculas");
-		entoncesObtengoUnaListaDePeliculas(mav, 5);
-	}
-
-	private void dadoQueTenemosUnaListaDePeliculas(int cantidad){
-		List<Pelicula> peliculas = new LinkedList<>();
-		for (int i = 0; i <cantidad ; i++) {
-			peliculas.add((new Pelicula()));
-		}
 		when(this.servicioPelicula.getPeliculas()).thenReturn(peliculas);
 	}
-	private ModelAndView cuandoAccedeALaPantallaDePeliculas(){
-		return this.controladorPelicula.visualizarPeliculas();
-	}
-	private void entoncesMeMuestraLaVistaPeliculas(ModelAndView mav, String vistaEsperada){
-		assertThat(mav.getViewName()).isEqualTo(vistaEsperada);
-	}
-	private void entoncesObtengoUnaListaDePeliculas(ModelAndView mav, int cantidad){
-		assertThat(mav.getModel().get("peliculas")).isNotNull();
-		assertThat(mav.getModel().get("peliculas")).isInstanceOf(List.class);
-		List<Pelicula> peliculaList = (List<Pelicula>) mav.getModel().get("peliculas");
-		assertThat(peliculaList).hasSize(cantidad);
-	}
-*/
+
 }
