@@ -29,4 +29,11 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
         .addEntity(Genero.class).list();
  
     }
+
+	@Override
+	public Genero getDescripcionById(Long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Genero)session.createSQLQuery("SELECT * from genero where id= :genero_id")
+				.addEntity(Genero.class).setString("genero_id",id.toString()).getResultList().get(0);
+	}
 }

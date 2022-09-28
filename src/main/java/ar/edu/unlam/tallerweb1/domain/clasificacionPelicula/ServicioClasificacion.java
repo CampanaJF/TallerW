@@ -6,6 +6,6 @@ public interface ServicioClasificacion {
 
 public List<ClasificacionPelicula> listarClasificacion();
 		
-	
+public String getDescripcionClasificacionById(Long id);
 
 }

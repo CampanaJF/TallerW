@@ -41,9 +41,6 @@ public class ControladorCartelera {
     public ModelAndView irACartelera(@RequestParam(value ="genero",required=false) Long genero,
     		@RequestParam(value ="clasificacion",required=false) Long clasificacion,
     		@RequestParam(value ="orden",required=false) String orden){
-		System.out.println(genero);
-		System.out.println(clasificacion);
-		System.out.println(orden);
 		
     ModelMap model=new ModelMap();
     Filtro filtro=new Filtro(genero,clasificacion,orden);
@@ -52,14 +49,15 @@ public class ControladorCartelera {
     List<Pelicula>peliculas=this.servicioPelicula.obtenerPeliculas(filtro);
     List<String>filtrosSeleccionados=new ArrayList<>();
     
-    if(genero!=null) filtrosSeleccionados.add(genero.toString());
-    if(clasificacion!=null)filtrosSeleccionados.add(clasificacion.toString());
-    if(orden!=null) filtrosSeleccionados.add(orden);
+    if(genero!=null) filtrosSeleccionados.add(this.servicioGenero.getDescripcionGeneroById(genero));
+    if(clasificacion!=null)filtrosSeleccionados.add(this.servicioClasificacion.getDescripcionClasificacionById(clasificacion));
+    if(orden!=null && orden!="") filtrosSeleccionados.add(orden);
    
     model.put("generos",listaGeneros);
     model.put("clasificaciones",listaClasificacion);
     model.put("peliculas",peliculas);
     model.put("filtrosSeleccionados", filtrosSeleccionados);
+
     
     return new ModelAndView("cartelera",model);
 }

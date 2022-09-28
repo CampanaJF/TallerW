@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RepositorioGenero {
     List<Genero> getGeneros();
+
+	Genero getDescripcionById(Long id);
 }

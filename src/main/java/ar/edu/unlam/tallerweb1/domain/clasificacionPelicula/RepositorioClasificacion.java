@@ -6,4 +6,6 @@ public interface RepositorioClasificacion {
 
 	public List<ClasificacionPelicula> getClasificaciones();
 	
+	ClasificacionPelicula getDescripcionById(Long id);
+	
 }

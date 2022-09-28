@@ -49,6 +49,7 @@ public class RepositorioPeliculaTest extends SpringTest {
 		
 	}
 
+	
 	private List<Pelicula> whenSeListanTodasLasPeliculas() {
 		return this.repositorioPelicula.getPeliculas();
 		

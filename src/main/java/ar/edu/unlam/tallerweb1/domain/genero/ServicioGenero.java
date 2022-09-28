@@ -5,4 +5,5 @@ import java.util.List;
 public interface ServicioGenero {
 
     List<Genero> listarGeneros();
+    String getDescripcionGeneroById(Long id);
 }

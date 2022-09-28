@@ -25,4 +25,10 @@ public class ServicioGeneroImpl implements ServicioGenero{
     public List<Genero> listarGeneros() {
         return repositorioGenero.getGeneros();
     }
+
+	@Override
+	public String getDescripcionGeneroById(Long id) {
+		Genero genero=repositorioGenero.getDescripcionById(id);
+		return genero.getDescripcion();
+	}
 }

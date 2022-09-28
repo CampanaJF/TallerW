@@ -86,7 +86,7 @@
 												<section
 													class="d-flex justify-content-space-around flex-wrap">
 
-													<c:forEach var="clasificacion" items="${calificaciones}">
+													<c:forEach var="clasificacion" items="${clasificaciones}">
 														<div class="mb-3">
 															<div class="chip"
 																onclick="seleccionarClasificacion(this)"
@@ -180,16 +180,16 @@
 								class="container d-flex justify-content-center flex-column pt-5 ">
 								<div class="col-lg-12">
 									<i class="bi bi-clock text-light"></i>
-									<p class="text-light ml-2">Duraci&oacute;n:${pelicula.getDuracion()}</p>
+									<p class="text-light ml-2">Duraci&oacute;n: ${pelicula.getDuracion()}</p>
 								</div>
 								<div class="col-lg-12">
 
 									<i class="bi bi-emoji-smile text-light"></i>
-									<p class="text-light">Clasificaci&oacute;n:${pelicula.getClasificacionPelicula().getDescripcion() }</p>
+									<p class="text-light">Clasificaci&oacute;n: ${pelicula.getClasificacionPelicula().getDescripcion() }</p>
 								</div>
 								<div class="col-lg-12 mb-3">
 									<i class="bi bi-film text-light"></i>
-									<p class="text-light">Genero:${pelicula.getGenero().getDescripcion() }</p>
+									<p class="text-light">Genero: ${pelicula.getGenero().getDescripcion() }</p>
 								</div>
 
 								<p class="text-light">Fecha De Estreno:${pelicula.getFechaEstreno() }</p>
