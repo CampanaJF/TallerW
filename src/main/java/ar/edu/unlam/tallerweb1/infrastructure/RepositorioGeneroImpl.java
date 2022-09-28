@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
+@Repository("repositorioGenero")
 @Transactional
 public class RepositorioGeneroImpl implements RepositorioGenero {
 
@@ -21,10 +21,12 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
+	@Override
     public List<Genero> getGeneros() {
 
         Session session = sessionFactory.getCurrentSession();
-        return (List<Genero>) session.createSQLQuery("SELECT * FROM genero").list();
+        return (List<Genero>) session.createSQLQuery("SELECT * FROM genero")
+        .addEntity(Genero.class).list();
+ 
     }
 }

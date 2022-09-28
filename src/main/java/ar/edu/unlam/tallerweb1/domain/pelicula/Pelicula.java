@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
-import ar.edu.unlam.tallerweb1.domain.calificacionPelicula.CalificacionPelicula;
+import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ClasificacionPelicula;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 
 import javax.persistence.Column;
@@ -35,7 +35,7 @@ import java.util.Date;
         private Integer duracion;
 
         @ManyToOne
-        private CalificacionPelicula calificacionPelicula;
+        private ClasificacionPelicula clasificacionPelicula;
 
         private Date fechaEstreno;
 
@@ -104,12 +104,12 @@ import java.util.Date;
             this.duracion = duracion;
         }
 
-        public CalificacionPelicula getCalificacionPelicula() {
-            return calificacionPelicula;
+        public ClasificacionPelicula getClasificacionPelicula() {
+            return clasificacionPelicula;
         }
 
-        public void setCalificacionPelicula(CalificacionPelicula calificacionPelicula) {
-            this.calificacionPelicula = calificacionPelicula;
+        public void setClasificacionPelicula(ClasificacionPelicula clasificacionPelicula) {
+            this.clasificacionPelicula = clasificacionPelicula;
         }
 
         public Date getFechaEstreno() {
