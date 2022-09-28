@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/cartelera.css">
     <link href="css/font.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
-   
+    <link rel="stylesheet" href="css/perfil-usuario.css">
     <!-- Favicon-->
     <link rel="icon" href="<c:url value="/icons/favicon.ico" />">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">

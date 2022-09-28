@@ -61,4 +61,45 @@ public class RepositorioPeliculaTest extends SpringTest {
 		return pelicula;
 	}
 
+	@Test
+	@Transactional
+	@Rollback
+	public void alBuscarUnaPeliculaPorSuTituloMeDevuelveUno(){
+
+		dadoQueHayPeliculasCargadas();
+
+		List<Pelicula> peliculasList=cuandoConsultoPorLaPelicula("Back to the future");
+
+		entoncesObtengoUnaPelicula(peliculasList, 1);
+	}
+	private void dadoQueHayPeliculasCargadas(){
+		Pelicula pelicula1 = new Pelicula();
+		pelicula1.setTitulo("Back to the future");
+        this.session().save(pelicula1);
+
+		Pelicula pelicula2 = new Pelicula();
+		pelicula2.setTitulo("Indiana Jones: Raiders of the Lost Ark");
+		this.session().save(pelicula2);
+	}
+	private List<Pelicula> cuandoConsultoPorLaPelicula(String titulo){
+		return this.repositorioPelicula.buscarPeliculas(titulo);
+	}
+    private void entoncesObtengoUnaPelicula(List<Pelicula> peliculas, int cantidadEsperada){
+		assertThat(peliculas).hasSize(cantidadEsperada);
+	}
+	@Test
+	@Transactional
+	@Rollback
+	public void alBuscarUnaPeliculaQueNoEstaCargadaMeDevuelveCero(){
+		//dado que hay peliculas cargadas
+		dadoQueHayPeliculasCargadas();
+		//cuando consulto por la pelicula
+		List<Pelicula> peliculas= cuandoConsultoPorLaPelicula("Avatar");
+		//entonces obtengo 0 porque no existe
+		entoncesMeDevuelveCeroPeliculas(peliculas,0);
+	}
+
+	private void entoncesMeDevuelveCeroPeliculas(List<Pelicula> peliculas, int cantidadEsperada){
+		assertThat(peliculas).hasSize(cantidadEsperada);
+	}
 }
