@@ -13,13 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+//import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations= "classpath:applicationContext.xml")
 public class ControladorUsuarioTest {
 
