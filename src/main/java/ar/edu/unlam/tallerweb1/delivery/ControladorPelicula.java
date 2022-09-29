@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
-import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -58,24 +55,11 @@ public class ControladorPelicula {
     @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value="titulo")String titulo, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
-
 		Long userId = this.servicioSession.getUserId(request);
-		model.put("usuario",userId);
-
 		List<Pelicula> peliculaList = this.servicioPelicula.buscarPeliculas(titulo);
 
+		model.put("usuario",userId);
 		model.put("peliculas", peliculaList);
-
 		return new ModelAndView("pelicula-buscada",model);
 	}
-
-    /**
-    @RequestMapping(path = "/todas-las-peliculas", method = RequestMethod.GET)
-	public ModelAndView visualizarPeliculas() {
-		ModelMap model = new ModelMap();
-		List<Pelicula> peliculaList=this.servicioPelicula.getPeliculas();
-		model.put("peliculas",peliculaList);
-		return new ModelAndView("todas-peliculas",model);
-	}
-	*/
 }
