@@ -29,11 +29,11 @@ import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 
 
-@RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(locations= "classpath:applicationContext.xml")
+
 public class ControladorPeliculaTest {
 
 	private final ServicioSession servicioSession = mock(ServicioSession.class);
+
 	private final ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
 	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession,servicioPelicula);
 
