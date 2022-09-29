@@ -168,7 +168,7 @@
 			
 													
 			<c:forEach var="pelicula" items="${peliculas}">
-			<article class="col-lg-4 col-xl-3 mt-4 ">
+			<article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
 				<div class="contenedor-carta">
 					<div class="carta">
 						<div class="carta-delantera bg-dark">
