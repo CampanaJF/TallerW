@@ -18,7 +18,8 @@ public class RepositorioPeliculaTest extends SpringTest {
 	
 	@Autowired
 	private RepositorioPelicula repositorioPelicula;
-	
+	public static final String PELICULA_TITULO ="Back to the future";
+	public static final String PELICULA_TITULO2 ="Indiana Jones: Raiders of the Lost Ark";
 	@Test
     @Transactional
     @Rollback
@@ -66,25 +67,25 @@ public class RepositorioPeliculaTest extends SpringTest {
 	@Rollback
 	public void alBuscarUnaPeliculaPorSuTituloMeDevuelveUno(){
 
-		dadoQueHayPeliculasCargadas();
+		givenQueHayPeliculasCargadas();
 
-		List<Pelicula> peliculasList=cuandoConsultoPorLaPelicula("Back to the future");
+		List<Pelicula> peliculasList=whenConsultoPorLaPelicula(PELICULA_TITULO);
 
-		entoncesObtengoUnaPelicula(peliculasList, 1);
+		thenObtengoUnaCantidadPeliculas(peliculasList, 1);
 	}
-	private void dadoQueHayPeliculasCargadas(){
+	private void givenQueHayPeliculasCargadas(){
 		Pelicula pelicula1 = new Pelicula();
-		pelicula1.setTitulo("Back to the future");
+		pelicula1.setTitulo(PELICULA_TITULO);
         this.session().save(pelicula1);
 
 		Pelicula pelicula2 = new Pelicula();
-		pelicula2.setTitulo("Indiana Jones: Raiders of the Lost Ark");
+		pelicula2.setTitulo(PELICULA_TITULO2);
 		this.session().save(pelicula2);
 	}
-	private List<Pelicula> cuandoConsultoPorLaPelicula(String titulo){
+	private List<Pelicula> whenConsultoPorLaPelicula(String titulo){
 		return this.repositorioPelicula.buscarPeliculas(titulo);
 	}
-    private void entoncesObtengoUnaPelicula(List<Pelicula> peliculas, int cantidadEsperada){
+    private void thenObtengoUnaCantidadPeliculas(List<Pelicula> peliculas, int cantidadEsperada){
 		assertThat(peliculas).hasSize(cantidadEsperada);
 	}
 	@Test
@@ -92,14 +93,11 @@ public class RepositorioPeliculaTest extends SpringTest {
 	@Rollback
 	public void alBuscarUnaPeliculaQueNoEstaCargadaMeDevuelveCero(){
 		//dado que hay peliculas cargadas
-		dadoQueHayPeliculasCargadas();
+		givenQueHayPeliculasCargadas();
 		//cuando consulto por la pelicula
-		List<Pelicula> peliculas= cuandoConsultoPorLaPelicula("Avatar");
+		List<Pelicula> peliculas= whenConsultoPorLaPelicula("Avatar");
 		//entonces obtengo 0 porque no existe
-		entoncesMeDevuelveCeroPeliculas(peliculas,0);
+		thenObtengoUnaCantidadPeliculas(peliculas,0);
 	}
 
-	private void entoncesMeDevuelveCeroPeliculas(List<Pelicula> peliculas, int cantidadEsperada){
-		assertThat(peliculas).hasSize(cantidadEsperada);
-	}
 }
