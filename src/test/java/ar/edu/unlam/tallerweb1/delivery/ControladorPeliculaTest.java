@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+//import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,8 +21,8 @@ import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 
 
-@RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(locations= "classpath:applicationContext.xml")
+//@RunWith(MockitoJUnitRunner.class)
+//@ContextConfiguration(locations= "classpath:applicationContext.xml")
 public class ControladorPeliculaTest {
 
 	private final ServicioSession servicioSession = mock(ServicioSession.class);
