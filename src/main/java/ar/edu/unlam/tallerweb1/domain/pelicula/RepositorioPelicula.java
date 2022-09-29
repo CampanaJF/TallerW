@@ -8,4 +8,5 @@ public interface RepositorioPelicula {
 
 	List<Pelicula> getPeliculas(Filtro filtro);
 
+    List<Pelicula> buscarPeliculas(String titulo);
 }

@@ -12,7 +12,13 @@
 <body class="bgColor">
 
 	<%@include file="header.jsp"%>
-
+	
+	<c:if test="${not empty error}">
+			<div class="p-1 alertbg">
+				<h5 class="text-center text-white">${error}</h5> 	
+			</div>
+	 	</c:if>
+	
 	<div class="container-md pt-2 pb-2">
 		<div class="row">
 
@@ -28,19 +34,29 @@
 				<h4>Steven Spielberg</h4>
 				<h5 class="pb-3">Michael J. Fox - Christopher Lloyd</h5>
 				
-				<a href="comprar-entrada" type="button" class="btn-lg btn buttonA">Comprar Entradas</a>
+				
+				<form:form action="entrada-compra" modelAttribute="datosEntrada" method="POST">
+					
+				<form:select class="form-select" path="funcion.id" >
+							  
+				 <c:forEach items="${funciones}" var="funcion">
+				  
+				  <form:option value="${funcion.id}" label="${funcion.horario}"/>
+				  
+				 </c:forEach>
+				 
+				</form:select>
+				
+				
+				<form:hidden path="usuario.id" value="${usuarioModel.id}" />
+				
+				
+				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
+				
+				</form:form> 
 				
 			</div>
-			<div class="text-light">
-				<h2>Comentarios</h2>
-				<form method="post" action="">
-					<hr>
-					Comentar:<br>
-					<input type="hidden" name="id" value="idUser">
-					<textarea name="comment_content" rows="2" cols="44" placeholder="Escriba un comentario..." required></textarea><br>
-					<input type="submit" name="comment" value="Comentar">
-				</form>
-			</div>
+
 		</div>
 
 	</div>
