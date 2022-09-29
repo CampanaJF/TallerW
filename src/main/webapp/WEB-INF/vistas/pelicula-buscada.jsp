@@ -36,7 +36,7 @@
 
 <c:if test="${empty peliculas}">
     <div class="body-perfil">
-        <h3 class="text-center text-white mt-3">Lo sentimos, la pelicula no se encuentra disponible. </h3>
+        <h3 class="text-center text-white mt-3">Lo sentimos, la pelicula buscada no se encuentra disponible</h3>
     </div>
 </c:if>
 

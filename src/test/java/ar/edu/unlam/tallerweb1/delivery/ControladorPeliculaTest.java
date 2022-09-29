@@ -1,16 +1,12 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,9 +16,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
@@ -39,7 +33,7 @@ public class ControladorPeliculaTest {
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
-
+    public static final String PELICULA_TITULO ="Back to the future";
 
 	private ModelAndView mav = new ModelAndView();
 
@@ -79,27 +73,35 @@ public class ControladorPeliculaTest {
 
 
 	@Test
-	public void alBuscarUnaPeliculaPorSuTituloMeDebeMostrarLaMisma(){
-		dadoQueExisteUnaPelicula();
-		ModelAndView mav = cuandoBuscoUnaPeliculaPorSuNombre("Back to the future");
-		entoncesMeMuestraLaVista(mav, "pelicula-buscada");
-
+	public void queSePuedaRealizarUnaBusquedaDePeliculasExitosamente(){
+		givenQueLaPeliculaExiste();
+		ModelAndView mav =whenBuscoPelicula();
+		thenEncuentroPeliculas(mav);
+	}
+	private void givenQueLaPeliculaExiste(){
+		List<Pelicula> peliculaList = new LinkedList<>();
+		when(this.servicioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(peliculaList);
+	}
+	private ModelAndView whenBuscoPelicula() {
+		return this.controladorPelicula.buscar(PELICULA_TITULO, mockRequest);
+	}
+	private void thenEncuentroPeliculas(ModelAndView mav){
+		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
 	}
 
-	private void entoncesMeMuestraLaVista(ModelAndView mav, String vistaEsperada) {
-	assertThat(mav.getViewName()).isEqualTo(vistaEsperada);
+	@Test
+	public void queAlRealizarUnaBusquedaDePeliculaNoSeEncuetreDisponible(){
+		givenQueLaPeliculaNoExiste();
+		ModelAndView mav = whenBuscoPelicula();
+		thenNoEncuentroPeliculas(mav);
 	}
 
-	private ModelAndView cuandoBuscoUnaPeliculaPorSuNombre(String titulo){
-		return this.controladorPelicula.buscar(titulo, mockRequest);
+	private void givenQueLaPeliculaNoExiste(){
+		when(servicioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(null);
 	}
-	private void dadoQueExisteUnaPelicula(){
-        List<Pelicula> peliculas = new LinkedList<>();
-		Pelicula pelicula1 = new Pelicula();
-		pelicula1.setTitulo("Back to the future");
-		peliculas.add(pelicula1);
+	private void thenNoEncuentroPeliculas(ModelAndView mav){
+		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
+	}
 
-		when(this.servicioPelicula.getPeliculas()).thenReturn(peliculas);
-	}
 
 }

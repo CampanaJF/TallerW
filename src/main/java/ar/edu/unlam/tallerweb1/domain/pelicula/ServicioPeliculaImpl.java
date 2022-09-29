@@ -7,7 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
+
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+
 
 @Service
 @Transactional
@@ -30,8 +34,9 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
     }
 
     @Override
-    public List<Pelicula> buscarPeliculas(String titulo) {
-        return this.repositorioPelicula.buscarPeliculas(titulo);
+    public List<Pelicula> buscarPeliculas(String titulo){
+
+       return this.repositorioPelicula.buscarPeliculas(titulo);
     }
 	
 }

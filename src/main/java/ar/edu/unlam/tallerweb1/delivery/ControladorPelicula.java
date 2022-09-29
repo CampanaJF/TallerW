@@ -54,24 +54,11 @@ public class ControladorPelicula {
     @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value="titulo")String titulo, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
-
 		Long userId = this.servicioSession.getUserId(request);
-		model.put("usuario",userId);
-
 		List<Pelicula> peliculaList = this.servicioPelicula.buscarPeliculas(titulo);
 
+		model.put("usuario",userId);
 		model.put("peliculas", peliculaList);
-
 		return new ModelAndView("pelicula-buscada",model);
 	}
-
-    /**
-    @RequestMapping(path = "/todas-las-peliculas", method = RequestMethod.GET)
-	public ModelAndView visualizarPeliculas() {
-		ModelMap model = new ModelMap();
-		List<Pelicula> peliculaList=this.servicioPelicula.getPeliculas();
-		model.put("peliculas",peliculaList);
-		return new ModelAndView("todas-peliculas",model);
-	}
-	*/
 }

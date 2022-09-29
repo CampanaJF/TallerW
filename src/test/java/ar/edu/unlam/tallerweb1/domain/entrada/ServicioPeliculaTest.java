@@ -4,7 +4,9 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
+
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioPeliculaImpl;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +25,14 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 public class ServicioPeliculaTest {
 
+
+    public static final String PELICULA_TITULO ="Back to the future";
+
 	@Inject
 	private ServicioPelicula servicioPelicula;
 	@Autowired
 	private RepositorioPelicula repositorioPelicula;
+
 
     @Before
     public void init(){
@@ -56,30 +62,45 @@ public class ServicioPeliculaTest {
  @Test
     public void queSePuedaBuscarUnaPeliculaPorSuTitulo(){
         //dadp que existen peliculas
-        dadoQueExistenPeliculas();
+        givenQueExistenPeliculas();
         //cuando consulta por la peli
-        List<Pelicula> peliculas=cuandoConsultoPorLaPelicula("Back to the future");
+        List<Pelicula> peliculas=whenConsultoPorLaPelicula();
         //me devuelve uno
-        entoncesSeBuscoLaPelicula("Back to the future");
+        thenSeEncontroLaPelicula(peliculas);
     }
-    private void dadoQueExistenPeliculas(){
-        Pelicula pelicula1 = new Pelicula();
-        pelicula1.setTitulo("Back to the future");
-
-        Pelicula pelicula2 = new Pelicula();
-        pelicula2.setTitulo("Indiana Jones: Raiders of the Lost Ark");
-
+    private void givenQueExistenPeliculas(){
         List<Pelicula> peliculaList = new LinkedList<>();
+
+        Pelicula pelicula1 = new Pelicula();
+        pelicula1.setTitulo(PELICULA_TITULO);
+
         peliculaList.add(pelicula1);
-        peliculaList.add(pelicula2);
 
-        when(this.repositorioPelicula.getPeliculas()).thenReturn(peliculaList);
+        when(this.repositorioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(peliculaList);
     }
-    private List<Pelicula> cuandoConsultoPorLaPelicula(String titulo){
-        return this.servicioPelicula.buscarPeliculas(titulo);
+    private List<Pelicula> whenConsultoPorLaPelicula(){
+        return this.servicioPelicula.buscarPeliculas(PELICULA_TITULO);
     }
-    private  void entoncesSeBuscoLaPelicula(String titulo){
-        verify(repositorioPelicula,times(1)).buscarPeliculas(titulo);
+    private  void thenSeEncontroLaPelicula(List<Pelicula> peliculaList){
+        assertThat(peliculaList).isNotNull();
+        verify(repositorioPelicula,times(1)).buscarPeliculas(PELICULA_TITULO);
     }
-
+    @Test
+    public void alRealizarUnaBusquedaNoEncuentroLaPelicula(){
+        //dado que la peli no existe
+        givenNoExisteLaPelicula();
+        //when busco la peli
+        List<Pelicula> peliculaList= whenBuscoLaPelicula ();
+        //then no la encuentro
+        thenNoEncuentroPeliculas(peliculaList);
+    }
+    private void givenNoExisteLaPelicula(){
+        when(this.repositorioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(null);
+    }
+    private List<Pelicula> whenBuscoLaPelicula (){
+        return servicioPelicula.buscarPeliculas(PELICULA_TITULO);
+    }
+    private void thenNoEncuentroPeliculas(List<Pelicula>peliculas){
+       assertThat(peliculas).isNull();
+    }
 }
