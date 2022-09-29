@@ -10,8 +10,8 @@
 		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
 		<property name="url" value="jdbc:hsqldb:mem:db_" />
-		<property name="username" value="root" />
-		<property name="password" value="2203yba" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
 	</bean>
 
 	<!--Configuracion de la factory encargada de generar las sesiones con la base de datos, la misma -->

@@ -62,14 +62,4 @@ public class ControladorPelicula {
 		model.put("peliculas", peliculaList);
 		return new ModelAndView("pelicula-buscada",model);
 	}
-
-    /**
-    @RequestMapping(path = "/todas-las-peliculas", method = RequestMethod.GET)
-	public ModelAndView visualizarPeliculas() {
-		ModelMap model = new ModelMap();
-		List<Pelicula> peliculaList=this.servicioPelicula.getPeliculas();
-		model.put("peliculas",peliculaList);
-		return new ModelAndView("todas-peliculas",model);
-	}
-	*/
 }
