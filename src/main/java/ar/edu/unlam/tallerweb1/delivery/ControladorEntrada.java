@@ -55,11 +55,11 @@ public class ControladorEntrada {
 		Long sess = servicioSession.getUserId(request);
 		ModelMap model = new ModelMap();
 		
-		List<CinePelicula> cines = this.servicioCine.getCines(1L);
+		List<CinePelicula> cines = this.servicioCine.getCines(2L);
 		
 		model.put("usuario", sess);
 		model.put("cines", cines);
-		model.put("pelicula",1L);
+		model.put("pelicula",2L);
 		
 		model.addAttribute("datosCine", new DatosCine());
 		

@@ -5,25 +5,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.domain.genero.Genero;
+import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 
 public class RepositorioPeliculaTest extends SpringTest {
 	
-	@Autowired
+	@Inject
 	private RepositorioPelicula repositorioPelicula;
 	
 	@Test
     @Transactional
     @Rollback
 	public void queSeListenTodasLasPeliculas() {
-		
+	
 		Pelicula P1 = givenPelicula("1");
 		Pelicula P2 = givenPelicula("2");
 		Pelicula P3 = givenPelicula("3");
@@ -49,11 +52,14 @@ public class RepositorioPeliculaTest extends SpringTest {
 		
 	}
 
+	
 	private List<Pelicula> whenSeListanTodasLasPeliculas() {
-		return this.repositorioPelicula.getPeliculas();
+		Filtro filtro=new Filtro(null,null,null);
+		return this.repositorioPelicula.getPeliculasFiltro(filtro);
 		
 	}
-
+	
+	
 	private Pelicula givenPelicula(String titulo) {
 		Pelicula pelicula = new Pelicula();
 		pelicula.setId(new Random().nextLong());
