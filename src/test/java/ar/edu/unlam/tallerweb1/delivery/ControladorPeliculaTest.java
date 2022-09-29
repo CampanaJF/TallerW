@@ -72,28 +72,6 @@ public class ControladorPeliculaTest {
 	 }
 
 
-/*	@Test
-	public void alBuscarUnaPeliculaPorSuTituloLaEncuentro(){
-		dadoQueExisteUnaPelicula();
-		ModelAndView mav = cuandoBuscoUnaPeliculaPorSuNombre("Back to the future");
-		entoncesMeMuestraLaVista(mav, "pelicula-buscada");
-
-	}
-
-	private void entoncesMeMuestraLaVista(ModelAndView mav, String vistaEsperada) {
-	assertThat(mav.getViewName()).isEqualTo(vistaEsperada);
-	}
-
-	private ModelAndView cuandoBuscoUnaPeliculaPorSuNombre(String titulo){
-		return this.controladorPelicula.buscar(titulo, mockRequest);
-	}
-	private void dadoQueExisteUnaPelicula(){
-        List<Pelicula> peliculas = new LinkedList<>();
-		Pelicula pelicula1 = new Pelicula();
-		pelicula1.setTitulo("Back to the future");
-		peliculas.add(pelicula1);
-		when(this.servicioPelicula.getPeliculas()).thenReturn(peliculas);
-	}*/
 	@Test
 	public void queSePuedaRealizarUnaBusquedaDePeliculasExitosamente(){
 		givenQueLaPeliculaExiste();
