@@ -44,7 +44,7 @@ public class ServicioPeliculaTest {
     	List<Pelicula>peliculas=new ArrayList<>();
     	Pelicula pelicula=new Pelicula();
     	peliculas.add(pelicula);
-    	when(repoPelicula.getPeliculas(filtro)).thenReturn(peliculas);
+    	when(repoPelicula.getPeliculasFiltro(filtro)).thenReturn(peliculas);
     	servicioPelicula=new ServicioPeliculaImpl(repoPelicula);
     	
     	//Ejecucion

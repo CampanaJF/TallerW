@@ -28,7 +28,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	}
 
 	@Override
-	public List<Pelicula> getPeliculas(Filtro filtro) {
+	public List<Pelicula> getPeliculasFiltro(Filtro filtro) {
 		final Session session = sessionFactory.getCurrentSession();
 		String queryString="SELECT * from pelicula";
 		
@@ -65,6 +65,12 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public List<Pelicula> buscarPeliculas(String titulo) {
 		final Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Pelicula.class).add(Restrictions.ilike("titulo",titulo, MatchMode.ANYWHERE)).list();
+	}
+	
+	@Override
+	public List<Pelicula> getPeliculas() {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class).list();
 	}
 
 }

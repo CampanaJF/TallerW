@@ -1,12 +1,10 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
-import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,8 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 

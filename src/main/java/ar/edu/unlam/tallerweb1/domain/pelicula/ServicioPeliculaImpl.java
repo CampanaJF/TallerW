@@ -22,9 +22,9 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	@Override
 	public List<Pelicula> obtenerPeliculas(Filtro filtro) {
 	
-		return repositorioPelicula.getPeliculas(filtro);
+		return repositorioPelicula.getPeliculasFiltro(filtro);
 	}
-@Override
+	@Override
     public List<Pelicula> getPeliculas() {
         return this.repositorioPelicula.getPeliculas();
     }

@@ -55,7 +55,7 @@ public class RepositorioPeliculaTest extends SpringTest {
 	
 	private List<Pelicula> whenSeListanTodasLasPeliculas() {
 		Filtro filtro=new Filtro(null,null,null);
-		return this.repositorioPelicula.getPeliculas(filtro);
+		return this.repositorioPelicula.getPeliculasFiltro(filtro);
 		
 	}
 	
