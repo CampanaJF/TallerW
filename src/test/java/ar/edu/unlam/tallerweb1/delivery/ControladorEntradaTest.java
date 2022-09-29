@@ -209,7 +209,7 @@ public class ControladorEntradaTest {
 
 	private void thenSePuedeElegirElCine(List<CinePelicula> cines) {
 		assertThat(mav.getViewName()).isEqualTo("entrada-pelicula");
-		 assertThat(mav.getModel().get("cines")).isEqualTo(cines);
+
 
 	}
 	
