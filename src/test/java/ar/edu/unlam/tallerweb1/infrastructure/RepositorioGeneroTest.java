@@ -4,15 +4,19 @@ import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RepositorioGeneroTest extends SpringTest {
-    private RepositorioGenero repositorioGenero;
+    @Autowired
+	private RepositorioGenero repositorioGenero;
 
     @Test
+    @Transactional
     public void testQueSeDevuelvaListaDeGeneros(){
         dadoQueTenemosGenerosGuardadosEnBaseDeDatos();
         List<Genero> listaGeneros = cuandoConsultoLosGeneros();
