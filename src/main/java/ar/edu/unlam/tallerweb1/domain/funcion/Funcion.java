@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
+import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 
@@ -104,5 +104,8 @@ public class Funcion {
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
+
+	
+	
 
 }

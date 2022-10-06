@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
+import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
@@ -229,11 +230,10 @@ public class ControladorEntradaTest {
 		return pelicula;
 	}
 	
-	private Funcion givenFuncion(Cine cine,Pelicula pelicula) {
+	private Funcion givenFuncion(Sala sala,Pelicula pelicula) {
 		Funcion funcion = new Funcion();
-		funcion.setCine(cine);
+		funcion.setSala(sala);
 		funcion.setPelicula(pelicula);
-		funcion.setHorario(new Random().nextInt());
 		funcion.setId(new Random().nextLong());
 		
 		return funcion;

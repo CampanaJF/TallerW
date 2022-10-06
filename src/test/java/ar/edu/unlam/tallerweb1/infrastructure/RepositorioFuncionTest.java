@@ -38,34 +38,34 @@ public class RepositorioFuncionTest extends SpringTest{
 		 Cine cineDos = givenCine("cineDos");
 		 Sala salaUno = givenSala(cineUno,"salaUno");
 		 Sala salaDos = givenSala(cineDos,"salaDos");
-		 Funcion F1 = givenFuncion(salaUno,horario);
-		 Funcion F2 = givenFuncion(salaDos,horario);
-		 Pelicula P1 = givenPelicula("Indiana Jones");
-		 Pelicula P2 = givenPelicula("Back to the Future");
-		 F1.setPelicula(P1);
-		 F2.setPelicula(P2);
+		 Funcion funcion1 = givenFuncion(salaUno,horario);
+		 Funcion funcion2 = givenFuncion(salaDos,horario);
+		 Pelicula pelicula1 = givenPelicula("Indiana Jones");
+		 Pelicula pelicula2 = givenPelicula("Back to the Future");
+		 funcion1.setPelicula(pelicula1);
+		 funcion2.setPelicula(pelicula2);
 		 
 		 
 		 session().save(cineUno);
 	     session().save(cineDos);
 	     session().save(salaUno);
 	     session().save(salaDos);
-	     session().save(P1);
-	     session().save(P2);
-	     session().save(F1);
-	     session().save(F2);
+	     session().save(pelicula1);
+	     session().save(pelicula2);
+	     session().save(funcion1);
+	     session().save(funcion2);
 
 	     
 	      
-	     List<Funcion> funciones = whenSeListanTodasLasFuncionesDeEsaPelicula(salaUno.getId(),P1.getId());
+	     List<Funcion> funciones = whenSeListanTodasLasFuncionesDeEsaPelicula(cineUno.getId(),pelicula1.getId());
 	     
 	     thenSeListanTodasLasFunciones(funciones);
 	
 	 }
 	 
-	 private List<Funcion> whenSeListanTodasLasFuncionesDeEsaPelicula(Long sala,Long pelicula) {
+	 private List<Funcion> whenSeListanTodasLasFuncionesDeEsaPelicula(Long cine,Long pelicula) {
 
-		return this.repositorioFuncion.getFuncionesDeUnCine(sala,pelicula);
+		return this.repositorioFuncion.getFuncionesDeUnCine(cine,pelicula);
 	}
 
 	private void thenSeListanTodasLasFunciones(List<Funcion> funciones) {
