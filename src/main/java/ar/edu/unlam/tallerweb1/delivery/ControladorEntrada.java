@@ -70,22 +70,24 @@ public class ControladorEntrada {
 	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos,
 									   	   HttpServletRequest request) {
 		
-		Long sess = this.servicioSession.getUserId(request);
-		
-		Usuario usuarioModel = this.servicioUsuario.getUsuario(sess);
-				
-		List <Funcion> funciones= this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
-		
+	
 		ModelMap model = new ModelMap();
 		
-		model.put("usuarioModel", usuarioModel);
-		model.put("usuario", sess);
-		model.put("funciones", funciones);
+		model.put("usuario", obtenerUsuarioLogueado(request));
+		model.put("funciones", obtenerFuncionesPor(datos));
 		
 		model.addAttribute("datosEntrada", new DatosEntrada());
 		
 		
 		return new ModelAndView("entrada-preparacion",model);
+	}
+
+	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
+		return this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
+	}
+
+	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
+		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 	}
 	
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
@@ -104,6 +106,22 @@ public class ControladorEntrada {
 		model.put("entrada", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
+		return new ModelAndView("entrada",model);
+	}
+	
+	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
+	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request) {
+		
+		ModelMap model = new ModelMap();
+		
+		Long sess = this.servicioSession.getUserId(request);
+		
+		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
+
+	
+		model.put("usuario", sess);
+		model.put("entrada", entradaEncontrada);
+
 		return new ModelAndView("entrada",model);
 	}
 	
@@ -130,22 +148,6 @@ public class ControladorEntrada {
 
 		
 		return new ModelAndView("mis-entradas",model);
-	}
-	
-	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
-	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request) {
-		
-		ModelMap model = new ModelMap();
-		
-		Long sess = this.servicioSession.getUserId(request);
-		
-		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
-
-	
-		model.put("usuario", sess);
-		model.put("entrada", entradaEncontrada);
-
-		return new ModelAndView("entrada",model);
 	}
 	
 //	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)

@@ -12,7 +12,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
@@ -23,6 +22,7 @@ public class RepositorioPeliculaTest extends SpringTest {
 	private RepositorioPelicula repositorioPelicula;
 	public static final String PELICULA_TITULO ="Back to the future";
 	public static final String PELICULA_TITULO2 ="Indiana Jones: Raiders of the Lost Ark";
+	
 	@Test
     @Transactional
     @Rollback
@@ -79,6 +79,7 @@ public class RepositorioPeliculaTest extends SpringTest {
 
 		thenObtengoUnaCantidadPeliculas(peliculasList, 1);
 	}
+	
 	private void givenQueHayPeliculasCargadas(){
 		Pelicula pelicula1 = new Pelicula();
 		pelicula1.setTitulo(PELICULA_TITULO);
@@ -88,12 +89,15 @@ public class RepositorioPeliculaTest extends SpringTest {
 		pelicula2.setTitulo(PELICULA_TITULO2);
 		this.session().save(pelicula2);
 	}
+	
 	private List<Pelicula> whenConsultoPorLaPelicula(String titulo){
 		return this.repositorioPelicula.buscarPeliculas(titulo);
 	}
+	
     private void thenObtengoUnaCantidadPeliculas(List<Pelicula> peliculas, int cantidadEsperada){
 		assertThat(peliculas).hasSize(cantidadEsperada);
 	}
+    
 	@Test
 	@Transactional
 	@Rollback

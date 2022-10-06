@@ -79,7 +79,7 @@ public class ServicioEntradaTest {
 	}
 
 	private void thenSeCompraronLasEntradas(Entrada e1, Entrada e2, Entrada e3) {
-		assertThat(e1.getFuncion().getCine().getNombre()).isEqualTo("CINE 5");
+		assertThat(e1.getFuncion().getCine().getNombreCine()).isEqualTo("CINE 5");
 		assertThat(e2.getUsuario().getNombre()).isEqualTo("A");
 		assertThat(e3.getUsuario().getNombre()).isEqualTo("B");
 
@@ -122,7 +122,7 @@ public class ServicioEntradaTest {
 
 	private Cine givenCine(String nombreCine) {
 		Cine cine = new Cine();
-		cine.setNombre(nombreCine);
+		cine.setNombreCine(nombreCine);
 		return cine;
 	}
 

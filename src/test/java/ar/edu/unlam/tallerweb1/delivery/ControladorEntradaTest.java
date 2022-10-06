@@ -49,35 +49,6 @@ public class ControladorEntradaTest {
 	
 	private ModelAndView mav = new ModelAndView();
 	
-//	@Test
-//	public void queSeCompreLaEntrada() {
-//		
-//		Usuario U1 = givenUsuario(1L,"Nombre");
-//		Funcion F1 = new Funcion();
-//		F1.setId(1L);
-//		Entrada entrada = givenEntrada(U1,F1);
-//		
-//		
-//		whenSeCompraUnaEntrada(entrada);
-//		
-//		thenSeComproLaEntrada(entrada);
-//	}
-//	
-//	private void whenSeCompraUnaEntrada(Entrada entrada) {
-//		mocksSessionRequests();
-//		
-//		when(servicioEntrada.getEntrada(entrada.getUsuario().getId(),entrada.getFuncion().getId())).thenReturn(entrada);
-//		mav = this.controladorEntrada.comprarEntrada(entrada,mockRequest);
-//		
-//		
-//		
-//	}
-//
-//	private void thenSeComproLaEntrada(Entrada entrada) {
-//		assertThat(mav.getViewName()).isEqualTo("entrada");
-//
-//		
-//	}
 	
 	@Test
 	public void queSeHayaCompradoLaEntradaExitosamente() {
@@ -91,7 +62,7 @@ public class ControladorEntradaTest {
 		
 		Entrada entrada = givenEntrada(usuario,funcion);
 		
-		whenSeSeleccionaLaFuncionDeseada(funcion,usuario,entrada,DE);
+		whenSeSeleccionaLaFuncionDeseada(funcion,entrada,DE);
 		
 		thenSeCompraLaEntradaParaEsaFuncion();
 			
@@ -104,7 +75,7 @@ public class ControladorEntradaTest {
 		
 	}
 
-	private void whenSeSeleccionaLaFuncionDeseada(Funcion funcion, Usuario usuario, Entrada entrada,DatosEntrada DE) {
+	private void whenSeSeleccionaLaFuncionDeseada(Funcion funcion, Entrada entrada,DatosEntrada DE) {
 		mocksSessionRequests();
 		
 		when(this.servicioEntrada.comprarEntrada(DE)).thenReturn(entrada);
@@ -229,7 +200,7 @@ public class ControladorEntradaTest {
 	private Cine givenCine(String string) {
 		Cine cine = new Cine();
 		cine.setId(new Random().nextLong());
-		cine.setNombre(string);
+		cine.setNombreCine(string);
 		
 		return cine;
 	}
