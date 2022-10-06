@@ -2,8 +2,8 @@ package ar.edu.unlam.tallerweb1.domain.cine;
 
 import java.util.List;
 
-public interface RepositorioCine {
-
+public interface ServicioCine {
+	
 	List<Cine> getCines();
 
 	List<CinePelicula> getCines(Long pelicula);

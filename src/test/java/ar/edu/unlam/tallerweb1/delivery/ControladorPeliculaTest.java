@@ -1,19 +1,21 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-//import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,43 +23,19 @@ import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 
 
-//@RunWith(MockitoJUnitRunner.class)
-//@ContextConfiguration(locations= "classpath:applicationContext.xml")
+
 public class ControladorPeliculaTest {
 
 	private final ServicioSession servicioSession = mock(ServicioSession.class);
-	
-	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession);
+
+	private final ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
+	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession,servicioPelicula);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
+    public static final String PELICULA_TITULO ="Back to the future";
 
-	
 	private ModelAndView mav = new ModelAndView();
-	
-	
-
-	@Test
-	public void queSePuedaBuscarUnaPelicula(){
-		
-    	whenSeBuscaUnaPelicula();
-    	
-    	thenSeVeLaPeliculaBuscada();
-	
-	}
-	
-	
-	private void whenSeBuscaUnaPelicula() {
-		mocksSessionRequests();
-		
-		mav = this.controladorPelicula.buscarPelicula(mockRequest);
-		
-	}
-	
-	private void thenSeVeLaPeliculaBuscada() {
-		assertThat(mav.getViewName()).isEqualTo("resultado-busqueda");
-		
-	}
 
 	@Test
 	public void queSePuedanVerLosDetallesDeUnaPelicula(){
@@ -92,8 +70,38 @@ public class ControladorPeliculaTest {
 	    when(mockRequest.getSession().getAttribute("ID")).thenReturn(1L);
 
 	 }
-	
-	
+
+
+	@Test
+	public void queSePuedaRealizarUnaBusquedaDePeliculasExitosamente(){
+		givenQueLaPeliculaExiste();
+		ModelAndView mav =whenBuscoPelicula();
+		thenEncuentroPeliculas(mav);
+	}
+	private void givenQueLaPeliculaExiste(){
+		List<Pelicula> peliculaList = new LinkedList<>();
+		when(this.servicioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(peliculaList);
+	}
+	private ModelAndView whenBuscoPelicula() {
+		return this.controladorPelicula.buscar(PELICULA_TITULO, mockRequest);
+	}
+	private void thenEncuentroPeliculas(ModelAndView mav){
+		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
+	}
+
+	@Test
+	public void queAlRealizarUnaBusquedaDePeliculaNoSeEncuetreDisponible(){
+		givenQueLaPeliculaNoExiste();
+		ModelAndView mav = whenBuscoPelicula();
+		thenNoEncuentroPeliculas(mav);
+	}
+
+	private void givenQueLaPeliculaNoExiste(){
+		when(servicioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(null);
+	}
+	private void thenNoEncuentroPeliculas(ModelAndView mav){
+		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
+	}
 
 
 }

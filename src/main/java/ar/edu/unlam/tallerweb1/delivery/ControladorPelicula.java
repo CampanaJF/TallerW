@@ -1,8 +1,9 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
-
-
 import javax.servlet.http.HttpServletRequest;
+
+import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,19 +11,23 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
+
+import java.util.List;
 
 
 @Controller
 public class ControladorPelicula {
 	
 	private final ServicioSession servicioSession;
-	
+	private ServicioPelicula servicioPelicula;
 	@Autowired
-	public ControladorPelicula(ServicioSession servicioSession) {
+	public ControladorPelicula(ServicioSession servicioSession,ServicioPelicula servicioPelicula) {
 		this.servicioSession=servicioSession;
+		this.servicioPelicula = servicioPelicula;
 	}
 	
 	@RequestMapping(path = "/pelicula", method = RequestMethod.GET)
@@ -45,30 +50,15 @@ public class ControladorPelicula {
 		
 		return new ModelAndView("pelicula",model);
 	}
-	
-	@RequestMapping(path = "/resultado-busqueda", method = RequestMethod.GET)
-	public ModelAndView buscarPelicula(HttpServletRequest request) {
-		
-		Long userId = this.servicioSession.getUserId(request);
-		
-		String busqueda = "busqueda.exe";
-				
+
+    @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
+	public ModelAndView buscar(@RequestParam(value="titulo")String titulo, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
-			
-		if (userId==null) {
-			model.put("busqueda", busqueda);
-			
-			return new ModelAndView("resultado-busqueda",model);
-        }
-				
-		model.put("usuario", userId);
-		model.put("busqueda", busqueda);
-		
-		return new ModelAndView("resultado-busqueda",model);
+		Long userId = this.servicioSession.getUserId(request);
+		List<Pelicula> peliculaList = this.servicioPelicula.buscarPeliculas(titulo);
+
+		model.put("usuario",userId);
+		model.put("peliculas", peliculaList);
+		return new ModelAndView("pelicula-buscada",model);
 	}
-
-	
-	
-	
-
 }

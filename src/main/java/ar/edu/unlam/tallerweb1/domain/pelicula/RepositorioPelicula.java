@@ -6,6 +6,9 @@ import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 
 public interface RepositorioPelicula {
 
-	List<Pelicula> getPeliculas(Filtro filtro);
-
+	List<Pelicula> getPeliculasFiltro(Filtro filtro);
+	
+	List<Pelicula> getPeliculas();
+	
+    List<Pelicula> buscarPeliculas(String titulo);
 }
