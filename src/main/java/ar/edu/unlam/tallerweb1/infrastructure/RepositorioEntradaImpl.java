@@ -38,11 +38,9 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 
 	@Override
-	public Entrada comprarEntrada(Entrada entrada) {
+	public void comprarEntrada(Entrada entrada) {
 		
 		sessionFactory.getCurrentSession().save(entrada);
-		
-		return entrada;
 		
 	}
 
@@ -54,6 +52,16 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		Criterion rest1 = Restrictions.eq("usuario.id", uId);
 		
 		return session.createCriteria(Entrada.class).add(rest1).list();
+	}
+
+	@Override
+	public Entrada getEntrada(Long usuario, Long funcion) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("usuario.id", usuario);
+		Criterion rest2 = Restrictions.eq("funcion.id", funcion);
+		
+		return (Entrada) session.createCriteria(Entrada.class).add(rest1).add(rest2).uniqueResult();
 	}
 
 }

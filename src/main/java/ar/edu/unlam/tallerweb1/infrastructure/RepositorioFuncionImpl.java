@@ -14,7 +14,7 @@ import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.RepositorioFuncion;
 
 
-@SuppressWarnings({ "unchecked", "deprecation" })
+@SuppressWarnings({ "unchecked", "deprecation"})
 @Repository("repositorioFuncion")
 @Transactional
 public class RepositorioFuncionImpl implements RepositorioFuncion {
@@ -34,7 +34,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		Criterion rest1 = Restrictions.eq("cine.id",cine);
 		Criterion rest2 = Restrictions.eq("pelicula.id", pelicula);
 		
-		return sessionFactory.getCurrentSession().createCriteria(Funcion.class)
+		return session.createCriteria(Funcion.class)
 							 .createAlias("sala", "salas")
 							 .createAlias("salas.cine", "cine")
 							 .add(rest1).add(rest2).list();

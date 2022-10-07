@@ -38,25 +38,11 @@ public class RepositorioFuncionTest extends SpringTest{
 		 Cine cineDos = givenCine("cineDos");
 		 Sala salaUno = givenSala(cineUno,"salaUno");
 		 Sala salaDos = givenSala(cineDos,"salaDos");
-		 Funcion funcion1 = givenFuncion(salaUno,horario);
-		 Funcion funcion2 = givenFuncion(salaDos,horario);
 		 Pelicula pelicula1 = givenPelicula("Indiana Jones");
 		 Pelicula pelicula2 = givenPelicula("Back to the Future");
-		 funcion1.setPelicula(pelicula1);
-		 funcion2.setPelicula(pelicula2);
-		 
-		 
-		 session().save(cineUno);
-	     session().save(cineDos);
-	     session().save(salaUno);
-	     session().save(salaDos);
-	     session().save(pelicula1);
-	     session().save(pelicula2);
-	     session().save(funcion1);
-	     session().save(funcion2);
-
-	     
-	      
+		 givenFuncion(salaUno,horario,pelicula1);
+		 givenFuncion(salaDos,horario,pelicula2);
+			 
 	     List<Funcion> funciones = whenSeListanTodasLasFuncionesDeEsaPelicula(cineUno.getId(),pelicula1.getId());
 	     
 	     thenSeListanTodasLasFunciones(funciones);
@@ -95,6 +81,7 @@ public class RepositorioFuncionTest extends SpringTest{
 			Cine cine = new Cine();
 			cine.setId(new Random().nextLong());
 			cine.setNombreCine(string);
+			session().save(cine);
 			return cine;
 		}
 	
@@ -103,6 +90,7 @@ public class RepositorioFuncionTest extends SpringTest{
 		sala.setId(new Random().nextLong());
 		sala.setCine(cine);
 		sala.setNombreSala(string);
+		session().save(sala);
 		return sala;
 	}
 	
@@ -110,14 +98,17 @@ public class RepositorioFuncionTest extends SpringTest{
 		Pelicula pelicula = new Pelicula();
 		pelicula.setId(new Random().nextLong());
 		pelicula.setTitulo(titulo);
+		session().save(pelicula);
 		return pelicula;
 	}
 	
-	private Funcion givenFuncion(Sala sala,Date horario) {
+	private Funcion givenFuncion(Sala sala,Date horario,Pelicula pelicula) {
 		Funcion funcion = new Funcion();
 		funcion.setSala(sala);
 		funcion.setId(new Random().nextLong());
 		funcion.setHorario(horario);
+		funcion.setPelicula(pelicula);
+		session().save(funcion);
 		return funcion;
 	}
 

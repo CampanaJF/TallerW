@@ -54,16 +54,17 @@ public class ControladorEntradaTest {
 	@Test
 	public void queSeHayaCompradoLaEntradaExitosamente() {
 		
-		Cine C1 = givenCine("1");
-		Pelicula P1 = givenPelicula("peli",1L);
-		Funcion funcion = givenFuncion(C1,P1);
+		Cine cine = givenCine("CINEEEEEE");
+		Pelicula pelicula = givenPelicula("peli",1L);
+		Sala sala = givenSala(cine,"LA SALA");
+		Funcion funcion = givenFuncion(sala,pelicula);
 		Usuario usuario = givenUsuario(1L,"Nombre");
 		
-		DatosEntrada DE = givenDatosEntrada(funcion,usuario);
+		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario);
 		
 		Entrada entrada = givenEntrada(usuario,funcion);
 		
-		whenSeSeleccionaLaFuncionDeseada(funcion,entrada,DE);
+		whenSeSeleccionaLaFuncionDeseada(entrada,datosEntrada);
 		
 		thenSeCompraLaEntradaParaEsaFuncion();
 			
@@ -76,28 +77,28 @@ public class ControladorEntradaTest {
 		
 	}
 
-	private void whenSeSeleccionaLaFuncionDeseada(Funcion funcion, Entrada entrada,DatosEntrada DE) {
+	private void whenSeSeleccionaLaFuncionDeseada(Entrada entrada,DatosEntrada DE) {
 		mocksSessionRequests();
 		
-		when(this.servicioEntrada.comprarEntrada(DE)).thenReturn(entrada);
-		when(this.servicioEntrada.getEntrada(entrada.getId())).thenReturn(entrada);
+		when(this.servicioEntrada.getEntrada(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
 		mav = this.controladorEntrada.entradaCompra(DE,mockRequest);	
 	}
 
 	@Test
 	public void queSeHayaElegidoUnCineYPuedaElegirElHorarioYFormatoParaComprarUnaEntradaDePelicula() {
 		
-		Cine C1 = givenCine("1");
-		Pelicula P1 = givenPelicula("peli",1L);
+		Cine cine = givenCine("CINEEE");
+		Sala sala = givenSala(cine,"LA SALA");
+		Pelicula pelicula = givenPelicula("peli",1L);
 		
-		DatosCine CD= new DatosCine();
+		DatosCine datosCine= new DatosCine();
 		
-		CD.setCine(C1.getId());
-		CD.setPelicula(P1.getId());
+		datosCine.setCine(cine.getId());
+		datosCine.setPelicula(pelicula.getId());
 		
-		List <Funcion> funciones =  givenFuncionesParaEseCineYEsaPelicula(C1,P1);
+		List <Funcion> funciones =  givenFuncionesParaEseCineYEsaPelicula(sala,pelicula);
 		
-		whenSeQuiereElegirElFormatoYHorario(CD,funciones);
+		whenSeQuiereElegirElFormatoYHorario(datosCine,funciones);
 		
 		thenSeEligenElFormatoYHorario(funciones);
 	}
@@ -116,16 +117,16 @@ public class ControladorEntradaTest {
 		
 	}
 	
-	private List<Funcion> givenFuncionesParaEseCineYEsaPelicula(Cine cine,Pelicula pelicula){
+	private List<Funcion> givenFuncionesParaEseCineYEsaPelicula(Sala sala,Pelicula pelicula){
 		
-		Funcion F1 = givenFuncion(cine,pelicula);
-		Funcion F2 = givenFuncion(cine,pelicula);
-		Funcion F3 = givenFuncion(cine,pelicula);
+		Funcion funcion1 = givenFuncion(sala,pelicula);
+		Funcion funcion2 = givenFuncion(sala,pelicula);
+		Funcion funcion3 = givenFuncion(sala,pelicula);
 		
-		List <Funcion> funciones = new ArrayList();
-		funciones.add(F1);
-		funciones.add(F2);
-		funciones.add(F3);
+		List <Funcion> funciones = new ArrayList<Funcion>();
+		funciones.add(funcion1);
+		funciones.add(funcion2);
+		funciones.add(funcion3);
 		
 		return funciones;
 	}
@@ -143,24 +144,24 @@ public class ControladorEntradaTest {
 	
 	private List<CinePelicula> givenCinesConPeliculas(){
 		
-		Cine C1 = givenCine("1");
-		Cine C2 = givenCine("2");
-		Cine C3 = givenCine("3");
+		Cine cine1 = givenCine("1");
+		Cine cine2 = givenCine("2");
+		Cine cine3 = givenCine("3");
 		
-		Pelicula P1 = givenPelicula("P",1L);
-		Pelicula P2 = givenPelicula("P",2L);
+		Pelicula pelicula1 = givenPelicula("Pelicula 1",1L);
+		Pelicula pelicula2 = givenPelicula("Pelicula 2 Electric Boogaloo",2L);
 		
-		List <CinePelicula> cines = new ArrayList();
+		List <CinePelicula> cines = new ArrayList<CinePelicula>();
 		CinePelicula one = new CinePelicula();
 		CinePelicula two = new CinePelicula();
 		CinePelicula three = new CinePelicula(); 
 		
-		one.setCine(C1);
-		one.setPelicula(P1);
-		two.setCine(C2);
-		two.setPelicula(P2);
-		three.setCine(C3);
-		three.setPelicula(P1);
+		one.setCine(cine1);
+		one.setPelicula(pelicula1);
+		two.setCine(cine2);
+		two.setPelicula(pelicula2);
+		three.setCine(cine3);
+		three.setPelicula(pelicula1);
 		
 		
 		cines.add(one);
@@ -228,6 +229,14 @@ public class ControladorEntradaTest {
 		pelicula.setTitulo(titulo);
 		
 		return pelicula;
+	}
+	
+	private Sala givenSala(Cine cine,String string) {
+		Sala sala = new Sala();
+		sala.setId(new Random().nextLong());
+		sala.setCine(cine);
+		sala.setNombreSala(string);
+		return sala;
 	}
 	
 	private Funcion givenFuncion(Sala sala,Pelicula pelicula) {

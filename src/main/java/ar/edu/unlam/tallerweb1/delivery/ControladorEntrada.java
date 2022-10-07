@@ -96,9 +96,10 @@ public class ControladorEntrada {
 		
 		Long sess = this.servicioSession.getUserId(request);
 
-		Entrada entradaComprada = this.servicioEntrada.comprarEntrada(datosEntrada);
+		this.servicioEntrada.comprarEntrada(datosEntrada); 
 		
-		entradaComprada = this.servicioEntrada.getEntrada(entradaComprada.getId());
+		Entrada entradaComprada = this.servicioEntrada.getEntrada(datosEntrada.getUsuario().getId(),
+																  datosEntrada.getFuncion().getId());
 		
 		ModelMap model = new ModelMap();
 		

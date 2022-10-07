@@ -34,15 +34,15 @@ public class ServicioFuncionTest {
 		 Pelicula peliculaUno = givenPelicula("Indiana Jones");
 		 Pelicula peliculaDos = givenPelicula("Back to the Future");
 		 
-		 Funcion funcionUno = givenFuncion(salaUno,cineUno);
-		 Funcion funcionDos = givenFuncion(salaDos,cineUno);
-		 Funcion funcionTres = givenFuncion(salaTres,cineDos);
+		 Funcion funcionUno = givenFuncion(salaUno);
+		 Funcion funcionDos = givenFuncion(salaDos);
+		 Funcion funcionTres = givenFuncion(salaTres);
 		 
 		 funcionUno.setPelicula(peliculaUno);
 		 funcionTres.setPelicula(peliculaUno);
 		 funcionDos.setPelicula(peliculaDos);
 		 
-		 List<Funcion> funciones = new ArrayList();
+		 List<Funcion> funciones = new ArrayList<Funcion>();
 
 			funciones.add(funcionUno);
 			funciones.add(funcionDos);
@@ -86,11 +86,10 @@ public class ServicioFuncionTest {
 		return sala;
 	}
 	
-	private Funcion givenFuncion(Sala sala,Cine cine) {
+	private Funcion givenFuncion(Sala sala) {
 		Funcion funcion = new Funcion();
 		funcion.setId(new Random().nextLong());
 		funcion.setSala(sala);
-		funcion.setCine(cine);
 		return funcion;
 	}
 	

@@ -23,7 +23,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public Entrada comprarEntrada(DatosEntrada datosEntrada) {
+	public void comprarEntrada(DatosEntrada datosEntrada) {
 	
 		Entrada entrada = new Entrada();
 		
@@ -31,9 +31,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		entrada.setUsuario(datosEntrada.getUsuario());
 	
 		this.repositorioEntrada.comprarEntrada(entrada);
-		
-		return entrada;
-		
+			
 	}
 
 	@Override
@@ -48,6 +46,12 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 		return this.repositorioEntrada.getEntradas(uId);
 		
+	}
+
+	@Override
+	public Entrada getEntrada(Long usuario, Long funcion) {
+	
+		return this.repositorioEntrada.getEntrada(usuario,funcion);
 	}
 
 }

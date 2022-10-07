@@ -3,12 +3,16 @@ package ar.edu.unlam.tallerweb1.domain.entrada;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import java.util.Random;
+
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
@@ -22,19 +26,22 @@ public class ServicioEntradaTest {
 	@Test
 	public void queSePuedaComprarUnaEntrada() {
 		
-		Usuario U1 = givenUsuario(3L,"A");
+		Usuario usuario = givenUsuario(3L,"Dio");
     	
-    	Pelicula P1 = givenPelicula("Indiana Jones");
+    	Pelicula pelicula = givenPelicula("Indiana Jones");
     	
-    	Cine S1 = givenCine("Sala 5");
+    	Cine cine = givenCine("El Cine");
     	
-    	Funcion F1 = givenFuncion(P1,S1);
+    	Sala sala = givenSala(cine,"Sala 5");
     	
-    	DatosEntrada DE = givenDatosEntrada(F1,U1);
+    	Funcion funcion = givenFuncion(pelicula,sala);
+    	
+    	DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario);
+    	
     		
-    	Entrada entrada = whenSeCompraLaEntrada(DE);
+    	Entrada entrada = whenSeCompraLaEntrada(datosEntrada);
 		
-		thenSeComproLaEntrada(entrada,F1);
+		thenSeComproLaEntrada(entrada,funcion);
 	}
 	
 	private void thenSeComproLaEntrada(Entrada entrada,Funcion funcion) {
@@ -43,65 +50,55 @@ public class ServicioEntradaTest {
 		
 	}
 
-	private Entrada whenSeCompraLaEntrada(DatosEntrada DE) {
-		
-		return this.servicioEntrada.comprarEntrada(DE);
-		
-	}
 	
 	@Test
 	public void queSePuedanComprarMultiplesEntradasParaUnaFuncion() {
 		
-		Usuario U1 = givenUsuario(2L,"A");
-		Usuario U2 = givenUsuario(3L,"B");
+		Usuario usuario1 = givenUsuario(2L,"Usuarin");
+		Usuario usuario2 = givenUsuario(3L,"Okarin");
     	
-    	Pelicula P1 = givenPelicula("Indiana Jones");
+    	Pelicula pelicula = givenPelicula("Indiana Jones");
     	
-    	Cine S1 = givenCine("CINE 5");
+    	Cine cine = givenCine("Cineee");
     	
-    	Funcion F1 = givenFuncion(P1,S1);
+    	Sala sala = givenSala(cine,"Sala 5");
     	
-    	DatosEntrada DE1 = givenDatosEntrada(F1,U1);
-    	DatosEntrada DE2 = givenDatosEntrada(F1,U1);
-    	DatosEntrada DE3 = givenDatosEntrada(F1,U2);
+    	Funcion funcion = givenFuncion(pelicula,sala);
     	
-		Entrada E1 = whenSeCompranLasEntradas(DE1);
-    	Entrada E2 = whenSeCompranLasEntradas(DE2);
-    	Entrada E3 = whenSeCompranLasEntradas(DE3);
+    	DatosEntrada datosEntrada1 = givenDatosEntrada(funcion,usuario1);
+    	DatosEntrada datosEntrada2 = givenDatosEntrada(funcion,usuario1);
+    	DatosEntrada datosEntrada3 = givenDatosEntrada(funcion,usuario2);
+    	
+		Entrada entrada1 = whenSeCompraLaEntrada(datosEntrada1);
+    	Entrada entrada2 = whenSeCompraLaEntrada(datosEntrada2);
+    	Entrada entrada3 = whenSeCompraLaEntrada(datosEntrada3);
     				
-		thenSeCompraronLasEntradas(E1,E2,E3);
+		thenSeCompraronLasEntradas(entrada1,entrada2,entrada3);
 	}
 	
-	private Entrada whenSeCompranLasEntradas(DatosEntrada DE) {
-		Entrada entrada =this.servicioEntrada.comprarEntrada(DE);
-
+	private Entrada whenSeCompraLaEntrada(DatosEntrada DE) {
+		Entrada entrada = new Entrada ();
+		entrada.setFuncion(DE.getFuncion());
+		entrada.setUsuario(DE.getUsuario());
 		return entrada;
 	}
 
-	private void thenSeCompraronLasEntradas(Entrada e1, Entrada e2, Entrada e3) {
-		assertThat(e1.getFuncion().getCine().getNombreCine()).isEqualTo("CINE 5");
-		assertThat(e2.getUsuario().getNombre()).isEqualTo("A");
-		assertThat(e3.getUsuario().getNombre()).isEqualTo("B");
+	private void thenSeCompraronLasEntradas(Entrada entrada1, Entrada entrada2, Entrada entrada3) {
+		assertThat(entrada1.getFuncion().getSala().getCine().getNombreCine()).isEqualTo("Cineee");
+		assertThat(entrada2.getUsuario().getNombre()).isEqualTo("Usuarin");
+		assertThat(entrada3.getUsuario().getNombre()).isEqualTo("Okarin");
 
 	}
 
 	@Test
 	public void queSePuedanVerLasEntradasQueSeCompraronPorUnUsuario() {
 		
-		Usuario U1 = givenUsuario(1L,"A");
+		Usuario usuario = givenUsuario(1L,"A");
     	
-    	Pelicula P1 = givenPelicula("Indiana Jones");
-    	
-    	Cine S1 = givenCine("Sala 5");
-    	
-    	Funcion F1 = givenFuncion(P1,S1);
-    	
-    	Entrada E1 = givenEntrada(U1,F1);
-
-    			
-		whenSeConsultanLasEntradas(U1);
+	
+		whenSeConsultanLasEntradas(usuario);
 		
-		thenSeObtienenLasEntradas(U1);
+		thenSeObtienenLasEntradas(usuario);
 	}
 
 	private void thenSeObtienenLasEntradas(Usuario u1) {
@@ -112,13 +109,6 @@ public class ServicioEntradaTest {
 		this.servicioEntrada.getEntradas(u1.getId());	
 	}
 
-	private Entrada givenEntrada(Usuario U1,Funcion F1) {
-		Entrada entrada = new Entrada();
-		entrada.setFuncion(F1);
-		entrada.setUsuario(U1);
-		entrada.setPelicula(F1.getPelicula().getTitulo());
-		return entrada;
-	}
 
 	private Cine givenCine(String nombreCine) {
 		Cine cine = new Cine();
@@ -133,17 +123,26 @@ public class ServicioEntradaTest {
 	}
 	
 	private DatosEntrada givenDatosEntrada(Funcion funcion, Usuario usuario) {
-		DatosEntrada DE = new DatosEntrada();
-		DE.setFuncion(funcion);
-		DE.setUsuario(usuario);
-		return DE;
+		DatosEntrada datosEntrada = new DatosEntrada();
+		datosEntrada.setFuncion(funcion);
+		datosEntrada.setUsuario(usuario);
+		return datosEntrada;
 	}
 
-	private Funcion givenFuncion(Pelicula pelicula, Cine cine) {
+	private Funcion givenFuncion(Pelicula pelicula, Sala sala) {
 		Funcion funcion = new Funcion();
+		funcion.setId(new Random().nextLong());
 		funcion.setPelicula(pelicula);
-		funcion.setCine(cine);
+		funcion.setSala(sala);
 		return funcion;
+	}
+	
+	private Sala givenSala(Cine cine,String string) {
+		Sala sala = new Sala();
+		sala.setId(new Random().nextLong());
+		sala.setCine(cine);
+		sala.setNombreSala(string);
+		return sala;
 	}
 
 	public Usuario givenUsuario(Long id,String nombre) {
