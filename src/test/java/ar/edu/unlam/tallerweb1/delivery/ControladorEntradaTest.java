@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
@@ -26,7 +27,6 @@ import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
-import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
@@ -35,13 +35,15 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 @ContextConfiguration(locations= "classpath:applicationContext.xml")
 public class ControladorEntradaTest {
 	
-	private final ServicioSession servicioSession = mock(ServicioSession.class);
+
 	private final ServicioEntrada servicioEntrada = mock(ServicioEntrada.class);
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
 	private final ServicioFuncion servicioFuncion = mock(ServicioFuncion.class);
 	private final ServicioCine servicioCine = mock(ServicioCine.class);
 	
-	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioSession,servicioEntrada,servicioUsuario,
+	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
+	
+	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioEntrada,servicioUsuario,
 																					servicioFuncion,servicioCine);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
@@ -72,7 +74,6 @@ public class ControladorEntradaTest {
 	
 	private void thenSeCompraLaEntradaParaEsaFuncion() {
 		assertThat(mav.getViewName()).isEqualTo("entrada");
-		assertThat(mav.getModel().get("usuario")).isNotNull();
 		assertThat(mav.getModel().get("entrada")).isNotNull();
 		
 	}
@@ -174,8 +175,9 @@ public class ControladorEntradaTest {
 	private void whenSeEligeQuiereElegirElCine(List<CinePelicula> cines) {
 		mocksSessionRequests();
 		
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		when(servicioCine.getCines(1L)).thenReturn(cines);
-		mav = this.controladorEntrada.entradaPelicula(mockRequest);
+		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L,redirectAttributes);
 		
 		
 	}

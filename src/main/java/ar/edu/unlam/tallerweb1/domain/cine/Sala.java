@@ -21,9 +21,6 @@ public class Sala {
 	
 	private Long asientosTotales;
 	
-	@ManyToOne
-	private Asiento asiento;
-	
 	public String getNombreSala() {
 		return nombreSala;
 	}
@@ -63,15 +60,5 @@ public class Sala {
 	public void setCine(Cine cine) {
 		this.cine = cine;
 	}
-
-	public Asiento getAsiento() {
-		return asiento;
-	}
-
-	public void setAsiento(Asiento asiento) {
-		this.asiento = asiento;
-	}
-	
-	
 	
 }
