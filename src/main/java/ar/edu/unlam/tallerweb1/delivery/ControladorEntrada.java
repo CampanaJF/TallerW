@@ -48,21 +48,13 @@ public class ControladorEntrada {
 	*/
 	
 	@RequestMapping(path = "/entrada-pelicula", method = RequestMethod.GET)
-	public ModelAndView entradaPelicula(HttpServletRequest request,@RequestParam("peliculaId") Long peliculaId,
-										final RedirectAttributes redirectAttributes) {
+	public ModelAndView entradaPelicula(HttpServletRequest request,@RequestParam("peliculaId") Long peliculaId) {
 		
 		ModelMap model = new ModelMap();
-		
-		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
-		
-		if(null==usuarioLogueado) {
-			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
-			return new ModelAndView("redirect:/registrarme");
-		}
-		
+				
 		List<CinePelicula> cines = this.servicioCine.getCines(peliculaId);
 		
-		model.put("usuario", usuarioLogueado);
+		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("cines", cines);
 		model.put("pelicula",cines.get(0).getPelicula());
 		
@@ -76,7 +68,7 @@ public class ControladorEntrada {
 									   	   HttpServletRequest request) {
 		
 		ModelMap model = new ModelMap();
-		
+	
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("funciones", obtenerFuncionesPor(datos));
 		
@@ -88,16 +80,23 @@ public class ControladorEntrada {
 	
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
 	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
-									 HttpServletRequest request) {
+									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
 
+		ModelMap model = new ModelMap();
+		
+		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
+		
+		if(null==usuarioLogueado) {
+			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
+			return new ModelAndView("redirect:/registrarme");
+		}
+		
 		this.servicioEntrada.comprarEntrada(datosEntrada); 
 		
 		Entrada entradaComprada = this.servicioEntrada.getEntrada(datosEntrada.getUsuario().getId(),
 																  datosEntrada.getFuncion().getId());
 		
-		ModelMap model = new ModelMap();
-		
-		model.put("usuario", obtenerUsuarioLogueado(request));
+		model.put("usuario", usuarioLogueado);
 		model.put("entrada", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
@@ -105,14 +104,22 @@ public class ControladorEntrada {
 	}
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
-	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request) {
+	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request,
+									final RedirectAttributes redirectAttributes) {
 		
 		ModelMap model = new ModelMap();
+		
+		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
+		
+		if(null==usuarioLogueado) {
+			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
+			return new ModelAndView("redirect:/registrarme");
+		}
 		
 		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
 
 	
-		model.put("usuario", obtenerUsuarioLogueado(request));
+		model.put("usuario", usuarioLogueado);
 		model.put("entrada", entradaEncontrada);
 
 		return new ModelAndView("entrada",model);
@@ -140,6 +147,7 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("mis-entradas",model);
 	}
+	
 	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
 		return this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());

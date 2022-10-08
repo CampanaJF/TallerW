@@ -81,8 +81,9 @@ public class ControladorEntradaTest {
 	private void whenSeSeleccionaLaFuncionDeseada(Entrada entrada,DatosEntrada DE) {
 		mocksSessionRequests();
 		
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		when(this.servicioEntrada.getEntrada(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
-		mav = this.controladorEntrada.entradaCompra(DE,mockRequest);	
+		mav = this.controladorEntrada.entradaCompra(DE,mockRequest,redirectAttributes);	
 	}
 
 	@Test
@@ -113,6 +114,7 @@ public class ControladorEntradaTest {
 	private void whenSeQuiereElegirElFormatoYHorario(DatosCine CD,List<Funcion> funciones) {
 		mocksSessionRequests();
 		
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		when(servicioFuncion.getFuncionesDeUnCine(CD.getCine(),CD.getPelicula())).thenReturn(funciones);
 		mav = this.controladorEntrada.entradaPreparacion(CD,mockRequest);
 		
@@ -130,6 +132,30 @@ public class ControladorEntradaTest {
 		funciones.add(funcion3);
 		
 		return funciones;
+	}
+	
+	@Test
+	public void queNoSePuedaComprarUnaEntradaSiNoSeEstaLogueado(){
+				
+		DatosEntrada datosEntrada = new DatosEntrada();
+				
+    	whenSeIntentaComprarUnaEntradaSinEstarLogueado(datosEntrada);
+    	
+    	thenSeRedireccionaARegistro();
+	
+	}
+
+	private void whenSeIntentaComprarUnaEntradaSinEstarLogueado(DatosEntrada datosEntrada) {
+		mocksSessionRequests();
+		
+		when(servicioUsuario.getUsuario(1L)).thenReturn(null);
+		mav = this.controladorEntrada.entradaCompra(datosEntrada,mockRequest,redirectAttributes);	
+		
+	}
+
+	private void thenSeRedireccionaARegistro() {
+		assertThat(mav.getViewName()).isEqualTo("redirect:/registrarme");
+		
 	}
 
 	@Test
@@ -177,7 +203,7 @@ public class ControladorEntradaTest {
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		when(servicioCine.getCines(1L)).thenReturn(cines);
-		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L,redirectAttributes);
+		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L);
 		
 		
 	}
