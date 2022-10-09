@@ -82,7 +82,7 @@ public class ControladorEntradaTest {
 		mocksSessionRequests();
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
-		when(this.servicioEntrada.getEntrada(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
+		when(this.servicioEntrada.getUltimaEntradaDeUsuario(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
 		mav = this.controladorEntrada.entradaCompra(DE,mockRequest,redirectAttributes);	
 	}
 

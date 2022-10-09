@@ -90,26 +90,6 @@ public class ServicioEntradaTest {
 
 	}
 
-	@Test
-	public void queSePuedanVerLasEntradasQueSeCompraronPorUnUsuario() {
-		
-		Usuario usuario = givenUsuario(1L,"A");
-    	
-	
-		whenSeConsultanLasEntradas(usuario);
-		
-		thenSeObtienenLasEntradas(usuario);
-	}
-
-	private void thenSeObtienenLasEntradas(Usuario u1) {
-		verify(repositorioEntrada,times(1)).getEntradas(u1.getId());	
-	}
-
-	private void whenSeConsultanLasEntradas(Usuario u1) {
-		this.servicioEntrada.getEntradas(u1.getId());	
-	}
-
-
 	private Cine givenCine(String nombreCine) {
 		Cine cine = new Cine();
 		cine.setNombreCine(nombreCine);

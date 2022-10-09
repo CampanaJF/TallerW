@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
@@ -24,6 +25,79 @@ public class RepositorioEntradaTest extends SpringTest {
     private RepositorioEntrada repositorioEntrada;
 	
 	@Test
+	@Transactional
+	@Rollback
+	public void queSeObtenganTodasLasEntradasCompradasPorUnUsuarioParaUnaDeterminadaFuncion() {
+	
+		Usuario usuario1 = givenUsuario("Jojo");
+		
+		Pelicula indianaJones = givenPelicula("Indiana Jones");
+		Pelicula kungFuPanda = givenPelicula("Kung Fu Panda");
+		
+		Cine cineUno = givenCine("CineUno");
+    	
+    	Sala salaUno = givenSala(cineUno,"salaUno");
+    	
+    	Funcion funcion1= givenFuncion(kungFuPanda,salaUno);
+    	Funcion funcion3 = givenFuncion(indianaJones,salaUno);
+    	
+    	givenEntradas(usuario1,funcion1,15L);
+    	givenEntradas(usuario1,funcion3,5L);
+    	
+    	List<Entrada> entradasObtenidas = whenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminaFuncion(usuario1,funcion3);
+    	
+    	thenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminadaFuncion(entradasObtenidas);
+	}
+	
+	private List<Entrada> whenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminaFuncion(Usuario usuario,Funcion funcion){
+		return this.repositorioEntrada.getUltimaEntradaDeUsuarioList(usuario.getId(),funcion.getId());
+		
+	}
+
+	private void thenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminadaFuncion(List<Entrada> entradasObtenidas) {
+		assertThat(entradasObtenidas.size()).isEqualTo(5);
+		assertThat(entradasObtenidas.get(0).getFuncion().getPelicula().getTitulo()).isEqualTo("Indiana Jones");
+	
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	public void queSoloSeObtengaLaUltimaEntradaCompradaPorUnUsuarioParaUnaDeterminadaFuncion() {
+		Usuario usuario1 = givenUsuario("Jojo");
+		Usuario usuario2 = givenUsuario("Dio");
+		
+		Pelicula indianaJones = givenPelicula("Indiana Jones");
+    	
+    	Cine cineUno = givenCine("CineUno");
+    	
+    	Sala salaUno = givenSala(cineUno,"salaUno");
+    	
+    	Funcion funcion = givenFuncion(indianaJones,salaUno);
+    	
+    	givenEntrada(usuario1,funcion);
+    	givenEntrada(usuario2,funcion);
+    	Entrada entrada3 = givenEntrada(usuario2,funcion);
+    	givenEntrada(usuario1,funcion);
+    	
+    	Entrada obtenida = whenSeObtieneLaUltimaEntradaCompradaDeUnUsuarioParaUnaFuncionDeterminada(usuario2,funcion);
+    	
+    	thenSeObtieneLaUltimaEntradaCompradaDeUnUsuario(obtenida,entrada3);
+		
+	}
+	
+	private void thenSeObtieneLaUltimaEntradaCompradaDeUnUsuario(Entrada entradaObtenida,Entrada entradaOriginal) {
+		assertThat(entradaObtenida.getId().equals(entradaOriginal.getId()));
+		assertThat(entradaObtenida.getUsuario().equals(entradaOriginal.getUsuario()));
+		assertThat(entradaObtenida.equals(entradaOriginal));		
+	}
+
+	private Entrada whenSeObtieneLaUltimaEntradaCompradaDeUnUsuarioParaUnaFuncionDeterminada(Usuario usuario,Funcion funcion){
+		return this.repositorioEntrada.getUltimaEntradaDeUsuario(usuario.getId(),funcion.getId());
+		
+	}
+
+	@Test
     @Transactional
     @Rollback
     public void queSePuedaComprarUnaEntrada() {
@@ -40,13 +114,6 @@ public class RepositorioEntradaTest extends SpringTest {
     	
     	Entrada entrada = givenEntrada(usuario1,funcion);
     
-    	session().save(usuario1);
-    	session().save(indianaJones);
-    	session().save(cineUno);
-    	session().save(salaUno);
-    	session().save(funcion);
-    	session().save(entrada);
-
     	whenSeCompraUnaEntrada(entrada);
     	
     	assertThat(repositorioEntrada.getEntrada(entrada.getId())).isNotNull();
@@ -60,30 +127,43 @@ public class RepositorioEntradaTest extends SpringTest {
 		
 	}
 	
+	private void givenEntradas(Usuario U1,Funcion F1,Long cantidad){
+		
+		while(cantidad>0){
+			givenEntrada(U1,F1);
+			cantidad--;
+		}
+		
+	}
+	
 	private Entrada givenEntrada(Usuario U1,Funcion F1) {
 		Entrada entrada = new Entrada();
 		entrada.setFuncion(F1);
 		entrada.setUsuario(U1);
 		entrada.setId(new Random().nextLong());
+		session().save(entrada);
 		return entrada;
 	}
 
 	private Cine givenCine(String nombreCine) {
 		Cine cine = new Cine();
 		cine.setNombreCine(nombreCine);
+		session().save(cine);
 		return cine;
 	}
 
 	private Pelicula givenPelicula(String titulo) {
 		Pelicula pelicula = new Pelicula();
 		pelicula.setTitulo(titulo);
+		session().save(pelicula);
 		return pelicula;
 	}
-
+	
 	private Funcion givenFuncion(Pelicula pelicula, Sala sala) {
 		Funcion funcion = new Funcion();
 		funcion.setPelicula(pelicula);
 		funcion.setSala(sala);
+		session().save(funcion);
 		return funcion;
 	}
 	
@@ -92,12 +172,14 @@ public class RepositorioEntradaTest extends SpringTest {
 		sala.setId(new Random().nextLong());
 		sala.setCine(cine);
 		sala.setNombreSala(string);
+		session().save(sala);
 		return sala;
 	}
 
 	public Usuario givenUsuario(String nombre) {
     	Usuario usuario = new Usuario ();
     	usuario.setNombre(nombre);
+    	session().save(usuario);
     	return usuario;
     }
 

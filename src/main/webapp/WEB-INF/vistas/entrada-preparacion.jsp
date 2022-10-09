@@ -7,7 +7,7 @@
 
 	<%@include file="head.jsp"%>
 	
-	<title>${pelicula}</title>
+	<title>${funciones.get(0).getPelicula().titulo}</title>
 	
 <body class="bgColor">
 
@@ -25,14 +25,15 @@
 			<div class="col">
 				<div class="text-center"> 
 					<img class="img-fluid portadaPelicula" 
-					src="<c:url value="/img/peliculas/backtothefuture.jpg"/>">
+					src="<c:url value="${funciones.get(0).getPelicula().poster}"/>">
 				</div>
 			</div>
 
 			<div class="col align-self-center text-center text-white">
-				<h1>Back to the Future</h1>
-				<h4>Steven Spielberg</h4>
-				<h5 class="pb-3">Michael J. Fox - Christopher Lloyd</h5>
+				<h1>${funciones.get(0).getPelicula().titulo}</h1>
+				<h4>${funciones.get(0).getPelicula().director}</h4>
+				<h5 class="pb-3">${funciones.get(0).getPelicula().protagonista}</h5>
+				<h5 class="pb-3">Precio : ${funciones.get(0).getPelicula().protagonista} $</h5>
 				
 				
 				<form:form action="entrada-compra" modelAttribute="datosEntrada" method="POST">
@@ -48,7 +49,7 @@
 				</form:select>
 				
 				
-				<form:hidden path="usuario.id" value="${usuarioModel.id}" />
+				<form:hidden path="usuario.id" value="${usuario.id}" />
 				
 				
 				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>

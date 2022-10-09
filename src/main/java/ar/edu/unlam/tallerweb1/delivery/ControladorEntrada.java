@@ -41,9 +41,13 @@ public class ControladorEntrada {
 		this.servicioCine = servicioCine;
 	}
 	
-	/*TO DO - Agregar Control de sesion para que se deba estar logueado para comprar la entrada sino explota
+	/*TO DO 
+	 * 		- Que se diferencien las funciones segun su tipo (2D, 3D ,ETC)
+	 * 		- Que se puedan comprar multiples entradas para una funcion a la vez
+	 * 		- 
 			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
+			-
 			
 	*/
 	
@@ -68,12 +72,11 @@ public class ControladorEntrada {
 									   	   HttpServletRequest request) {
 		
 		ModelMap model = new ModelMap();
-	
+		
 		model.put("usuario", obtenerUsuarioLogueado(request));
-		model.put("funciones", obtenerFuncionesPor(datos));
+		model.put("funciones",  obtenerFuncionesPor(datos));
 		
 		model.addAttribute("datosEntrada", new DatosEntrada());
-		
 		
 		return new ModelAndView("entrada-preparacion",model);
 	}
@@ -93,7 +96,7 @@ public class ControladorEntrada {
 		
 		this.servicioEntrada.comprarEntrada(datosEntrada); 
 		
-		Entrada entradaComprada = this.servicioEntrada.getEntrada(datosEntrada.getUsuario().getId(),
+		Entrada entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuario(datosEntrada.getUsuario().getId(),
 																  datosEntrada.getFuncion().getId());
 		
 		model.put("usuario", usuarioLogueado);
@@ -111,7 +114,7 @@ public class ControladorEntrada {
 		
 		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
 		
-		if(null==usuarioLogueado) {
+		if(null==usuarioLogueado) { // tambien se podria hacer un try catch en el call al servicio usuario
 			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
 			return new ModelAndView("redirect:/registrarme");
 		}
@@ -125,6 +128,16 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada",model);
 	}
 	
+
+	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
+		return this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
+	}
+
+	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
+		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	}
+	
+	/* Removido por ahora
 	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
 	public ModelAndView misEntradas(HttpServletRequest request) {
 		
@@ -147,15 +160,6 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("mis-entradas",model);
 	}
-	
-	
-	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
-		return this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
-	}
-
-	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-	}
-	
+	*/
 
 }

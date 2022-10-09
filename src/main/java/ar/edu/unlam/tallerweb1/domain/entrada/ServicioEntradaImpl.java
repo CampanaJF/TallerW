@@ -21,6 +21,11 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	public ServicioEntradaImpl(RepositorioEntrada repositorioEntrada) {
 		this.repositorioEntrada = repositorioEntrada;
 	}
+	
+	// TO DO
+	// Agregar logica para multiples entradas
+	// Validar capacidad
+	// Generar Asiento/s
 
 	@Override
 	public void comprarEntrada(DatosEntrada datosEntrada) {
@@ -42,16 +47,16 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public List<Entrada> getEntradas(Long uId) {
+	public List<Entrada> getUltimaEntradaDeUsuarioList(Long usuario,Long funcion) {
 		
-		return this.repositorioEntrada.getEntradas(uId);
+		return this.repositorioEntrada.getUltimaEntradaDeUsuarioList(usuario,funcion);
 		
 	}
 
 	@Override
-	public Entrada getEntrada(Long usuario, Long funcion) {
+	public Entrada getUltimaEntradaDeUsuario(Long usuario, Long funcion) {
 	
-		return this.repositorioEntrada.getEntrada(usuario,funcion);
+		return this.repositorioEntrada.getUltimaEntradaDeUsuario(usuario,funcion);
 	}
 
 }
