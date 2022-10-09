@@ -128,7 +128,7 @@ z-index:99;
   opacity: 0.5;
 }
  
-.clasificacion,.genero,.duracion,.calificacion{
+.clasificacion,.genero,.duracion,.calificacion,.fechaEstreno{
 	font-size:12px;
 }
 .genero{

@@ -149,14 +149,14 @@
                     <img class="pelicula" src="${pelicula.getPoster()}">
                     <div class="container informacionPeli d-flex flex-column">
                         <div class="row">
-                        <div class="col-lg-2 mt-2">
+                        <div class="col-lg-4 mt-2">
                             <p class="text-light clasificacion">${pelicula.getClasificacionPelicula().getDescripcion() }</p>
                         </div>
-                        <div class="col-lg-2 mt-2">
-                            <p class="text-light duracion">${pelicula.getDuracion()}</p>
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light duracion">${pelicula.getDuracionEnHoras()}</p>
                         </div>
                         <div class="col-lg-4  fechaEstreno mt-2">
-                        <!--    <p class="text-light">${pelicula.getFechaEstreno()}</p> -->
+                            <p class="text-light">${pelicula.getFechaEstreno().getYear()+1900}</p> 
                         </div>
                       
                         </div>
@@ -166,18 +166,6 @@
                          </div>
                          
                          
-                         
-                        
-                        
-                        <!-- 
-                            <div class="col-lg-12 mb-3">
-                            	
-                            	
-                            </div>
-                            
-                           
-                            </div>
-                            -->
                     </div>
                 </div>
                 </div>

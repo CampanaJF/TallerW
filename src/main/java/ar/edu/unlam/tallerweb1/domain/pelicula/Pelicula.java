@@ -99,7 +99,15 @@ import java.util.Date;
         public Integer getDuracion() {
             return duracion;
         }
-
+        
+        public String getDuracionEnHoras() {
+        	Integer conversorAHoras=60;
+        	Integer horas=duracion/conversorAHoras;
+        	Integer minutos=duracion-horas*conversorAHoras;
+        	
+        	return (horas+"h" +minutos+"m"); 
+        	
+        }
         public void setDuracion(Integer duracion) {
             this.duracion = duracion;
         }

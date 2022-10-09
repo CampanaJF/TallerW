@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import static org.mockito.Mockito.mock;
 
+import org.assertj.core.api.MapAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +46,42 @@ public class ControladorCarteleraTest {
 	@Test
 	public void verificaQueElNombreDeLaVistaSeaCorrecto() {
 		Filtro filtro=new Filtro(null,null,null);
-		List<Genero> listaGeneros=new ArrayList<>();
-		when(this.servicioGenero.listarGeneros()).thenReturn(listaGeneros);
-		List<ClasificacionPelicula> listaClasificacion=new ArrayList<>();
-		when(this.servicioClasificacion.listarClasificacion()).thenReturn(listaClasificacion);
-		List<Pelicula> listaPelicula=new ArrayList<>();
-		when(this.servicioPelicula.obtenerPeliculas(filtro)).thenReturn(listaPelicula);
+		givenSeObtieneListaDeGeneros();
+		givenSeObtieneListaClasificacion();
+		givenSeObtieneListaPeliculas(filtro);
+		ModelAndView modelo = whenIrACartelera();
+		
+		thenElNombreDeLaVistaSeaCorrecta(modelo);
+		thenLaVistaContengaListaGenero(modelo);
+	}
+
+	private MapAssert<String, Object> thenLaVistaContengaListaGenero(ModelAndView modelo) {
+		return assertThat(modelo.getModel()).containsKey("generos");
+	}
+
+	private void thenElNombreDeLaVistaSeaCorrecta(ModelAndView modelo) {
+		assertThat(modelo.getViewName()).isEqualTo("cartelera");
+	}
+
+	private ModelAndView whenIrACartelera() {
 		controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula);
 		ModelAndView modelo=controlador.irACartelera(null, null, null);
-		
-		assertThat(modelo.getViewName()).isEqualTo("cartelera");
-		assertThat(modelo.getModel()).containsKey("generos");
+		return modelo;
+	}
+
+	private void givenSeObtieneListaPeliculas(Filtro filtro) {
+		List<Pelicula> listaPelicula=new ArrayList<>();
+		when(this.servicioPelicula.obtenerPeliculas(filtro)).thenReturn(listaPelicula);
+	}
+
+	private void givenSeObtieneListaClasificacion() {
+		List<ClasificacionPelicula> listaClasificacion=new ArrayList<>();
+		when(this.servicioClasificacion.listarClasificacion()).thenReturn(listaClasificacion);
+	}
+
+	private void givenSeObtieneListaDeGeneros() {
+		List<Genero> listaGeneros=new ArrayList<>();
+		when(this.servicioGenero.listarGeneros()).thenReturn(listaGeneros);
 	}
 
 }
