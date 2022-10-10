@@ -7,6 +7,7 @@ public class DatosEntrada {
 	private Funcion funcion;
     private Usuario usuario;
     private Long cantidad;
+
     
 	public Funcion getFuncion() {
 		return funcion;
@@ -26,6 +27,7 @@ public class DatosEntrada {
 	public void setCantidad(Long cantidad) {
 		this.cantidad = cantidad;
 	}
+
     
     
 }

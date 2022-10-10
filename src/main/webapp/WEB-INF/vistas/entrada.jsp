@@ -39,11 +39,11 @@
 		  <h2 class="title">${entrada.funcion.pelicula.titulo}</h2>
 		  
 		  <div class="sce">
-			<p>Tipo de Funcion<br/>${entrada.funcion.horario}</p>
+			<p>${entrada.funcion.formato.tipo}<br/>${entrada.funcion.horario}</p>
 		  </div>
 		  <div class="fix"></div>
 		  <div class="loc">
-			<p>${entrada.funcion.sala.nombreSala}<br/> ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio}</p>
+			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio} $</p>
 		  </div>
 		  <div class="fix"></div>
 		  <button class="cancel">Imprimir</button>
