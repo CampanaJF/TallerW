@@ -32,7 +32,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	// no las compra ninguna
 
 	@Override
-	public void prepararCompraEntrada(DatosEntrada datosEntrada) {
+	public void comprar(DatosEntrada datosEntrada) {
 		
 		validarEntrada(datosEntrada);
 		

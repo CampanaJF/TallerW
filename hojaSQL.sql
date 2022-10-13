@@ -175,4 +175,6 @@ where funcion.id = 1 and asiento.ocupado = 1;
 
 select * from entrada;   
 
+select * from funcion;
+
 delete from entrada where id is not null; 

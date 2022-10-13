@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
 
 public interface ServicioEntrada {
 
-	void prepararCompraEntrada(DatosEntrada datosEntrada);
+	void comprar(DatosEntrada datosEntrada);
 	
 	void comprarMultiplesEntradas(DatosEntrada datosEntrada);
 	
