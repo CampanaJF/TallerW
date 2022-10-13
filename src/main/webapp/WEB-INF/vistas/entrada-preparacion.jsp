@@ -28,7 +28,7 @@
 				</div>
 			</div>
 
-			<div class="checkout col align-self-center text-center text-white">
+			<div class="checkout col align-self-center text-white">
 				<h1>${funciones.get(0).getPelicula().titulo}</h1>
 				<h4>${funciones.get(0).getPelicula().director}</h4>
 				<h5 class="pb-3">${funciones.get(0).getPelicula().protagonista}</h5>
@@ -41,13 +41,13 @@
                 
                 <h4>Horarios para la funcion 2D</h4>
                 <div class="container">
-                <div class="row row-cols-3 btn-group" role="group" aria-label="Basic radio toggle button group">
+                <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
 
 					<c:forEach items="${funciones}" var="funcion">
 					
 					<c:if test="${funcion.formato.tipo == '2D' }">
                     <div class="col p-0"> 
-                    <form:radiobutton class="btn-check" id="${funcion.id}"
+                    <form:radiobutton class="btn-check " id="${funcion.id}"
                      path="funcion.id" value="${funcion.id}" autocomplete="off"/>  
                     <label class="btn btn-outline-primary" for="${funcion.id}">${funcion.horario}</label>
                     </div>
@@ -62,7 +62,7 @@
                 
                 <h4>Horarios para la funcion 3D</h4>
                 <div class="container">
-                <div class="row row-cols-3 btn-group" role="group" aria-label="Basic radio toggle button group">
+                <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
 
 					<c:forEach items="${funciones}" var="funcion">
 					
@@ -83,7 +83,7 @@
                 
                 <h4>Horarios para la funcion de Realidad Aumentada</h4>
                 <div class="container">
-                <div class="row row-cols-3 btn-group" role="group" aria-label="Basic radio toggle button group">
+                <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
 
 					<c:forEach items="${funciones}" var="funcion">
 					
@@ -105,7 +105,7 @@
                 	Cantidad: <form:input class="quantity form-control cantidad-form" value ="1" placeholder="1" path="cantidad" />
                 	<form:hidden path="usuario.id" value="${usuario.id}" />
                 	
-                	<p class="total">Total: <span id="total">${funciones.get(0).precio}</span></p>
+                	<h5 class="total">Total: <span id="total">${funciones.get(0).precio}</span></h5>
                 	               	
                 	<button type="submit" class="mt-3 btn-lg btn buttonA">Comprar Entradas</button>
 				

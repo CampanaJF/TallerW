@@ -170,4 +170,9 @@ where funcion.id = 1 and asiento.ocupado = 1;
 select count(*) from entrada
 join funcion on entrada.funcion_id = funcion.id 
 join asiento on entrada.asiento_id = asiento.id	
-where funcion.id = 1 and asiento.ocupado = 1;	      
+where funcion.id = 1 and asiento.ocupado = 1;	  
+
+
+select * from entrada;   
+
+delete from entrada where id is not null; 

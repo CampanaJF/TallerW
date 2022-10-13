@@ -9,11 +9,11 @@
 	
 	<title>CineClub</title>
 	
-	<body>
+
 
 	<%@include file="header.jsp"%>
 	
-	 <body>  
+<body class="bgColor text-white">  
 
 
 		<c:if test="${not empty mensaje}">

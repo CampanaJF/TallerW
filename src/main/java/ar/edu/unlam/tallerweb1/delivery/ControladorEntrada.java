@@ -43,9 +43,8 @@ public class ControladorEntrada {
 	}
 	
 	/*TO DO 
-	 * 		- Que se diferencien las funciones segun su tipo (2D, 3D ,ETC)
-	 * 		- Que se puedan comprar multiples entradas para una funcion a la vez
-	 * 		- 
+	 * 		- Agregar validaciones en el html para los formularios
+	 * 
 			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 			-
