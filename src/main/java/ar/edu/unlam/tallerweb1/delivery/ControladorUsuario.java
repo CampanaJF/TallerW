@@ -35,10 +35,9 @@ public class ControladorUsuario {
 	public ModelAndView irALogin(HttpServletRequest request,final RedirectAttributes redirectAttributes) {
 
 		ModelMap model = new ModelMap();
-		Long sess = servicioSession.getUserId(request);
 		
-		if(null!=sess) {
-			redirectAttributes.addFlashAttribute("mensaje","ï¿½Ya esta Logueado!"); //permite redirect con model
+		if(null!=obtenerUsuarioLogueado(request)) {
+			redirectAttributes.addFlashAttribute("mensaje","Ya esta Logueado!"); //permite redirect con model
 			return new ModelAndView("redirect:/home");
 		}
 
@@ -57,7 +56,7 @@ public class ControladorUsuario {
 			servicioSession.setUserId(usuarioBuscado.getId(), request);
 			return new ModelAndView("redirect:/home");
 		} else {
-			model.put("error", "ï¿½Usuario o clave incorrecta!");
+			model.put("error", "Usuario o clave incorrecta!");
 		}
 		return new ModelAndView("login", model);
 	}
@@ -65,11 +64,10 @@ public class ControladorUsuario {
 	@RequestMapping("/registrarme")
 	public ModelAndView registro(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
 
-		Long sess = servicioSession.getUserId(request);
 		ModelMap model = new ModelMap();
 		
-		if(null!=sess) {
-			redirectAttributes.addFlashAttribute("mensaje","ï¿½Ya esta Logueado!");
+		if(null!=obtenerUsuarioLogueado(request)) {
+			redirectAttributes.addFlashAttribute("mensaje","Ya esta Logueado!");
 			return new ModelAndView("redirect:/home");
 		}
 		
@@ -82,22 +80,22 @@ public class ControladorUsuario {
 	public ModelAndView procesarRegistro(
 			@ModelAttribute("datosUsuario") DatosUsuario datosUsuario, final RedirectAttributes redirectAttributes) {
 		
-		String mensaje="ï¿½Se Registro Exitosamente!";
+		String mensaje="Se Registro Exitosamente!";
 			
 		try {
             servicioUsuario.registrarUsuario(datosUsuario.getEmail(),datosUsuario.getPassword(),
             								 datosUsuario.getPasswordRe(),datosUsuario.getNombre());
         } catch (EmailEnUsoException eeue) {
-        	mensaje="ï¿½El Email ya esta en uso!";
+        	mensaje="El Email ya esta en uso!";
         	
         } catch (PasswordsDiferentesException pde) {
-        	mensaje="ï¿½Las contraseï¿½as son diferentes!";
+        	mensaje="Las contraseñas son diferentes!";
         	
         } catch (PasswordLenghtException ple) {
-        	mensaje="ï¿½La contraseï¿½a debe tener almenos 12 caracteres!";
+        	mensaje="La contraseña debe tener almenos 12 caracteres!";
         }
 		
-		if(mensaje!="ï¿½Se Registro Exitosamente!") {
+		if(mensaje!="Se Registro Exitosamente!") {
 			redirectAttributes.addFlashAttribute("mensaje",mensaje);
 			return new ModelAndView("redirect:/registrarme");
 		}
@@ -111,14 +109,13 @@ public class ControladorUsuario {
 	public ModelAndView verPerfil(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
 		
 		ModelMap model = new ModelMap();
-		Long sess = servicioSession.getUserId(request);
 		
-		if(sess==null) {
-			redirectAttributes.addFlashAttribute("mensaje","ï¿½No puede ver su perfil sin estar logueado!");
+		if(null==obtenerUsuarioLogueado(request)) {
+			redirectAttributes.addFlashAttribute("mensaje","No puede ver su perfil sin estar logueado!");
 			return new ModelAndView("redirect:/home");
 		}
 		
-		Usuario encontrado = this.servicioUsuario.getUsuario(sess);
+		Usuario encontrado = obtenerUsuarioLogueado(request);
 		
 		model.put("datosUsuario", encontrado);
 		
@@ -136,10 +133,8 @@ public class ControladorUsuario {
 	public ModelAndView goHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
 		ModelMap model = new ModelMap();
-		Long userId = this.servicioSession.getUserId(request);
 		 
-		//model.put("error", mensaje);
-		model.put("usuario", userId);
+		model.put("usuario", obtenerUsuarioLogueado(request));
 		
 		return new ModelAndView("home",model);
 	}
@@ -147,6 +142,10 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
 		return new ModelAndView("redirect:/login");
+	}
+	
+	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
+		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 	}
 
 

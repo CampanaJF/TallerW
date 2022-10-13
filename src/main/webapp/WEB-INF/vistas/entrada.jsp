@@ -13,7 +13,7 @@
 
 	<%@include file="header.jsp"%>
 	
-	 <body class="text-white bgColor">  
+	 <body>  
 
 
 		<c:if test="${not empty mensaje}">
@@ -21,18 +21,19 @@
 	        <h5 class="text-center text-white">${mensaje}</h5> 	
 	    </div>
 	    </c:if>
-		
-		<div class="container">
+
+<c:if test="${not empty entrada}">				  
+<div class="container">
   <h1 class="upcomming">Entrada/s</h1>
   
-  <div class="item">
+  	<div class="item">
   
 		<div class="item-right">
 		  <h4 class="num">${entrada.asiento.ubicacion}</h4>
 		  <p class="day">${entrada.funcion.sala.nombreSala}</p>
 		  <span class="up-border"></span>
 		  <span class="down-border"></span>
-		</div> <!-- end item-right -->
+		</div>
 		
 		<div class="item-left">
 		  <p class="event">${entrada.funcion.sala.cine.nombreCine}</p>
@@ -47,10 +48,52 @@
 		  </div>
 		  <div class="fix"></div>
 		  <button class="cancel">Imprimir</button>
-		</div> <!-- end item-right -->
-	  </div> <!-- end item -->
-	  
-	</div>
+		</div> 
+		
+	  </div>
+	   	 
+</div>
+</c:if>	
+	    
+	    
+<c:if test="${not empty entradas}">				  
+<div class="container">
+  <h1 class="upcomming">Entrada/s</h1>
+  
+   <c:forEach items="${entradas}" var="entrada">
+  
+  	<div class="item">
+  
+		<div class="item-right">
+		  <h4 class="num">${entrada.asiento.ubicacion}</h4>
+		  <p class="day">${entrada.funcion.sala.nombreSala}</p>
+		  <span class="up-border"></span>
+		  <span class="down-border"></span>
+		</div>
+		
+		<div class="item-left">
+		  <p class="event">${entrada.funcion.sala.cine.nombreCine}</p>
+		  <h2 class="title">${entrada.funcion.pelicula.titulo}</h2>
+		  
+		  <div class="sce">
+			<p>${entrada.funcion.formato.tipo}<br/>${entrada.funcion.horario}</p>
+		  </div>
+		  <div class="fix"></div>
+		  <div class="loc">
+			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio} $</p>
+		  </div>
+		  <div class="fix"></div>
+		  <button class="cancel">Imprimir</button>
+		</div> 
+		
+	  </div>
+	   
+	 </c:forEach>  
+	
+	 
+</div>
+</c:if>	
+	
 	    
 
 	<%@include file="footer.jsp"%>

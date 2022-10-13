@@ -41,9 +41,6 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 	
 	}
 	  
-	 
-	
-	
 	@Override
 	public Funcion getFuncion(Long funcionId) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -52,5 +49,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		
 		return (Funcion) session.createCriteria(Funcion.class).add(rest1).uniqueResult();
 	}
+
+
 
 }

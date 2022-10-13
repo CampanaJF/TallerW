@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
+import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 
 
 
@@ -16,6 +17,7 @@ import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
 public class ServicioEntradaImpl implements ServicioEntrada {
 	
 	private RepositorioEntrada repositorioEntrada;
+
 	
 	@Autowired
 	public ServicioEntradaImpl(RepositorioEntrada repositorioEntrada) {
@@ -26,17 +28,61 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	// Agregar logica para multiples entradas
 	// Validar capacidad
 	// Generar Asiento/s
+	// Debe verificar la cantidad de asientos disponibles para esa funcion antes de comprar las entradas, si no hay suficientes
+	// no las compra ninguna
 
 	@Override
-	public void comprarEntrada(DatosEntrada datosEntrada) {
+	public void prepararCompraEntrada(DatosEntrada datosEntrada) {
+		
+		validarEntrada(datosEntrada);
+		
+		Long cantidadDeEntradas = datosEntrada.getCantidad();
+		
+		if(cantidadDeEntradas>1L) {
+			comprarMultiplesEntradas(datosEntrada);
+		}
+		else {
+			comprarUnaEntrada(datosEntrada);
+		}
+			
+	}
 	
+	@Override
+	public void comprarMultiplesEntradas(DatosEntrada datosEntrada) {
+		
+		Long cantidadDeEntradas = datosEntrada.getCantidad();
+			
+		while(cantidadDeEntradas>0) {
+			
+			comprarUnaEntrada(datosEntrada);
+			cantidadDeEntradas--;
+		}
+		
+	}
+
+	@Override
+	public void comprarUnaEntrada(DatosEntrada datosEntrada) {
+		
 		Entrada entrada = new Entrada();
 		
 		entrada.setFuncion(datosEntrada.getFuncion());
 		entrada.setUsuario(datosEntrada.getUsuario());
 	
 		this.repositorioEntrada.comprarEntrada(entrada);
-			
+		
+	}
+	
+	@Override
+	public void validarEntrada(DatosEntrada datosEntrada) throws DatosEntradaInvalidaException {
+		
+		if(datosEntrada.getCantidad()<=0L||datosEntrada.getCantidad()==null) {
+			throw new DatosEntradaInvalidaException();
+		}
+		
+		if(datosEntrada.getFuncion()==null) {
+			throw new DatosEntradaInvalidaException();
+		}
+		
 	}
 
 	@Override
@@ -58,5 +104,15 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	
 		return this.repositorioEntrada.getUltimaEntradaDeUsuario(usuario,funcion);
 	}
+
+	@Override
+	public Long cantidadDeAsientosDisponiblesDeLaFuncion(Long funcion) {
+		
+		return null;
+	}
+
+	
+
+	
 
 }

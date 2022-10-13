@@ -22,6 +22,7 @@ import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 
 @Controller
 public class ControladorEntrada {
@@ -90,17 +91,22 @@ public class ControladorEntrada {
 		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
 		
 		if(null==usuarioLogueado) {
-			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
+			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
 			return new ModelAndView("redirect:/registrarme");
 		}
 		
-		this.servicioEntrada.comprarEntrada(datosEntrada); 
+		try {
+			this.servicioEntrada.prepararCompraEntrada(datosEntrada); 
+		}catch(DatosEntradaInvalidaException q) {
+			redirectAttributes.addFlashAttribute("mensaje","Debe comprar por lo menos una entrada y seleccionar una funcion!");
+			return new ModelAndView("redirect:/home");	
+		}
 		
-		Entrada entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuario(datosEntrada.getUsuario().getId(),
-																  datosEntrada.getFuncion().getId());
+		List <Entrada> entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuarioList(datosEntrada.getUsuario().getId(),
+																  							datosEntrada.getFuncion().getId());
 		
 		model.put("usuario", usuarioLogueado);
-		model.put("entrada", entradaComprada);
+		model.put("entradas", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
@@ -159,6 +165,36 @@ public class ControladorEntrada {
 
 		
 		return new ModelAndView("mis-entradas",model);
+	}
+	
+	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
+	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
+									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
+
+		ModelMap model = new ModelMap();
+		
+		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
+		
+		if(null==usuarioLogueado) {
+			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
+			return new ModelAndView("redirect:/registrarme");
+		}
+		
+		try {
+			this.servicioEntrada.prepararCompraEntrada(datosEntrada); 
+		}catch(DatosEntradaInvalidaException q) {
+			redirectAttributes.addFlashAttribute("error","Debe comprar por lo menos una entrada!");
+			return new ModelAndView("redirect:/home");	
+		}
+		
+		List <Entrada> entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuarioList(datosEntrada.getUsuario().getId(),
+																  datosEntrada.getFuncion().getId());
+		
+		model.put("usuario", usuarioLogueado);
+		model.put("entrada", entradaComprada);
+		model.put("mensaje", "Entrada Comprada Exitosamente");
+		
+		return new ModelAndView("entrada",model);
 	}
 	*/
 

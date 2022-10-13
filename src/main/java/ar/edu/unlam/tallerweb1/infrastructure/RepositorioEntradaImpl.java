@@ -65,5 +65,21 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		return (Entrada) session.createCriteria(Entrada.class).add(rest1)
 				.add(rest2).setMaxResults(1).uniqueResult();
 	}
+	
+		// Usa Entrada, entrada tiene acceso facil a las dos entidades, y tiene todo lo necesario para realizar esto
+	
+//		@Override
+//		public Long getAsientosOcupados(Long funcionId) {
+//			final Session session = sessionFactory.getCurrentSession();
+//			
+//			Criterion rest1 = Restrictions.eq("F.id", funcionId);
+//			Criterion rest2 = Restrictions.eq("A.ocupado", true);
+//			
+//			
+//			session.createCriteria(Entrada.class).createAlias("asiento", "A")
+//												 .createAlias("funcion", "F")
+//			 									 .add(rest1).add(rest2).list();
+//			
+//		}
 
 }

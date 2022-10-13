@@ -111,5 +111,6 @@ public class RepositorioFuncionTest extends SpringTest{
 		session().save(funcion);
 		return funcion;
 	}
+	
 
 }

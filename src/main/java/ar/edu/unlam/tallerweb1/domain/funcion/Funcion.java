@@ -88,14 +88,6 @@ public class Funcion {
 		this.lenguaje = lenguaje;
 	}
 
-	public Sala getSala() {
-		return sala;
-	}
-
-	public void setSala(Sala sala) {
-		this.sala = sala;
-	}
-
 	public Double getPrecio() {
 		return precio;
 	}
@@ -104,6 +96,15 @@ public class Funcion {
 		this.precio = precio;
 	}
 
+	public Sala getSala() {
+		return sala;
+	}
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
+
+	
 	
 	
 

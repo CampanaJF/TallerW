@@ -1,9 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;
@@ -11,83 +11,170 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.AsientoNoDisponibleException;
+import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 
 public class ServicioEntradaTest {
 	
 	private RepositorioEntrada repositorioEntrada = mock(RepositorioEntrada.class);
+
 	
 	private ServicioEntradaImpl servicioEntrada = new ServicioEntradaImpl(repositorioEntrada);
 	
 	@Test
-	public void queSePuedaComprarUnaEntrada() {
+	public void queSePuedaComprarSoloUnaEntrada() {
 		
-		Usuario usuario = givenUsuario(3L,"Dio");
-    	
-    	Pelicula pelicula = givenPelicula("Indiana Jones");
-    	
-    	Cine cine = givenCine("El Cine");
-    	
-    	Sala sala = givenSala(cine,"Sala 5");
-    	
-    	Funcion funcion = givenFuncion(pelicula,sala);
-    	
-    	DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario);
-    	
-    		
-    	Entrada entrada = whenSeCompraLaEntrada(datosEntrada);
+		Usuario usuario = givenUsuario(1L,"Okarin");
 		
-		thenSeComproLaEntrada(entrada,funcion);
+		Funcion funcion = givenFuncionCompleta();
+		
+		Long cantidadDeEntradas = 1L;
+		
+		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario,cantidadDeEntradas);
+		
+		whenSeCompraUnaEntrada(datosEntrada);
+		
+		thenSeComproUnaEntrada();
+			
 	}
 	
-	private void thenSeComproLaEntrada(Entrada entrada,Funcion funcion) {
-		assertThat(entrada.getFuncion()).isEqualTo(funcion);
-
+	private void whenSeCompraUnaEntrada(DatosEntrada datosEntrada) {
+		this.servicioEntrada.prepararCompraEntrada(datosEntrada);
 		
 	}
 
+	private void thenSeComproUnaEntrada() {
+		verify(this.repositorioEntrada,times(1)).comprarEntrada(anyObject());
+	}
 	
 	@Test
-	public void queSePuedanComprarMultiplesEntradasParaUnaFuncion() {
+	public void queSePuedanComprarMultiplesEntradas() {
 		
-		Usuario usuario1 = givenUsuario(2L,"Usuarin");
-		Usuario usuario2 = givenUsuario(3L,"Okarin");
-    	
-    	Pelicula pelicula = givenPelicula("Indiana Jones");
-    	
-    	Cine cine = givenCine("Cineee");
-    	
-    	Sala sala = givenSala(cine,"Sala 5");
-    	
-    	Funcion funcion = givenFuncion(pelicula,sala);
-    	
-    	DatosEntrada datosEntrada1 = givenDatosEntrada(funcion,usuario1);
-    	DatosEntrada datosEntrada2 = givenDatosEntrada(funcion,usuario1);
-    	DatosEntrada datosEntrada3 = givenDatosEntrada(funcion,usuario2);
-    	
-		Entrada entrada1 = whenSeCompraLaEntrada(datosEntrada1);
-    	Entrada entrada2 = whenSeCompraLaEntrada(datosEntrada2);
-    	Entrada entrada3 = whenSeCompraLaEntrada(datosEntrada3);
-    				
-		thenSeCompraronLasEntradas(entrada1,entrada2,entrada3);
+		Usuario usuario = givenUsuario(1L,"Okarin");
+		
+		Funcion funcion = givenFuncionCompleta();
+		
+		Long cantidadDeEntradas = 5L;
+		
+		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario,cantidadDeEntradas);
+			
+		whenSeCompranMultiplesEntradas(datosEntrada);
+		
+		thenSeCompranMultiplesEntradas();
+			
 	}
 	
-	private Entrada whenSeCompraLaEntrada(DatosEntrada DE) {
-		Entrada entrada = new Entrada ();
-		entrada.setFuncion(DE.getFuncion());
-		entrada.setUsuario(DE.getUsuario());
-		return entrada;
+	private void whenSeCompranMultiplesEntradas(DatosEntrada datosEntrada) {
+		this.servicioEntrada.prepararCompraEntrada(datosEntrada);
+		
 	}
 
-	private void thenSeCompraronLasEntradas(Entrada entrada1, Entrada entrada2, Entrada entrada3) {
-		assertThat(entrada1.getFuncion().getSala().getCine().getNombreCine()).isEqualTo("Cineee");
-		assertThat(entrada2.getUsuario().getNombre()).isEqualTo("Usuarin");
-		assertThat(entrada3.getUsuario().getNombre()).isEqualTo("Okarin");
+	private void thenSeCompranMultiplesEntradas() {
+		verify(this.repositorioEntrada,times(5)).comprarEntrada(anyObject());
+		
+	}
 
+	@Test(expected = DatosEntradaInvalidaException.class)
+	public void queNoSePuedaComprarUnaEntradaSiTieneDatosInvalidosCantidadEntrada0() {
+		
+		Usuario usuario = givenUsuario(1L,"Okarin");
+		
+		Funcion funcion = givenFuncionCompleta();
+		
+		Long cantidadDeEntradas = 0L;
+		
+		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario,cantidadDeEntradas);
+		
+		whenSeCompraUnaEntrada(datosEntrada);
+				
+	}
+	
+	@Test(expected = DatosEntradaInvalidaException.class)
+	public void queNoSePuedaComprarUnaEntradaSiTieneDatosInvalidosSinFuncion() {
+		
+		Usuario usuario = givenUsuario(1L,"Okarin");
+		
+		Long cantidadDeEntradas = 0L;
+		
+		DatosEntrada datosEntrada = givenDatosEntrada(null,usuario,cantidadDeEntradas);
+		
+		whenSeCompraUnaEntrada(datosEntrada);
+				
+	}
+	
+
+//	@Test(expected = AsientoNoDisponibleException.class)
+//	public void queNoSePuedaComprarUnaEntradaSiYaNoHayAsientosDisponiblesParaEsaFuncion() {
+//		
+//		Usuario usuario = givenUsuario(1L,"Okarin");
+//		
+//		Funcion funcion = givenFuncionCompletaConAsientosDisponible(1L);
+//		
+//		Long cantidadDeEntradas = 1L;
+//		
+//		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario,cantidadDeEntradas);
+//		
+//		whenSeCompraUnaEntrada(datosEntrada);
+//		
+//		whenSeCompraUnaEntrada(datosEntrada);
+//			
+//	}
+	
+//	@Test
+//	public void queSeObtengaLaCantidadDeAsientosRestantesDeUnaFuncion() {
+//		Funcion funcion = givenFuncionCompletaConAsientosDisponible(1L);
+//		
+//		Long asientosDisponibles = whenSeObtieneLaCantidadDeAsientosDisponibles(funcion);
+//		
+//		thenSeObtieneLaCantidadDeAsientosDisponibles(asientosDisponibles);
+//	}
+//	
+//	private Long whenSeObtieneLaCantidadDeAsientosDisponibles(Funcion funcion) {
+//		Long asientosDisponibles = this.servicioEntrada.cantidadDeAsientosDisponiblesDeLaFuncion(funcion.getId());
+//		
+//		return asientosDisponibles;
+//	}
+//
+//	private void thenSeObtieneLaCantidadDeAsientosDisponibles(Long asientosDisponibles) {
+//		assertThat(asientosDisponibles).isEqualTo(1L);
+//		
+//	}
+
+	private Funcion givenFuncionCompletaConAsientosDisponible(Long asientos) {
+		
+		Funcion funcion = new Funcion();
+		Sala sala = givenSala(givenCine("Cinemax"),"Sala 42");
+		sala.setAsientosTotales(asientos);
+		
+		List <Asiento> asientosFuncion = new ArrayList<>();
+		
+		while(asientos>0L) {
+			asientosFuncion.add(givenAsientoNoOcupado(sala));
+			asientos--;
+		}
+		
+		funcion.setPelicula(givenPelicula("Indiana Jones"));
+		funcion.setPrecio(599.99);
+		funcion.setSala(sala);
+		
+		return funcion;
+	}
+	
+	private Funcion givenFuncionCompleta() {
+		
+		Funcion funcion = new Funcion();
+		
+		funcion.setPelicula(givenPelicula("Indiana Jones"));
+		funcion.setPrecio(599.99);
+		funcion.setSala(givenSala(givenCine("Cinemax"),"Sala 42"));
+		
+		return funcion;
 	}
 
 	private Cine givenCine(String nombreCine) {
@@ -102,10 +189,11 @@ public class ServicioEntradaTest {
 		return pelicula;
 	}
 	
-	private DatosEntrada givenDatosEntrada(Funcion funcion, Usuario usuario) {
+	private DatosEntrada givenDatosEntrada(Funcion funcion, Usuario usuario,Long cantidad) {
 		DatosEntrada datosEntrada = new DatosEntrada();
 		datosEntrada.setFuncion(funcion);
 		datosEntrada.setUsuario(usuario);
+		datosEntrada.setCantidad(cantidad);
 		return datosEntrada;
 	}
 
@@ -115,6 +203,24 @@ public class ServicioEntradaTest {
 		funcion.setPelicula(pelicula);
 		funcion.setSala(sala);
 		return funcion;
+	}
+	
+	private Asiento givenAsientoOcupado(Sala sala) {
+		Asiento asiento = new Asiento();
+		asiento.setId(new Random().nextLong());
+		asiento.setSala(sala);
+		asiento.setOcupado(true);
+		
+		return asiento;
+	}
+	
+	private Asiento givenAsientoNoOcupado(Sala sala) {
+		Asiento asiento = new Asiento();
+		asiento.setId(new Random().nextLong());
+		asiento.setSala(sala);
+		asiento.setOcupado(false);
+		
+		return asiento;
 	}
 	
 	private Sala givenSala(Cine cine,String string) {

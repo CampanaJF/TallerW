@@ -2,8 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>	
+
 
 	<%@include file="head.jsp"%>
 	
@@ -103,7 +102,7 @@
                 </div>
                 </div>
                 
-                	Cantidad: <form:input class="quantity form-control cantidad-form" placeholder="1" path="cantidad" />
+                	Cantidad: <form:input class="quantity form-control cantidad-form" value ="1" placeholder="1" path="cantidad" />
                 	<form:hidden path="usuario.id" value="${usuario.id}" />
                 	
                 	<p class="total">Total: <span id="total">${funciones.get(0).precio}</span></p>
