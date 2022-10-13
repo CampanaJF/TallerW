@@ -54,7 +54,7 @@ public class ControladorUsuario {
 		
 		if (usuarioBuscado != null) {
 			servicioSession.setUserId(usuarioBuscado.getId(), request);
-			return new ModelAndView("redirect:/home");
+			return new ModelAndView("redirect:/cartelera");
 		} else {
 			model.put("error", "Usuario o clave incorrecta!");
 		}
@@ -101,7 +101,7 @@ public class ControladorUsuario {
 		}
 
 		redirectAttributes.addFlashAttribute("mensaje",mensaje);
-		return new ModelAndView("redirect:/home");
+		return new ModelAndView("redirect:/cartelera");
 			
 	}
 	

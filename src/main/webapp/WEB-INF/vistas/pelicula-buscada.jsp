@@ -10,35 +10,30 @@
 <%@include file="header.jsp"%>
 
 <c:if test="${not empty peliculas}">
-<div>
+    <div>
+        <h2 class="text-white  mt-lg-5 ms-5 titulo-cartelera">Resultados de la búsqueda:</h2>
+    </div>
+    <section class="d-flex  flex-row flex-wrap text-center">
     <c:forEach items="${peliculas}" var="pelicula">
-        <div>
-            <h2 class="text-white  mt-lg-5 ms-5  titulo-cartelera">Peliculas encontradas:</h2>
-        </div>
+        <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+                      <div>
+                         <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
+                            <img src="img/peliculas/${pelicula.poster}.jpg" class="pelicula mb-2" width="270" height="386" >
+                            <h4  class="text-center text-white">${pelicula.titulo}</h4>
 
-        <div  class="d-block ms-5 ">
-            <ul class="m-2 flex-wrap d-flex list-unstyled">
-                <li class="p-5 m-b2 position-relative">
-                    <div class="d-block text-center">
-                        <a href="" class="text-decoration-none"> <!-- a ver detalle de la pelicula -->
-                            <figure>
-                                <img  src="img/peliculas/${pelicula.poster}.jpg" width="270" height="386" style="border: 5px solid white">
-                            </figure>
-                            <h4 class="text-center text-white">${pelicula.titulo}</h4>
                         </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+                      </div>
+        </article>
     </c:forEach>
-</div>
+    </section>
 </c:if>
 
 <c:if test="${empty peliculas}">
     <div class="body-perfil">
-        <h3 class="text-center text-white mt-3">Lo sentimos, la pelicula buscada no se encuentra disponible</h3>
+        <h3 class="text-center text-white mt-3">Lo sentimos, no se encontraron resultados para su búsqueda.</h3>
     </div>
 </c:if>
 
 </body>
+
 </html>
