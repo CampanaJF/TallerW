@@ -162,15 +162,14 @@
                         </div>
                          <div class="row">
                          <p class="text-light genero">${pelicula.getGenero().getDescripcion() }</p>
-                         <p class="calificacion">Calificacion</p>
-                         </div>
+                 
                          
                          
                     </div>
                 </div>
                 </div>
                 </div>
-              
+              </div>
                 <button class="btn btn-lg text-light" id="comprarEntradas">Comprar
                 Entradas</button>
             </article>

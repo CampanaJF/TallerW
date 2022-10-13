@@ -103,4 +103,39 @@ public class ServicioPeliculaTest {
     private void thenNoEncuentroPeliculas(List<Pelicula>peliculas){
        assertThat(peliculas).isNull();
     }
+    
+    
+    @Test
+    public void consultarQueDevuelvaLosEstrenosDelMes() {
+    	
+    	givenPeliculasEstrenosDelMes();
+    	List<Pelicula>peliculasEstrenos=whenConsultoEstrenoDelMes();
+    	thenObtengoEstrenoDelMes(peliculasEstrenos);
+    }
+
+	private void thenObtengoEstrenoDelMes(List<Pelicula>peliculasEstrenos) {
+		assertEquals(2,peliculasEstrenos.size());
+		
+	}
+
+	private List<Pelicula> whenConsultoEstrenoDelMes() {
+		return servicioPelicula.obtenerPeliculaEstrenos();
+		
+	}
+
+	private void givenPeliculasEstrenosDelMes() {
+		Pelicula pelicula=new Pelicula();
+		Pelicula pelicula2=new Pelicula();
+	
+		List<Pelicula>peliculasEstrenos=new ArrayList<>();
+		peliculasEstrenos.add(pelicula);
+		peliculasEstrenos.add(pelicula2);
+		when(repositorioPelicula.getEstrenosDelMes()).thenReturn(peliculasEstrenos);
+		
+	}
+    
+    
+    
+    
+    
 }

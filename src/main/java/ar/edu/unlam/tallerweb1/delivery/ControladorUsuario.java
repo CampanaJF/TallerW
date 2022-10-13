@@ -132,17 +132,7 @@ public class ControladorUsuario {
         return new ModelAndView("redirect:/home");
     }
 	
-	@RequestMapping(path = "/home", method = RequestMethod.GET)
-	public ModelAndView goHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
-		
-		ModelMap model = new ModelMap();
-		Long userId = this.servicioSession.getUserId(request);
-		 
-		//model.put("error", mensaje);
-		model.put("usuario", userId);
-		
-		return new ModelAndView("home",model);
-	}
+	
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {

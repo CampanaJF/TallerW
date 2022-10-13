@@ -105,15 +105,22 @@ main{
 .informacionPeli{
 	background-color:#1a1a1a;
 	height:100px;
+	display:none !important;
+	
 }
 
 .tile:hover {
   transform: scale(1.5);
 }
-
+.tile:hover .informacionPeli{
+	
+	display:flex !important;
+	
+}
 .tile:hover .overlay {
   opacity: 1;
 z-index:99;
+
 }
 
 .shiftLeft {

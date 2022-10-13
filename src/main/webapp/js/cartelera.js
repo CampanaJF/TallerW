@@ -3,7 +3,6 @@
 function getContextPath() {
    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 }
-alert(getContextPath());
 
 function eliminarFiltro(capsula){
 filtro={
@@ -21,7 +20,7 @@ $.ajax({
         //aqui redireccionas
     },
     error: function (request, status, error) {
-        alert(request.responseText);
+     
     }
 	});
                

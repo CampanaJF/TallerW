@@ -28,31 +28,35 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControladorCarteleraTest {
+public class ControladorCarteleraDeberia {
 
 	ServicioGenero servicioGenero;
 	ServicioClasificacion servicioClasificacion;
 	ServicioPelicula servicioPelicula;
-	
+	ControladorCartelera controlador;
 	@Before
     public void init(){
         servicioGenero = mock(ServicioGenero.class);
         servicioPelicula = mock(ServicioPelicula.class);
         servicioClasificacion = mock(ServicioClasificacion.class);
+        controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula);
 	}
-	@Autowired
-	private ControladorCartelera controlador;
+	
+	
 	
 	@Test
 	public void verificaQueElNombreDeLaVistaSeaCorrecto() {
-		Filtro filtro=new Filtro(null,null,null);
 		givenSeObtieneListaDeGeneros();
 		givenSeObtieneListaClasificacion();
-		givenSeObtieneListaPeliculas(filtro);
+		givenSeObtieneListaPeliculas(noFilter());
 		ModelAndView modelo = whenIrACartelera();
 		
 		thenElNombreDeLaVistaSeaCorrecta(modelo);
 		thenLaVistaContengaListaGenero(modelo);
+	}
+
+	private Filtro noFilter() {
+		return new Filtro(null,null,null);
 	}
 
 	private MapAssert<String, Object> thenLaVistaContengaListaGenero(ModelAndView modelo) {
@@ -64,7 +68,7 @@ public class ControladorCarteleraTest {
 	}
 
 	private ModelAndView whenIrACartelera() {
-		controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula);
+		
 		ModelAndView modelo=controlador.irACartelera(null, null, null);
 		return modelo;
 	}

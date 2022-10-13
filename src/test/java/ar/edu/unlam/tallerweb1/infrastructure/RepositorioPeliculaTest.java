@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -106,4 +108,45 @@ public class RepositorioPeliculaTest extends SpringTest {
 		thenObtengoUnaCantidadPeliculas(peliculas,0);
 	}
 
+	@Test
+	@Transactional
+	@Rollback
+	public void consultaQueDevuelveLosEstrenosDelMes() {
+		givenQueHayPeliculasEstrenosCargadas();
+		List<Pelicula> peliculas= whenConsultoPorLosEstrenos();
+		
+		thenObtengoEstrenos(peliculas,2);
+		
+		
+		
+	}
+
+	private void thenObtengoEstrenos(List<Pelicula> peliculas, int i) {
+		assertEquals(i,peliculas.size());
+		
+	}
+
+	private List<Pelicula> whenConsultoPorLosEstrenos() {
+		
+		return repositorioPelicula.getEstrenosDelMes();
+	}
+
+	private void givenQueHayPeliculasEstrenosCargadas() {
+		Pelicula peli1=new Pelicula();
+		Pelicula peli2=new Pelicula();
+		Pelicula peli3=new Pelicula();
+		peli1.setFechaEstreno(new Date("2022/10/15") );
+		peli1.setTitulo("Escalera al infierno");
+		peli2.setFechaEstreno(new Date("2022/10/17") );
+		peli2.setTitulo("El ladron de los siglos");
+		peli3.setFechaEstreno(new Date("2021/10/01") );
+		peli3.setTitulo("Can el volador");
+		session().save(peli1);
+		session().save(peli2);
+		session().save(peli3);
+		
+	}
+	
+	
+	
 }

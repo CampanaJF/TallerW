@@ -11,4 +11,6 @@ public interface RepositorioPelicula {
 	List<Pelicula> getPeliculas();
 	
     List<Pelicula> buscarPeliculas(String titulo);
+
+	List<Pelicula> getEstrenosDelMes();
 }
