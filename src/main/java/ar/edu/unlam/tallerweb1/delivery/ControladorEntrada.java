@@ -44,6 +44,12 @@ public class ControladorEntrada {
 	
 	/*TO DO 
 	 * 		- Agregar validaciones en el html para los formularios
+	 *      - Mas Datos de la pelicula a la hora de comprar
+	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
+	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
+	 *      - Hacer horario string, y date solo la fecha
+	 *      - Sacar datosEntrada de servicioEntrada
+	 *      - Cambiar cantidad a int
 	 * 
 			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
@@ -85,17 +91,13 @@ public class ControladorEntrada {
 	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
 									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
 
-		ModelMap model = new ModelMap();
 		
-		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
-		
-		if(null==usuarioLogueado) {
-			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
-			return new ModelAndView("redirect:/registrarme");
-		}
+		ModelAndView usuarioLogueado = validarUsuarioLogueado(request, redirectAttributes);
+		if(usuarioLogueado!=null) 
+			return usuarioLogueado;
 		
 		try {
-			this.servicioEntrada.prepararCompraEntrada(datosEntrada); 
+			this.servicioEntrada.comprar(datosEntrada); 
 		}catch(DatosEntradaInvalidaException q) {
 			redirectAttributes.addFlashAttribute("mensaje","Debe comprar por lo menos una entrada y seleccionar una funcion!");
 			return new ModelAndView("redirect:/home");	
@@ -103,12 +105,23 @@ public class ControladorEntrada {
 		
 		List <Entrada> entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuarioList(datosEntrada.getUsuario().getId(),
 																  							datosEntrada.getFuncion().getId());
-		
-		model.put("usuario", usuarioLogueado);
+		ModelMap model = new ModelMap();
+	//	model.put("usuario", usuarioLogueado);
 		model.put("entradas", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
+	}
+
+	private ModelAndView validarUsuarioLogueado(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
+		
+		if(null==usuarioLogueado) {
+			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
+			return new ModelAndView("redirect:/registrarme");
+		}
+		
+		return null;
 	}
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
@@ -142,59 +155,6 @@ public class ControladorEntrada {
 		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 	}
 	
-	/* Removido por ahora
-	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
-	public ModelAndView misEntradas(HttpServletRequest request) {
-		
-		ModelMap model = new ModelMap();
-			
-		List<Entrada> entradas = this.servicioEntrada.getEntradas(obtenerUsuarioLogueado(request).getId());
-
-		if(entradas.isEmpty()) {
-			String mensaje = "No Has Comprado Nignuna Entrada";
-			
-			model.put("usuario", obtenerUsuarioLogueado(request));
-			model.put("mensaje",mensaje);
-			
-			return new ModelAndView("mis-entradas",model);
-		}
-		
-		model.put("usuario", obtenerUsuarioLogueado(request));
-		model.put("entradas", entradas);
-
-		
-		return new ModelAndView("mis-entradas",model);
-	}
 	
-	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
-	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
-									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
-
-		ModelMap model = new ModelMap();
-		
-		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
-		
-		if(null==usuarioLogueado) {
-			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
-			return new ModelAndView("redirect:/registrarme");
-		}
-		
-		try {
-			this.servicioEntrada.prepararCompraEntrada(datosEntrada); 
-		}catch(DatosEntradaInvalidaException q) {
-			redirectAttributes.addFlashAttribute("error","Debe comprar por lo menos una entrada!");
-			return new ModelAndView("redirect:/home");	
-		}
-		
-		List <Entrada> entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuarioList(datosEntrada.getUsuario().getId(),
-																  datosEntrada.getFuncion().getId());
-		
-		model.put("usuario", usuarioLogueado);
-		model.put("entrada", entradaComprada);
-		model.put("mensaje", "Entrada Comprada Exitosamente");
-		
-		return new ModelAndView("entrada",model);
-	}
-	*/
 
 }
