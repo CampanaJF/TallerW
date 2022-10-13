@@ -1,6 +1,5 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -39,42 +38,5 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 
        return this.repositorioPelicula.buscarPeliculas(titulo);
     }
-
-	@Override
-	public Pelicula buscarPeliculaPorId(Long id) {
-		return this.repositorioPelicula.buscarPeliculaPorId(id);
-	}
-
-	@Override
-	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(String descripcion) {
-		return this.repositorioPelicula.obtenerPeliculasSimilaresPorGenero(descripcion);
-	}
-
-	@Override
-	public void guardarValoracionPelicula(int estrellas, Pelicula pelicula) {
-       this.repositorioPelicula.guardarValoracionPelicula(estrellas,pelicula);
-	}
-
-	@Override
-	public Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada) {
-		Long suma=0L;
-		Long promedioValoracion=0L;
-		List<Valoracion> valoraciones= this.repositorioPelicula.listarValoracionesPorPelicula(peliculaBuscada);
-		int cantidadValoraciones = valoraciones.size();
-
-		if(cantidadValoraciones!=0){
-			for (Valoracion val:valoraciones) {
-				suma=suma+val.getEstrellas();
-			}
-			promedioValoracion=suma/valoraciones.size();
-		}
-
-		return promedioValoracion;
-	}
-
-	@Override
-	public List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada) {
-		return this.repositorioPelicula.listarValoracionesPorPelicula(buscada);
-	}
-
+	
 }

@@ -7,7 +7,7 @@
         </a>
 
         <ul class="ps-3 nav col-12 col-lg-auto me-lg-3 mb-2 justify-content-center mb-md-0">
-   <!--       <li><a href="home" class="nav-link px-2 text-secondary">Inicio</a></li>-->
+          <li><a href="home" class="nav-link px-2 text-secondary">Inicio</a></li>
           <li><a href="cartelera" class="nav-link px-2 text-white nav-text">Cartelera</a></li>
           <li><a href="#" class="nav-link px-2 text-white nav-text">Goloton</a></li>
         </ul>
@@ -15,8 +15,8 @@
         
         <c:if test="${empty usuario}">
         
-        <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto"  onsubmit="return validaCaracteres()">
-            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" id="titulo">
+        <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto">
+            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo">
         </form>
 
         <div class="text-end">
@@ -31,7 +31,7 @@
         <c:if test="${not empty usuario}">
 
         <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto">
-            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" >
+            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo">
         </form>
 
         <div class="text-end">
