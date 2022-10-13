@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
@@ -22,15 +23,8 @@ public class Entrada {
 	@ManyToOne
 	private Funcion funcion;
 	
-	private Double precio;
-	
-	private String pelicula;
-	
-	private String sala;
-	
-	private String detalles;
-	
-	private Long asiento;
+	@ManyToOne
+	private Asiento asiento;
 
 	public Long getId() {
 		return id;
@@ -56,45 +50,14 @@ public class Entrada {
 		this.funcion = funcion;
 	}
 
-	public String getPelicula() {
-		return pelicula;
-	}
-
-	public void setPelicula(String pelicula) {
-		this.pelicula = pelicula;
-	}
-
-	public String getSala() {
-		return sala;
-	}
-
-	public void setSala(String sala) {
-		this.sala = sala;
-	}
-
-	public Long getAsiento() {
+	public Asiento getAsiento() {
 		return asiento;
 	}
 
-	public void setAsiento(Long asiento) {
+	public void setAsiento(Asiento asiento) {
 		this.asiento = asiento;
 	}
 
-	public String getDetalles() {
-		return detalles;
-	}
-
-	public void setDetalles(String detalles) {
-		this.detalles = detalles;
-	}
-
-	public Double getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Double precio) {
-		this.precio = precio;
-	}
 	
 	
 	

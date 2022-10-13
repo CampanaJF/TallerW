@@ -7,7 +7,7 @@
 
 	<%@include file="head.jsp"%>
 	
-	<title>${pelicula}</title>
+	<title>${pelicula.titulo}</title>
 	
 <body class="bgColor">
 
@@ -25,14 +25,14 @@
 			<div class="col">
 				<div class="text-center"> 
 					<img class="img-fluid portadaPelicula" 
-					src="<c:url value="/img/peliculas/backtothefuture.jpg"/>">
+					src="<c:url value="${pelicula.poster}"/>">
 				</div>
 			</div>
 
 			<div class="col align-self-center text-center text-white">
-				<h1>Back to the Future</h1>
-				<h4>Steven Spielberg</h4>
-				<h5 class="pb-3">Michael J. Fox - Christopher Lloyd</h5>
+				<h1>${pelicula.titulo}</h1>
+				<h4>${pelicula.director}</h4>
+				<h5 class="pb-3">${pelicula.protagonista}</h5>
 				
 				
 				<form:form action="entrada-preparacion" modelAttribute="datosCine" method="POST">
@@ -41,48 +41,19 @@
 							  
 				 <c:forEach items="${cines}" var="cines">
 				  
-				  <form:option value="${cines.cine.id}" label="${cines.cine.nombre}"/>
+				  <form:option value="${cines.cine.id}" label="${cines.cine.nombreCine}"/>
 				  
 				 </c:forEach>
 				 
 				</form:select>
 				
 				
-				<form:hidden path="pelicula" value="${pelicula}" />
+				<form:hidden path="pelicula" value="${pelicula.id}" />
 				
 				
 				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
 				
 				</form:form> 
-	
-	
-		<%-- 
-				<form:form action="entrada-preparacion" method="POST">
-				
-				
-				
-				<form:select class="form-select" path="cineId" >
-							  
-				 <c:forEach items="${cines}" var="cines">
-				  
-				  <form:option value="${cines.cine.id}" label="${cines.cine.nombre}"/>
-				  
-				 </c:forEach>
-				 
-				</form:select>
-				
-				
-				
-				<form:hidden path="peliculaId" value="${pelicula}" />
-				
-				
-				
-				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
-				
-				</form:form>   
-				
-				--%>
-				
 				
 			</div>
 
