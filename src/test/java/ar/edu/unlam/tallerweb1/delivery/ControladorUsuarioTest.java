@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 //import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
+
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
@@ -35,26 +36,26 @@ public class ControladorUsuarioTest {
 	private ModelAndView mav = new ModelAndView();
 	
 	
-	@Test
-	public void queSePuedaEntrarAlPerfilDeUsuario(){
-		
-    	whenSeQuiereVerElPerfil();
-    	
-    	thenSePuedeVerElPerfil();
-	
-	}
-	
-	private void whenSeQuiereVerElPerfil() {
-		mocksSessionRequests();
-		
-		mav = this.controladorUsuario.verPerfil(mockRequest, null);
-		
-	}
-
-	private void thenSePuedeVerElPerfil() {
-		assertThat(mav.getViewName()).isEqualTo("perfil-usuario");
-		
-	}
+//	@Test
+//	public void queSePuedaEntrarAlPerfilDeUsuario(){
+//		
+//    	whenSeQuiereVerElPerfil();
+//    	
+//    	thenSePuedeVerElPerfil();
+//	
+//	}
+//	
+//	private void whenSeQuiereVerElPerfil() {
+//		mocksSessionRequests();
+//		
+//		mav = this.controladorUsuario.verPerfil(mockRequest, null);
+//		
+//	}
+//
+//	private void thenSePuedeVerElPerfil() {
+//		assertThat(mav.getViewName()).isEqualTo("perfil-usuario");
+//		
+//	}
 
 
 	

@@ -14,7 +14,7 @@ import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.RepositorioFuncion;
 
 
-@SuppressWarnings({ "unchecked", "deprecation" })
+@SuppressWarnings({ "unchecked", "deprecation"})
 @Repository("repositorioFuncion")
 @Transactional
 public class RepositorioFuncionImpl implements RepositorioFuncion {
@@ -28,17 +28,19 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 
 	@Override
 	public List<Funcion> getFuncionesDeUnCine(Long cine,Long pelicula) {
-		//TO DO
-		// ordenar por horario y  filtrar horarios repetidos una ves se implemente la clase definitiva para manejarlos
-		// filtrar por formato
+		
 		final Session session = sessionFactory.getCurrentSession();
 		
-		Criterion rest1 = Restrictions.eq("cine.id", cine);
+		Criterion rest1 = Restrictions.eq("cine.id",cine);
 		Criterion rest2 = Restrictions.eq("pelicula.id", pelicula);
 		
-		return session.createCriteria(Funcion.class).add(rest1).add(rest2).list();
+		return session.createCriteria(Funcion.class)
+							 .createAlias("sala", "salas")
+							 .createAlias("salas.cine", "cine")
+							 .add(rest1).add(rest2).list();
+	
 	}
-
+	  
 	@Override
 	public Funcion getFuncion(Long funcionId) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -47,5 +49,7 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		
 		return (Funcion) session.createCriteria(Funcion.class).add(rest1).uniqueResult();
 	}
+
+
 
 }
