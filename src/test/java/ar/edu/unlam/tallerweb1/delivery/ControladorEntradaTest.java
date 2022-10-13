@@ -74,7 +74,7 @@ public class ControladorEntradaTest {
 	
 	private void thenSeCompraLaEntradaParaEsaFuncion() {
 		assertThat(mav.getViewName()).isEqualTo("entrada");
-		assertThat(mav.getModel().get("entrada")).isNotNull();
+		assertThat(mav.getModel().get("entradas")).isNotNull();
 		
 	}
 

@@ -36,26 +36,26 @@ public class ControladorUsuarioTest {
 	private ModelAndView mav = new ModelAndView();
 	
 	
-	@Test
-	public void queSePuedaEntrarAlPerfilDeUsuario(){
-		
-    	whenSeQuiereVerElPerfil();
-    	
-    	thenSePuedeVerElPerfil();
-	
-	}
-	
-	private void whenSeQuiereVerElPerfil() {
-		mocksSessionRequests();
-		
-		mav = this.controladorUsuario.verPerfil(mockRequest, null);
-		
-	}
-
-	private void thenSePuedeVerElPerfil() {
-		assertThat(mav.getViewName()).isEqualTo("perfil-usuario");
-		
-	}
+//	@Test
+//	public void queSePuedaEntrarAlPerfilDeUsuario(){
+//		
+//    	whenSeQuiereVerElPerfil();
+//    	
+//    	thenSePuedeVerElPerfil();
+//	
+//	}
+//	
+//	private void whenSeQuiereVerElPerfil() {
+//		mocksSessionRequests();
+//		
+//		mav = this.controladorUsuario.verPerfil(mockRequest, null);
+//		
+//	}
+//
+//	private void thenSePuedeVerElPerfil() {
+//		assertThat(mav.getViewName()).isEqualTo("perfil-usuario");
+//		
+//	}
 
 
 	
