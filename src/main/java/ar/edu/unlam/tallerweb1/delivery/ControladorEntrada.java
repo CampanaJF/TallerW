@@ -47,10 +47,10 @@ public class ControladorEntrada {
 	 *      - Mas Datos de la pelicula a la hora de comprar
 	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
 	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
+	 *      
+	 *      DONE
 	 *      - Hacer horario string, y date solo la fecha
-	 *      - Sacar datosEntrada de servicioEntrada
-	 *      - Cambiar cantidad a int
-	 * 
+	 *     
 			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 			-
@@ -97,7 +97,7 @@ public class ControladorEntrada {
 			return usuarioLogueado;
 		
 		try {
-			this.servicioEntrada.comprar(datosEntrada); 
+			this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getCantidad()); 
 		}catch(DatosEntradaInvalidaException q) {
 			redirectAttributes.addFlashAttribute("mensaje","Debe comprar por lo menos una entrada y seleccionar una funcion!");
 			return new ModelAndView("redirect:/home");	

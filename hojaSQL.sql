@@ -2,10 +2,6 @@ drop database cineclub;
 create schema cineclub; 
 use cineclub;
 
-select * from cine;
-
-select * from cinepelicula;
-
 insert into usuario (email,nombre,password) values
 					('pacofranco45@gmail.com','Franco','1234'),
                     ('mail@mail.com','main','1234'),
@@ -113,47 +109,45 @@ VALUES ("6","ATP");
 		 he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark','2','3');
 		 
     
-select * from pelicula;
-
  insert into cinepelicula(cine_id,pelicula_id) values
 						  (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),
                           (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),
 						  (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),
                           (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7);
 
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,1),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,1),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,3),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,2);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','17:00','Japones',750.00,true,1,1,1),
+                    ('2022-09-22','13:00','Japones',750.00,true,2,1,1),
+                    ('2022-09-22','17:00','Castellano',1050.00,false,3,1,3),
+                    ('2022-09-22','20:00','Japones',750.00,true,2,1,2);
 
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,4),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,4),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,5),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,6);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','17:00','Japones',750.00,true,1,1,4),
+                    ('2022-09-22','13:00','Japones',750.00,true,2,1,4),
+                    ('2022-09-22','17:00','Castellano',1050.00,false,3,1,5),
+                    ('2022-09-22','20:00','Japones',750.00,true,2,1,6);
                     
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,7),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,7),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,8),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,9);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','17:00','Japones',750.00,true,1,1,7),
+                    ('2022-09-22','13:00','Japones',750.00,true,2,1,7),
+                    ('2022-09-22','17:00','Castellano',1050.00,false,3,1,8),
+                    ('2022-09-22','20:00','Japones',750.00,true,2,1,9);
                     
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,10),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,10),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,11),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,12);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('22-09-22','17:00','Japones',750.00,true,1,1,10),
+                    ('22-09-22','13:00','Japones',750.00,true,2,1,10),
+                    ('22-09-22','17:00','Castellano',1050.00,false,3,1,11),
+                    ('22-09-22','20:00','Japones',750.00,true,2,1,12);
                     
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 15:00','Japones',750.00,true,1,1,1),
-                    ('2022-09-22 23:00','Japones',750.00,true,2,1,1),
-                    ('2022-09-22 12:00','Castellano',1050.00,false,3,1,2),
-                    ('2022-09-22 23:00','Japones',750.00,true,2,1,2);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','15:00','Japones',750.00,true,1,1,1),
+                    ('2022-09-22','23:00','Japones',750.00,true,2,1,1),
+                    ('2022-09-22','12:00','Castellano',1050.00,false,3,1,2),
+                    ('2022-09-22','23:00','Japones',750.00,true,2,1,2);
                     
 select * from funcion
 left join sala on funcion.sala_id = sala.id where
-pelicula_id = 2 and sala.id = 1; 
+pelicula_id = 1 and sala.id = 1; 
 
 select * from pelicula p
 join clasificacionPelicula c on p.clasificacionPelicula_id = c.id;
