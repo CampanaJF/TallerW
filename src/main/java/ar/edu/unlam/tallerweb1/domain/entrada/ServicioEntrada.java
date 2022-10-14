@@ -6,9 +6,19 @@ import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
 
 public interface ServicioEntrada {
 
-	Entrada comprarEntrada(DatosEntrada datosEntrada);
+	void comprar(DatosEntrada datosEntrada);
+	
+	void comprarMultiplesEntradas(DatosEntrada datosEntrada);
+	
+	void comprarUnaEntrada(DatosEntrada datosEntrada);
+	
+	void validarEntrada(DatosEntrada datosEntrada);
 	
 	Entrada getEntrada(Long entrada);
+	
+	Entrada getUltimaEntradaDeUsuario(Long usuario,Long funcion);
 
-	List<Entrada> getEntradas(Long uId);
+	List<Entrada> getUltimaEntradaDeUsuarioList(Long usuario,Long funcion);
+	
+	Long cantidadDeAsientosDisponiblesDeLaFuncion(Long funcion);
 }

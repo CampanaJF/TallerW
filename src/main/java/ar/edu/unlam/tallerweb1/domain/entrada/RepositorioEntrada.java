@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface RepositorioEntrada {
 
-	Entrada comprarEntrada(Entrada entrada);
+	void comprarEntrada(Entrada entrada);
 	
 	Entrada getEntrada(Long entrada);
+	
+	Entrada getUltimaEntradaDeUsuario(Long usuario,Long funcion);
 
-	List<Entrada> getEntradas(Long uId);
+	List<Entrada> getUltimaEntradaDeUsuarioList(Long id, Long id2);
 }

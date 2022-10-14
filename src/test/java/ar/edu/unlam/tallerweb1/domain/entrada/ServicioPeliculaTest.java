@@ -1,4 +1,5 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
+import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
@@ -61,13 +62,73 @@ public class ServicioPeliculaTest {
 
  @Test
     public void queSePuedaBuscarUnaPeliculaPorSuTitulo(){
-        //dadp que existen peliculas
+
         givenQueExistenPeliculas();
-        //cuando consulta por la peli
         List<Pelicula> peliculas=whenConsultoPorLaPelicula();
-        //me devuelve uno
         thenSeEncontroLaPelicula(peliculas);
     }
+    @Test
+    public void alRealizarUnaBusquedaNoEncuentroLaPelicula(){
+        givenNoExisteLaPelicula();
+        List<Pelicula> peliculaList= whenBuscoLaPelicula ();
+        thenNoEncuentroPeliculas(peliculaList);
+    }
+
+
+    @Test
+    public void meDebeDevolverUnaListaDePeliculasSimilaresPorGenero(){
+        //dado que existe pelicula
+
+        //dado que existe genero
+        givenExisteGeneroDePelicula("Aventuras");
+        givenQueExistenPeliculasConGenero("Aventuras");
+        //when listo peliculas similares
+        List<Pelicula> similares = whenListoPeliculasSimilaresPorGenero("Aventuras");
+        //then obtengo peliculas similares
+        thenObtengoListaDePeliculasSimilaresPorGenero(similares,"Aventuras");
+    }
+    @Test
+    public void meDebeDevolverCeroCuandoConsultoUnaListaDePeliculasSimilaresPorGenero(){
+        givenExisteGeneroDePelicula("Aventuras");
+        givenQueExistenPeliculasConGenero("Accion");
+        //when listo peliculas similares
+        List<Pelicula> similares = whenListoPeliculasSimilaresPorGenero("Aventuras");
+        //then obtengo peliculas similares
+        thenObtengoCeroEnListaDePeliculasSimilaresPorGenero(similares,0);
+    }
+
+    private void thenObtengoCeroEnListaDePeliculasSimilaresPorGenero(List<Pelicula> similares, int cantidad) {
+        assertThat(similares).hasSize(cantidad);
+    }
+
+    private void thenObtengoListaDePeliculasSimilaresPorGenero(List<Pelicula> similares, String genero) {
+        assertThat(similares).isNotNull();
+        verify(repositorioPelicula,times(1)).obtenerPeliculasSimilaresPorGenero(genero);
+    }
+
+    private List<Pelicula> whenListoPeliculasSimilaresPorGenero(String descripcion) {
+        return this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(descripcion);
+    }
+    private void givenQueExistenPeliculasConGenero(String descripcion){
+        List<Pelicula> peliculaList = new LinkedList<>();
+         Pelicula pelicula = new Pelicula();
+         Genero genero = new Genero();
+         genero.setDescripcion(descripcion);
+         pelicula.setGenero(genero);
+         peliculaList.add(pelicula);
+         when(this.repositorioPelicula.getPeliculas()).thenReturn(peliculaList);
+    }
+    private void givenExisteGeneroDePelicula(String descripcion) {
+        List<Pelicula> peliculaList = new LinkedList<>();
+
+        Pelicula p = new Pelicula();
+        Genero genero = new Genero();
+        genero.setDescripcion(descripcion);
+        p.setGenero(genero);
+        peliculaList.add(p);
+         when(this.repositorioPelicula.buscarPeliculaPorGenero(genero)).thenReturn(peliculaList);
+    }
+
     private void givenQueExistenPeliculas(){
         List<Pelicula> peliculaList = new LinkedList<>();
 
@@ -78,21 +139,13 @@ public class ServicioPeliculaTest {
 
         when(this.repositorioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(peliculaList);
     }
+
     private List<Pelicula> whenConsultoPorLaPelicula(){
         return this.servicioPelicula.buscarPeliculas(PELICULA_TITULO);
     }
     private  void thenSeEncontroLaPelicula(List<Pelicula> peliculaList){
         assertThat(peliculaList).isNotNull();
         verify(repositorioPelicula,times(1)).buscarPeliculas(PELICULA_TITULO);
-    }
-    @Test
-    public void alRealizarUnaBusquedaNoEncuentroLaPelicula(){
-        //dado que la peli no existe
-        givenNoExisteLaPelicula();
-        //when busco la peli
-        List<Pelicula> peliculaList= whenBuscoLaPelicula ();
-        //then no la encuentro
-        thenNoEncuentroPeliculas(peliculaList);
     }
     private void givenNoExisteLaPelicula(){
         when(this.repositorioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(null);
