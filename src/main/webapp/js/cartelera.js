@@ -1,7 +1,31 @@
 
 //AOS.init();
+function getContextPath() {
+   return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+}
 
 function eliminarFiltro(capsula){
+filtro={
+   genero:'',
+   clasificacion:'',
+   orden:''
+}
+
+$.ajax({
+            url: getContextPath()+'/eliminarFiltros',
+            type: 'POST',
+            data: filtro,
+            contentType: "application/x-www-form-urlencoded",
+             success: function (data) {
+        //aqui redireccionas
+    },
+    error: function (request, status, error) {
+     
+    }
+	});
+               
+            
+
 capsula.parentNode.remove();
 }
 
@@ -35,5 +59,7 @@ let orden=document.getElementById("ordenFiltro");
 orden.value=capsula.id
 
   
-
 }
+
+
+

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.Date;
 
@@ -30,8 +31,9 @@ import java.util.Date;
         private String protagonista;
 
         @ManyToOne
+        //@JoinColumn(name ="genero",referencedColumnName="id")
         private Genero genero;
-
+        
         private Integer duracion;
 
         @ManyToOne
@@ -99,7 +101,15 @@ import java.util.Date;
         public Integer getDuracion() {
             return duracion;
         }
-
+        
+        public String getDuracionEnHoras() {
+        	Integer conversorAHoras=60;
+        	Integer horas=duracion/conversorAHoras;
+        	Integer minutos=duracion-horas*conversorAHoras;
+        	
+        	return (horas+"h" +minutos+"m"); 
+        	
+        }
         public void setDuracion(Integer duracion) {
             this.duracion = duracion;
         }

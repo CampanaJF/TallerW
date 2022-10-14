@@ -5,6 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class RepositorioGeneroTest extends SpringTest {
 
     @Test
     @Transactional
+    @Rollback
     public void testQueSeDevuelvaListaDeGeneros(){
         dadoQueTenemosGenerosGuardadosEnBaseDeDatos();
         List<Genero> listaGeneros = cuandoConsultoLosGeneros();
@@ -40,6 +42,7 @@ public class RepositorioGeneroTest extends SpringTest {
 
         session().save(genero);
         session().save(genero2);
-
-    }
+}
+    //Agregar para tipo de genero
+    //busqueda por genero por genero/clasificacion por clasificacion busqueda sin filtro
 }
