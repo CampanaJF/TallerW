@@ -61,5 +61,8 @@ orden.value=capsula.id
   
 }
 
+document.querySelector('jsuites-rating').addEventListener('onchange', function(e) {
+    //document.getElementById('console').innerHTML = 'New value: ' + this.value;
+});
 
 

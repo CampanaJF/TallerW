@@ -55,12 +55,12 @@
   
 </div>
 		
-		<h1 class="text-light fw-bolder mt-5">Anticipadas:</h1>
+		<h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
 		
 		
 		
 		
-		<h1 class="text-light fw-bolder mt-5">Estrenos del mes:</h1>
+		<h1 class="text-light fw-bolder mt-5">Estrenos del mes</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach var="pelicula" items="${peliculasEstrenos}">
             <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
@@ -83,9 +83,9 @@
                         </div>
                       
                         </div>
-                         <div class="row">
-                         <p class="text-light genero">${pelicula.getGenero().getDescripcion() }</p>
-                         <p class="calificacion">Calificacion</p>
+                         <div class="d-flex justify-content-around">
+                         <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
+                         <jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}"tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
                          </div>
                          
                          
