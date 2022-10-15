@@ -164,8 +164,8 @@
                         
                          <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
                           
-                 		<jsuites-rating class="estrellas" value="0" tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
- 					
+                 		<jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}"tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+ 						
 						
                 </div>
                 </div>

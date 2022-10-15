@@ -83,9 +83,9 @@
                         </div>
                       
                         </div>
-                         <div class="row">
-                         <p class="text-light genero">${pelicula.getGenero().getDescripcion() }</p>
-                         <p class="calificacion">Calificacion</p>
+                         <div class="d-flex justify-content-around">
+                         <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
+                         <jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}"tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
                          </div>
                          
                          
