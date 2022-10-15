@@ -29,9 +29,10 @@ import java.util.Date;
         private String director;
 
         private String protagonista;
-
+        
+        private Integer calificacion;
+         
         @ManyToOne
-        //@JoinColumn(name ="genero",referencedColumnName="id")
         private Genero genero;
         
         private Integer duracion;
@@ -85,10 +86,19 @@ import java.util.Date;
             return protagonista;
         }
 
+        public Integer getCalificacion() {
+			return calificacion;
+		}
+
+		public void setCalificacion(Integer calificacion) {
+			this.calificacion = calificacion;
+		}
+
+
         public void setProtagonista(String protagonista) {
             this.protagonista = protagonista;
-        }
 
+        }
 
         public Genero getGenero() {
             return genero;

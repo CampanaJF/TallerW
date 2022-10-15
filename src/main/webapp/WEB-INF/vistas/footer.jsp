@@ -11,6 +11,8 @@
 
 	<script src="js/cartelera.js"></script>
 	<script src="js/slide.js"></script>
+	<script src="https://jsuites.net/v4/jsuites.js"></script>
+	<script src="https://jsuites.net/v4/jsuites.webcomponents.js"></script>
 
 	
 	
