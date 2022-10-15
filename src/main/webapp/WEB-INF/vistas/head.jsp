@@ -25,6 +25,7 @@
 
     <!-- Favicon-->
     <link rel="icon" href="<c:url value="/icons/favicon.ico" />">
+<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 

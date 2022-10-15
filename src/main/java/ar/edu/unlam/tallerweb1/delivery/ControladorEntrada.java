@@ -47,10 +47,10 @@ public class ControladorEntrada {
 	 *      - Mas Datos de la pelicula a la hora de comprar
 	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
 	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
+	 *      
+	 *      DONE
 	 *      - Hacer horario string, y date solo la fecha
-	 *      - Sacar datosEntrada de servicioEntrada
-	 *      - Cambiar cantidad a int
-	 * 
+	 *     
 			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 			-
@@ -97,13 +97,13 @@ public class ControladorEntrada {
 			return usuarioLogueado;
 		
 		try {
-			this.servicioEntrada.comprar(datosEntrada); 
+			this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getCantidad()); 
 		}catch(DatosEntradaInvalidaException q) {
 			redirectAttributes.addFlashAttribute("mensaje","Debe comprar por lo menos una entrada y seleccionar una funcion!");
 			return new ModelAndView("redirect:/home");	
 		}
 		
-		List <Entrada> entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuarioList(datosEntrada.getUsuario().getId(),
+		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
 																  							datosEntrada.getFuncion().getId());
 		ModelMap model = new ModelMap();
 	//	model.put("usuario", usuarioLogueado);
@@ -148,7 +148,7 @@ public class ControladorEntrada {
 	
 
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
-		return this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
+		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
 	}
 
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {

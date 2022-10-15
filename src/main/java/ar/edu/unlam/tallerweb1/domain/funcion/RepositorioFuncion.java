@@ -7,5 +7,7 @@ public interface RepositorioFuncion {
 	List<Funcion> getFuncionesDeUnCine(Long sala,Long pelicula);
 
 	Funcion getFuncion(Long funcionId);
+
+	void update(Funcion funcion);
 	
 }

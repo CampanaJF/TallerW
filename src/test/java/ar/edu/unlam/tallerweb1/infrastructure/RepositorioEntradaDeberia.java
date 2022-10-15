@@ -19,7 +19,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
-public class RepositorioEntradaTest extends SpringTest {
+public class RepositorioEntradaDeberia extends SpringTest {
 	
 	@Autowired
     private RepositorioEntrada repositorioEntrada;
@@ -27,7 +27,7 @@ public class RepositorioEntradaTest extends SpringTest {
 	@Test
 	@Transactional
 	@Rollback
-	public void queSeObtenganTodasLasEntradasCompradasPorUnUsuarioParaUnaDeterminadaFuncion() {
+	public void obtenerTodasLasEntradasCompradasParaUnaFuncionPorUnUsuario() {
 	
 		Usuario usuario1 = givenUsuario("Jojo");
 		
@@ -50,7 +50,7 @@ public class RepositorioEntradaTest extends SpringTest {
 	}
 	
 	private List<Entrada> whenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminaFuncion(Usuario usuario,Funcion funcion){
-		return this.repositorioEntrada.getUltimaEntradaDeUsuarioList(usuario.getId(),funcion.getId());
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario.getId(),funcion.getId());
 		
 	}
 
@@ -63,7 +63,7 @@ public class RepositorioEntradaTest extends SpringTest {
 	@Test
 	@Transactional
 	@Rollback
-	public void queSoloSeObtengaLaUltimaEntradaCompradaPorUnUsuarioParaUnaDeterminadaFuncion() {
+	public void obtenerLaUltimaEntradaCompradaPorUnUsuarioParaUnaFuncion() {
 		Usuario usuario1 = givenUsuario("Jojo");
 		Usuario usuario2 = givenUsuario("Dio");
 		
@@ -93,14 +93,14 @@ public class RepositorioEntradaTest extends SpringTest {
 	}
 
 	private Entrada whenSeObtieneLaUltimaEntradaCompradaDeUnUsuarioParaUnaFuncionDeterminada(Usuario usuario,Funcion funcion){
-		return this.repositorioEntrada.getUltimaEntradaDeUsuario(usuario.getId(),funcion.getId());
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario.getId(),funcion.getId()).get(0);
 		
 	}
 
 	@Test
     @Transactional
     @Rollback
-    public void queSePuedaComprarUnaEntrada() {
+    public void crearUnaEntrada() {
     	
     	Usuario usuario1 = givenUsuario("A");
     	

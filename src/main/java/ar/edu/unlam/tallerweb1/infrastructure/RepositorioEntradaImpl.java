@@ -46,7 +46,7 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 
 	
 	@Override
-	public List<Entrada> getUltimaEntradaDeUsuarioList(Long usuario,Long funcion) {
+	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
 		final Session session = sessionFactory.getCurrentSession();
 		
 		Criterion rest1 = Restrictions.eq("usuario.id", usuario);
@@ -55,17 +55,6 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		return session.createCriteria(Entrada.class).add(rest1).add(rest2).list();
 	}
 
-	@Override
-	public Entrada getUltimaEntradaDeUsuario(Long usuario, Long funcion) {
-		final Session session = sessionFactory.getCurrentSession();
-		
-		Criterion rest1 = Restrictions.eq("usuario.id", usuario);
-		Criterion rest2 = Restrictions.eq("funcion.id", funcion);
-		
-		return (Entrada) session.createCriteria(Entrada.class).add(rest1)
-				.add(rest2).setMaxResults(1).uniqueResult();
-	}
-	
 		// Usa Entrada, entrada tiene acceso facil a las dos entidades, y tiene todo lo necesario para realizar esto
 	
 //		@Override

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
@@ -23,7 +24,7 @@ public class Entrada {
 	@ManyToOne
 	private Funcion funcion;
 	
-	@ManyToOne
+	@OneToOne
 	private Asiento asiento;
 
 	public Long getId() {

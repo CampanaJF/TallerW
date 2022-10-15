@@ -160,15 +160,17 @@
                         </div>
                       
                         </div>
-                         <div class="row">
-                         <p class="text-light genero">${pelicula.getGenero().getDescripcion() }</p>
-                 
-                         
-                         
-                    </div>
+                         <div class="d-flex justify-content-around">
+                        
+                         <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
+                          
+                 		<jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}"tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+ 						
+						
                 </div>
                 </div>
                 </div>
+              </div>
               </div>
                 <button class="btn btn-lg text-light" id="comprarEntradas">Comprar
                 Entradas</button>
