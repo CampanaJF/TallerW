@@ -90,16 +90,10 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public List<Entrada> getUltimaEntradaDeUsuarioList(Long usuario,Long funcion) {
+	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
 		
-		return this.repositorioEntrada.getUltimaEntradaDeUsuarioList(usuario,funcion);
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario,funcion);
 		
-	}
-
-	@Override
-	public Entrada getUltimaEntradaDeUsuario(Long usuario, Long funcion) {
-	
-		return this.repositorioEntrada.getUltimaEntradaDeUsuario(usuario,funcion);
 	}
 
 	@Override

@@ -18,9 +18,7 @@ public interface ServicioEntrada {
 	
 	Entrada getEntrada(Long entrada);
 	
-	Entrada getUltimaEntradaDeUsuario(Long usuario,Long funcion);
-
-	List<Entrada> getUltimaEntradaDeUsuarioList(Long usuario,Long funcion);
+	List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion);
 	
 	Long cantidadDeAsientosDisponiblesDeLaFuncion(Long funcion);
 }

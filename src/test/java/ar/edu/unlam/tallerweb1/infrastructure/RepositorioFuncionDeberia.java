@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.RepositorioFuncion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 
-public class RepositorioFuncionTest extends SpringTest{
+public class RepositorioFuncionDeberia extends SpringTest{
 	
 	@Autowired
     private RepositorioFuncion repositorioFuncion;
@@ -30,7 +31,7 @@ public class RepositorioFuncionTest extends SpringTest{
 	 @Test
 	 @Transactional
 	 @Rollback
-	 public void queSeListenTodasLasFuncionesDeUnCineParaUnaDeterminadaPelicula() {
+	 public void listarTodasLasFuncionesDeUnCineDeterminado() {
 		 
 		 givenHorario();
 		 
@@ -111,6 +112,9 @@ public class RepositorioFuncionTest extends SpringTest{
 		session().save(funcion);
 		return funcion;
 	}
+	
+	
+	
 	
 
 }

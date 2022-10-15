@@ -103,7 +103,7 @@ public class ControladorEntrada {
 			return new ModelAndView("redirect:/home");	
 		}
 		
-		List <Entrada> entradaComprada = this.servicioEntrada.getUltimaEntradaDeUsuarioList(datosEntrada.getUsuario().getId(),
+		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
 																  							datosEntrada.getFuncion().getId());
 		ModelMap model = new ModelMap();
 	//	model.put("usuario", usuarioLogueado);
@@ -148,7 +148,7 @@ public class ControladorEntrada {
 	
 
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
-		return this.servicioFuncion.getFuncionesDeUnCine(datos.getCine(),datos.getPelicula());
+		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
 	}
 
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {

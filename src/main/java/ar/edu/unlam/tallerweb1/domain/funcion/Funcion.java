@@ -38,6 +38,8 @@ public class Funcion {
 	
 	private Date fecha;
 	
+	private String fechaStr;
+	
 	private String horario;
 	
 	private Double precio;
@@ -112,6 +114,14 @@ public class Funcion {
 
 	public void setHorario(String horario) {
 		this.horario = horario;
+	}
+
+	public String getFechaStr() {
+		return fechaStr;
+	}
+
+	public void setFechaStr(String fechaStr) {
+		this.fechaStr = fechaStr;
 	}
 
 	

@@ -33,7 +33,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(locations= "classpath:applicationContext.xml")
-public class ControladorEntradaTest {
+public class ControladorEntradaDeberia {
 	
 
 	private final ServicioEntrada servicioEntrada = mock(ServicioEntrada.class);
@@ -54,7 +54,7 @@ public class ControladorEntradaTest {
 	
 	
 	@Test
-	public void queSeHayaCompradoLaEntradaExitosamente() {
+	public void comprarUnaEntradaExitosamente() {
 		
 		Cine cine = givenCine("CINEEEEEE");
 		Pelicula pelicula = givenPelicula("peli",1L);
@@ -64,7 +64,9 @@ public class ControladorEntradaTest {
 		
 		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario);
 		
-		Entrada entrada = givenEntrada(usuario,funcion);
+		List<Entrada> entrada = new ArrayList<>();
+		
+		entrada.add(givenEntrada(usuario,funcion));
 		
 		whenSeSeleccionaLaFuncionDeseada(entrada,datosEntrada);
 		
@@ -78,16 +80,16 @@ public class ControladorEntradaTest {
 		
 	}
 
-	private void whenSeSeleccionaLaFuncionDeseada(Entrada entrada,DatosEntrada DE) {
+	private void whenSeSeleccionaLaFuncionDeseada(List<Entrada> entrada,DatosEntrada DE) {
 		mocksSessionRequests();
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
-		when(this.servicioEntrada.getUltimaEntradaDeUsuario(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
+		when(this.servicioEntrada.getEntradasCompradasDelUsuario(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
 		mav = this.controladorEntrada.entradaCompra(DE,mockRequest,redirectAttributes);	
 	}
 
 	@Test
-	public void queSeHayaElegidoUnCineYPuedaElegirElHorarioYFormatoParaComprarUnaEntradaDePelicula() {
+	public void elegirElCineYLaPeliculaParaLaCompraDeUnaEntrada() {
 		
 		Cine cine = givenCine("CINEEE");
 		Sala sala = givenSala(cine,"LA SALA");
@@ -115,7 +117,7 @@ public class ControladorEntradaTest {
 		mocksSessionRequests();
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
-		when(servicioFuncion.getFuncionesDeUnCine(CD.getCine(),CD.getPelicula())).thenReturn(funciones);
+		when(servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(CD.getCine(),CD.getPelicula())).thenReturn(funciones);
 		mav = this.controladorEntrada.entradaPreparacion(CD,mockRequest);
 		
 	}
@@ -135,7 +137,7 @@ public class ControladorEntradaTest {
 	}
 	
 	@Test
-	public void queNoSePuedaComprarUnaEntradaSiNoSeEstaLogueado(){
+	public void impedirComprarEntradasSiNoSeEstaLogueado(){
 				
 		DatosEntrada datosEntrada = new DatosEntrada();
 				
@@ -159,7 +161,7 @@ public class ControladorEntradaTest {
 	}
 
 	@Test
-	public void queSePuedaElegirElCineParaComprarUnaEntradaDePelicula(){
+	public void elegirElCineParaComprarUnaEntrada(){
 		
 		List <CinePelicula> cines = givenCinesConPeliculas();
 		

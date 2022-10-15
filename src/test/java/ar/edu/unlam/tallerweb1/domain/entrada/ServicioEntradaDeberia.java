@@ -2,8 +2,6 @@ package ar.edu.unlam.tallerweb1.domain.entrada;
 
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;
@@ -54,7 +52,7 @@ public class ServicioEntradaDeberia {
 	}
 	
 	@Test
-	public void queSePuedanComprarMultiplesEntradas() {
+	public void poderComprarMultiplesEntradas() {
 		
 		Usuario usuario = givenUsuario(1L,"Okarin");
 		
@@ -81,7 +79,7 @@ public class ServicioEntradaDeberia {
 	}
 
 	@Test(expected = DatosEntradaInvalidaException.class)
-	public void queNoSePuedaComprarUnaEntradaSiTieneDatosInvalidosCantidadEntrada0() {
+	public void impedirComprarEntradasSiNoSeEspecificaLaCantidad() {
 		
 		Usuario usuario = givenUsuario(1L,"Okarin");
 		
@@ -96,7 +94,7 @@ public class ServicioEntradaDeberia {
 	}
 	
 	@Test(expected = DatosEntradaInvalidaException.class)
-	public void queNoSePuedaComprarUnaEntradaSiTieneDatosInvalidosSinFuncion() {
+	public void impedirComprarEntradasSiLosDatosDeLaFuncionSonInvalidos() {
 		
 		Usuario usuario = givenUsuario(1L,"Okarin");
 		
@@ -146,25 +144,25 @@ public class ServicioEntradaDeberia {
 //		
 //	}
 
-	private Funcion givenFuncionCompletaConAsientosDisponible(Long asientos) {
-		
-		Funcion funcion = new Funcion();
-		Sala sala = givenSala(givenCine("Cinemax"),"Sala 42");
-		sala.setAsientosTotales(asientos);
-		
-		List <Asiento> asientosFuncion = new ArrayList<>();
-		
-		while(asientos>0L) {
-			asientosFuncion.add(givenAsientoNoOcupado(sala));
-			asientos--;
-		}
-		
-		funcion.setPelicula(givenPelicula("Indiana Jones"));
-		funcion.setPrecio(599.99);
-		funcion.setSala(sala);
-		
-		return funcion;
-	}
+//	private Funcion givenFuncionCompletaConAsientosDisponible(Long asientos) {
+//		
+//		Funcion funcion = new Funcion();
+//		Sala sala = givenSala(givenCine("Cinemax"),"Sala 42");
+//		sala.setAsientosTotales(asientos);
+//		
+//		List <Asiento> asientosFuncion = new ArrayList<>();
+//		
+//		while(asientos>0L) {
+//			asientosFuncion.add(givenAsientoNoOcupado(sala));
+//			asientos--;
+//		}
+//		
+//		funcion.setPelicula(givenPelicula("Indiana Jones"));
+//		funcion.setPrecio(599.99);
+//		funcion.setSala(sala);
+//		
+//		return funcion;
+//	}
 	
 	private Funcion givenFuncion() {
 		
