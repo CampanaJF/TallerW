@@ -3,11 +3,13 @@ drop database cineclub;
 create schema cineclub; 
 use cineclub;
 
+
 /*
 select * from cine;
 
 select * from cinepelicula;
 */
+
 
 
 insert into usuario (email,nombre,password) values
@@ -18,14 +20,10 @@ insert into usuario (email,nombre,password) values
 insert into formato (tipo) values
  ('2D'),('3D'),('Realidad Aumentada'); 
 
- select *
- from formato;
  insert into cine (locacion,nombre) values
 				  ('Calle Falsa 123','Cine Numero 1'),
 				  ('Baker Street','Gran Cine');
-select *
-from pelicula;
-/* Se podria estandarizar la cantidad de asientos*/
+
 
 insert into sala (asientosTotales,nombreSala,cine_id) values
 				 (150,'Sala A',1),
@@ -37,30 +35,36 @@ insert into sala (asientosTotales,nombreSala,cine_id) values
                  select *
                 from sala;
  
- /*                
-insert into pelicula (director,poster,protagonista,sinopsis,titulo) values
- ('Robert Zemeckis','backtothefuture','Michael J. Fox','Marty McFly, a 17-year-old high school student,
- is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend,
- the maverick scientist Doc Brown.','Back to the Future'),
- ('Steven Spielberg','raidersofthelostark','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
- biblical artefact known as the Ark of the Covenant. While doing so,
- he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark');
- */
- 
-insert into funcion (horario,lenguaje,subtitulos,cine_id,pelicula_id,formato_id,sala_id) values
-					(13,'Castellano',false,1,3,1,1),
-                    (13,'Ingles',true,2,4,3,1),
-                    (17,'Ingles',false,2,5,2,1),
-                    (17,'Castellano',false,1,6,1,2);
-                    
-                    select *
-                    from funcion;
-                    
-insert into entrada (asiento,pelicula,funcion_id,usuario_id,precio) values
-			(1,'30 noches con mi ex',3,2,1500.00),
-            (1,'Bienvenidos al infierno',1,2,2000.00);
-       
-	
+
+INSERT INTO genero (id,descripcion)
+VALUES ("1","Acción");
+INSERT INTO genero (id,descripcion)
+VALUES ("2","Anime");
+INSERT INTO genero (id,descripcion)
+VALUES ("3","Suspenso");
+INSERT INTO genero (id,descripcion)
+VALUES ("4","Comedia");
+INSERT INTO genero (id,descripcion)
+VALUES ("5","Drama");
+INSERT INTO genero (id,descripcion)
+VALUES ("6","Terror");
+INSERT INTO genero (id,descripcion)
+VALUES ("7","Biografica");
+INSERT INTO genero (id,descripcion)
+VALUES ("8","Animación");
+
+INSERT INTO clasificacionpelicula (id,descripcion)
+VALUES ("1","ATP");
+INSERT INTO clasificacionpelicula (id,descripcion)
+VALUES ("2","+13");
+INSERT INTO clasificacionpelicula (id,descripcion)
+VALUES ("3","+16");
+INSERT INTO clasificacionpelicula (id,descripcion)
+VALUES ("4","+18");
+INSERT INTO clasificacionpelicula (id,descripcion)
+VALUES ("5","R");
+INSERT INTO clasificacionpelicula (id,descripcion)
+VALUES ("6","ATP");
 
     
     INSERT INTO `cineclub`.`pelicula` 
@@ -219,41 +223,15 @@ insert into entrada (asiento,pelicula,funcion_id,usuario_id,precio) values
        VALUES ('Natalia Beristáin', '105', '2022-11-22', 
        'img/peliculas/ruido.jpg', 'Julieta Egurrola','En pleno siglo 21 y en uno de los países más violentos para con sus mujeres, RUIDO narra el viaje y el dolor de una madre ante la desaparición de su hija y de su propia vida.',
        'Ruido', '2', '5');
+       
+       insert into pelicula (director,duracion,poster,protagonista,sinopsis,titulo,clasificacionPelicula_id,genero_id) values
+		 ('Robert Zemeckis','120','img/peliculas/backtothefuture.jpg','Michael J. Fox','Marty McFly, a 17-year-old high school student,
+		 is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend,
+		 the maverick scientist Doc Brown.','Back to the Future','2','3'),
+		 ('Steven Spielberg','120','img/peliculas/raidersofthelostark.jpg','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
+		 biblical artefact known as the Ark of the Covenant. While doing so,
+		 he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark','2','3');
          
-         select *
-         from pelicula;
-         
-         
-INSERT INTO genero (id,descripcion)
-VALUES ("1","Acción");
-INSERT INTO genero (id,descripcion)
-VALUES ("2","Anime");
-INSERT INTO genero (id,descripcion)
-VALUES ("3","Suspenso");
-INSERT INTO genero (id,descripcion)
-VALUES ("4","Comedia");
-INSERT INTO genero (id,descripcion)
-VALUES ("5","Drama");
-INSERT INTO genero (id,descripcion)
-VALUES ("6","Terror");
-INSERT INTO genero (id,descripcion)
-VALUES ("7","Biografica");
-INSERT INTO genero (id,descripcion)
-VALUES ("8","Animación");
-
-INSERT INTO clasificacionpelicula (id,descripcion)
-VALUES ("1","ATP");
-INSERT INTO clasificacionpelicula (id,descripcion)
-VALUES ("2","+13");
-INSERT INTO clasificacionpelicula (id,descripcion)
-VALUES ("3","+16");
-INSERT INTO clasificacionpelicula (id,descripcion)
-VALUES ("4","+18");
-INSERT INTO clasificacionpelicula (id,descripcion)
-VALUES ("5","R");
-
-select *
-from pelicula;
 
 insert into cine (locacion,nombreCine) values ('Calle Falsa 123','CineClub');
 
@@ -285,45 +263,46 @@ insert into sala (asientosTotales,nombreSala,cine_id) values
 
 select * from pelicula;
 
+
  insert into cinepelicula(cine_id,pelicula_id) values
 						  (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),
                           (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),
 						  (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),
                           (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7);
 
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,1),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,1),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,3),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,2);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','17:00','Japones',750.00,true,1,1,1),
+                    ('2022-09-22','13:00','Japones',750.00,true,2,1,1),
+                    ('2022-09-22','17:00','Castellano',1050.00,false,3,1,3),
+                    ('2022-09-22','20:00','Japones',750.00,true,2,1,2);
 
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,4),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,4),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,5),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,6);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','17:00','Japones',750.00,true,1,1,4),
+                    ('2022-09-22','13:00','Japones',750.00,true,2,1,4),
+                    ('2022-09-22','17:00','Castellano',1050.00,false,3,1,5),
+                    ('2022-09-22','20:00','Japones',750.00,true,2,1,6);
                     
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,7),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,7),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,8),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,9);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','17:00','Japones',750.00,true,1,1,7),
+                    ('2022-09-22','13:00','Japones',750.00,true,2,1,7),
+                    ('2022-09-22','17:00','Castellano',1050.00,false,3,1,8),
+                    ('2022-09-22','20:00','Japones',750.00,true,2,1,9);
                     
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 17:00','Japones',750.00,true,1,1,10),
-                    ('2022-09-22 13:00','Japones',750.00,true,2,1,10),
-                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,11),
-                    ('2022-09-22 20:00','Japones',750.00,true,2,1,12);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('22-09-22','17:00','Japones',750.00,true,1,1,10),
+                    ('22-09-22','13:00','Japones',750.00,true,2,1,10),
+                    ('22-09-22','17:00','Castellano',1050.00,false,3,1,11),
+                    ('22-09-22','20:00','Japones',750.00,true,2,1,12);
                     
-insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-22 15:00','Japones',750.00,true,1,1,1),
-                    ('2022-09-22 23:00','Japones',750.00,true,2,1,1),
-                    ('2022-09-22 12:00','Castellano',1050.00,false,3,1,2),
-                    ('2022-09-22 23:00','Japones',750.00,true,2,1,2);
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22','15:00','Japones',750.00,true,1,1,1),
+                    ('2022-09-22','23:00','Japones',750.00,true,2,1,1),
+                    ('2022-09-22','12:00','Castellano',1050.00,false,3,1,2),
+                    ('2022-09-22','23:00','Japones',750.00,true,2,1,2);
                     
 select * from funcion
 left join sala on funcion.sala_id = sala.id where
-pelicula_id = 2 and sala.id = 1; 
+pelicula_id = 1 and sala.id = 1; 
 
 select * from pelicula p
 join clasificacionPelicula c on p.clasificacionPelicula_id = c.id;

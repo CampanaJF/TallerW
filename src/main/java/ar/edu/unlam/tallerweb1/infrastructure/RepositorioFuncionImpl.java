@@ -50,6 +50,12 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		return (Funcion) session.createCriteria(Funcion.class).add(rest1).uniqueResult();
 	}
 
+	@Override
+	public void update(Funcion funcion) {
+		sessionFactory.getCurrentSession().update(funcion);
+		
+	}
+
 
 
 }

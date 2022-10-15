@@ -8,7 +8,5 @@ public interface RepositorioEntrada {
 	
 	Entrada getEntrada(Long entrada);
 	
-	Entrada getUltimaEntradaDeUsuario(Long usuario,Long funcion);
-
-	List<Entrada> getUltimaEntradaDeUsuarioList(Long id, Long id2);
+	List<Entrada> getEntradasCompradasDelUsuario(Long id, Long id2);
 }

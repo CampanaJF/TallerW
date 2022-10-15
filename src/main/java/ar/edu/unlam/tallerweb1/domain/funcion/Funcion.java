@@ -36,7 +36,11 @@ public class Funcion {
 	@Enumerated(EnumType.STRING)
 	private Lenguaje lenguaje;
 	
-	private Date horario;
+	private Date fecha;
+	
+	private String fechaStr;
+	
+	private String horario;
 	
 	private Double precio;
 	
@@ -64,12 +68,12 @@ public class Funcion {
 		this.formato = formato;
 	}
 
-	public Date getHorario() {
-		return horario;
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public void setHorario(Date horario) {
-		this.horario = horario;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public Boolean getSubtitulos() {
@@ -102,6 +106,22 @@ public class Funcion {
 
 	public void setSala(Sala sala) {
 		this.sala = sala;
+	}
+
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
+
+	public String getFechaStr() {
+		return fechaStr;
+	}
+
+	public void setFechaStr(String fechaStr) {
+		this.fechaStr = fechaStr;
 	}
 
 	

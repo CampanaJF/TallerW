@@ -7,7 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unlam.tallerweb1.delivery.DatosEntrada;
+import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 
 
@@ -32,54 +33,50 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	// no las compra ninguna
 
 	@Override
-	public void comprar(DatosEntrada datosEntrada) {
+	public void comprar(Funcion funcion,Usuario usuario,Integer cantidad) {
 		
-		validarEntrada(datosEntrada);
-		
-		Long cantidadDeEntradas = datosEntrada.getCantidad();
-		
-		if(cantidadDeEntradas>1L) {
-			comprarMultiplesEntradas(datosEntrada);
+		validarEntrada(funcion,usuario,cantidad);
+			
+		if(cantidad>1L) {
+			comprarMultiplesEntradas(funcion,usuario,cantidad);
 		}
 		else {
-			comprarUnaEntrada(datosEntrada);
+			comprarUnaEntrada(funcion,usuario);
 		}
 			
 	}
 	
 	@Override
-	public void comprarMultiplesEntradas(DatosEntrada datosEntrada) {
-		
-		Long cantidadDeEntradas = datosEntrada.getCantidad();
+	public void comprarMultiplesEntradas(Funcion funcion,Usuario usuario,Integer cantidad) {
 			
-		while(cantidadDeEntradas>0) {
+		while(cantidad>0) {
 			
-			comprarUnaEntrada(datosEntrada);
-			cantidadDeEntradas--;
+			comprarUnaEntrada(funcion,usuario);
+			cantidad--;
 		}
 		
 	}
 
 	@Override
-	public void comprarUnaEntrada(DatosEntrada datosEntrada) {
+	public void comprarUnaEntrada(Funcion funcion,Usuario usuario) {
 		
 		Entrada entrada = new Entrada();
 		
-		entrada.setFuncion(datosEntrada.getFuncion());
-		entrada.setUsuario(datosEntrada.getUsuario());
+		entrada.setFuncion(funcion);
+		entrada.setUsuario(usuario);
 	
 		this.repositorioEntrada.comprarEntrada(entrada);
 		
 	}
 	
 	@Override
-	public void validarEntrada(DatosEntrada datosEntrada) throws DatosEntradaInvalidaException {
+	public void validarEntrada(Funcion funcion,Usuario usuario,Integer cantidad) throws DatosEntradaInvalidaException {
 		
-		if(datosEntrada.getCantidad()<=0L||datosEntrada.getCantidad()==null) {
+		if(cantidad<=0L||cantidad==null) {
 			throw new DatosEntradaInvalidaException();
 		}
 		
-		if(datosEntrada.getFuncion()==null) {
+		if(funcion==null) {
 			throw new DatosEntradaInvalidaException();
 		}
 		
@@ -93,16 +90,10 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public List<Entrada> getUltimaEntradaDeUsuarioList(Long usuario,Long funcion) {
+	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
 		
-		return this.repositorioEntrada.getUltimaEntradaDeUsuarioList(usuario,funcion);
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario,funcion);
 		
-	}
-
-	@Override
-	public Entrada getUltimaEntradaDeUsuario(Long usuario, Long funcion) {
-	
-		return this.repositorioEntrada.getUltimaEntradaDeUsuario(usuario,funcion);
 	}
 
 	@Override
