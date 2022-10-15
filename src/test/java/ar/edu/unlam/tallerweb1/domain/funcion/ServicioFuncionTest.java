@@ -1,15 +1,19 @@
 package ar.edu.unlam.tallerweb1.domain.funcion;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 
 public class ServicioFuncionTest {
@@ -21,37 +25,49 @@ public class ServicioFuncionTest {
 	@Test
 	public void queSeListenTodasLasFuncionesDeUnCineParaUnaDeterminadaPelicula() {
 		
-		 Cine C1 = givenCine("1");
-		 Cine C2 = givenCine("2");
-		 Funcion F1 = givenFuncion(C1,12);
-		 Funcion F2 = givenFuncion(C2,17);
-		 Funcion F3 = givenFuncion(C1,18);
-		 Pelicula P1 = givenPelicula("Indiana Jones");
-		 Pelicula P2 = givenPelicula("Back to the Future");
-		 F1.setPelicula(P1);
-		 F3.setPelicula(P1);
-		 F2.setPelicula(P2);
+		 Cine cineUno = givenCine("1");
+		 Cine cineDos = givenCine("2");
+		 Sala salaUno = givenSala(cineUno,"salaUno");
+		 Sala salaDos = givenSala(cineUno,"salaDos");
+		 Sala salaTres = givenSala(cineDos,"salaTres");
+		 
+		 Pelicula peliculaUno = givenPelicula("Indiana Jones");
+		 Pelicula peliculaDos = givenPelicula("Back to the Future");
+		 
+		 Funcion funcionUno = givenFuncion(salaUno);
+		 Funcion funcionDos = givenFuncion(salaDos);
+		 Funcion funcionTres = givenFuncion(salaTres);
+		 
+		 funcionUno.setPelicula(peliculaUno);
+		 funcionTres.setPelicula(peliculaUno);
+		 funcionDos.setPelicula(peliculaDos);
+		 
+		 List<Funcion> funciones = new ArrayList<Funcion>();
+
+			funciones.add(funcionUno);
+			funciones.add(funcionDos);
+			funciones.add(funcionTres);
 	
+		whenSeListanTodasLasFunciones(cineUno.getId(),peliculaDos.getId(),funciones);
 		
-		List<Funcion> funciones = whenSeListanTodasLasFunciones(C2.getId(),P2.getId());
-		
-		thenSeListanTodasLasFunciones(C2.getId(),P2.getId());
+		thenSeListanTodasLasFunciones(cineUno.getId(),peliculaDos.getId(),funciones);
 	}
 	
-	private void thenSeListanTodasLasFunciones(Long cine, Long pelicula) {
+	private void thenSeListanTodasLasFunciones(Long cine, Long pelicula,List<Funcion> funciones) {
 		verify(repositorioFuncion,times(1)).getFuncionesDeUnCine(cine,pelicula);
-
+		assertThat(funciones).isNotEmpty();
 	}
 
-	private List<Funcion> whenSeListanTodasLasFunciones(Long cine, Long pelicula) {
-		return this.servicioFuncion.getFuncionesDeUnCine(cine, pelicula);
+	private void whenSeListanTodasLasFunciones(Long cine, Long pelicula,List<Funcion> funciones) {
 		
+		when(repositorioFuncion.getFuncionesDeUnCine(cine,pelicula)).thenReturn(funciones);
+		this.servicioFuncion.getFuncionesDeUnCine(cine, pelicula);		
 	}
-
+	
 	private Cine givenCine(String string) {
 		Cine cine = new Cine();
 		cine.setId(new Random().nextLong());
-		cine.setNombre(string);
+		cine.setNombreCine(string);
 		return cine;
 	}
 	
@@ -62,11 +78,18 @@ public class ServicioFuncionTest {
 		return pelicula;
 	}
 	
-	private Funcion givenFuncion(Cine cine,Integer horario) {
+	private Sala givenSala(Cine cine,String string) {
+		Sala sala = new Sala();
+		sala.setId(new Random().nextLong());
+		sala.setCine(cine);
+		sala.setNombreSala(string);
+		return sala;
+	}
+	
+	private Funcion givenFuncion(Sala sala) {
 		Funcion funcion = new Funcion();
-		funcion.setCine(cine);
 		funcion.setId(new Random().nextLong());
-		funcion.setHorario(horario);
+		funcion.setSala(sala);
 		return funcion;
 	}
 	

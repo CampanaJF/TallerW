@@ -6,6 +6,8 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 public class DatosEntrada {
 	private Funcion funcion;
     private Usuario usuario;
+    private Long cantidad;
+
     
 	public Funcion getFuncion() {
 		return funcion;
@@ -19,6 +21,13 @@ public class DatosEntrada {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	public Long getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(Long cantidad) {
+		this.cantidad = cantidad;
+	}
+
     
     
 }

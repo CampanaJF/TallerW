@@ -5,13 +5,15 @@
 
 	<%@include file="head.jsp"%>
 	
-	<title class="bgColor">CineClub</title>
+	<link href="css/ticket.css" rel="stylesheet">
 	
-	<body>
+	<title>CineClub</title>
+	
+
 
 	<%@include file="header.jsp"%>
 	
-	 <body class="text-white bgColor">  
+<body class="bgColor text-white">  
 
 
 		<c:if test="${not empty mensaje}">
@@ -19,25 +21,80 @@
 	        <h5 class="text-center text-white">${mensaje}</h5> 	
 	    </div>
 	    </c:if>
+
+<c:if test="${not empty entrada}">				  
+<div class="container">
+  <h1 class="upcomming">Entrada/s</h1>
+  
+  	<div class="item">
+  
+		<div class="item-right">
+		  <h4 class="num">${entrada.asiento.ubicacion}</h4>
+		  <p class="day">${entrada.funcion.sala.nombreSala}</p>
+		  <span class="up-border"></span>
+		  <span class="down-border"></span>
+		</div>
+		
+		<div class="item-left">
+		  <p class="event">${entrada.funcion.sala.cine.nombreCine}</p>
+		  <h2 class="title">${entrada.funcion.pelicula.titulo}</h2>
+		  
+		  <div class="sce">
+			<p>${entrada.funcion.formato.tipo}<br/>${entrada.funcion.horario}</p>
+		  </div>
+		  <div class="fix"></div>
+		  <div class="loc">
+			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio} $</p>
+		  </div>
+		  <div class="fix"></div>
+		  <button class="cancel">Imprimir</button>
+		</div> 
+		
+	  </div>
+	   	 
+</div>
+</c:if>	
 	    
-        <div class="container pt-3">
-            <div class="row">
-              <div class="col align-self-start">
-              </div>
-              <div class="col-6 align-self-center align-items-center text-center">
-                <h2 class="pt-2">Tu Entrada</h2>
-                <h4 class="pt-2">Cine: ${entrada.funcion.cine.nombre}</h4>
-                <h4 class="pt-2">Titulo: ${entrada.funcion.pelicula.titulo}</h4>
-                <h4 class="pt-2">Horario: ${entrada.funcion.horario}</h4>
-                <h4 class="pt-2">Sala: ${entrada.funcion.sala.nombre}</h4>
-				<p class="pt-5">${entrada.id}</p>
-              </div>
-              <div class="col align-self-end ">
-              </div>
-            </div>
-          </div>
-
-
+	    
+<c:if test="${not empty entradas}">				  
+<div class="container">
+  <h1 class="upcomming">Entrada/s</h1>
+  
+   <c:forEach items="${entradas}" var="entrada">
+  
+  	<div class="item">
+  
+		<div class="item-right">
+		  <h4 class="num">${entrada.asiento.ubicacion}</h4>
+		  <p class="day">${entrada.funcion.sala.nombreSala}</p>
+		  <span class="up-border"></span>
+		  <span class="down-border"></span>
+		</div>
+		
+		<div class="item-left">
+		  <p class="event">${entrada.funcion.sala.cine.nombreCine}</p>
+		  <h2 class="title">${entrada.funcion.pelicula.titulo}</h2>
+		  
+		  <div class="sce">
+			<p>${entrada.funcion.formato.tipo}<br/>${entrada.funcion.horario}</p>
+		  </div>
+		  <div class="fix"></div>
+		  <div class="loc">
+			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio} $</p>
+		  </div>
+		  <div class="fix"></div>
+		  <button class="cancel">Imprimir</button>
+		</div> 
+		
+	  </div>
+	   
+	 </c:forEach>  
+	
+	 
+</div>
+</c:if>	
+	
+	    
 
 	<%@include file="footer.jsp"%>
 </body>

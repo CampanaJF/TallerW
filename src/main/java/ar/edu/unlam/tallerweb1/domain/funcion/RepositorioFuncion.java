@@ -4,7 +4,8 @@ import java.util.List;
 
 public interface RepositorioFuncion {
 
-	List<Funcion> getFuncionesDeUnCine(Long cine,Long pelicula);
+	List<Funcion> getFuncionesDeUnCine(Long sala,Long pelicula);
 
 	Funcion getFuncion(Long funcionId);
+	
 }

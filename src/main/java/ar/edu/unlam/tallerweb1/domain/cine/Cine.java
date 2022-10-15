@@ -14,7 +14,7 @@ public class Cine {
 	private Long id;
 	
 	@Column(unique=true)
-	private String nombre;
+	private String nombreCine;
 	
 	@Column(unique=true)
 	private String locacion;
@@ -27,12 +27,12 @@ public class Cine {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNombreCine() {
+		return nombreCine;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreCine(String nombre) {
+		this.nombreCine = nombre;
 	}
 
 	public String getLocacion() {

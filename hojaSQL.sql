@@ -3,6 +3,12 @@ drop database cineclub;
 create schema cineclub; 
 use cineclub;
 
+/*
+select * from cine;
+
+select * from cinepelicula;
+*/
+
 
 insert into usuario (email,nombre,password) values
 					('pacofranco45@gmail.com','Franco','1234'),
@@ -11,6 +17,7 @@ insert into usuario (email,nombre,password) values
 
 insert into formato (tipo) values
  ('2D'),('3D'),('Realidad Aumentada'); 
+
  select *
  from formato;
  insert into cine (locacion,nombre) values
@@ -248,8 +255,97 @@ VALUES ("5","R");
 select *
 from pelicula;
 
-drop table pelicula;
+insert into cine (locacion,nombreCine) values ('Calle Falsa 123','CineClub');
 
+insert into sala (asientosTotales,nombreSala,cine_id) values
+				 (150,'Sala J',1),
+				 (100,'Sala K',1),
+				 (25,'Sala L',1);
+ 
+  insert into cine (locacion,nombreCine) values ('Italia 913','Cine Magistral');
+ 
+insert into sala (asientosTotales,nombreSala,cine_id) values                
+				 (100,'Sala A',2),
+                 (100,'Sala B',2),
+                 (25,'Sala C',2);
+                 
+ insert into cine (locacion,nombreCine) values ('Etiopia 1865','Grand');
+                  
+insert into sala (asientosTotales,nombreSala,cine_id) values                
+				 (100,'Sala 1',3),
+                 (100,'Sala 2',3),
+                 (25,'Sala 3',3);
+                 
+insert into cine (locacion,nombreCine) values ('Irlanda 993','Sunshine');          
+      
+insert into sala (asientosTotales,nombreSala,cine_id) values                
+							(100,'Sala X',4),
+							(25,'Sala Z',4),
+							(150,'Sala Y',4);
+
+select * from pelicula;
+
+ insert into cinepelicula(cine_id,pelicula_id) values
+						  (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),
+                          (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),
+						  (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),
+                          (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7);
+
+insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22 17:00','Japones',750.00,true,1,1,1),
+                    ('2022-09-22 13:00','Japones',750.00,true,2,1,1),
+                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,3),
+                    ('2022-09-22 20:00','Japones',750.00,true,2,1,2);
+
+insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22 17:00','Japones',750.00,true,1,1,4),
+                    ('2022-09-22 13:00','Japones',750.00,true,2,1,4),
+                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,5),
+                    ('2022-09-22 20:00','Japones',750.00,true,2,1,6);
+                    
+insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22 17:00','Japones',750.00,true,1,1,7),
+                    ('2022-09-22 13:00','Japones',750.00,true,2,1,7),
+                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,8),
+                    ('2022-09-22 20:00','Japones',750.00,true,2,1,9);
+                    
+insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22 17:00','Japones',750.00,true,1,1,10),
+                    ('2022-09-22 13:00','Japones',750.00,true,2,1,10),
+                    ('2022-09-22 17:00','Castellano',1050.00,false,3,1,11),
+                    ('2022-09-22 20:00','Japones',750.00,true,2,1,12);
+                    
+insert into funcion (horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-22 15:00','Japones',750.00,true,1,1,1),
+                    ('2022-09-22 23:00','Japones',750.00,true,2,1,1),
+                    ('2022-09-22 12:00','Castellano',1050.00,false,3,1,2),
+                    ('2022-09-22 23:00','Japones',750.00,true,2,1,2);
+                    
+select * from funcion
+left join sala on funcion.sala_id = sala.id where
+pelicula_id = 2 and sala.id = 1; 
+
+select * from pelicula p
+join clasificacionPelicula c on p.clasificacionPelicula_id = c.id;
+
+select * from pelicula p
+join genero g on p.genero_id = g.id
+where g.id = 2;
           
-		
-          
+select count(*) from funcion
+join sala on funcion.sala_id = sala.id
+join asiento on sala.id = asiento.sala_id
+where funcion.id = 1 and asiento.ocupado = 1;	
+
+select count(*) from entrada
+join funcion on entrada.funcion_id = funcion.id 
+join asiento on entrada.asiento_id = asiento.id	
+where funcion.id = 1 and asiento.ocupado = 1;	  
+
+
+select * from entrada;   
+
+select * from funcion;
+
+delete from entrada where id is not null; 
+

@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import java.util.Date;
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.domain.genero.Genero;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -89,9 +91,59 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	@Override
 	public List<Pelicula> buscarPeliculas(String titulo) {
 		final Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Pelicula.class).add(Restrictions.ilike("titulo",titulo, MatchMode.ANYWHERE)).list();
+		return session.createCriteria(Pelicula.class)
+				.add(Restrictions.ilike("titulo",titulo, MatchMode.ANYWHERE))
+				.list();
 	}
-	
+
+	@Override
+	public Pelicula buscarPeliculaPorId(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Pelicula) session.createCriteria(Pelicula.class)
+				.add(Restrictions.eq("id",id))
+				.uniqueResult();
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(String genero) {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class)
+				.createAlias("genero","genero")
+				.add(Restrictions.eq("genero.descripcion",genero))
+				.list();
+	}
+
+	@Override
+	public List<Pelicula> buscarPeliculasPorActor(String protagonista) {
+		final Session session= sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class).add(Restrictions.eq("protagonista",protagonista))
+				.list();
+	}
+
+	@Override
+	public void guardarValoracionPelicula(int estrellas, Pelicula pelicula) {
+		final Session session= sessionFactory.getCurrentSession();
+		Valoracion valoracionPelicula = new Valoracion(estrellas,pelicula);
+		session.save(valoracionPelicula);
+	}
+
+	@Override
+	public List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula) {
+		final Session session= sessionFactory.getCurrentSession();
+		return session.createCriteria(Valoracion.class)
+				.add(Restrictions.eq("pelicula",pelicula))
+				.list();
+	}
+
+	@Override
+	public List<Pelicula> buscarPeliculaPorGenero(Genero genero) {
+		final Session session= sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class)
+				.add(Restrictions.eq("genero",genero))
+				.list();
+	}
+
+
 	@Override
 	public List<Pelicula> getPeliculas() {
 		final Session session = sessionFactory.getCurrentSession();

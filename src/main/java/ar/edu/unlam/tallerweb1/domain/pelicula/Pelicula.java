@@ -82,7 +82,7 @@ import java.util.Date;
             this.director = director;
         }
 
-        public String getProtegonista() {
+        public String getProtagonista() {
             return protagonista;
         }
 
@@ -94,10 +94,11 @@ import java.util.Date;
 			this.calificacion = calificacion;
 		}
 
-		public void setProtegonista(String protegonista) {
-            this.protagonista = protegonista;
-        }
 
+        public void setProtagonista(String protagonista) {
+            this.protagonista = protagonista;
+
+        }
 
         public Genero getGenero() {
             return genero;
