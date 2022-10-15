@@ -89,10 +89,10 @@ public class ControladorUsuario {
         	mensaje="El Email ya esta en uso!";
         	
         } catch (PasswordsDiferentesException pde) {
-        	mensaje="Las contraseñas son diferentes!";
+        	mensaje="Las contraseÃ±as son diferentes!";
         	
         } catch (PasswordLenghtException ple) {
-        	mensaje="La contraseña debe tener almenos 12 caracteres!";
+        	mensaje="La contraseÃ±a debe tener almenos 12 caracteres!";
         }
 		
 		if(mensaje!="Se Registro Exitosamente!") {
@@ -129,6 +129,7 @@ public class ControladorUsuario {
         return new ModelAndView("redirect:/home");
     }
 	
+
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView goHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
@@ -138,6 +139,7 @@ public class ControladorUsuario {
 		
 		return new ModelAndView("home",model);
 	}
+
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {

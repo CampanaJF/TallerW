@@ -40,6 +40,15 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
        return this.repositorioPelicula.buscarPeliculas(titulo);
     }
 
+    
+	@Override
+	public List<Pelicula> obtenerPeliculaEstrenos() {
+		
+		return this.repositorioPelicula.getEstrenosDelMes();
+	}
+	
+
+
 	@Override
 	public Pelicula buscarPeliculaPorId(Long id) {
 		return this.repositorioPelicula.buscarPeliculaPorId(id);
@@ -76,5 +85,6 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	public List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada) {
 		return this.repositorioPelicula.listarValoracionesPorPelicula(buscada);
 	}
+
 
 }

@@ -9,8 +9,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.StringType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +35,30 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		this.sessionFactory = sessionFactory;
 	}
 
+	public List<Pelicula> getPeliculasFiltro(Filtro filtro) {
+		final Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Pelicula.class);
+		if (filtro.getGenero() != null) {
+			criteria.createAlias("genero", "g");
+			criteria.add(Restrictions.eq("g.id", filtro.getGenero()));
+		}
+		if (filtro.getClasificacion() != null) {
+			criteria.createAlias("clasificacionPelicula", "p");
+			criteria.add(Restrictions.eq("p.id", filtro.getClasificacion()));
+		}
+		if (filtro.getOrden() != null) {
+			if (filtro.getOrden().equals("genero")) {
+				criteria.addOrder(Order.asc("genero"));
+			} else if (filtro.getOrden().equals("clasificacion")) {
+			}
+
+		}
+		return criteria.list();
+	}
+	/*
 	@Override
 	public List<Pelicula> getPeliculasFiltro(Filtro filtro) {
+		
 		final Session session = sessionFactory.getCurrentSession();
 		String queryString="SELECT * from pelicula";
 		
@@ -57,13 +84,10 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		if(filtro.getClasificacion()!=null)query.setString("clasificacion", filtro.getClasificacion().toString());
 		if(filtro.getOrden()!=null)	query.setString("orden", filtro.getOrden().toString());
 		
-		
-	
 		return query.getResultList();
 		
-		
 	}
-
+*/
 	@Override
 	public List<Pelicula> buscarPeliculas(String titulo) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -124,6 +148,22 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public List<Pelicula> getPeliculas() {
 		final Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Pelicula.class).list();
+	}
+
+	@Override
+	//Alias => Cada uno de los registros de la tabla
+	// ? => Lugar  que va a ser remplazado x una variable
+	
+	public List<Pelicula> getEstrenosDelMes() {
+		final Session session = sessionFactory.getCurrentSession();
+		Date fechaActual=new Date();
+	
+		return (List<Pelicula>) session.createCriteria(Pelicula.class)
+				.add(Restrictions.sqlRestriction("Month({alias}.fechaEstreno)=?",fechaActual.getMonth()+1,new IntegerType()))
+				.add((Restrictions.sqlRestriction("year({alias}.fechaEstreno)=?",fechaActual.getYear()+1900,new IntegerType())))
+				.addOrder(Order.desc("fechaEstreno"))
+				.setMaxResults(4)
+				.list();
 	}
 
 }

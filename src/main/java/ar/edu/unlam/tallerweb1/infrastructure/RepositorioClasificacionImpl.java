@@ -1,9 +1,11 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,22 +18,22 @@ public class RepositorioClasificacionImpl implements RepositorioClasificacion {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public List<ClasificacionPelicula> getClasificaciones() {
-		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM clasificacionpelicula")
-				.addEntity(ClasificacionPelicula.class).list();
+
+		return sessionFactory.getCurrentSession()
+				.createCriteria(ClasificacionPelicula.class).list();
 	}
 
 	@Override
 	public ClasificacionPelicula getDescripcionById(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (ClasificacionPelicula)session.createSQLQuery("SELECT * from clasificacionpelicula"
-				+ " where id= :clasificacion_id")
-				.addEntity(ClasificacionPelicula.class).setString("clasificacion_id",id.toString()).getResultList().get(0);
-	}
 
-	
+		return (ClasificacionPelicula) session
+				.createCriteria(ClasificacionPelicula.class)
+				.add(Restrictions.eq("id", id)).list().get(0);
+
+	}
 
 }
