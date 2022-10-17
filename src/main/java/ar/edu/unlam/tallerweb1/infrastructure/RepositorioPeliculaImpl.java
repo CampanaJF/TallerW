@@ -80,14 +80,6 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.uniqueResult();
 	}
 
-	@Override
-	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(String genero) {
-		final Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Pelicula.class)
-				.createAlias("genero","genero")
-				.add(Restrictions.eq("genero.descripcion",genero))
-				.list();
-	}
 
 	@Override
 	public List<Pelicula> buscarPeliculasPorActor(String protagonista) {
@@ -116,6 +108,15 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		final Session session= sessionFactory.getCurrentSession();
 		return session.createCriteria(Pelicula.class)
 				.add(Restrictions.eq("genero",genero))
+				.list();
+	}
+
+	@Override
+	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula) {
+		 final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class)
+				.add(Restrictions.eq("genero",genero))
+				.add(Restrictions.ne("id",pelicula.getId()))
 				.list();
 	}
 

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.servlet.http.HttpServletRequest;
+
+import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +48,8 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	}
 
 	@Override
-	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(String descripcion) {
-		return this.repositorioPelicula.obtenerPeliculasSimilaresPorGenero(descripcion);
+	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula) {
+		return this.repositorioPelicula.obtenerPeliculasSimilaresPorGenero(genero,pelicula);
 	}
 
 	@Override

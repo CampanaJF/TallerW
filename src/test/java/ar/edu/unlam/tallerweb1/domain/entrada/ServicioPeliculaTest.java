@@ -74,61 +74,6 @@ public class ServicioPeliculaTest {
         thenNoEncuentroPeliculas(peliculaList);
     }
 
-
-    @Test
-    public void meDebeDevolverUnaListaDePeliculasSimilaresPorGenero(){
-        //dado que existe pelicula
-
-        //dado que existe genero
-        givenExisteGeneroDePelicula("Aventuras");
-        givenQueExistenPeliculasConGenero("Aventuras");
-        //when listo peliculas similares
-        List<Pelicula> similares = whenListoPeliculasSimilaresPorGenero("Aventuras");
-        //then obtengo peliculas similares
-        thenObtengoListaDePeliculasSimilaresPorGenero(similares,"Aventuras");
-    }
-    @Test
-    public void meDebeDevolverCeroCuandoConsultoUnaListaDePeliculasSimilaresPorGenero(){
-        givenExisteGeneroDePelicula("Aventuras");
-        givenQueExistenPeliculasConGenero("Accion");
-        //when listo peliculas similares
-        List<Pelicula> similares = whenListoPeliculasSimilaresPorGenero("Aventuras");
-        //then obtengo peliculas similares
-        thenObtengoCeroEnListaDePeliculasSimilaresPorGenero(similares,0);
-    }
-
-    private void thenObtengoCeroEnListaDePeliculasSimilaresPorGenero(List<Pelicula> similares, int cantidad) {
-        assertThat(similares).hasSize(cantidad);
-    }
-
-    private void thenObtengoListaDePeliculasSimilaresPorGenero(List<Pelicula> similares, String genero) {
-        assertThat(similares).isNotNull();
-        verify(repositorioPelicula,times(1)).obtenerPeliculasSimilaresPorGenero(genero);
-    }
-
-    private List<Pelicula> whenListoPeliculasSimilaresPorGenero(String descripcion) {
-        return this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(descripcion);
-    }
-    private void givenQueExistenPeliculasConGenero(String descripcion){
-        List<Pelicula> peliculaList = new LinkedList<>();
-         Pelicula pelicula = new Pelicula();
-         Genero genero = new Genero();
-         genero.setDescripcion(descripcion);
-         pelicula.setGenero(genero);
-         peliculaList.add(pelicula);
-         when(this.repositorioPelicula.getPeliculas()).thenReturn(peliculaList);
-    }
-    private void givenExisteGeneroDePelicula(String descripcion) {
-        List<Pelicula> peliculaList = new LinkedList<>();
-
-        Pelicula p = new Pelicula();
-        Genero genero = new Genero();
-        genero.setDescripcion(descripcion);
-        p.setGenero(genero);
-        peliculaList.add(p);
-         when(this.repositorioPelicula.buscarPeliculaPorGenero(genero)).thenReturn(peliculaList);
-    }
-
     private void givenQueExistenPeliculas(){
         List<Pelicula> peliculaList = new LinkedList<>();
 
