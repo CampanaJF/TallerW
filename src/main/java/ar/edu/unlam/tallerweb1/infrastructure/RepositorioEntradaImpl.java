@@ -38,22 +38,37 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 
 	@Override
-	public Entrada comprarEntrada(Entrada entrada) {
+	public void comprarEntrada(Entrada entrada) {
 		
 		sessionFactory.getCurrentSession().save(entrada);
-		
-		return entrada;
 		
 	}
 
 	
 	@Override
-	public List<Entrada> getEntradas(Long uId) {
+	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
 		final Session session = sessionFactory.getCurrentSession();
 		
-		Criterion rest1 = Restrictions.eq("usuario.id", uId);
+		Criterion rest1 = Restrictions.eq("usuario.id", usuario);
+		Criterion rest2 = Restrictions.eq("funcion.id", funcion);
 		
-		return session.createCriteria(Entrada.class).add(rest1).list();
+		return session.createCriteria(Entrada.class).add(rest1).add(rest2).list();
 	}
+
+		// Usa Entrada, entrada tiene acceso facil a las dos entidades, y tiene todo lo necesario para realizar esto
+	
+//		@Override
+//		public Long getAsientosOcupados(Long funcionId) {
+//			final Session session = sessionFactory.getCurrentSession();
+//			
+//			Criterion rest1 = Restrictions.eq("F.id", funcionId);
+//			Criterion rest2 = Restrictions.eq("A.ocupado", true);
+//			
+//			
+//			session.createCriteria(Entrada.class).createAlias("asiento", "A")
+//												 .createAlias("funcion", "F")
+//			 									 .add(rest1).add(rest2).list();
+//			
+//		}
 
 }

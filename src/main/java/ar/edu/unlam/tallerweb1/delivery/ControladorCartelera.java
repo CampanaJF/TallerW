@@ -61,6 +61,10 @@ public class ControladorCartelera {
     
     return new ModelAndView("cartelera",model);
 }
-
+	@RequestMapping(path = "/eliminarFiltros")
+	public void eliminarFiltros(Filtro filtro) {
+		irACartelera(filtro.getGenero(), filtro.getClasificacion(), filtro.getOrden());
+		
+	}
 
 }

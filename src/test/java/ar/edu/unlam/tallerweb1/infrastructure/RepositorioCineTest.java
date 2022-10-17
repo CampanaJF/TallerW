@@ -43,7 +43,7 @@ public class RepositorioCineTest extends SpringTest {
 
 	private void thenSeListanTodosLosCines(List<Cine> cines) {
 		assertThat(cines.size()).isEqualTo(4);
-		assertThat(cines.get(2).getNombre()).isEqualTo("3");
+		assertThat(cines.get(2).getNombreCine()).isEqualTo("3");
 		
 	}
 
@@ -55,7 +55,7 @@ public class RepositorioCineTest extends SpringTest {
 	private Cine givenCine(String string) {
 		Cine cine = new Cine();
 		cine.setId(new Random().nextLong());
-		cine.setNombre(string);
+		cine.setNombreCine(string);
 		return cine;
 	}
 	 

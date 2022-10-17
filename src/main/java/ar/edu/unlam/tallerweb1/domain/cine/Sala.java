@@ -20,7 +20,22 @@ public class Sala {
 	private Cine cine;
 	
 	private Long asientosTotales;
+	
+	public String getNombreSala() {
+		return nombreSala;
+	}
 
+	public void setNombreSala(String nombreSala) {
+		this.nombreSala = nombreSala;
+	}
+
+	public Long getAsientosTotales() {
+		return asientosTotales;
+	}
+
+	public void setAsientosTotales(Long asientosTotales) {
+		this.asientosTotales = asientosTotales;
+	}
 
 	public Long getId() {
 		return id;
@@ -38,14 +53,6 @@ public class Sala {
 		this.asientosTotales = asientos;
 	}
 
-	public String getNombre() {
-		return nombreSala;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombreSala = nombre;
-	}
-
 	public Cine getCine() {
 		return cine;
 	}
@@ -53,7 +60,5 @@ public class Sala {
 	public void setCine(Cine cine) {
 		this.cine = cine;
 	}
-	
-	
 	
 }

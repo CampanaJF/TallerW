@@ -14,6 +14,9 @@ public interface RepositorioPelicula {
 	
     List<Pelicula> buscarPeliculas(String titulo);
 
+
+	List<Pelicula> getEstrenosDelMes();
+
     Pelicula buscarPeliculaPorId(Long id);
 
     List<Pelicula> buscarPeliculasPorActor(String protagonista);
@@ -25,5 +28,7 @@ public interface RepositorioPelicula {
 
     List<Pelicula> buscarPeliculaPorGenero(Genero genero);
 
+
     List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula);
+
 }

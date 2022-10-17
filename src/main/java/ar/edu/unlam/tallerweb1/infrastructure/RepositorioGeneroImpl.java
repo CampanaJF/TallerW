@@ -4,6 +4,7 @@ import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,15 +26,15 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
     public List<Genero> getGeneros() {
 
         Session session = sessionFactory.getCurrentSession();
-        return (List<Genero>) session.createSQLQuery("SELECT * FROM genero")
-        .addEntity(Genero.class).list();
+        return session.createCriteria(Genero.class).list();
  
     }
 
 	@Override
 	public Genero getDescripcionById(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Genero)session.createSQLQuery("SELECT * from genero where id= :genero_id")
-				.addEntity(Genero.class).setString("genero_id",id.toString()).getResultList().get(0);
+		
+	return (Genero) session.createCriteria(Genero.class)
+			.add(Restrictions.eq("id", id)).list().get(0);
 	}
 }

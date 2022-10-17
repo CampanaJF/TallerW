@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface RepositorioEntrada {
 
-	Entrada comprarEntrada(Entrada entrada);
+	void comprarEntrada(Entrada entrada);
 	
 	Entrada getEntrada(Long entrada);
-
-	List<Entrada> getEntradas(Long uId);
+	
+	List<Entrada> getEntradasCompradasDelUsuario(Long id, Long id2);
 }

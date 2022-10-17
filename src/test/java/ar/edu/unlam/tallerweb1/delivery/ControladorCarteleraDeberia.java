@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import static org.mockito.Mockito.mock;
 
+import org.assertj.core.api.MapAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,35 +28,64 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControladorCarteleraTest {
+public class ControladorCarteleraDeberia {
 
 	ServicioGenero servicioGenero;
 	ServicioClasificacion servicioClasificacion;
 	ServicioPelicula servicioPelicula;
-	
+	ControladorCartelera controlador;
 	@Before
     public void init(){
         servicioGenero = mock(ServicioGenero.class);
         servicioPelicula = mock(ServicioPelicula.class);
         servicioClasificacion = mock(ServicioClasificacion.class);
+        controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula);
 	}
-	@Autowired
-	private ControladorCartelera controlador;
+	
+	
 	
 	@Test
 	public void verificaQueElNombreDeLaVistaSeaCorrecto() {
-		Filtro filtro=new Filtro(null,null,null);
-		List<Genero> listaGeneros=new ArrayList<>();
-		when(this.servicioGenero.listarGeneros()).thenReturn(listaGeneros);
-		List<ClasificacionPelicula> listaClasificacion=new ArrayList<>();
-		when(this.servicioClasificacion.listarClasificacion()).thenReturn(listaClasificacion);
+		givenSeObtieneListaDeGeneros();
+		givenSeObtieneListaClasificacion();
+		givenSeObtieneListaPeliculas(noFilter());
+		ModelAndView modelo = whenIrACartelera();
+		
+		thenElNombreDeLaVistaSeaCorrecta(modelo);
+		thenLaVistaContengaListaGenero(modelo);
+	}
+
+	private Filtro noFilter() {
+		return new Filtro(null,null,null);
+	}
+
+	private MapAssert<String, Object> thenLaVistaContengaListaGenero(ModelAndView modelo) {
+		return assertThat(modelo.getModel()).containsKey("generos");
+	}
+
+	private void thenElNombreDeLaVistaSeaCorrecta(ModelAndView modelo) {
+		assertThat(modelo.getViewName()).isEqualTo("cartelera");
+	}
+
+	private ModelAndView whenIrACartelera() {
+		
+		ModelAndView modelo=controlador.irACartelera(null, null, null);
+		return modelo;
+	}
+
+	private void givenSeObtieneListaPeliculas(Filtro filtro) {
 		List<Pelicula> listaPelicula=new ArrayList<>();
 		when(this.servicioPelicula.obtenerPeliculas(filtro)).thenReturn(listaPelicula);
-		controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula);
-		ModelAndView modelo=controlador.irACartelera(null, null, null);
-		
-		assertThat(modelo.getViewName()).isEqualTo("cartelera");
-		assertThat(modelo.getModel()).containsKey("generos");
+	}
+
+	private void givenSeObtieneListaClasificacion() {
+		List<ClasificacionPelicula> listaClasificacion=new ArrayList<>();
+		when(this.servicioClasificacion.listarClasificacion()).thenReturn(listaClasificacion);
+	}
+
+	private void givenSeObtieneListaDeGeneros() {
+		List<Genero> listaGeneros=new ArrayList<>();
+		when(this.servicioGenero.listarGeneros()).thenReturn(listaGeneros);
 	}
 
 }

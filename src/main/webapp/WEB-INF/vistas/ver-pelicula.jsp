@@ -16,7 +16,9 @@
 
         <div class="col">
             <div class="text-center">
-                <img src="img/peliculas/${pelicula.poster}.jpg" class=" mb-2 mt-5 img-fluid" width="270" height="386" >
+
+                <img src="${pelicula.poster}" class="mb-2 mt-5 img-fluid" width="270" height="386" >
+
             </div>
         </div>
 
