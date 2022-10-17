@@ -78,12 +78,12 @@
 <div>
      <h2 class="text-white mt-lg-5 ms-5 ">Peliculas similares</h2>
 
-    <section class="d-flex  flex-row flex-nowrap text-center">
+    <section class="d-flex  flex-row flex-wrap text-center">
         <c:forEach items="${similares}" var="pelicula">
             <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
                 <div>
                     <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
-                        <img src="img/peliculas/${pelicula.poster}.jpg" class=" mb-2" width="250" height="320" >
+                        <img src="${pelicula.poster}" class=" mb-2" width="250" height="320" >
                         <h4  class="text-center text-white">${pelicula.titulo}</h4>
                     </a>
                 </div>
