@@ -36,6 +36,7 @@ public class ControladorEntrada {
 	@Autowired
 	public ControladorEntrada(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario,
 							  ServicioFuncion servicioFuncion,ServicioCine servicioCine) {
+		
 		this.servicioEntrada = servicioEntrada;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
@@ -47,12 +48,16 @@ public class ControladorEntrada {
 	 *      - Mas Datos de la pelicula a la hora de comprar
 	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
 	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
+	 *      - try catch para casos donde no hay funciones
+	 *      
+	 *      
+	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
+			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 	 *      
 	 *      DONE
 	 *      - Hacer horario string, y date solo la fecha
 	 *     
-			- Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
-			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
+			
 			-
 			
 	*/
@@ -78,6 +83,7 @@ public class ControladorEntrada {
 									   	   HttpServletRequest request) {
 		
 		ModelMap model = new ModelMap();
+		
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("funciones",  obtenerFuncionesPor(datos));

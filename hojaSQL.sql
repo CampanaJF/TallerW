@@ -1,15 +1,6 @@
-
 drop database cineclub;
 create schema cineclub; 
 use cineclub;
-
-
-/*
-select * from cine;
-
-select * from cinepelicula;
-*/
-
 
 
 insert into usuario (email,nombre,password) values
@@ -20,20 +11,34 @@ insert into usuario (email,nombre,password) values
 insert into formato (tipo) values
  ('2D'),('3D'),('Realidad Aumentada'); 
 
- insert into cine (locacion,nombre) values
-				  ('Calle Falsa 123','Cine Numero 1'),
-				  ('Baker Street','Gran Cine');
-
+insert into cine (locacion,nombreCine) values ('Calle Falsa 123','CineClub');
 
 insert into sala (asientosTotales,nombreSala,cine_id) values
-				 (150,'Sala A',1),
-				 (100,'Sala B',2),
-				 (25,'Sala 1',1),
-				 (100,'Sala 2',2),
-                 (100,'Sala Q',1),
-                 (150,'Sala 9',2);
-                 select *
-                from sala;
+				 (150,'Sala J',1),
+				 (100,'Sala K',1),
+				 (25,'Sala L',1);
+ 
+insert into cine (locacion,nombreCine) values ('Italia 913','Cine Magistral');
+ 
+insert into sala (asientosTotales,nombreSala,cine_id) values                
+				 (100,'Sala A',2),
+                 (100,'Sala B',2),
+                 (25,'Sala C',2);
+                 
+ insert into cine (locacion,nombreCine) values ('Etiopia 1865','Grand');
+                  
+insert into sala (asientosTotales,nombreSala,cine_id) values                
+				 (100,'Sala 1',3),
+                 (100,'Sala 2',3),
+                 (25,'Sala 3',3);
+                 
+insert into cine (locacion,nombreCine) values ('Irlanda 993','Sunshine');          
+      
+insert into sala (asientosTotales,nombreSala,cine_id) values                
+							(100,'Sala X',4),
+							(25,'Sala Z',4),
+							(150,'Sala Y',4);
+
  
 
 INSERT INTO genero (id,descripcion)
@@ -224,52 +229,52 @@ VALUES ("6","ATP");
        'img/peliculas/ruido.jpg', 'Julieta Egurrola','En pleno siglo 21 y en uno de los países más violentos para con sus mujeres, RUIDO narra el viaje y el dolor de una madre ante la desaparición de su hija y de su propia vida.',
        'Ruido', '2', '5');
        
-       insert into pelicula (director,duracion,poster,protagonista,sinopsis,titulo,clasificacionPelicula_id,genero_id) values
-		 ('Robert Zemeckis','120','img/peliculas/backtothefuture.jpg','Michael J. Fox','Marty McFly, a 17-year-old high school student,
+       insert into pelicula (director,duracion,fechaEstreno,poster,protagonista,sinopsis,titulo,clasificacionPelicula_id,genero_id) values
+		 ('Robert Zemeckis','120','2022-11-22','img/peliculas/backtothefuture.jpg','Michael J. Fox','Marty McFly, a 17-year-old high school student,
 		 is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend,
-		 the maverick scientist Doc Brown.','Back to the Future','2','3'),
-		 ('Steven Spielberg','120','img/peliculas/raidersofthelostark.jpg','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
+		 the maverick scientist Doc Brown.','Back to the Future','2','1'),
+		 ('Steven Spielberg','120','2022-11-22','img/peliculas/raidersofthelostark.jpg','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
 		 biblical artefact known as the Ark of the Covenant. While doing so,
-		 he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark','2','3');
+		 he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark','2','1');
          
 
-insert into cine (locacion,nombreCine) values ('Calle Falsa 123','CineClub');
+/* agregar las nuevas peliculas */
+insert into cinepelicula(cine_id,pelicula_id) values
+						  (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),
+                          (1,15),(1,16),(1,17),(1,18),(1,19),
+                          (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,20),(2,21),(2,22),(2,23),(2,24),(2,25),(2,26),
+						  (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),
+                          (3,15),(3,16),(3,17),(3,18),(3,19),(3,20),(3,21),(3,22),(3,23),(3,24),(3,25),(3,26),
+						  (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7),(4,8),(4,9),(4,10),(4,11),(4,12),(4,13),(4,14),
+                          (4,15),(4,16),(4,17),(4,18),(4,19),(4,20),(4,21),(4,22),(4,23),(4,24),(4,25),(4,26);
 
-insert into sala (asientosTotales,nombreSala,cine_id) values
-				 (150,'Sala J',1),
-				 (100,'Sala K',1),
-				 (25,'Sala L',1);
- 
-  insert into cine (locacion,nombreCine) values ('Italia 913','Cine Magistral');
- 
-insert into sala (asientosTotales,nombreSala,cine_id) values                
-				 (100,'Sala A',2),
-                 (100,'Sala B',2),
-                 (25,'Sala C',2);
-                 
- insert into cine (locacion,nombreCine) values ('Etiopia 1865','Grand');
-                  
-insert into sala (asientosTotales,nombreSala,cine_id) values                
-				 (100,'Sala 1',3),
-                 (100,'Sala 2',3),
-                 (25,'Sala 3',3);
-                 
-insert into cine (locacion,nombreCine) values ('Irlanda 993','Sunshine');          
-      
-insert into sala (asientosTotales,nombreSala,cine_id) values                
-							(100,'Sala X',4),
-							(25,'Sala Z',4),
-							(150,'Sala Y',4);
+select * from cinepelicula;
 
-select * from pelicula;
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-20','17:00','Ingles',750.00,true,1,25,9),
+                    ('2022-09-19','13:00','Ingles',750.00,true,2,25,11),
+                    ('2022-09-24','17:00','Castellano',1050.00,false,3,25,12),
+                    ('2022-09-25','20:00','Ingles',750.00,true,2,25,10);
+                    
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-10-20','17:00','Ingles',750.00,true,1,26,10),
+                    ('2022-10-19','13:00','Ingles',750.00,true,2,26,10),
+                    ('2022-10-25','20:00','Ingles',750.00,true,2,26,12);
 
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-10-20','17:00','Ingles',750.00,true,1,25,9),
+                    ('2022-10-19','13:00','Ingles',750.00,true,2,25,11),
+                    ('2022-10-24','17:00','Castellano',1050.00,false,3,25,12),
+                    ('2022-10-25','20:00','Ingles',750.00,true,2,25,10);
+                    
+insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					('2022-09-20','17:00','Ingles',750.00,true,1,26,10),
+                    ('2022-09-19','13:00','Ingles',750.00,true,2,26,10),
+                    ('2022-09-25','20:00','Ingles',750.00,true,2,26,12);
 
- insert into cinepelicula(cine_id,pelicula_id) values
-						  (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),
-                          (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),
-						  (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),
-                          (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),(4,7);
+select * from funcion;
 
+/*
 insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
 					('2022-09-22','17:00','Japones',750.00,true,1,1,1),
                     ('2022-09-22','13:00','Japones',750.00,true,2,1,1),
@@ -299,7 +304,7 @@ insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicul
                     ('2022-09-22','23:00','Japones',750.00,true,2,1,1),
                     ('2022-09-22','12:00','Castellano',1050.00,false,3,1,2),
                     ('2022-09-22','23:00','Japones',750.00,true,2,1,2);
-                    
+*/                    
 select * from funcion
 left join sala on funcion.sala_id = sala.id where
 pelicula_id = 1 and sala.id = 1; 

@@ -56,6 +56,16 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		
 	}
 
+	@Override
+	public List<Funcion> getCinesDeUnaPelicula(Long pelicula) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("pelicula.id",pelicula);
+		
+		return session.createCriteria(Funcion.class)
+									  .add(rest1).list();
+	}
+
 
 
 }

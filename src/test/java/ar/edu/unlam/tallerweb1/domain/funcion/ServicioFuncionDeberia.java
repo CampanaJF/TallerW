@@ -30,10 +30,13 @@ public class ServicioFuncionDeberia {
 	
 	public static Pelicula pelicula = new Pelicula();
 	
+	public static Pelicula peliculaDos = new Pelicula();
+	
 	public static Sala sala = new Sala();
 	
 	// testear el formato de fecha tambien
 	
+
 	@Test
 	public void listarTodasLasFuncionesDeUnCineParaLosSiguientesTresDias() {
 		

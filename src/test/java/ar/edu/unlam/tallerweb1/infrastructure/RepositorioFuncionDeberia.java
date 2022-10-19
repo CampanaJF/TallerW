@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +27,43 @@ public class RepositorioFuncionDeberia extends SpringTest{
 	
 	public static Date fecha = new Date();
 	
-	 @Test
+//	@Test
+//	@Transactional
+//	@Rollback
+//	public void listarTodosLosCinesDondeSePuedeVerUnaPelicula() {
+//		
+//		 Cine cineUno = givenCine("cineUno");
+//		 Cine cineDos = givenCine("cineDos");
+//		 Cine cineTres = givenCine("tres");
+//		 Sala salaUno = givenSala(cineUno,"salaUno");
+//		 Sala salaDos = givenSala(cineUno,"salaDos");
+//		 Sala salaTres = givenSala(cineDos,"salaA");
+//		 Sala salaCuatro = givenSala(cineTres,"salaB");
+//		 Pelicula pelicula1 = givenPelicula("Indiana Jones");
+//		 Pelicula pelicula2 = givenPelicula("Back to the Future");
+//		 givenFuncion(salaUno,fecha,pelicula1);
+//		 givenFuncion(salaDos,fecha,pelicula2);
+//		 givenFuncion(salaTres,fecha,pelicula1);
+//		 givenFuncion(salaCuatro,fecha,pelicula2);
+//		 
+//		 List<Funcion> cines = whenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(pelicula2.getId());
+//		 
+//		 thenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(cines);
+//	}
+//	
+//	 private void thenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(List<Funcion> cines) {
+//		assertThat(cines.size()).isEqualTo(2);
+//		assertThat(cines.get(0).getSala().getCine().getNombreCine()).isEqualTo("cineUno");
+//		assertThat(cines.get(1).getSala().getCine().getNombreCine()).isEqualTo("tres");
+//		
+//	}
+//
+//	private List<Funcion> whenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(Long id) {
+//		
+//		return this.repositorioFuncion.getCinesDeUnaPelicula(id);
+//	}
+
+	@Test
 	 @Transactional
 	 @Rollback
 	 public void listarTodasLasFuncionesDeUnCineDeterminado() {
