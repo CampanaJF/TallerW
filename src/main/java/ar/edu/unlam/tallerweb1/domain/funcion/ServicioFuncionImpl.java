@@ -86,4 +86,14 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		return false;
 	}
 
+	@Override
+	public Boolean validarAsientosDisponibles(Funcion funcion) {
+		
+		Long asientosOcupados = this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
+		if(funcion.getSala().getAsientosTotales()-asientosOcupados>=0)
+			return true;
+		
+		return false;
+	}
+
 }

@@ -14,11 +14,14 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.Sala;
+import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.RepositorioFuncion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+
 
 public class RepositorioFuncionDeberia extends SpringTest{
 	
@@ -27,43 +30,99 @@ public class RepositorioFuncionDeberia extends SpringTest{
 	
 	public static Date fecha = new Date();
 	
-//	@Test
-//	@Transactional
-//	@Rollback
-//	public void listarTodosLosCinesDondeSePuedeVerUnaPelicula() {
-//		
-//		 Cine cineUno = givenCine("cineUno");
-//		 Cine cineDos = givenCine("cineDos");
-//		 Cine cineTres = givenCine("tres");
-//		 Sala salaUno = givenSala(cineUno,"salaUno");
-//		 Sala salaDos = givenSala(cineUno,"salaDos");
-//		 Sala salaTres = givenSala(cineDos,"salaA");
-//		 Sala salaCuatro = givenSala(cineTres,"salaB");
-//		 Pelicula pelicula1 = givenPelicula("Indiana Jones");
-//		 Pelicula pelicula2 = givenPelicula("Back to the Future");
-//		 givenFuncion(salaUno,fecha,pelicula1);
-//		 givenFuncion(salaDos,fecha,pelicula2);
-//		 givenFuncion(salaTres,fecha,pelicula1);
-//		 givenFuncion(salaCuatro,fecha,pelicula2);
-//		 
-//		 List<Funcion> cines = whenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(pelicula2.getId());
-//		 
-//		 thenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(cines);
-//	}
-//	
-//	 private void thenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(List<Funcion> cines) {
-//		assertThat(cines.size()).isEqualTo(2);
-//		assertThat(cines.get(0).getSala().getCine().getNombreCine()).isEqualTo("cineUno");
-//		assertThat(cines.get(1).getSala().getCine().getNombreCine()).isEqualTo("tres");
-//		
-//	}
-//
-//	private List<Funcion> whenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(Long id) {
-//		
-//		return this.repositorioFuncion.getCinesDeUnaPelicula(id);
-//	}
+	@Test
+	@Transactional
+	@Rollback
+	public void obtenerCantidadDeAsientosOcupados() {
+		
+		Cine cineUno = givenCine("cineUno");
+		Sala salaUno = givenSala(cineUno,"salaUno");
+		Pelicula pelicula1 = givenPelicula("Indiana Jones");
+		
+		Funcion funcion = givenFuncion(salaUno,fecha,pelicula1);
+		
+		Asiento asientoOcupado1 = givenAsientoOcupado();
+		Asiento asientoOcupado2 = givenAsientoOcupado();
+		Asiento asientoNoOcupado3 = givenAsientoNoOcupado();
+		
+		Entrada entrada1 = givenEntrada(funcion);
+		Entrada entrada2 = givenEntrada(funcion);
+		Entrada entrada3 = givenEntrada(funcion);
+		
+		entrada3.setAsiento(asientoNoOcupado3);
+		asientoNoOcupado3.setEntrada(entrada3);
+		
+		entrada1.setAsiento(asientoOcupado1);
+		asientoOcupado1.setEntrada(entrada1);
+		
+		entrada2.setAsiento(asientoOcupado2);
+		asientoOcupado2.setEntrada(entrada2);
+		
+		session().save(entrada1);
+		session().save(asientoOcupado1);
+		session().save(entrada2);
+		session().save(asientoOcupado2);
+		session().save(entrada3);
+		session().save(asientoNoOcupado3);
+		
+		
+		
+		Long cantidadOcupados = whenSeObtieneLaCantidadDeAsientosOcupados(funcion);
+		
+		thenSeObtieneLaCantidadDeAsientosOcupados(cantidadOcupados);
+		
+	}
+	
+	
+	private void thenSeObtieneLaCantidadDeAsientosOcupados(Long cantidadOcupados) {
+		assertThat(cantidadOcupados).isEqualTo(2);
+		
+	}
+
+
+	private Long whenSeObtieneLaCantidadDeAsientosOcupados(Funcion funcion) {
+
+		return this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
+	}
+
 
 	@Test
+	@Transactional
+	@Rollback
+	public void listarTodosLosCinesDondeSePuedeVerUnaPelicula() {
+		
+		 Cine cineUno = givenCine("cineUno");
+		 Cine cineDos = givenCine("cineDos");
+		 Cine cineTres = givenCine("tres");
+		 Sala salaUno = givenSala(cineUno,"salaUno");
+		 Sala salaDos = givenSala(cineUno,"salaDos");
+		 Sala salaTres = givenSala(cineDos,"salaA");
+		 Sala salaCuatro = givenSala(cineTres,"salaB");
+		 Pelicula pelicula1 = givenPelicula("Indiana Jones");
+		 Pelicula pelicula2 = givenPelicula("Back to the Future");
+		 givenFuncion(salaUno,fecha,pelicula1);
+		 givenFuncion(salaDos,fecha,pelicula2);
+		 givenFuncion(salaTres,fecha,pelicula1);
+		 givenFuncion(salaCuatro,fecha,pelicula2);
+		 
+		 List<Funcion> cines = whenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(pelicula2.getId());
+		 
+		 thenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(cines);
+	}
+	
+	 private void thenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(List<Funcion> cines) {
+		assertThat(cines.size()).isEqualTo(2);
+		assertThat(cines.get(0).getSala().getCine().getNombreCine()).isEqualTo("cineUno");
+		assertThat(cines.get(1).getSala().getCine().getNombreCine()).isEqualTo("tres");
+		
+	}
+
+	private List<Funcion> whenSeListanTodosLosCinesDondeSePuedeVerUnaPelicula(Long id) {
+		
+		return this.repositorioFuncion.getCinesDeUnaPelicula(id);
+	}
+
+	 @Test
 	 @Transactional
 	 @Rollback
 	 public void listarTodasLasFuncionesDeUnCineDeterminado() {
@@ -146,6 +205,24 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		funcion.setPelicula(pelicula);
 		session().save(funcion);
 		return funcion;
+	}
+	
+	private Asiento givenAsientoOcupado() {
+		Asiento asiento = new Asiento();
+		asiento.setOcupado(true);
+		return asiento;
+	}
+	
+	private Asiento givenAsientoNoOcupado() {
+		Asiento asiento = new Asiento();
+		asiento.setOcupado(false);
+		return asiento;
+	}
+	
+	private Entrada givenEntrada(Funcion funcion) {
+		Entrada entrada = new Entrada();
+		entrada.setFuncion(funcion);
+		return entrada;
 	}
 	
 	

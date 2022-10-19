@@ -46,18 +46,16 @@ public class ControladorEntrada {
 	/*TO DO 
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - Mas Datos de la pelicula a la hora de comprar
-	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
 	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
 	 *      - try catch para casos donde no hay funciones
-	 *      
+	 *      - Generar asientos para la funcion si no tiene asientos
 	 *      
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 	 *      
 	 *      DONE
 	 *      - Hacer horario string, y date solo la fecha
-	 *     
-			
+	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
 			-
 			
 	*/
@@ -112,7 +110,7 @@ public class ControladorEntrada {
 		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
 																  							datosEntrada.getFuncion().getId());
 		ModelMap model = new ModelMap();
-	//	model.put("usuario", usuarioLogueado);
+		model.put("usuario", usuarioLogueado);
 		model.put("entradas", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		

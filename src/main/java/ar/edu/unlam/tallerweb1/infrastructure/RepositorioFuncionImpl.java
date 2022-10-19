@@ -2,14 +2,17 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.RepositorioFuncion;
 
@@ -64,6 +67,25 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		
 		return session.createCriteria(Funcion.class)
 									  .add(rest1).list();
+	}
+
+	// saco directamente todos los asientos ocupados y desocupados de aca
+	@Override
+	public Long getCantidadAsientosOcupados(Long funcion) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("funcion.id",funcion);
+		Criterion rest2 = Restrictions.eq("ocupado",true);
+		
+		Criteria crit = session.createCriteria(Asiento.class);
+		crit.createAlias("entrada", "entradaJoin");
+		crit.createAlias("entradaJoin.funcion", "funcion");
+		crit.add(rest1);
+		crit.add(rest2);
+		crit.setProjection(Projections.rowCount());
+		
+		
+		return (Long) crit.uniqueResult();
 	}
 
 

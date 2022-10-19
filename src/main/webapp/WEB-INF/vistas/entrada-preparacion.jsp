@@ -32,6 +32,9 @@
 				<h1>${funciones.get(0).getPelicula().titulo}</h1>
 				<h4>${funciones.get(0).getPelicula().director}</h4>
 				<h5 class="pb-3">${funciones.get(0).getPelicula().protagonista}</h5>
+				<h5 class="pb-3">${funciones.get(0).getPelicula().getGenero().descripcion}</h5>
+				<jsuites-rating class="estrellas" value="${funciones.get(0).getPelicula().calificacion}"
+				tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
 				
 				<h5 class="pb-3 price"
 				 data-price="${funciones.get(0).precio}">Precio por entrada : ${funciones.get(0).precio} $</h5>
