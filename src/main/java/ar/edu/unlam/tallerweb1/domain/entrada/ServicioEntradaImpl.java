@@ -26,7 +26,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 	
 	// TO DO
-	// Agregar logica para multiples entradas
 	// Validar capacidad
 	// Generar Asiento/s
 	// Debe verificar la cantidad de asientos disponibles para esa funcion antes de comprar las entradas, si no hay suficientes

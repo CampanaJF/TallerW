@@ -43,6 +43,7 @@ public class ServicioFuncionDeberia {
 		 cine = givenCine("Cine++");
 		 pelicula = givenPelicula("Indiana Jones");
 		 sala = givenSala(cine,"Sala A");
+		 sala.setAsientosTotales(5);
 			 
 		 Funcion funcionUno = givenFuncionConHorario(givenFechaInvalida(),pelicula,sala);
 		 Funcion funcionDos = givenFuncionConHorario(givenFechaInvalida(),pelicula,sala);
@@ -80,12 +81,16 @@ public class ServicioFuncionDeberia {
 	}
 
 	private List<Funcion> whenSeListanTodasLasFuncionesDeLosSiguientesTresDias(Long cine, Long pelicula, List<Funcion> funciones) {
+		
+		for (int i = 0; i < funciones.size(); i++) {
+			when(repositorioFuncion.getCantidadAsientosOcupados(funciones.get(i).getId())).thenReturn(1);		
+		}
+		
 		when(repositorioFuncion.getFuncionesDeUnCine(cine,pelicula)).thenReturn(funciones);
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(cine, pelicula);	
 		
 	}
 	
-	// Sala.Asientos totales - entradas vendidas
 	@Test
 	public void validarSiLasFuncionesTienenAsientosDisponibles() {
 		
@@ -106,12 +111,12 @@ public class ServicioFuncionDeberia {
 	
 
 	private void thenSeValidoSiTeniaAsientosDisponibles(Boolean tieneAsientosDisponibles) {
-		assertThat(tieneAsientosDisponibles).isTrue();
+		assertThat(tieneAsientosDisponibles).isFalse();
 		
 	}
 
 	private Boolean whenSeValidaSiTieneAsientosDisponibles(Funcion funcionUno) {
-		
+		when(repositorioFuncion.getCantidadAsientosOcupados(funcionUno.getId())).thenReturn(5);
 		return this.servicioFuncion.validarAsientosDisponibles(funcionUno);
 	}
 

@@ -67,20 +67,20 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		
 		
 		
-		Long cantidadOcupados = whenSeObtieneLaCantidadDeAsientosOcupados(funcion);
+		Integer cantidadOcupados = whenSeObtieneLaCantidadDeAsientosOcupados(funcion);
 		
 		thenSeObtieneLaCantidadDeAsientosOcupados(cantidadOcupados);
 		
 	}
 	
 	
-	private void thenSeObtieneLaCantidadDeAsientosOcupados(Long cantidadOcupados) {
+	private void thenSeObtieneLaCantidadDeAsientosOcupados(Integer cantidadOcupados) {
 		assertThat(cantidadOcupados).isEqualTo(2);
 		
 	}
 
 
-	private Long whenSeObtieneLaCantidadDeAsientosOcupados(Funcion funcion) {
+	private Integer whenSeObtieneLaCantidadDeAsientosOcupados(Funcion funcion) {
 
 		return this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
 	}

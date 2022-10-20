@@ -37,7 +37,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		
 		for (Funcion funcion : funciones) {
 			
-			if(validarFechaFuncion(funcion)) {
+			if(validarFechaFuncion(funcion)&&validarAsientosDisponibles(funcion)) {
 				formatFechaFuncion(funcion);
 				siguientesFunciones.add(funcion);
 			}
@@ -89,8 +89,8 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	@Override
 	public Boolean validarAsientosDisponibles(Funcion funcion) {
 		
-		Long asientosOcupados = this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
-		if(funcion.getSala().getAsientosTotales()-asientosOcupados>=0)
+		Integer asientosOcupados = this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
+		if(funcion.getSala().getAsientosTotales()-asientosOcupados>0)
 			return true;
 		
 		return false;

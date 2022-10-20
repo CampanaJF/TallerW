@@ -13,6 +13,6 @@ public interface RepositorioFuncion {
 
 	List<Funcion> getCinesDeUnaPelicula(Long pelicula);
 	
-	Long getCantidadAsientosOcupados(Long funcion);
+	Integer getCantidadAsientosOcupados(Long funcion);
 	
 }

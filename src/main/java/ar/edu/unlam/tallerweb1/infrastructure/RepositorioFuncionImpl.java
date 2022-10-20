@@ -69,9 +69,9 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 									  .add(rest1).list();
 	}
 
-	// saco directamente todos los asientos ocupados y desocupados de aca
+	
 	@Override
-	public Long getCantidadAsientosOcupados(Long funcion) {
+	public Integer getCantidadAsientosOcupados(Long funcion) {
 		final Session session = sessionFactory.getCurrentSession();
 		
 		Criterion rest1 = Restrictions.eq("funcion.id",funcion);
@@ -83,9 +83,8 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		crit.add(rest1);
 		crit.add(rest2);
 		crit.setProjection(Projections.rowCount());
-		
-		
-		return (Long) crit.uniqueResult();
+				
+		return Math.toIntExact((long) crit.uniqueResult());
 	}
 
 
