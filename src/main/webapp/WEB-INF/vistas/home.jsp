@@ -56,11 +56,47 @@
 </div>
 		
 		<h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
+		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
+        <c:forEach var="pelicula" items="${proximosEstrenos}">
+            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+                <div class="fila">
+                <div class="tile">
+                <img class="pelicula" src="${pelicula.getPoster()}"
+                    alt="">
+                <div class="overlay ">
+                    <img class="pelicula" src="${pelicula.getPoster()}">
+                    <div class="container informacionPeli d-flex flex-column">
+                        <div class="row">
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light clasificacion">${pelicula.getClasificacionPelicula().getDescripcion() }</p>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light duracion">${pelicula.getDuracionEnHoras()}</p>
+                        </div>
+                        <div class="col-lg-4  fechaEstreno mt-2">
+                            <p class="text-light">${pelicula.getFechaEstreno().getYear()+1900}</p> 
+                        </div>
+                      
+                        </div>
+                         <div class="d-flex justify-content-around">
+                         <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
+                         </div>
+                         
+                         
+                    </div>
+                </div>
+                </div>
+                </div>
+              
+               
+            </article>
+            
+        </c:forEach>
+        </section>
 		
 		
 		
-		
-		<h1 class="text-light fw-bolder mt-5">Estrenos del mes</h1>
+		<h1 class="text-light fw-bolder mt-2">Estrenos del mes</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach var="pelicula" items="${peliculasEstrenos}">
             <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
@@ -85,7 +121,11 @@
                         </div>
                          <div class="d-flex justify-content-around">
                          <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
-                         <jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}"tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+                         <div class="rating-container">
+                         <div class="cover"></div>
+                         <jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}
+                         "tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+                         </div>
                          </div>
                          
                          

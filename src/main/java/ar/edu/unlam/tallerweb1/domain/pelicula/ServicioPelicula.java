@@ -24,5 +24,6 @@ public interface ServicioPelicula {
     Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 
 	List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada);
+	List<Pelicula> obtenerProximosEstrenos();
 
 }
