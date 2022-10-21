@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
+
 @Service("servicioFuncion")
 @Transactional
 public class ServicioFuncionImpl implements ServicioFuncion{
@@ -29,7 +31,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	}
 
 	@Override
-	public List<Funcion> obtenerLasFuncionesDeLosProximosTresDias(Long cine, Long pelicula) {
+	public List<Funcion> obtenerLasFuncionesDeLosProximosTresDias(Long cine, Long pelicula) throws NoSeEncontraronFuncionesException{
 		
 		List<Funcion> funciones = this.repositorioFuncion.getFuncionesDeUnCine(cine,pelicula);
 		
@@ -43,6 +45,10 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 			}
 			
 		}
+		
+		if(siguientesFunciones.isEmpty())
+			throw new NoSeEncontraronFuncionesException();
+		
 		return siguientesFunciones;
 	}
 

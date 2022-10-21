@@ -23,6 +23,7 @@ import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
+import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
 @Controller
 public class ControladorEntrada {
@@ -46,14 +47,16 @@ public class ControladorEntrada {
 	/*TO DO 
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - Mas Datos de la pelicula a la hora de comprar
-	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
 	 *      - try catch para casos donde no hay funciones
 	 *      - Generar asientos para la funcion si no tiene asientos
+	 *      - Que no se pueda comprar mas entradas de las disponibles para esa funcion
+	 *      - Arreglar la forma de validar al usuario
 	 *      
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 	 *      
 	 *      DONE
+	 *      - Que si una funcion no tiene asientos disponibles no aparezca 
 	 *      - Hacer horario string, y date solo la fecha
 	 *      - Mostrar solo las funciones de los siguientes 3 dias (filtrarlas en el servicio con before y after)
 			-
@@ -63,9 +66,10 @@ public class ControladorEntrada {
 	@RequestMapping(path = "/entrada-pelicula", method = RequestMethod.GET)
 	public ModelAndView entradaPelicula(HttpServletRequest request,@RequestParam("peliculaId") Long peliculaId) {
 		
-		ModelMap model = new ModelMap();
 				
 		List<CinePelicula> cines = this.servicioCine.getCines(peliculaId);
+		
+		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("cines", cines);
@@ -78,10 +82,17 @@ public class ControladorEntrada {
 	
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
 	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos,
-									   	   HttpServletRequest request) {
+									   	   HttpServletRequest request,final RedirectAttributes redirectAttributes) {
+		
+			
+		try {
+			obtenerFuncionesPor(datos);
+		}catch(NoSeEncontraronFuncionesException q){
+			redirectAttributes.addFlashAttribute("mensaje","No existen funciones para esta pelicula y este cine");
+			return new ModelAndView("redirect:/home");	
+		}
 		
 		ModelMap model = new ModelMap();
-		
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("funciones",  obtenerFuncionesPor(datos));
@@ -150,7 +161,6 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada",model);
 	}
 	
-
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
 	}
@@ -158,7 +168,6 @@ public class ControladorEntrada {
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
 		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 	}
-	
 	
 
 }
