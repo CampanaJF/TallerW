@@ -37,6 +37,9 @@ border-color: #b41717 !important;
 }
 
 .portadaPelicula{
+ /*
   width: 29em !important;
   height: 39em !important;
+*/
+width:270px;
 }

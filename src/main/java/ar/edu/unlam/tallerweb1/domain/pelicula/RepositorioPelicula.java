@@ -30,5 +30,5 @@ public interface RepositorioPelicula {
 
 
     List<Pelicula> buscarPeliculaPorGenero(Genero genero);
-
+    List<Pelicula> getProximosEstrenos();
 }
