@@ -4,40 +4,26 @@ function getContextPath() {
    return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 }
 
-function eliminarFiltro(capsula){
-filtro={
-   genero:'',
-   clasificacion:'',
-   orden:''
+
+function limpiarFiltros(){
+	
+	window.location.href=getContextPath()+"/cartelera";
 }
-
-$.ajax({
-            url: getContextPath()+'/eliminarFiltros',
-            type: 'POST',
-            data: filtro,
-            contentType: "application/x-www-form-urlencoded",
-             success: function (data) {
-        //aqui redireccionas
-    },
-    error: function (request, status, error) {
-     
-    }
-	});
-               
-            
-
-capsula.parentNode.remove();
-}
-
-
-
-
 const filtrosSeleccionados={
    genero:'',
    clasificacion:'',
    orden:''
 }
 
+function seleccionarFiltro(capsula,filtro){
+	const capsulaActivada=document.querySelector(`#${filtro} .activada`);
+	if(capsulaActivada){
+		capsulaActivada.style.backgroundColor="#D81438";
+		capsulaActivada.classList.remove("activada")
+	}
+	capsula.style.backgroundColor='#c94f4f';
+	capsula.classList.add("activada");
+}
 
 function seleccionarGenero(capsula){
  
@@ -53,10 +39,20 @@ clasificacion.value=capsula.id
 
 }
 
-function seleccionarOrden(capsula){
-  
-let orden=document.getElementById("ordenFiltro");
+function seleccionarOrden(capsula,filtro){
+  const capsulaActivada=document.querySelector(`#${filtro} .activada`);
+	let orden=document.getElementById("ordenFiltro");
+	
+	if(capsulaActivada){
+		capsulaActivada.style.backgroundColor="#D81438";
+		capsulaActivada.classList.remove("activada")
+	}
+	capsula.style.backgroundColor='#c94f4f';
+	capsula.classList.add("activada");
+
+
 orden.value=capsula.id
+
 
   
 }

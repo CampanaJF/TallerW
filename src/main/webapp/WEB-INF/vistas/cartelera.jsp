@@ -14,6 +14,18 @@
                 data-bs-target="#exampleModal">
             <i class="bi bi-funnel-fill text-light"></i>
             </button>
+            <c:if test="${filtrosSeleccionados.size()>0}">
+            <button type="button" class="btn mx-3 btn-danger btn-eliminarFiltro" onclick="limpiarFiltros()">
+            <div class="chip-close d-inline mx-1 mr-0" id="closeIcon">
+                        <svg class="chip-svg text-light" focusable="false"
+                            viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
+                        </svg>
+                    </div>
+                    Limpiar Filtros 
+            </button>
+            </c:if>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -45,11 +57,11 @@
                                             aria-labelledby="headingOne"
                                             data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <section
+                                                <section id="filtroGenero"
                                                     class="d-flex justify-content-space-around flex-wrap">
                                                     <c:forEach var="genero" items="${generos}">
                                                         <div class="mb-3">
-                                                            <div class="chip" onclick="seleccionarGenero(this)"
+                                                            <div class="chip" onclick="seleccionarFiltro(this,'filtroGenero')"
                                                                 id="${genero.getId()}">
                                                                 <div class="chip-content text-light">${genero.getDescripcion()}</div>
                                                             </div>
@@ -71,12 +83,12 @@
                                             aria-labelledby="headingTwo"
                                             data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <section
+                                                <section id="clasificacion"
                                                     class="d-flex justify-content-space-around flex-wrap">
                                                     <c:forEach var="clasificacion" items="${clasificaciones}">
                                                         <div class="mb-3">
                                                             <div class="chip"
-                                                                onclick="seleccionarClasificacion(this)"
+                                                                onclick="seleccionarFiltro(this,'clasificacion')"
                                                                 id="${clasificacion.getId()}">
                                                                 <div class="chip-content text-light">${clasificacion.getDescripcion()}</div>
                                                             </div>
@@ -98,18 +110,27 @@
                                             aria-labelledby="headingThree"
                                             data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
+                                                <section id="orden" class="d-flex justify-content-space-around flex-wrap" >
                                                 <div class="mb-3">
-                                                    <div class="chip" onclick="seleccionarOrden(this)"
-                                                        id="genero">
-                                                        <div class="chip-content text-light">Genero</div>
+                                                    <div class="chip" onclick="seleccionarOrden(this,'orden')"
+                                                        id="Director">
+                                                        <div class="chip-content text-light">Director</div>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="mb-3">
+                                                    <div class="chip" onclick="seleccionarOrden(this,'orden')"
+                                                        id="Titulo">
+                                                        <div class="chip-content text-light">Titulo</div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <div class="chip" onclick="seleccionarOrden(this)"
-                                                        id="clasificacion">
-                                                        <div class="chip-content text-light">Clasificacion</div>
+                                                    <div class="chip" onclick="seleccionarOrden(this,'orden')"
+                                                        id="Calificacion">
+                                                        <div class="chip-content text-light">Calificacion</div>
                                                     </div>
                                                 </div>
+                                                </section>
                                             </div>
                                         </div>
                                     </div>
@@ -127,14 +148,6 @@
             <c:forEach var="filtro" items="${filtrosSeleccionados}">
                 <div class="chip mt-5 mr-5">
                     <div class="chip-content text-light">${filtro}</div>
-                    <div class="chip-close" id="closeIcon"
-                        onclick="eliminarFiltro(this)">
-                        <svg class="chip-svg text-light" focusable="false"
-                            viewBox="0 0 24 24" aria-hidden="true">
-                            <path
-                                d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
-                        </svg>
-                    </div>
                 </div>
             </c:forEach>
         </section>

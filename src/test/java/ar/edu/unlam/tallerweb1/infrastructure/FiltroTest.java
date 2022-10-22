@@ -5,9 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import org.hibernate.Criteria;
+import org.junit.After;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +21,9 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 
 public class FiltroTest extends SpringTest{
 	
-	@Inject
+	@Autowired
 	private RepositorioPelicula repositorioPelicula;
+	
 	
 	@Test
     @Transactional
@@ -44,10 +46,11 @@ public void verificarFiltroPorClasificacion(){
 	List<Pelicula>peliculasObtenidasPorClasificacionMas16=whenBuscoPeliculasPorClasificacionMas16();
 	thenObtengoPeliculasPorClasificacionATP(peliculasObtenidasPorClasificacionATP);
 	thenObtengoPeliculasPorClasificacionMas16(peliculasObtenidasPorClasificacionMas16);
-	
+
 }
+	
 	// Lo comento ya que los otros 2 andan correctamnete pero este no me funciona
-	/*
+	
 	@Test
     @Transactional
     @Rollback
@@ -117,7 +120,7 @@ private void thenObtengoPeliculasPorClasificacionYGenero(List<Pelicula> pelicula
 	assertEquals("Thor",peliculasObtenidasPorClasificacionYGenero.get(0).getTitulo());
 		
 	}
-*/
+
 private void thenObtengoPeliculasPorClasificacionMas16(List<Pelicula> peliculasObtenidasPorClasificacionMas16) {
 	assertEquals(1,peliculasObtenidasPorClasificacionMas16.size());
 		
@@ -129,14 +132,14 @@ private void thenObtengoPeliculasPorClasificacionATP(List<Pelicula> peliculasObt
 	}
 
 private List<Pelicula> whenBuscoPeliculasPorClasificacionMas16() {
-	Filtro filtro=new Filtro(null,2L,null);
+	Filtro filtro=new Filtro(null,4L,null);
 	List<Pelicula>peliculasObtenidasPorClasificacionMas16=repositorioPelicula.getPeliculasFiltro(filtro);
 	return peliculasObtenidasPorClasificacionMas16;
 		
 	}
 
 private List<Pelicula> whenBuscoPeliculasPorClasificacionATP() {
-	Filtro filtro=new Filtro(null,1L,null);
+	Filtro filtro=new Filtro(null,3L,null);
 	List<Pelicula>peliculasObtenidasPorClasificacionATP=repositorioPelicula.getPeliculasFiltro(filtro);
 	return peliculasObtenidasPorClasificacionATP;
 		
@@ -155,13 +158,13 @@ private void thenObtengoPeliculasPorGeneroAccion(List<Pelicula>peliculasObtenida
 }
 
 private List<Pelicula> whenBuscoPeliculasPorGeneroAccion() {
-	Filtro filtro=new Filtro(1L,null,null);
+	Filtro filtro=new Filtro(3L,null,null);
 	List<Pelicula>peliculasObtenidasPorGenero=repositorioPelicula.getPeliculasFiltro(filtro);
 	return peliculasObtenidasPorGenero;
 }
 
 private List<Pelicula> whenBuscoPeliculasPorGeneroTerror() {
-	Filtro filtro=new Filtro(2L,null,null);
+	Filtro filtro=new Filtro(4L,null,null);
 	List<Pelicula>peliculasObtenidasPorGenero=repositorioPelicula.getPeliculasFiltro(filtro);
 	return peliculasObtenidasPorGenero;
 	}
