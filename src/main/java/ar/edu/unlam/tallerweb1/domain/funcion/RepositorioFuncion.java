@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.domain.funcion;
 
 import java.util.List;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
+
 
 public interface RepositorioFuncion {
 
@@ -14,5 +16,7 @@ public interface RepositorioFuncion {
 	List<Funcion> getCinesDeUnaPelicula(Long pelicula);
 	
 	Integer getCantidadAsientosOcupados(Long funcion);
+
+	List<Asiento> getTodosLosAsientos(Long funcion);
 	
 }

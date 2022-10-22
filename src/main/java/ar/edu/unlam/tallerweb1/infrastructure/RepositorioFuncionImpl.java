@@ -87,6 +87,20 @@ public class RepositorioFuncionImpl implements RepositorioFuncion {
 		return Math.toIntExact((long) crit.uniqueResult());
 	}
 
+	@Override
+	public List<Asiento> getTodosLosAsientos(Long funcion) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("funcion.id",funcion);
+		
+		Criteria crit = session.createCriteria(Asiento.class);
+		crit.createAlias("entrada", "entradaJoin");
+		crit.createAlias("entradaJoin.funcion", "funcion");
+		crit.add(rest1);
+		
+		return crit.list();
+	}
+
 
 
 }

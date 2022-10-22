@@ -33,6 +33,38 @@ public class RepositorioFuncionDeberia extends SpringTest{
 	@Test
 	@Transactional
 	@Rollback
+	public void obtenerTodosLosAsientosDeUnaFuncion() {
+		
+		Funcion funcion = givenFuncion();
+		
+		givenAsientosYEntradas(funcion,5);
+		
+		List<Asiento> asientosDeEsaFuncion =whenSePidenLosAsientosDeEsaFuncion(funcion);
+		
+		thenSeObtienenTodosLosAsientosDeEsaFuncion(asientosDeEsaFuncion);
+	
+	}
+	
+	
+
+	private List<Asiento> whenSePidenLosAsientosDeEsaFuncion(Funcion funcion) {
+
+		return this.repositorioFuncion.getTodosLosAsientos(funcion.getId());
+		
+	}
+
+
+
+	private void thenSeObtienenTodosLosAsientosDeEsaFuncion(List<Asiento> asientosDeLaFuncion) {
+		assertThat(asientosDeLaFuncion.size()).isEqualTo(5);
+		
+	}
+
+
+
+	@Test
+	@Transactional
+	@Rollback
 	public void obtenerCantidadDeAsientosOcupados() {
 		
 		Cine cineUno = givenCine("cineUno");
@@ -43,7 +75,7 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		
 		Asiento asientoOcupado1 = givenAsientoOcupado();
 		Asiento asientoOcupado2 = givenAsientoOcupado();
-		Asiento asientoNoOcupado3 = givenAsientoNoOcupado();
+		Asiento asientoNoOcupado3 = givenAsientoVacio();
 		
 		Entrada entrada1 = givenEntrada(funcion);
 		Entrada entrada2 = givenEntrada(funcion);
@@ -207,16 +239,41 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		return funcion;
 	}
 	
+	private Funcion givenFuncion() {
+		Funcion funcion = new Funcion();
+		session().save(funcion);
+		return funcion;
+	}
+	
 	private Asiento givenAsientoOcupado() {
 		Asiento asiento = new Asiento();
 		asiento.setOcupado(true);
 		return asiento;
 	}
 	
-	private Asiento givenAsientoNoOcupado() {
+	private Asiento givenAsientoVacio() {
 		Asiento asiento = new Asiento();
 		asiento.setOcupado(false);
 		return asiento;
+	}
+	
+	
+	private void givenAsientosYEntradas(Funcion funcion,Integer cantidad) {
+		
+		for (int i = 0; i < cantidad; i++) {
+			
+			Entrada entrada = givenEntrada(funcion);
+			Asiento asientoVacio = givenAsientoVacio();
+			
+			entrada.setAsiento(asientoVacio);
+			asientoVacio.setEntrada(entrada);
+			
+			session().save(entrada);
+			session().save(asientoVacio);
+					
+		}
+		
+
 	}
 	
 	private Entrada givenEntrada(Funcion funcion) {
