@@ -29,6 +29,10 @@ public interface RepositorioPelicula {
     List<Pelicula> buscarPeliculaPorGenero(Genero genero);
 
 
+
     List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula);
+
+
+    List<Pelicula> getProximosEstrenos();
 
 }

@@ -87,6 +87,11 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	public List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada) {
 		return this.repositorioPelicula.listarValoracionesPorPelicula(buscada);
 	}
+	@Override
+	public List<Pelicula> obtenerProximosEstrenos() {
+		// TODO Auto-generated method stub
+		return this.repositorioPelicula.getProximosEstrenos();
+	}
 
 
 }
