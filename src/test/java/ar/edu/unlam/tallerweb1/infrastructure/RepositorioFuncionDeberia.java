@@ -37,7 +37,11 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		
 		Funcion funcion = givenFuncion();
 		
-		givenAsientosYEntradas(funcion,5);
+		Integer cantidadVacios = 5;
+		
+		Integer cantidadOcupados = 5;
+		
+		givenAsientosVaciosYOcupadosConSusEntradas(funcion,cantidadVacios,cantidadOcupados);
 		
 		List<Asiento> asientosDeEsaFuncion =whenSePidenLosAsientosDeEsaFuncion(funcion);
 		
@@ -45,18 +49,14 @@ public class RepositorioFuncionDeberia extends SpringTest{
 	
 	}
 	
-	
-
 	private List<Asiento> whenSePidenLosAsientosDeEsaFuncion(Funcion funcion) {
 
 		return this.repositorioFuncion.getTodosLosAsientos(funcion.getId());
 		
 	}
 
-
-
 	private void thenSeObtienenTodosLosAsientosDeEsaFuncion(List<Asiento> asientosDeLaFuncion) {
-		assertThat(asientosDeLaFuncion.size()).isEqualTo(5);
+		assertThat(asientosDeLaFuncion.size()).isEqualTo(10);
 		
 	}
 
@@ -66,48 +66,25 @@ public class RepositorioFuncionDeberia extends SpringTest{
 	@Transactional
 	@Rollback
 	public void obtenerCantidadDeAsientosOcupados() {
+			
+		Funcion funcion = givenFuncion();
 		
-		Cine cineUno = givenCine("cineUno");
-		Sala salaUno = givenSala(cineUno,"salaUno");
-		Pelicula pelicula1 = givenPelicula("Indiana Jones");
+		Integer cantidadVacios = 5;
 		
-		Funcion funcion = givenFuncion(salaUno,fecha,pelicula1);
+		Integer cantidadOcupados = 3;
 		
-		Asiento asientoOcupado1 = givenAsientoOcupado();
-		Asiento asientoOcupado2 = givenAsientoOcupado();
-		Asiento asientoNoOcupado3 = givenAsientoVacio();
+		givenAsientosVaciosYOcupadosConSusEntradas(funcion,cantidadVacios,cantidadOcupados);
+
 		
-		Entrada entrada1 = givenEntrada(funcion);
-		Entrada entrada2 = givenEntrada(funcion);
-		Entrada entrada3 = givenEntrada(funcion);
+		Integer cantidadOcupadosEncontrados = whenSeObtieneLaCantidadDeAsientosOcupados(funcion);
 		
-		entrada3.setAsiento(asientoNoOcupado3);
-		asientoNoOcupado3.setEntrada(entrada3);
-		
-		entrada1.setAsiento(asientoOcupado1);
-		asientoOcupado1.setEntrada(entrada1);
-		
-		entrada2.setAsiento(asientoOcupado2);
-		asientoOcupado2.setEntrada(entrada2);
-		
-		session().save(entrada1);
-		session().save(asientoOcupado1);
-		session().save(entrada2);
-		session().save(asientoOcupado2);
-		session().save(entrada3);
-		session().save(asientoNoOcupado3);
-		
-		
-		
-		Integer cantidadOcupados = whenSeObtieneLaCantidadDeAsientosOcupados(funcion);
-		
-		thenSeObtieneLaCantidadDeAsientosOcupados(cantidadOcupados);
+		thenSeObtieneLaCantidadDeAsientosOcupados(cantidadOcupadosEncontrados,cantidadOcupados);
 		
 	}
 	
 	
-	private void thenSeObtieneLaCantidadDeAsientosOcupados(Integer cantidadOcupados) {
-		assertThat(cantidadOcupados).isEqualTo(2);
+	private void thenSeObtieneLaCantidadDeAsientosOcupados(Integer cantidadOcupadosEncontrados,Integer cantidadOcupados) {
+		assertThat(cantidadOcupadosEncontrados).isEqualTo(cantidadOcupados);
 		
 	}
 
@@ -187,6 +164,8 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		
 	}
 	
+	
+	
 	private Date givenHorario() {
 		String fechaDada = "28-05-2029";
 		
@@ -245,31 +224,45 @@ public class RepositorioFuncionDeberia extends SpringTest{
 		return funcion;
 	}
 	
-	private Asiento givenAsientoOcupado() {
-		Asiento asiento = new Asiento();
-		asiento.setOcupado(true);
-		return asiento;
+	private void givenAsientosVaciosYOcupadosConSusEntradas(Funcion funcion,Integer cantidadVacios,Integer cantidadOcupados) {
+		
+		givenAsientosVaciosYEntradas(funcion,cantidadVacios);
+		
+		givenAsientosOcupadosYEntradas(funcion,cantidadOcupados);
 	}
 	
-	private Asiento givenAsientoVacio() {
-		Asiento asiento = new Asiento();
-		asiento.setOcupado(false);
-		return asiento;
-	}
-	
-	
-	private void givenAsientosYEntradas(Funcion funcion,Integer cantidad) {
+	private void givenAsientosVaciosYEntradas(Funcion funcion,Integer cantidad) {
 		
 		for (int i = 0; i < cantidad; i++) {
 			
 			Entrada entrada = givenEntrada(funcion);
-			Asiento asientoVacio = givenAsientoVacio();
+			Asiento asiento = new Asiento();
 			
-			entrada.setAsiento(asientoVacio);
-			asientoVacio.setEntrada(entrada);
+			entrada.setAsiento(asiento);
+			asiento.setEntrada(entrada);
+			asiento.setOcupado(false);
 			
 			session().save(entrada);
-			session().save(asientoVacio);
+			session().save(asiento);
+					
+		}
+		
+	}
+	
+	private void givenAsientosOcupadosYEntradas(Funcion funcion,Integer cantidad) {
+		
+		for (int i = 0; i < cantidad; i++) {
+			
+			Entrada entrada = givenEntrada(funcion);
+			Asiento asiento = new Asiento();
+			
+			
+			entrada.setAsiento(asiento);
+			asiento.setEntrada(entrada);
+			asiento.setOcupado(true);
+			
+			session().save(entrada);
+			session().save(asiento);
 					
 		}
 		
