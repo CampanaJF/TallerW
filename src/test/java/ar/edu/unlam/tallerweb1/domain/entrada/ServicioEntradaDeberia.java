@@ -198,7 +198,7 @@ public class ServicioEntradaDeberia {
 	private Asiento givenAsientoOcupado(Sala sala) {
 		Asiento asiento = new Asiento();
 		asiento.setId(new Random().nextLong());
-		asiento.setSala(sala);
+
 		asiento.setOcupado(true);
 		
 		return asiento;
@@ -207,7 +207,7 @@ public class ServicioEntradaDeberia {
 	private Asiento givenAsientoNoOcupado(Sala sala) {
 		Asiento asiento = new Asiento();
 		asiento.setId(new Random().nextLong());
-		asiento.setSala(sala);
+
 		asiento.setOcupado(false);
 		
 		return asiento;

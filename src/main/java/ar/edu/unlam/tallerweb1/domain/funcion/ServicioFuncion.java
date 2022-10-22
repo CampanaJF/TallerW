@@ -15,5 +15,7 @@ public interface ServicioFuncion {
 	Date getFechaLimiteDeFunciones();
 	
 	Boolean validarFechaFuncion(Funcion funcion);
+	
+	Boolean validarAsientosDisponibles(Funcion funcion);
 
 }

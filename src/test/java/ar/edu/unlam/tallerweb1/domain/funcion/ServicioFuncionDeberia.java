@@ -30,16 +30,20 @@ public class ServicioFuncionDeberia {
 	
 	public static Pelicula pelicula = new Pelicula();
 	
+	public static Pelicula peliculaDos = new Pelicula();
+	
 	public static Sala sala = new Sala();
 	
 	// testear el formato de fecha tambien
 	
+
 	@Test
 	public void listarTodasLasFuncionesDeUnCineParaLosSiguientesTresDias() {
 		
 		 cine = givenCine("Cine++");
 		 pelicula = givenPelicula("Indiana Jones");
 		 sala = givenSala(cine,"Sala A");
+		 sala.setAsientosTotales(5);
 			 
 		 Funcion funcionUno = givenFuncionConHorario(givenFechaInvalida(),pelicula,sala);
 		 Funcion funcionDos = givenFuncionConHorario(givenFechaInvalida(),pelicula,sala);
@@ -77,54 +81,44 @@ public class ServicioFuncionDeberia {
 	}
 
 	private List<Funcion> whenSeListanTodasLasFuncionesDeLosSiguientesTresDias(Long cine, Long pelicula, List<Funcion> funciones) {
+		
+		for (int i = 0; i < funciones.size(); i++) {
+			when(repositorioFuncion.getCantidadAsientosOcupados(funciones.get(i).getId())).thenReturn(1);		
+		}
+		
 		when(repositorioFuncion.getFuncionesDeUnCine(cine,pelicula)).thenReturn(funciones);
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(cine, pelicula);	
 		
 	}
 	
-//	@Test
-//	public void listarTodasLasFuncionesDeUnCineDeterminado() {
-//		
-//		 Cine cineUno = givenCine("1");
-//		 Cine cineDos = givenCine("2");
-//		 Sala salaUno = givenSala(cineUno,"salaUno");
-//		 Sala salaDos = givenSala(cineUno,"salaDos");
-//		 Sala salaTres = givenSala(cineDos,"salaTres");
-//		 
-//		 Pelicula peliculaUno = givenPelicula("Indiana Jones");
-//		 Pelicula peliculaDos = givenPelicula("Back to the Future");
-//		 
-//		 Funcion funcionUno = givenFuncion(salaUno);
-//		 Funcion funcionDos = givenFuncion(salaDos);
-//		 Funcion funcionTres = givenFuncion(salaTres);
-//		 
-//		 funcionUno.setPelicula(peliculaUno);
-//		 funcionTres.setPelicula(peliculaUno);
-//		 funcionDos.setPelicula(peliculaDos);
-//		 
-//		 List<Funcion> funciones = new ArrayList<Funcion>();
-//
-//			funciones.add(funcionUno);
-//			funciones.add(funcionDos);
-//			funciones.add(funcionTres);
-//	
-//		whenSeListanTodasLasFunciones(cineUno.getId(),peliculaDos.getId(),funciones);
-//		
-//		thenSeListanTodasLasFunciones(cineUno.getId(),peliculaDos.getId(),funciones);
-//	}
-//	
-//	private void thenSeListanTodasLasFunciones(Long cine, Long pelicula,List<Funcion> funciones) {
-//		verify(repositorioFuncion,times(1)).getFuncionesDeUnCine(cine,pelicula);
-//		assertThat(funciones).isNotEmpty();
-//	}
-//
-//	private void whenSeListanTodasLasFunciones(Long cine, Long pelicula,List<Funcion> funciones) {
-//		
-//		when(repositorioFuncion.getFuncionesDeUnCine(cine,pelicula)).thenReturn(funciones);
-//		this.servicioFuncion.getFuncionesDeUnCine(cine, pelicula);		
-//	}
+	@Test
+	public void validarSiLasFuncionesTienenAsientosDisponibles() {
+		
+		 cine = givenCine("Cine++");
+		 pelicula = givenPelicula("Indiana Jones");
+		 sala = givenSala(cine,"Sala A");
+		 sala.setAsientosTotales(5);
+			 
+		 Funcion funcionUno = givenFuncionConHorario(givenFechaInvalida(),pelicula,sala);
+
+		 
+		 Boolean tieneAsientosDisponibles = whenSeValidaSiTieneAsientosDisponibles(funcionUno);
+
+		 thenSeValidoSiTeniaAsientosDisponibles(tieneAsientosDisponibles);
+
+	}
 	
 	
+
+	private void thenSeValidoSiTeniaAsientosDisponibles(Boolean tieneAsientosDisponibles) {
+		assertThat(tieneAsientosDisponibles).isFalse();
+		
+	}
+
+	private Boolean whenSeValidaSiTieneAsientosDisponibles(Funcion funcionUno) {
+		when(repositorioFuncion.getCantidadAsientosOcupados(funcionUno.getId())).thenReturn(5);
+		return this.servicioFuncion.validarAsientosDisponibles(funcionUno);
+	}
 
 	private Cine givenCine(String string) {
 		Cine cine = new Cine();
