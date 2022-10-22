@@ -19,9 +19,6 @@ public interface RepositorioPelicula {
 
     Pelicula buscarPeliculaPorId(Long id);
 
-
-    List<Pelicula> obtenerPeliculasSimilaresPorGenero(String genero);
-
     List<Pelicula> buscarPeliculasPorActor(String protagonista);
 
     void guardarValoracionPelicula(int estrellas, Pelicula pelicula);
@@ -30,5 +27,12 @@ public interface RepositorioPelicula {
 
 
     List<Pelicula> buscarPeliculaPorGenero(Genero genero);
+
+
+
+    List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula);
+
+
+    List<Pelicula> getProximosEstrenos();
 
 }

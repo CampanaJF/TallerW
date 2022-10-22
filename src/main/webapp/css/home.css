@@ -1,3 +1,8 @@
 .body-home{
 	background-color: #232222;
 }
+.rating-container .cover{
+	width: 100px;
+    height: 25px;
+    position: absolute;
+}

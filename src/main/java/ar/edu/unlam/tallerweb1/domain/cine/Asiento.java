@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 
 @Entity
 public class Asiento {
@@ -13,11 +16,12 @@ public class Asiento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	private Sala sala;
+	@OneToOne
+	private Entrada entrada;
 	
 	private Boolean ocupado;
 	
+	private int numero;
 	private String ubicacion;
 
 	public Long getId() {
@@ -44,13 +48,23 @@ public class Asiento {
 		this.ubicacion = ubicacion;
 	}
 
-	public Sala getSala() {
-		return sala;
+	public int getNumero() {
+		return numero;
 	}
 
-	public void setSala(Sala sala) {
-		this.sala = sala;
+	public void setNumero(int numero) {
+		this.numero = numero;
 	}
+
+	public Entrada getEntrada() {
+		return entrada;
+	}
+
+	public void setEntrada(Entrada entrada) {
+		this.entrada = entrada;
+	}
+	
+	
 	
 	
 	

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/perfil-usuario.css">
      <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/valoracionPelicula.css">
+    
     <script src="js/busqueda.js"></script>
     <script src="js/valoracionPelicula.js"></script>
 

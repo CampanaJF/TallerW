@@ -17,6 +17,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
+import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -33,13 +34,14 @@ public class ControladorCarteleraDeberia {
 	ServicioGenero servicioGenero;
 	ServicioClasificacion servicioClasificacion;
 	ServicioPelicula servicioPelicula;
+	ServicioSession servicioSession;
 	ControladorCartelera controlador;
 	@Before
     public void init(){
         servicioGenero = mock(ServicioGenero.class);
         servicioPelicula = mock(ServicioPelicula.class);
         servicioClasificacion = mock(ServicioClasificacion.class);
-        controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula);
+        controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula,servicioSession);
 	}
 	
 	
@@ -69,7 +71,7 @@ public class ControladorCarteleraDeberia {
 
 	private ModelAndView whenIrACartelera() {
 		
-		ModelAndView modelo=controlador.irACartelera(null, null, null);
+		ModelAndView modelo=controlador.irACartelera(null, null, null, null);
 		return modelo;
 	}
 

@@ -40,7 +40,10 @@ public class ControladorHome {
 		model.put("usuario", userId);
 	
 		List<Pelicula>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
+		List<Pelicula>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
+		
 		model.put("peliculasEstrenos", peliculasEstrenos);
+		model.put("proximosEstrenos", proximosEstrenos);
 		
 		return new ModelAndView("home",model);
 	}

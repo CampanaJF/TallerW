@@ -118,7 +118,7 @@ public class ControladorEntradaDeberia {
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		when(servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(CD.getCine(),CD.getPelicula())).thenReturn(funciones);
-		mav = this.controladorEntrada.entradaPreparacion(CD,mockRequest);
+		mav = this.controladorEntrada.entradaPreparacion(CD,mockRequest,null);
 		
 	}
 	

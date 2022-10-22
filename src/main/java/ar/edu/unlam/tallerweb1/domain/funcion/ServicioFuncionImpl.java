@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
+
 @Service("servicioFuncion")
 @Transactional
 public class ServicioFuncionImpl implements ServicioFuncion{
@@ -29,7 +31,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	}
 
 	@Override
-	public List<Funcion> obtenerLasFuncionesDeLosProximosTresDias(Long cine, Long pelicula) {
+	public List<Funcion> obtenerLasFuncionesDeLosProximosTresDias(Long cine, Long pelicula) throws NoSeEncontraronFuncionesException{
 		
 		List<Funcion> funciones = this.repositorioFuncion.getFuncionesDeUnCine(cine,pelicula);
 		
@@ -37,12 +39,16 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		
 		for (Funcion funcion : funciones) {
 			
-			if(validarFechaFuncion(funcion)) {
+			if(validarFechaFuncion(funcion)&&validarAsientosDisponibles(funcion)) {
 				formatFechaFuncion(funcion);
 				siguientesFunciones.add(funcion);
 			}
 			
 		}
+		
+		if(siguientesFunciones.isEmpty())
+			throw new NoSeEncontraronFuncionesException();
+		
 		return siguientesFunciones;
 	}
 
@@ -81,6 +87,16 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		Date cuatroDiasDespues = getFechaLimiteDeFunciones();
 	
 		if(funcion.getFecha().after(hoy)&&funcion.getFecha().before(cuatroDiasDespues)) 
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public Boolean validarAsientosDisponibles(Funcion funcion) {
+		
+		Integer asientosOcupados = this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
+		if(funcion.getSala().getAsientosTotales()-asientosOcupados>0)
 			return true;
 		
 		return false;
