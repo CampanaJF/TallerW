@@ -50,6 +50,8 @@ public void verificarFiltroPorClasificacion(){
 }
 	
 	// Lo comento ya que los otros 2 andan correctamnete pero este no me funciona
+	//Ahora se soluciono pero hay un problema con mockito que los elementos no se eliminaban de la sesion
+	// y eso provocaba que romap
 	
 	@Test
     @Transactional

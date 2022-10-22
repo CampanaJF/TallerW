@@ -134,8 +134,8 @@
                 </div>
                 </div>
               
-                <button class="btn btn-lg text-light" id="comprarEntradas">Comprar
-                Entradas</button>
+                <a href="ver-pelicula?pelicula=${pelicula.id}" class="btn btn-lg text-light" id="comprarEntradas">Comprar
+                Entradas</a>
             </article>
             
         </c:forEach>

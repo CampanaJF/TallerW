@@ -23,7 +23,7 @@
 		<div class="row">
 
 			<div class="col">
-				<div class="text-center"> 
+				<div class="text-center mt-5"> 
 					<img class="img-fluid portadaPelicula" 
 					src="<c:url value="${pelicula.poster}"/>">
 				</div>
@@ -31,11 +31,11 @@
 
 			<div class="col align-self-center text-center text-white">
 				<h1>${pelicula.titulo}</h1>
-				<h4>${pelicula.director}</h4>
-				<h5 class="pb-3">${pelicula.protagonista}</h5>
+				<h4 class="mt-4">${pelicula.director}</h4>
+				<h5 class=" mt-4 pb-3">${pelicula.protagonista}</h5>
 				
 				
-				<form:form action="entrada-preparacion" modelAttribute="datosCine" method="POST">
+				<form:form class="mt-4" action="entrada-preparacion" modelAttribute="datosCine" method="POST">
 					
 				<form:select class="form-select" path="cine" >
 							  
@@ -51,7 +51,7 @@
 				<form:hidden path="pelicula" value="${pelicula.id}" />
 				
 				
-				<button type="submit" class="btn-lg btn buttonA">Comprar Entradas</button>
+				<button type="submit" class=" mt-4 btn-lg btn buttonA">Comprar Entradas</button>
 				
 				</form:form> 
 				
