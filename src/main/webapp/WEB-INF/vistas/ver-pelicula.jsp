@@ -16,10 +16,11 @@
         <div class="col">
             <div class="text-center">
 
-                <img src="${pelicula.poster}" class="mb-2 mt-5 img-fluid" width="270" height="386" >
+                <img src="${pelicula.poster}" class="mb-2 mt-5 img-fluid"  >
 
             </div>
         </div>
+
 
         <div class="col align-self-center  text-white">
             <h1 class="titulo-cartelera">${pelicula.titulo}</h1>
@@ -29,6 +30,7 @@
             <h5><span class="titulo-cartelera">Reparto principal </span>${pelicula.protagonista}</h5>
             <h5><span class="titulo-cartelera">G&eacute;nero </span>${pelicula.genero.descripcion}</h5>
             <h5><span class="titulo-cartelera">Duraci&oacute;n </span>${pelicula.duracionEnHoras}</h5>
+
 
             <a href="entrada-pelicula?peliculaId=${pelicula.id}" type="button" class="btn-lg btn buttonA mt-3">Comprar Entradas</a>
         </div>
@@ -77,6 +79,7 @@
            </form>
           </div>-->
     </div>
+        <!---
 </div>
          <div>
              <h2 class="text-white mt-lg-5 ms-2">Peliculas similares</h2>
@@ -94,9 +97,69 @@
              </section>
          </div>
 </div>
+-->
      </c:if>
 
 
+<div class="container mt-3">
+     <h2 class="text-white mt-lg-5 ms-5 mb-2">Peliculas similares</h2>
 
-</body>
-</html>
+
+    <section class="d-flex flex-row flex-wrap text-center">
+
+        <c:forEach items="${similares}" var="pelicula">
+            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+           
+           	  <div class="fila">
+                <div class="tile">
+                <img class="pelicula" src="${pelicula.poster()}"
+                    alt="">
+                <div class="overlay ">
+                    <img class="pelicula" src="${pelicula.poster()}">
+                    <div class="container informacionPeli d-flex flex-column">
+                        <div class="row">
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light clasificacion">${pelicula.clasificacionPelicula.descripcion}</p>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light duracion">${pelicula.duracionEnHoras}</p>
+                        </div>
+                        <div class="col-lg-4  fechaEstreno mt-2">
+                            <p class="text-light">${pelicula.fechaEstreno.year+1900}</p>
+                        </div>
+                      
+                        </div>
+                         <div class="d-flex justify-content-around">
+                        
+                         <p class="text-light genero mt-1">${pelicula.genero.descripcion}</p>
+                          
+                 		  <div class="rating-container">
+                         <div class="cover"></div>
+                         <jsuites-rating class="estrellas" value="${pelicula.calificacion}
+                         "tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+                         </div>
+ 						
+						
+                </div>
+                </div>
+                </div>
+              </div>
+              </div>
+        
+                <!--  
+                <div>
+                    <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
+
+                        <img src="${pelicula.poster}" class="mb-2" style="width:270px;" >
+
+                        <h4  class="text-center text-white">${pelicula.titulo}</h4>
+                    </a>
+                </div>
+                __-->
+            </article>
+        </c:forEach>
+    </section>
+</div>
+
+
+    <%@include file="footer.jsp"%>

@@ -23,7 +23,11 @@ public interface ServicioPelicula {
 
     Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 
+
 	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 
-    void actualizarPromedioDeValoracion(int puntos, Pelicula pelicula);
+	//List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada);
+	List<Pelicula> obtenerProximosEstrenos();
+
+
 }

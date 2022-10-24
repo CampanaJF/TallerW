@@ -83,10 +83,11 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		return promedioValoracion;
 	}
 
+
 	@Override
-	public void actualizarPromedioDeValoracion(int puntos, Pelicula pelicula) {
-           obtenerPromedioValoracionesPorPelicula(pelicula);
-		   obtenerCalificacionesDeUnaPelicula(pelicula);
+	public List<Pelicula> obtenerProximosEstrenos() {
+		// TODO Auto-generated method stub
+		return this.repositorioPelicula.getProximosEstrenos();
 	}
 
 }
