@@ -19,10 +19,11 @@ public interface ServicioPelicula {
 
 	List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero,Pelicula pelicula);
 
-    void guardarValoracionPelicula(int estrellas, Pelicula pelicula);
+    void guardarValoracionPelicula(int puntos,Pelicula pelicula);
 
     Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 
-	List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada);
+	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 
+    void actualizarPromedioDeValoracion(int puntos, Pelicula pelicula);
 }

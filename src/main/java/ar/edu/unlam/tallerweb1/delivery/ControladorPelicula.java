@@ -71,25 +71,38 @@ public class ControladorPelicula {
 	public ModelAndView verPelicula(@RequestParam Long pelicula,HttpServletRequest request){
 
 		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
-		List<Pelicula> peliculasSimilares = this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada);
-
 		ModelMap model = new ModelMap();
 		model.put("pelicula",peliculaBuscada);
-		model.put("similares",peliculasSimilares);
-		//model.put("datosValoracion",new DatosValoracion());
+		model.put("similares", this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada));
+        model.put("promedio",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
+		model.put("votos",this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(peliculaBuscada).size());
 		model.put("usuario",obtenerUsuarioLogueado(request));
-       //model.put("promedioValoraciones", this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
 
 		return new ModelAndView("ver-pelicula",model);
 	}
-	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.POST)
-	public ModelAndView guardarCalificacion(@ModelAttribute DatosValoracion datosValoracion,
-											final RedirectAttributes redirectAttributes){
+	@RequestMapping(path="/calificar-pelicula", method = RequestMethod.GET)
+	public ModelAndView calificarpelicula(@RequestParam Long pelicula,HttpServletRequest request){
+		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
 
-		this.servicioPelicula.guardarValoracionPelicula(datosValoracion.getValoracion().getEstrellas(), datosValoracion.getValoracion().getPelicula());
+		ModelMap model = new ModelMap();
+		model.put("pelicula",peliculaBuscada);
+		model.put("usuario",obtenerUsuarioLogueado(request));
+		return new ModelAndView("calificar-pelicula",model);
+	}
+	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.GET)
+	public ModelAndView guardarCalificacion(@RequestParam(value="puntos") int puntos,
+											@RequestParam(value = "peliculaId") Long peliculaId){
 
-		redirectAttributes.addFlashAttribute("mensaje","Su puntuacion ha sido registrada");
+		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(peliculaId);
+		this.servicioPelicula.guardarValoracionPelicula(puntos,pelicula);
 
-		return new ModelAndView("redirect:/ver-pelicula");
+        ModelMap model = new ModelMap();
+		//model.put("promedioNuevo",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(pelicula));
+        model.put("votos", this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula).size());
+		model.put("mensaje","¡Tu calificación ha sido guardada!");
+		model.put("puntos",puntos);
+		//model.put("usuario",obtenerUsuarioLogueado(request));
+        model.put("pelicula",pelicula);
+		return new ModelAndView("calificacionPelicula-exitosa",model);
 	}
 }

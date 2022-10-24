@@ -21,7 +21,7 @@ public interface RepositorioPelicula {
 
     List<Pelicula> buscarPeliculasPorActor(String protagonista);
 
-    void guardarValoracionPelicula(int estrellas, Pelicula pelicula);
+    void guardarValoracionPelicula(int puntos,Pelicula pelicula);
 
     List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula);
 
@@ -31,4 +31,7 @@ public interface RepositorioPelicula {
 
     List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula);
 
+    void actualizarPromedioDeValoracion(int puntos, Pelicula pelicula);
+
+    // List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 }

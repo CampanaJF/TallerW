@@ -15,8 +15,8 @@
         
         <c:if test="${empty usuario}">
         
-        <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto"  onsubmit="return validaCaracteres()">
-            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" id="titulo">
+        <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto">
+            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" >
         </form>
 
         <div class="text-end">
@@ -30,8 +30,8 @@
           
         <c:if test="${not empty usuario}">
 
-        <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto">
-            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" >
+        <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto" onsubmit="return validaCaracteres()">
+            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" id="titulo">
         </form>
 
         <div class="text-end">

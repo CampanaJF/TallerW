@@ -113,12 +113,23 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	}
 
 	@Override
-	public void guardarValoracionPelicula(int estrellas, Pelicula pelicula) {
+	public void guardarValoracionPelicula(int puntos,Pelicula pelicula) {
 		final Session session= sessionFactory.getCurrentSession();
-		Valoracion valoracionPelicula = new Valoracion(estrellas,pelicula);
+		Valoracion valoracionPelicula = new Valoracion(puntos,pelicula);
 		session.save(valoracionPelicula);
 	}
 
+	@Override
+	public void actualizarPromedioDeValoracion(int puntos, Pelicula pelicula) {
+		/*final Session session = sessionFactory.getCurrentSession();
+		int puntosActualizados = 0;
+		List<Valoracion> valoraciones= listarValoracionesPorPelicula(pelicula);
+
+		for (Valoracion val: valoraciones) {
+			int puntosSinActualizar = val.getPuntos();
+			val.setPuntos(puntosSinActualizar+puntos);
+		}*/
+	}
 	@Override
 	public List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula) {
 		final Session session= sessionFactory.getCurrentSession();
@@ -143,6 +154,8 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.add(Restrictions.ne("id",pelicula.getId()))
 				.list();
 	}
+
+
 
 
 	@Override
