@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.SpringTest;
+
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
@@ -100,30 +102,28 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	@Test
     @Transactional
     @Rollback
-    public void crearUnaEntrada() {
+    public void comprarUnaEntrada() {
+		
+    	Usuario usuario = givenUsuario("A");
+    	  	
+    	Funcion funcion = givenFuncion();
     	
-    	Usuario usuario1 = givenUsuario("A");
+    	Entrada entrada = givenAsientoVacioYEntrada(funcion);
+    	  	
+    	whenSeCompraUnaEntrada(funcion,usuario,entrada.getAsiento());
     	
-    	Pelicula indianaJones = givenPelicula("Indiana Jones");
-    	
-    	Cine cineUno = givenCine("CineUno");
-    	
-    	Sala salaUno = givenSala(cineUno,"salaUno");
-    	
-    	Funcion funcion = givenFuncion(indianaJones,salaUno);
-    	
-    	Entrada entrada = givenEntrada(usuario1,funcion);
-    
-    	whenSeCompraUnaEntrada(entrada);
-    	
-    	assertThat(repositorioEntrada.getEntrada(entrada.getId())).isNotNull();
-    	assertThat(repositorioEntrada.getEntrada(entrada.getId()).getFuncion()
-    											 .getPelicula().getTitulo()).isEqualTo("Indiana Jones");
+    	thenSeComproLaEntrada(entrada);
  	
     }
 	
-	private void whenSeCompraUnaEntrada(Entrada E1) {
-		this.repositorioEntrada.comprarEntrada(E1);
+	private void thenSeComproLaEntrada(Entrada entrada) {
+		assertThat(entrada.getUsuario()).isNotNull();
+		assertThat(entrada.getAsiento().getOcupado()).isTrue();
+		
+	}
+
+	private void whenSeCompraUnaEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
+		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
 		
 	}
 	
@@ -134,6 +134,23 @@ public class RepositorioEntradaDeberia extends SpringTest {
 			cantidad--;
 		}
 		
+	}
+	
+	private Entrada givenAsientoVacioYEntrada(Funcion funcion) {
+				
+			Entrada entrada = new Entrada();
+			Asiento asiento = new Asiento();
+			
+			entrada.setAsiento(asiento);
+			entrada.setFuncion(funcion);
+			asiento.setEntrada(entrada);
+			asiento.setOcupado(false);
+			
+			session().save(entrada);
+			session().save(asiento);
+			
+			return entrada;
+					
 	}
 	
 	private Entrada givenEntrada(Usuario U1,Funcion F1) {
@@ -157,6 +174,13 @@ public class RepositorioEntradaDeberia extends SpringTest {
 		pelicula.setTitulo(titulo);
 		session().save(pelicula);
 		return pelicula;
+	}
+	
+	private Funcion givenFuncion() {
+		Funcion funcion = new Funcion();
+
+		session().save(funcion);
+		return funcion;
 	}
 	
 	private Funcion givenFuncion(Pelicula pelicula, Sala sala) {

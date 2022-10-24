@@ -110,7 +110,7 @@ public class ControladorEntrada {
 			return usuarioLogueado;
 		
 		try {
-			this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getCantidad()); 
+			comprarEntrada(datosEntrada); 
 		}catch(DatosEntradaInvalidaException q) {
 			redirectAttributes.addFlashAttribute("mensaje","Debe comprar por lo menos una entrada y seleccionar una funcion!");
 			return new ModelAndView("redirect:/home");	
@@ -165,6 +165,10 @@ public class ControladorEntrada {
 
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
 		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	}
+	
+	private void comprarEntrada(DatosEntrada datosEntrada) {
+		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
 	
 

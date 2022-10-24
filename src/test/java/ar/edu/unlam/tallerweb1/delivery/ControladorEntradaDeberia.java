@@ -121,21 +121,7 @@ public class ControladorEntradaDeberia {
 		mav = this.controladorEntrada.entradaPreparacion(CD,mockRequest,null);
 		
 	}
-	
-	private List<Funcion> givenFuncionesParaEseCineYEsaPelicula(Sala sala,Pelicula pelicula){
 		
-		Funcion funcion1 = givenFuncion(sala,pelicula);
-		Funcion funcion2 = givenFuncion(sala,pelicula);
-		Funcion funcion3 = givenFuncion(sala,pelicula);
-		
-		List <Funcion> funciones = new ArrayList<Funcion>();
-		funciones.add(funcion1);
-		funciones.add(funcion2);
-		funciones.add(funcion3);
-		
-		return funciones;
-	}
-	
 	@Test
 	public void impedirComprarEntradasSiNoSeEstaLogueado(){
 				
@@ -171,6 +157,36 @@ public class ControladorEntradaDeberia {
 	
 	}
 	
+	private void whenSeEligeQuiereElegirElCine(List<CinePelicula> cines) {
+		mocksSessionRequests();
+		
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
+		when(servicioCine.getCines(1L)).thenReturn(cines);
+		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L);
+		
+		
+	}
+
+	private void thenSePuedeElegirElCine(List<CinePelicula> cines) {
+		assertThat(mav.getViewName()).isEqualTo("entrada-pelicula");
+
+
+	}
+	
+	private List<Funcion> givenFuncionesParaEseCineYEsaPelicula(Sala sala,Pelicula pelicula){
+		
+		Funcion funcion1 = givenFuncion(sala,pelicula);
+		Funcion funcion2 = givenFuncion(sala,pelicula);
+		Funcion funcion3 = givenFuncion(sala,pelicula);
+		
+		List <Funcion> funciones = new ArrayList<Funcion>();
+		funciones.add(funcion1);
+		funciones.add(funcion2);
+		funciones.add(funcion3);
+		
+		return funciones;
+	}
+	
 	private List<CinePelicula> givenCinesConPeliculas(){
 		
 		Cine cine1 = givenCine("1");
@@ -200,22 +216,7 @@ public class ControladorEntradaDeberia {
 		return cines;
 	}
 	
-	private void whenSeEligeQuiereElegirElCine(List<CinePelicula> cines) {
-		mocksSessionRequests();
-		
-		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
-		when(servicioCine.getCines(1L)).thenReturn(cines);
-		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L);
-		
-		
-	}
 
-	private void thenSePuedeElegirElCine(List<CinePelicula> cines) {
-		assertThat(mav.getViewName()).isEqualTo("entrada-pelicula");
-
-
-	}
-	
 	private void mocksSessionRequests() {
 	    when(mockRequest.getSession()).thenReturn(mockSession);
 	    when(mockRequest.getSession().getAttribute("ID")).thenReturn(1L);
