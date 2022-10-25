@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
 import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
@@ -162,7 +164,13 @@ public class ControladorEntrada {
 	@RequestMapping(path="/entrada-asientos",method=RequestMethod.GET)
 	public ModelAndView entradaAsientos(HttpServletRequest request) {
 		
-		return new ModelAndView("entrada-asientos");
+		HashMap<Integer,List<Asiento>> a= this.servicioFuncion.obtenerAsientosDeLaFuncion(6L);
+		
+		ModelMap model = new ModelMap();
+		
+		model.put("filas",a);
+		
+		return new ModelAndView("entrada-asientos",model);
 	}
 	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {

@@ -12,6 +12,15 @@
 <body class="body-home">
 
 <%@include file="header.jsp"%>
+
+
+	<c:if test="${not empty error}">
+		 <div class="p-1 alertbg">
+			<h5 class="text-center text-white">${error}</h5> 	
+		</div>
+	</c:if>
+	 	
+	  	
 <div class="movie-body">
 
 	<div class="movie-container">
@@ -36,93 +45,29 @@
     
     <div class="containerCustom">
       <div class="screen"></div>
-
+      
+      
+      
+     <c:forEach items="${filas}" var="fila">
       <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
+      
+      <c:forEach items="${fila.value}" var="asiento">
+      
+      <c:if test="${asiento.ocupado == true }">
+        <div class="seat sold"></div>
+      </c:if>
+      
+      <c:if test="${asiento.ocupado == false }">
+      <div class="seat" value="${asiento.id}"></div>
+      </c:if>
+      
+      
+      </c:forEach>
       </div>
-
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
-      </div>
-      <div class="row">
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat sold"></div>
-        <div class="seat"></div>
-      </div>
-    </div>
+      
+      </c:forEach>
+      
+    
 
 
     <p class="text">
@@ -131,6 +76,7 @@
 
     <button type="submit" class="mt-3 btn-lg btn buttonA">Comprar Entradas</button>
 
+	</div>
 </div>
 
 </body>

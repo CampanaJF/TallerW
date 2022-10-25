@@ -1,10 +1,16 @@
 use cineclub;
 
 insert into funcion (fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-					('2022-09-20 21:00','17:00','Ingles',750.00,true,1,1,13);
+					('2022-10-26 21:00','21:00','Ingles',750.00,true,1,1,13);
+
+
+select * from sala;
+
 
 select * from funcion;
-call EP_crearAsientosYEntradasVacias(4);
+
+select * from funcion;
+call EP_crearAsientosYEntradasVacias(6);
 
 call EP_obtenerCantidadDeAsientosDeUnaFuncion(4,@cantidadACrear);
 select @cantidadACrear;

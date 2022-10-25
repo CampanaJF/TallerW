@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,6 +13,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
 @Service("servicioFuncion")
@@ -50,6 +53,29 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 			throw new NoSeEncontraronFuncionesException();
 		
 		return siguientesFunciones;
+	}
+	
+	// Test esto
+	@Override
+	public HashMap<Integer,List<Asiento>> obtenerAsientosDeLaFuncion(Long funcion) {
+		
+		List<Asiento> asientos = this.repositorioFuncion.getTodosLosAsientos(funcion);
+	
+		HashMap<Integer,List<Asiento>> filas = new HashMap<Integer,List<Asiento>>();
+		
+		for (int i = 1; i < (asientos.size()/10)+1; i++) {
+			
+			List<Asiento> filaDeAsientos = new ArrayList<>();
+			
+			for (int j = (i*10)-10; j < 10*i; j++) {
+			
+				filaDeAsientos.add(asientos.get(j));		
+			}
+			
+			filas.put(i,filaDeAsientos);		
+		}
+		
+		return filas;
 	}
 
 	@Override
@@ -101,5 +127,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		
 		return false;
 	}
+
+	
 
 }
