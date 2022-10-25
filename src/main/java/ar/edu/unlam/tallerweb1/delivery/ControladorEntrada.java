@@ -159,6 +159,12 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada",model);
 	}
 	
+	@RequestMapping(path="/entrada-asientos",method=RequestMethod.GET)
+	public ModelAndView entradaAsientos(HttpServletRequest request) {
+		
+		return new ModelAndView("entrada-asientos");
+	}
+	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
 	}
