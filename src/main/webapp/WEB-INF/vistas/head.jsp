@@ -23,7 +23,7 @@
     
     <script src="js/busqueda.js"></script>
     <script src="js/valoracionPelicula.js"></script>
-
+    <script src="js/valida-calificacion.js"></script>
     <!-- Favicon-->
     <link rel="icon" href="<c:url value="/icons/favicon.ico" />">
 <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />

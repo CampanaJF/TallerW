@@ -149,28 +149,31 @@ public class RepositorioPeliculaTest extends SpringTest {
     @Test
 	@Transactional
 	@Rollback
-	public void meDebeDevolverUnaListaDeValoracionesDeUnaPelicula2(){
-		//existe peli con calificacion
+	public void meDebeDevolverUnaListaDeValoracionesDeUnaPelicula(){
+
 		Pelicula pelicula = givenExistePelicula();
 			//dado que existen valoraciones de peliculas
-		 givenExistenValoracionesDeUnaPelicula(5,pelicula);
-		 givenExistenValoracionesDeUnaPelicula(3,pelicula);
-		 givenExistenValoracionesDeUnaPelicula(4,pelicula);
+		 givenExistenValoracionesDeUnaPelicula(5,pelicula,"Muy buena");
+		 givenExistenValoracionesDeUnaPelicula(3,pelicula,"Excelente");
+		 givenExistenValoracionesDeUnaPelicula(4,pelicula,"Malisima");
 		// cuando listo las calficaciones
 		List<Valoracion> calificaciones = whenConsultoPorCalificacionesDeUnaPelicula(pelicula);
 		//obtengo calif de la pelicula
 		thenObtengoCalificaciones(calificaciones,3);
 	}
 
+
+
 	private void thenObtengoCalificaciones(List<Valoracion> calificaciones, int cantidadEsperada) {
 		assertThat(calificaciones).isNotNull();
 		assertThat(calificaciones).hasSize(cantidadEsperada);
 	}
 
-	private void givenExistenValoracionesDeUnaPelicula(int puntos, Pelicula pelicula) {
+	private void givenExistenValoracionesDeUnaPelicula(int puntos, Pelicula pelicula,String comentario) {
 		Valoracion valoracion = new Valoracion();
 		valoracion.setPuntos(puntos);
 		valoracion.setPelicula(pelicula);
+		valoracion.setComentario(comentario);
 		session().save(valoracion);
 	}
 

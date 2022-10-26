@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,8 +59,8 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	}
 
 	@Override
-	public void guardarValoracionPelicula(int puntos,Pelicula pelicula) {
-		this.repositorioPelicula.guardarValoracionPelicula(puntos,pelicula);
+	public void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario) {
+		this.repositorioPelicula.guardarValoracionPelicula(puntos,pelicula,comentario,usuario);
 	}
 
 	@Override

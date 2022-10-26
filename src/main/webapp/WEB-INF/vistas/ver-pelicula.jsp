@@ -46,58 +46,17 @@
                      <h6 class="mt-2">Basado en ${votos} votos</h6>
                  </c:if>
              </div>
-             <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center calif-subtitulo mt-5">
-                <label> <i class="fa fa-star"></i> </label>
-                <a href="calificar-pelicula?pelicula=${pelicula.id}" class="a-calif"><h2 class="  text-center">Calificar</h2> </a>
+             <div class="ms-2">
+             <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center  mt-5">
+                <a href="calificar-pelicula?pelicula=${pelicula.id}" class="a-calif"><h2 class="text-center btn btn-secondary calif-subtitulo">CALIFICAR</h2> </a>
              </div>
-    <!--       <div>
-             <form action="guardar-calificacion" method="get">
-             <div class="container-rating">
-                 <div class="rating-wrap">
-                     <h2 class="text-white text-center">Calificar ahora</h2>
-                     <div class="center-rating">
-                         <div class="rating">
-                             <input type="hidden" value="${pelicula.id}" name="peliculaId"/>
-                             <label for="star5" class="full"></label>
-                             <input type="submit"  id="star5" name="puntos" value="5">
-
-                             <label for="star4" class="full"></label>
-                             <input type="submit" id="star4" name="puntos" value="4">
-
-                             <label for="star3" class="full"></label>
-                             <input type="submit"  id="star3" name="puntos" value="3">
-
-                             <label for="star2" class="full"></label>
-                             <input type="submit"  id="star2" name="puntos" value="2">
-
-                             <label for="star1" class="full"></label>
-                             <input type="submit"  id="star1" name="puntos" value="1">
-                         </div>
-                     </div>
-               </div>
+             <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center  mt-5">
+                 <a href="ver-opiniones?pelicula=${pelicula.id}" class="a-calif"><h2 class="text-center btn btn-secondary calif-subtitulo">VER RESEÑAS </h2> </a>
              </div>
-           </form>
-          </div>-->
+             </div>
     </div>
-        <!---
+    </div>
 </div>
-         <div>
-             <h2 class="text-white mt-lg-5 ms-2">Peliculas similares</h2>
-             <section class="d-flex  flex-row flex-wrap text-center">
-                 <c:forEach items="${similares}" var="pelicula">
-                     <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
-                         <div>
-                             <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
-                                 <img src="${pelicula.poster}" class=" mb-2" width="250" height="320" >
-                                 <h4  class="text-center text-white">${pelicula.titulo}</h4>
-                             </a>
-                         </div>
-                     </article>
-                 </c:forEach>
-             </section>
-         </div>
-</div>
--->
      </c:if>
 
 
@@ -112,10 +71,12 @@
            
            	  <div class="fila">
                 <div class="tile">
-                <img class="pelicula" src="${pelicula.poster()}"
+                <img class="pelicula" src="${pelicula.poster}"
                     alt="">
                 <div class="overlay ">
-                    <img class="pelicula" src="${pelicula.poster()}">
+                    <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
+                    <img class="pelicula" src="${pelicula.poster}">
+                    </a>
                     <div class="container informacionPeli d-flex flex-column">
                         <div class="row">
                         <div class="col-lg-4 mt-2">

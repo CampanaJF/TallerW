@@ -10,6 +10,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,18 +92,35 @@ public class ControladorPelicula {
 	}
 	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.GET)
 	public ModelAndView guardarCalificacion(@RequestParam(value="puntos") int puntos,
-											@RequestParam(value = "peliculaId") Long peliculaId){
+											@RequestParam(value = "peliculaId") Long peliculaId,
+											@RequestParam(value = "comentario") String comentario,
+											HttpServletRequest request){
 
 		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(peliculaId);
-		this.servicioPelicula.guardarValoracionPelicula(puntos,pelicula);
-
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		this.servicioPelicula.guardarValoracionPelicula(puntos,pelicula,comentario,usuario);
         ModelMap model = new ModelMap();
-		//model.put("promedioNuevo",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(pelicula));
         model.put("votos", this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula).size());
+		model.put("comentario", comentario);
 		model.put("mensaje","¡Tu calificación ha sido guardada!");
-		model.put("puntos",puntos);
-		//model.put("usuario",obtenerUsuarioLogueado(request));
-        model.put("pelicula",pelicula);
+		model.put("usuario",usuario);
+		model.put("pelicula",pelicula);
+		model.put("puntos", puntos);
+
 		return new ModelAndView("calificacionPelicula-exitosa",model);
+	}
+	@RequestMapping(path="/ver-opiniones", method=RequestMethod.GET)
+	public ModelAndView verOpiniones(@RequestParam Long pelicula,HttpServletRequest request){
+		Pelicula pelicula1 = this.servicioPelicula.buscarPeliculaPorId(pelicula);
+		List<Valoracion> valoraciones = this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula1);
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		ModelMap model = new ModelMap();
+		model.put("pelicula",pelicula1);
+		model.put("valoraciones",valoraciones);
+		model.put("usuario",usuario);
+		if(valoraciones.size() == 0){
+                 model.put("sinvaloracion","Todavia no se han echo reseñas");
+		}
+		return  new ModelAndView("ver-opiniones",model);
 	}
 }

@@ -8,6 +8,8 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 public interface ServicioPelicula {
     List<Pelicula> getPeliculas();
 	public List<Pelicula> obtenerPeliculas(Filtro filtro);
@@ -19,7 +21,7 @@ public interface ServicioPelicula {
 
 	List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero,Pelicula pelicula);
 
-    void guardarValoracionPelicula(int puntos,Pelicula pelicula);
+    void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario);
 
     Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 

@@ -48,6 +48,10 @@
     <img src="icons/estrella.png" width="32px" height="32px">
 </c:if>
 </div>
+<div class="text-white text-center mt-2">
+    <h3>Comentario:</h3>
+    <p>${comentario}</p>
+</div>
 <div class="text-center mt-2 mb-2">
     <a href="ver-pelicula?pelicula=${pelicula.id}" class="btn btn-secondary">Volver</a>
 </div>
