@@ -18,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
 import ar.edu.unlam.tallerweb1.domain.cine.Sala;
@@ -54,13 +55,94 @@ public class ControladorEntradaDeberia {
 	
 	
 	@Test
+	public void permitirElegirElCineParaComprarUnaEntrada(){
+		
+		List <CinePelicula> cines = givenCinesConPeliculas();
+		
+    	whenSeEligeQuiereElegirElCine(cines);
+    	
+    	thenSePuedeElegirElCine(cines);
+	
+	}
+	
+	private void whenSeEligeQuiereElegirElCine(List<CinePelicula> cines) {
+		mocksSessionRequests();
+		
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
+		when(servicioCine.getCines(1L)).thenReturn(cines);
+		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L);
+		
+		
+	}
+
+	private void thenSePuedeElegirElCine(List<CinePelicula> cines) {
+		assertThat(mav.getViewName()).isEqualTo("entrada-pelicula");
+
+
+	}
+	
+	@Test
+	public void permitirElegirLaFuncion() {
+		
+		DatosCine datosCine = givenDatosCine();
+		List <Funcion> funciones = new ArrayList<>();
+		funciones.add(givenFuncion());
+		
+		whenSeEligeLaFuncion(datosCine,funciones);
+		
+		thenSePuedenElegirLosAsientos();
+	}
+	
+
+
+	private void thenSePuedenElegirLosAsientos() {
+		assertThat(mav.getViewName()).isEqualTo("entrada-preparacion");
+		
+	}
+
+	private void whenSeEligeLaFuncion(DatosCine datosCine,List<Funcion>funciones) {
+		mocksSessionRequests();
+		
+		when(this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datosCine.getCine(),datosCine.getPelicula()))
+		.thenReturn(funciones);
+		
+		mav = this.controladorEntrada.entradaPreparacion(datosCine,mockRequest,redirectAttributes);	
+		
+	}
+	
+	@Test
+	public void permitirElegirAsientos() {
+		
+		DatosEntrada datosEntrada= givenDatosEntrada(givenFuncion(),givenUsuario());
+
+		
+		whenSeEligenAsientos(datosEntrada);
+		
+		thenSePuedenComprarLaEntrada();
+	}
+	
+	
+
+	private void thenSePuedenComprarLaEntrada() {
+		assertThat(mav.getViewName()).isEqualTo("entrada-asientos");
+		
+	}
+
+	private void whenSeEligenAsientos(DatosEntrada datosEntrada) {
+		mocksSessionRequests();
+		
+		//when(this.servicioFuncion.obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
+		
+		mav = this.controladorEntrada.entradaAsientos(datosEntrada,mockRequest,redirectAttributes);	
+		
+	}
+
+	@Test
 	public void comprarUnaEntradaExitosamente() {
 		
-		Cine cine = givenCine("CINEEEEEE");
-		Pelicula pelicula = givenPelicula("peli",1L);
-		Sala sala = givenSala(cine,"LA SALA");
-		Funcion funcion = givenFuncion(sala,pelicula);
+		Funcion funcion = givenFuncion();
 		Usuario usuario = givenUsuario(1L,"Nombre");
+		List<Asiento> asientos = givenAsientos(2);
 		
 		DatosEntrada datosEntrada = givenDatosEntrada(funcion,usuario);
 		
@@ -68,7 +150,7 @@ public class ControladorEntradaDeberia {
 		
 		entrada.add(givenEntrada(usuario,funcion));
 		
-		whenSeSeleccionaLaFuncionDeseada(entrada,datosEntrada);
+		whenSeSeleccionaLaFuncionDeseada(entrada,datosEntrada,asientos);
 		
 		thenSeCompraLaEntradaParaEsaFuncion();
 			
@@ -80,12 +162,13 @@ public class ControladorEntradaDeberia {
 		
 	}
 
-	private void whenSeSeleccionaLaFuncionDeseada(List<Entrada> entrada,DatosEntrada DE) {
+	private void whenSeSeleccionaLaFuncionDeseada(List<Entrada> entrada,DatosEntrada datosEntrada,List<Asiento> asientos) {
 		mocksSessionRequests();
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
-		when(this.servicioEntrada.getEntradasCompradasDelUsuario(DE.getUsuario().getId(),DE.getFuncion().getId())).thenReturn(entrada);
-		mav = this.controladorEntrada.entradaCompra(DE,mockRequest,redirectAttributes);	
+		//when(this.servicioEntrada.comprar(datosEntrada.getFuncion(), datosEntrada.getUsuario(), asientos)).thenReturn()
+		when(this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),datosEntrada.getFuncion().getId())).thenReturn(entrada);
+		mav = this.controladorEntrada.entradaCompra(datosEntrada,mockRequest,redirectAttributes);	
 	}
 
 	@Test
@@ -146,32 +229,7 @@ public class ControladorEntradaDeberia {
 		
 	}
 
-	@Test
-	public void elegirElCineParaComprarUnaEntrada(){
-		
-		List <CinePelicula> cines = givenCinesConPeliculas();
-		
-    	whenSeEligeQuiereElegirElCine(cines);
-    	
-    	thenSePuedeElegirElCine(cines);
 	
-	}
-	
-	private void whenSeEligeQuiereElegirElCine(List<CinePelicula> cines) {
-		mocksSessionRequests();
-		
-		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
-		when(servicioCine.getCines(1L)).thenReturn(cines);
-		mav = this.controladorEntrada.entradaPelicula(mockRequest,1L);
-		
-		
-	}
-
-	private void thenSePuedeElegirElCine(List<CinePelicula> cines) {
-		assertThat(mav.getViewName()).isEqualTo("entrada-pelicula");
-
-
-	}
 	
 	private List<Funcion> givenFuncionesParaEseCineYEsaPelicula(Sala sala,Pelicula pelicula){
 		
@@ -216,6 +274,23 @@ public class ControladorEntradaDeberia {
 		return cines;
 	}
 	
+	private List<Asiento> givenAsientos(Integer cantidad){
+		
+		List<Asiento> asientos = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			asientos.add(givenAsiento());
+			
+		}
+		
+		return asientos;
+	}
+
+	private Asiento givenAsiento() {
+		Asiento asiento = new Asiento();
+		asiento.setId(new Random().nextLong());
+		return asiento;
+	}
 
 	private void mocksSessionRequests() {
 	    when(mockRequest.getSession()).thenReturn(mockSession);
@@ -254,6 +329,13 @@ public class ControladorEntradaDeberia {
     	return usuario;
     }
 	
+	public Usuario givenUsuario() {
+    	Usuario usuario = new Usuario ();
+    	usuario.setId(new Random().nextLong());
+ 	
+    	return usuario;
+    }
+	
 	private Pelicula givenPelicula(String titulo,Long id) {
 		Pelicula pelicula = new Pelicula();
 		pelicula.setId(id);
@@ -270,6 +352,14 @@ public class ControladorEntradaDeberia {
 		return sala;
 	}
 	
+	private Funcion givenFuncion() {
+		Funcion funcion = new Funcion();
+		funcion.setId(new Random().nextLong());
+		
+		return funcion;
+		
+	}
+	
 	private Funcion givenFuncion(Sala sala,Pelicula pelicula) {
 		Funcion funcion = new Funcion();
 		funcion.setSala(sala);
@@ -279,5 +369,15 @@ public class ControladorEntradaDeberia {
 		return funcion;
 		
 	}
+		
+	private DatosCine givenDatosCine() {
+		DatosCine datosCine = new DatosCine();
+		
+		datosCine.setCine(1L);
+		datosCine.setPelicula(1L);
+		return datosCine;
+	}
+	
+	
 
 }

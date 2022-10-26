@@ -29,6 +29,35 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	@Test
 	@Transactional
 	@Rollback
+	public void obtenerLaCantidadDeAsientosVaciosDeLaFuncion() {
+		
+		Funcion funcion = givenFuncion();
+		
+		Integer vacios = 5;
+		
+		givenAsientosVaciosYEntradas(funcion,vacios);
+		
+		givenAsientosOcupadosYEntradas(funcion,15);
+		
+		Integer obtenido = whenSeObtienenLaCantidadDeVacios(funcion);
+		
+		thenSeObtieneLaCantidadDeVacios(obtenido,vacios);
+		
+	}
+	
+	private Integer whenSeObtienenLaCantidadDeVacios(Funcion funcion) {
+		return this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId());
+		
+	}
+
+	private void thenSeObtieneLaCantidadDeVacios(Integer obtenido,Integer vacios) {
+		assertThat(obtenido).isEqualTo(vacios);
+		
+	}
+
+	@Test
+	@Transactional
+	@Rollback
 	public void obtenerTodasLasEntradasCompradasParaUnaFuncionPorUnUsuario() {
 	
 		Usuario usuario1 = givenUsuario("Jojo");
@@ -151,6 +180,44 @@ public class RepositorioEntradaDeberia extends SpringTest {
 			
 			return entrada;
 					
+	}
+	
+	private void givenAsientosVaciosYEntradas(Funcion funcion,Integer cantidad) {
+		
+		for (int i = 0; i < cantidad; i++) {
+			
+			Entrada entrada = new Entrada();
+			Asiento asiento = new Asiento();
+			
+			entrada.setAsiento(asiento);
+			entrada.setFuncion(funcion);
+			asiento.setEntrada(entrada);
+			asiento.setOcupado(false);
+			
+			session().save(entrada);
+			session().save(asiento);
+					
+		}
+		
+	}
+	
+	private void givenAsientosOcupadosYEntradas(Funcion funcion,Integer cantidad) {
+		
+		for (int i = 0; i < cantidad; i++) {
+			
+			Entrada entrada = new Entrada();
+			Asiento asiento = new Asiento();
+			
+			entrada.setAsiento(asiento);
+			entrada.setFuncion(funcion);
+			asiento.setEntrada(entrada);
+			asiento.setOcupado(true);
+			
+			session().save(entrada);
+			session().save(asiento);
+					
+		}
+		
 	}
 	
 	private Entrada givenEntrada(Usuario U1,Funcion F1) {

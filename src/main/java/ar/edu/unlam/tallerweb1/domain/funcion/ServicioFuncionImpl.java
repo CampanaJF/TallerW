@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -55,6 +54,8 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		return siguientesFunciones;
 	}
 	
+	// El numero de asientos por fila (10) no debe estar hardcoded, se puede agregar a sala y obtenerlo de ahi
+	// Aun asi la view quiza no responda bien a ciertos tamaños de sala
 	// Test esto
 	@Override
 	public HashMap<Integer,List<Asiento>> obtenerAsientosDeLaFuncion(Long funcion) {

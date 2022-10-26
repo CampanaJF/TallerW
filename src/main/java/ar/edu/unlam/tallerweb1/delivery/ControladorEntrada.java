@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -102,6 +103,21 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada-preparacion",model);
 	}
 	
+	@RequestMapping(path = "/entrada-asientos",method = RequestMethod.POST)
+	public ModelAndView entradaAsientos(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
+			 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
+		
+		ModelMap model = new ModelMap();
+		
+		
+		
+		model.put("filas", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
+			
+		model.addAttribute("datosEntrada", datosEntrada);
+		
+		return new ModelAndView("entrada-asientos",model);
+	}
+		
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
 	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
 									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
@@ -110,6 +126,10 @@ public class ControladorEntrada {
 		ModelAndView usuarioLogueado = validarUsuarioLogueado(request, redirectAttributes);
 		if(usuarioLogueado!=null) 
 			return usuarioLogueado;
+		
+		List<Asiento> asientos = new ArrayList<>();
+		asientos.add(datosEntrada.getAsiento());
+		datosEntrada.setAsientos(asientos);
 		
 		try {
 			comprarEntrada(datosEntrada); 
@@ -126,17 +146,6 @@ public class ControladorEntrada {
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
-	}
-
-	private ModelAndView validarUsuarioLogueado(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
-		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
-		
-		if(null==usuarioLogueado) {
-			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
-			return new ModelAndView("redirect:/registrarme");
-		}
-		
-		return null;
 	}
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
@@ -160,17 +169,21 @@ public class ControladorEntrada {
 
 		return new ModelAndView("entrada",model);
 	}
+
+	private ModelAndView validarUsuarioLogueado(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
+		
+		if(null==usuarioLogueado) {
+			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
+			return new ModelAndView("redirect:/registrarme");
+		}
+		
+		return null;
+	}
 	
-	@RequestMapping(path="/entrada-asientos",method=RequestMethod.GET)
-	public ModelAndView entradaAsientos(HttpServletRequest request) {
+	private HashMap<Integer,List<Asiento>> obtenerAsientosDeLaFuncion(Long funcion){
 		
-		HashMap<Integer,List<Asiento>> a= this.servicioFuncion.obtenerAsientosDeLaFuncion(6L);
-		
-		ModelMap model = new ModelMap();
-		
-		model.put("filas",a);
-		
-		return new ModelAndView("entrada-asientos",model);
+		return this.servicioFuncion.obtenerAsientosDeLaFuncion(funcion);
 	}
 	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {

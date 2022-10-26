@@ -116,7 +116,7 @@ public class ServicioEntradaDeberia {
 	}
 	
 	private void whenSeCompranEntradas(Funcion funcion,Usuario usuario,List<Asiento> asiento) {
-		when(this.repositorioEntrada.getCantidadAsientosOcupados(funcion.getId())).thenReturn(asiento.size());
+		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(asiento.size());
 		this.servicioEntrada.comprar(funcion,usuario,asiento);
 		
 	}
@@ -128,7 +128,7 @@ public class ServicioEntradaDeberia {
 	}
 	
 	private void whenSeCompranEntradasSinSuficientesAsientos(Funcion funcion, Usuario usuario, List<Asiento> asientos) {
-		when(this.repositorioEntrada.getCantidadAsientosOcupados(funcion.getId())).thenReturn(3);
+		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(3);
 		this.servicioEntrada.comprar(funcion,usuario,asientos);
 		
 	}

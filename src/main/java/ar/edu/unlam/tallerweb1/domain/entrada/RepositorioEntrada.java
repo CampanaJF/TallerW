@@ -16,5 +16,7 @@ public interface RepositorioEntrada {
 	
 	List<Entrada> getEntradasCompradasDelUsuario(Long id, Long id2);
 
-	Integer getCantidadAsientosOcupados(Long funcion);
+	Integer getCantidadAsientosVacios(Long funcion);
+
+	Usuario getUsuario(Long Id);
 }

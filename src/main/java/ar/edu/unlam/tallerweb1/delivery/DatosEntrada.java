@@ -10,6 +10,7 @@ public class DatosEntrada {
 	private Funcion funcion;
     private Usuario usuario;
     private List<Asiento> asientos;
+    private Asiento asiento;
 
     
 	public Funcion getFuncion() {
@@ -29,6 +30,12 @@ public class DatosEntrada {
 	}
 	public void setAsientos(List<Asiento> asientos) {
 		this.asientos = asientos;
+	}
+	public Asiento getAsiento() {
+		return asiento;
+	}
+	public void setAsiento(Asiento asiento) {
+		this.asiento = asiento;
 	}
 
     

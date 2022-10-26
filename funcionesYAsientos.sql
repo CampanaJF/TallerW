@@ -15,12 +15,11 @@ call EP_crearAsientosYEntradasVacias(6);
 call EP_obtenerCantidadDeAsientosDeUnaFuncion(4,@cantidadACrear);
 select @cantidadACrear;
 
-delete from asiento;
-delete from entrada;
-
 select * from entrada;
 
-select * from asiento;
+select * from asiento where ocupado is true;
+
+update asiento set ocupado = 1 where id = 100876;
 
 drop procedure if exists EP_crearAsientosYEntradasVacias;
 DELIMITER //

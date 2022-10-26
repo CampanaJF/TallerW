@@ -77,11 +77,11 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 	
 	@Override
-	public Integer getCantidadAsientosOcupados(Long funcion) {
+	public Integer getCantidadAsientosVacios(Long funcion) {
 		final Session session = sessionFactory.getCurrentSession();
 		
 		Criterion rest1 = Restrictions.eq("funcion.id",funcion);
-		Criterion rest2 = Restrictions.eq("ocupado",true);
+		Criterion rest2 = Restrictions.eq("ocupado",false);
 		
 		Criteria crit = session.createCriteria(Asiento.class);
 		crit.createAlias("entrada", "entradaJoin");
@@ -92,6 +92,18 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 				
 		return Math.toIntExact((long) crit.uniqueResult());
 	}
+	
+	@Override
+	public Usuario getUsuario(Long Id) {
+		final Session session = sessionFactory.getCurrentSession();
+		Criterion rest1 = Restrictions.eq("id", Id);
+		
+		Usuario encontrado = (Usuario) session.createCriteria(Usuario.class).add(rest1).uniqueResult();
+		
+		return encontrado;
+	}
+	
+	
 
 
 }

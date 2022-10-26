@@ -97,7 +97,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 			throw new ErrorDeAsientoException();
 		}
 		
-		if(this.repositorioEntrada.getCantidadAsientosOcupados(funcion.getId())<asientos.size()) {
+		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) {
 			throw new ErrorDeAsientoException();
 		}
 		

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -43,40 +43,43 @@
       </li>
     </ul>
     
+   <form:form action="entrada-compra" modelAttribute="datosEntrada" method="POST"> 
+    
     <div class="containerCustom">
       <div class="screen"></div>
       
-      
-      
      <c:forEach items="${filas}" var="fila">
       <div class="row">
+         
+      <c:forEach items="${fila.value}" varStatus="s" var="asiento">
       
-      <c:forEach items="${fila.value}" var="asiento">
-      
-      <c:if test="${asiento.ocupado == true }">
-        <div class="seat sold"></div>
-      </c:if>
-      
-      <c:if test="${asiento.ocupado == false }">
-      <div class="seat" value="${asiento.id}"></div>
-      </c:if>
-      
-      
+        <form:checkbox path="asiento.id" value="${asiento.id}" class="seat
+         <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
+         
+         
+         <%-- 
+         <form:checkbox path="asientos[${s.index}].id" value="${asiento.id}" class="seat
+         <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox> --%>
+         
+                 
       </c:forEach>
+      
       </div>
       
       </c:forEach>
       
-    
-
-
-    <p class="text">
-      Cantidad de Entradas: <span id="count">0</span> Total: $ <span id="total">0</span>
-    </p>
-
-    <button type="submit" class="mt-3 btn-lg btn buttonA">Comprar Entradas</button>
-
 	</div>
+    
+    <div class="movie-container">
+       <p class="text">Cantidad de Entradas: <span id="count">0</span> Total: $ <span id="total">0</span></p>
+    </div>
+    
+    <form:hidden path="funcion.id" value="${datosEntrada.funcion.id}" />
+    <form:hidden path="usuario.id" value="${datosEntrada.usuario.id}" />
+    <button type="submit" class="mt-3 btn-lg btn buttonA">Comprar Entradas</button>
+    
+   </form:form>
+	
 </div>
 
 </body>
