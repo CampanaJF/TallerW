@@ -160,8 +160,36 @@ public class ServicioPeliculaTest {
 		
 	}
     
-    
-    
-    
-    
+    @Test
+    public void queSePuedaObtenerUnPromedioDeValoracionesDeUnaPelicula(){
+        Pelicula pelicula = new Pelicula();
+        givenExistePelicula(pelicula);
+        Valoracion valoracion1 = new Valoracion(4,pelicula,"Buena",null);
+        Valoracion valoracion2 = new Valoracion(5,pelicula,"Excelente",null);
+        Valoracion valoracion3 = new Valoracion(4,pelicula,"Me gusto",null);
+        givenExistenValoracionesDeUnaPelicula(valoracion1);
+        givenExistenValoracionesDeUnaPelicula(valoracion2);
+        givenExistenValoracionesDeUnaPelicula(valoracion3);
+        Long promedio = whenObtengoPromedioDeValoracionesPorPelicula(pelicula);
+        thenObtengoPromedioDeValoracionesDeUnaPelicula(promedio,4L);
+    }
+
+    private void thenObtengoPromedioDeValoracionesDeUnaPelicula(Long promedio, Long promedioEsperado) {
+        assertThat(promedio).isEqualTo(promedioEsperado);
+    }
+
+    private Long whenObtengoPromedioDeValoracionesPorPelicula(Pelicula pelicula){
+        return this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(pelicula);
+    }
+    private void  givenExistenValoracionesDeUnaPelicula(Valoracion valoracion){
+        List<Valoracion> valoracionList = new ArrayList<>();
+        valoracionList.add(valoracion);
+        when(this.repositorioPelicula.listarValoracionesPorPelicula(valoracion.getPelicula())).thenReturn(valoracionList);
+    }
+    private void givenExistePelicula(Pelicula pelicula){
+        List<Pelicula> peliculaList = new ArrayList<>();
+        peliculaList.add(pelicula);
+        when(this.repositorioPelicula.getPeliculas()).thenReturn(peliculaList);
+    }
+
 }
