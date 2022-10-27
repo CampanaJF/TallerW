@@ -134,18 +134,18 @@ public class RepositorioPeliculaTest extends SpringTest {
          thenEncuentroPeliculasDeUnActor(peliculasEncontradas,1);
 	}
 
-	/*@Test
+	@Test
 	@Transactional
 	@Rollback
-	public void meDebeDevolverCeroValoracionesDeUnaPeliculaPorqueNoSeHicieronValoraciones(){
+	public void meDebeDevolverCeroValoracionesDeUnaPeliculaPorqueNoExisten(){
 
 		//dado que existen peliculas
-		Pelicula pelicula = givenExistenPeliculas();
+		Pelicula pelicula = givenExistePelicula();
 		//cuando listo valoraciones
-		List<Valoracion>valoraciones= whenListoValoracionesDePeliculas(pelicula);
+		List<Valoracion>valoraciones= whenConsultoPorCalificacionesDeUnaPelicula(pelicula);
 		//entonces obtengo valoraciones
-		thenObtengoValoraciones(valoraciones,0);
-	}*/
+		thenObtengoCalificaciones(valoraciones,0);
+	}
     @Test
 	@Transactional
 	@Rollback
