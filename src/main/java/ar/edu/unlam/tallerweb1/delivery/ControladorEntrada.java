@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
 import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
@@ -100,6 +102,21 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada-preparacion",model);
 	}
 	
+	@RequestMapping(path = "/entrada-asientos",method = RequestMethod.POST)
+	public ModelAndView entradaAsientos(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
+			 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
+		
+		ModelMap model = new ModelMap();
+		
+		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()) );
+		
+		model.put("asientos", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
+			
+		model.addAttribute("datosEntrada", datosEntrada);
+		
+		return new ModelAndView("entrada-asientos",model);
+	}
+		
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
 	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
 									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
@@ -109,8 +126,12 @@ public class ControladorEntrada {
 		if(usuarioLogueado!=null) 
 			return usuarioLogueado;
 		
+		List<Asiento> asientos = new ArrayList<>();
+		asientos.add(datosEntrada.getAsiento());
+		datosEntrada.setAsientos(asientos);
+		
 		try {
-			this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getCantidad()); 
+			comprarEntrada(datosEntrada); 
 		}catch(DatosEntradaInvalidaException q) {
 			redirectAttributes.addFlashAttribute("mensaje","Debe comprar por lo menos una entrada y seleccionar una funcion!");
 			return new ModelAndView("redirect:/home");	
@@ -124,17 +145,6 @@ public class ControladorEntrada {
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
-	}
-
-	private ModelAndView validarUsuarioLogueado(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
-		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
-		
-		if(null==usuarioLogueado) {
-			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
-			return new ModelAndView("redirect:/registrarme");
-		}
-		
-		return null;
 	}
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
@@ -158,13 +168,37 @@ public class ControladorEntrada {
 
 		return new ModelAndView("entrada",model);
 	}
+
+	private ModelAndView validarUsuarioLogueado(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
+		
+		if(null==usuarioLogueado) {
+			redirectAttributes.addFlashAttribute("mensaje","Registrese Para Comprar sus entradas!");
+			return new ModelAndView("redirect:/registrarme");
+		}
+		
+		return null;
+	}
+	
+	private List<Asiento> obtenerAsientosDeLaFuncion(Long funcion){
+		
+		return this.servicioFuncion.obtenerAsientosDeLaFuncion(funcion);
+	}
 	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
 	}
+	
+	private Funcion obtenerFuncion(Funcion funcion) {
+		return this.servicioFuncion.getFuncion(funcion.getId());
+	}
 
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
 		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	}
+	
+	private void comprarEntrada(DatosEntrada datosEntrada) {
+		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
 	
 

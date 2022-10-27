@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
 @Service("servicioFuncion")
@@ -50,6 +51,16 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 			throw new NoSeEncontraronFuncionesException();
 		
 		return siguientesFunciones;
+	}
+	
+	// El numero de asientos por fila (10) no debe estar hardcoded, se puede agregar a sala y obtenerlo de ahi
+	// Aun asi la view quiza no responda bien a ciertos tamaños de sala
+	// Test esto
+	@Override
+	public List<Asiento> obtenerAsientosDeLaFuncion(Long funcion) {
+		
+		return this.repositorioFuncion.getTodosLosAsientos(funcion);
+
 	}
 
 	@Override
@@ -101,5 +112,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		
 		return false;
 	}
+
+	
 
 }

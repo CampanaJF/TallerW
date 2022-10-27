@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.entrada;
+package ar.edu.unlam.tallerweb1.domain.pelicula;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;

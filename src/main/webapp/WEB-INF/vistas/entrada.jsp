@@ -29,7 +29,7 @@
   	<div class="item">
   
 		<div class="item-right">
-		  <h4 class="num">${entrada.asiento.ubicacion}</h4>
+		  <h4 class="num">${entrada.asiento.numero} ${entrada.asiento.ubicacion}</h4>
 		  <p class="day">${entrada.funcion.sala.nombreSala}</p>
 		  <span class="up-border"></span>
 		  <span class="down-border"></span>
@@ -44,7 +44,7 @@
 		  </div>
 		  <div class="fix"></div>
 		  <div class="loc">
-			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio} $</p>
+			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion} ${entrada.asiento.numero}<br/> ${entrada.funcion.precio} $</p>
 		  </div>
 		  <div class="fix"></div>
 		  <button class="cancel">Imprimir</button>
@@ -65,7 +65,7 @@
   	<div class="item">
   
 		<div class="item-right">
-		  <h4 class="num">${entrada.asiento.ubicacion}</h4>
+		  <h4 class="num">${entrada.asiento.numero} ${entrada.asiento.ubicacion}</h4>
 		  <p class="day">${entrada.funcion.sala.nombreSala}</p>
 		  <span class="up-border"></span>
 		  <span class="down-border"></span>
@@ -80,7 +80,7 @@
 		  </div>
 		  <div class="fix"></div>
 		  <div class="loc">
-			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion}<br/> ${entrada.funcion.precio} $</p>
+			<p>${entrada.funcion.sala.nombreSala}<br/>Asiento ${entrada.asiento.ubicacion} ${entrada.asiento.numero}<br/> ${entrada.funcion.precio} $</p>
 		  </div>
 		  <div class="fix"></div>
 		  <button class="cancel">Imprimir</button>
