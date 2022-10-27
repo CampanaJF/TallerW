@@ -1,17 +1,14 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
-import javax.servlet.http.HttpServletRequest;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
 
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 
@@ -62,20 +59,24 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	}
 
 	@Override
-	public void guardarValoracionPelicula(int estrellas, Pelicula pelicula) {
-       this.repositorioPelicula.guardarValoracionPelicula(estrellas,pelicula);
+	public void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario) {
+		this.repositorioPelicula.guardarValoracionPelicula(puntos,pelicula,comentario,usuario);
 	}
 
+	@Override
+	public List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula) {
+		return this.repositorioPelicula.listarValoracionesPorPelicula(pelicula);
+	}
 	@Override
 	public Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada) {
 		Long suma=0L;
 		Long promedioValoracion=0L;
-		List<Valoracion> valoraciones= this.repositorioPelicula.listarValoracionesPorPelicula(peliculaBuscada);
+		List<Valoracion> valoraciones= obtenerCalificacionesDeUnaPelicula(peliculaBuscada);
 		int cantidadValoraciones = valoraciones.size();
 
 		if(cantidadValoraciones!=0){
 			for (Valoracion val:valoraciones) {
-				suma=suma+val.getEstrellas();
+				suma=suma+val.getPuntos();
 			}
 			promedioValoracion=suma/valoraciones.size();
 		}
@@ -83,15 +84,11 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		return promedioValoracion;
 	}
 
-	@Override
-	public List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada) {
-		return this.repositorioPelicula.listarValoracionesPorPelicula(buscada);
-	}
+
 	@Override
 	public List<Pelicula> obtenerProximosEstrenos() {
 		// TODO Auto-generated method stub
 		return this.repositorioPelicula.getProximosEstrenos();
 	}
-
 
 }

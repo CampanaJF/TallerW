@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.entrada;
+package ar.edu.unlam.tallerweb1.domain.pelicula;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
@@ -110,6 +110,23 @@ public class ServicioPeliculaTest {
     	List<Pelicula>peliculasEstrenos=whenConsultoEstrenoDelMes();
     	thenObtengoEstrenoDelMes(peliculasEstrenos);
     }
+    
+    @Test
+    public void consultarLosProximosEstrenos(){
+    	givenProximosEstrenos();
+    	List<Pelicula>proximosEstrenos=whenConsultoProximosEstrenos();
+    	thenObtengoProximosEstrenos(proximosEstrenos);
+    	
+    }
+	private void thenObtengoProximosEstrenos(List<Pelicula> proximosEstrenos) {
+		assertEquals(2,proximosEstrenos.size());
+		
+	}
+
+	private List<Pelicula> whenConsultoProximosEstrenos() {
+		// TODO Auto-generated method stub
+		return servicioPelicula.obtenerProximosEstrenos();
+	}
 
 	private void thenObtengoEstrenoDelMes(List<Pelicula>peliculasEstrenos) {
 		assertEquals(2,peliculasEstrenos.size());
@@ -129,6 +146,17 @@ public class ServicioPeliculaTest {
 		peliculasEstrenos.add(pelicula);
 		peliculasEstrenos.add(pelicula2);
 		when(repositorioPelicula.getEstrenosDelMes()).thenReturn(peliculasEstrenos);
+		
+	}
+	
+	private void givenProximosEstrenos() {
+		Pelicula pelicula=new Pelicula();
+		Pelicula pelicula2=new Pelicula();
+	
+		List<Pelicula>proximasEstrenos=new ArrayList<>();
+		proximasEstrenos.add(pelicula);
+		proximasEstrenos.add(pelicula2);
+		when(repositorioPelicula.getProximosEstrenos()).thenReturn(proximasEstrenos);
 		
 	}
     

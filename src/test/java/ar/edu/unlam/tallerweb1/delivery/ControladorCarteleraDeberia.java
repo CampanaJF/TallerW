@@ -41,6 +41,7 @@ public class ControladorCarteleraDeberia {
         servicioGenero = mock(ServicioGenero.class);
         servicioPelicula = mock(ServicioPelicula.class);
         servicioClasificacion = mock(ServicioClasificacion.class);
+		servicioSession=mock(ServicioSession.class);
         controlador=new ControladorCartelera(servicioGenero,servicioClasificacion,servicioPelicula,servicioSession);
 	}
 	

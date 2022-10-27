@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1"> 
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!--Import Google Icon Font-->
@@ -23,7 +22,7 @@
     
     <script src="js/busqueda.js"></script>
     <script src="js/valoracionPelicula.js"></script>
-
+    <script src="js/valida-calificacion.js"></script>
     <!-- Favicon-->
     <link rel="icon" href="<c:url value="/icons/favicon.ico" />">
 <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />

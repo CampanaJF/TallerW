@@ -39,10 +39,8 @@
 				<h5 class="pb-3 price"
 				 data-price="${funciones.get(0).precio}">Precio por entrada : ${funciones.get(0).precio} $</h5>
 				
-				<form:form action="entrada-compra" modelAttribute="datosEntrada" method="POST">
+		<form:form action="entrada-asientos" modelAttribute="datosEntrada" method="POST">
                 
-                
-               
 
 			<c:forEach items="${funciones}" var="funcion">
 			<c:if test="${funcion.formato.tipo == '2D' }">
@@ -63,10 +61,6 @@
               </c:if>
               </c:forEach> 
 
-                  
-                
-                
-                
 
 			 <c:forEach items="${funciones}" var="funcion">	
 			 <c:if test="${funcion.formato.tipo == '3D' }">
@@ -87,10 +81,6 @@
                </c:if>
                </c:forEach> 
 
-                  
-               
-                
-                
 
 				<c:forEach items="${funciones}" var="funcion">
 				<c:if test="${funcion.formato.tipo == 'Realidad Aumentada' }">
@@ -111,17 +101,11 @@
                 </c:if>
                 </c:forEach> 
 
-                  
-                
-                
-                	Cantidad: <form:input class="quantity form-control cantidad-form" value ="1" placeholder="1" path="cantidad" />
                 	<form:hidden path="usuario.id" value="${usuario.id}" />
-                	
-                	<h5 class="total">Total: <span id="total">${funciones.get(0).precio}</span></h5>
-                	               	
+          	
                 	<button type="submit" class="mt-3 btn-lg btn buttonA">Comprar Entradas</button>
 				
-				</form:form> 
+			</form:form> 
 				
 				
 			</div>

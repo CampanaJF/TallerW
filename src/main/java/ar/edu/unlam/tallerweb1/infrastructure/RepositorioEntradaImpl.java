@@ -2,16 +2,21 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.RepositorioEntrada;
+import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
 @SuppressWarnings({ "unchecked", "deprecation" })
@@ -38,9 +43,15 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 
 	@Override
-	public void comprarEntrada(Entrada entrada) {
+	public void comprarEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
 		
-		sessionFactory.getCurrentSession().save(entrada);
+		Entrada entrada = getEntrada(funcion.getId(),asiento.getId());
+		
+		entrada.setUsuario(usuario);
+		
+		entrada.getAsiento().setOcupado(true);
+		
+		sessionFactory.getCurrentSession().update(entrada);
 		
 	}
 
@@ -55,20 +66,44 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		return session.createCriteria(Entrada.class).add(rest1).add(rest2).list();
 	}
 
-		// Usa Entrada, entrada tiene acceso facil a las dos entidades, y tiene todo lo necesario para realizar esto
+	@Override
+	public Entrada getEntrada(Long funcion, Long asiento) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("asiento.id", asiento);
+		Criterion rest2 = Restrictions.eq("funcion.id", funcion);
+		
+		return (Entrada) session.createCriteria(Entrada.class).add(rest1).add(rest2).uniqueResult();
+	}
 	
-//		@Override
-//		public Long getAsientosOcupados(Long funcionId) {
-//			final Session session = sessionFactory.getCurrentSession();
-//			
-//			Criterion rest1 = Restrictions.eq("F.id", funcionId);
-//			Criterion rest2 = Restrictions.eq("A.ocupado", true);
-//			
-//			
-//			session.createCriteria(Entrada.class).createAlias("asiento", "A")
-//												 .createAlias("funcion", "F")
-//			 									 .add(rest1).add(rest2).list();
-//			
-//		}
+	@Override
+	public Integer getCantidadAsientosVacios(Long funcion) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("funcion.id",funcion);
+		Criterion rest2 = Restrictions.eq("ocupado",false);
+		
+		Criteria crit = session.createCriteria(Asiento.class);
+		crit.createAlias("entrada", "entradaJoin");
+		crit.createAlias("entradaJoin.funcion", "funcion");
+		crit.add(rest1);
+		crit.add(rest2);
+		crit.setProjection(Projections.rowCount());
+				
+		return Math.toIntExact((long) crit.uniqueResult());
+	}
+	
+	@Override
+	public Usuario getUsuario(Long Id) {
+		final Session session = sessionFactory.getCurrentSession();
+		Criterion rest1 = Restrictions.eq("id", Id);
+		
+		Usuario encontrado = (Usuario) session.createCriteria(Usuario.class).add(rest1).uniqueResult();
+		
+		return encontrado;
+	}
+	
+	
+
 
 }

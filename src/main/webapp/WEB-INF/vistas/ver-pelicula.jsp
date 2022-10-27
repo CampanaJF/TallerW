@@ -11,9 +11,8 @@
 
      <c:if test="${not empty pelicula}">
 
-<div class="container-md pt-2 pb-2">
+<div class="container-md pt-2 pb-2 mt-5">
     <div class="row">
-
         <div class="col">
             <div class="text-center">
 
@@ -22,58 +21,44 @@
             </div>
         </div>
 
-        <div class="col align-self-center text-center text-white">
-            <h1 class="text-center text-white titulo-cartelera">${pelicula.titulo}</h1>
-            <h4  class="text-center text-white mt-2">Dirigida por ${pelicula.director}</h4>
-            <h5 class="pb-3 text-center text-white mt-4">${pelicula.sinopsis}</h5>
 
-            <a href="entrada-pelicula?peliculaId=${pelicula.id}" type="button" class="btn-lg btn buttonA">Comprar Entradas</a>
+        <div class="col align-self-center  text-white">
+            <h1 class="titulo-cartelera">${pelicula.titulo}</h1>
+            <h6 class="clasif-borde">${pelicula.clasificacionPelicula.descripcion}</h6>
+            <h5 class="pb-3">${pelicula.sinopsis}</h5>
+            <h5><span class="titulo-cartelera">Direcci&oacute;n</span> ${pelicula.director}</h5>
+            <h5><span class="titulo-cartelera">Reparto principal </span>${pelicula.protagonista}</h5>
+            <h5><span class="titulo-cartelera">G&eacute;nero </span>${pelicula.genero.descripcion}</h5>
+            <h5><span class="titulo-cartelera">Duraci&oacute;n </span>${pelicula.duracionEnHoras}</h5>
+
+
+            <a href="entrada-pelicula?peliculaId=${pelicula.id}" type="button" class="btn-lg btn buttonA mt-3">Comprar Entradas</a>
         </div>
-<!--
-         <div class="col-4">
-             <form action="guardar-calificacion" method="post" modelAttribute="datosValoracion" >
-             <div class="container-rating">
-                 <div class="rating-wrap">
-                     <h2 class="text-white text-center">Star Rating</h2>
-                     <div class="center-rating">
-                         <fieldset class="rating">
-                            <form path="valoracion.pelicula" value="{pelicula.id}"/>
 
-                             <input type="radio" id="star5" name="estrellas" value="5" path="valoracion.estrellas"></input>
-                             <label for="star5" class="full" title="Awesome" path=""></label>
-
-                             <label for="star4" class="full"></label>
-                             <input type="radio" id="star4" name="estrellas" value="4"/>
-
-                             <label for="star3" class="full"></label>
-                             <input type="radio" id="star3" name="estrellas" value="3"/>
-
-                             <label for="star2" class="full"></label>
-                             <input type="radio" id="star2" name="estrellas" value="2"/>
-
-
-                             <label for="star1" class="full"></label>
-                             <input type="radio" id="star1" name="estrellas" value="1"/>
-
-                         </fieldset>
+         <div class="col">
+             <div class="text-white text-center pt-2 pb-2 mt-5">
+                 <c:if test="${not empty promedio}">
+                     <h4 >Calificaci&oacute;n de usuarios</h4>
+                     <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center">
+                         <img src="icons/estrella.png" class="bi me-2" width="40" height="40" role="img">
+                         <h4> <span class="titulo-cartelera"> ${promedio} </span>/ 5</h4>
                      </div>
-                     <div>
-                     <h4 id="rating-value"></h4>
-                     <input type="submit" value="Puntuar">
-                 </div>
-                <div>
-                    <c test="{not empty mensaje}">
-                        <span>{mensaje}</span>
-                    </c>
-
-                </div>
-         </div>
+                     <h6 class="mt-2">Basado en ${votos} votos</h6>
+                 </c:if>
              </div>
-             </form>
-             -->
+             <div class="ms-2">
+             <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center  mt-5">
+                <a href="calificar-pelicula?pelicula=${pelicula.id}" class="a-calif"><h2 class="text-center btn btn-secondary calif-subtitulo">CALIFICAR</h2> </a>
+             </div>
+             <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center  mt-5">
+                 <a href="ver-opiniones?pelicula=${pelicula.id}" class="a-calif"><h2 class="text-center btn btn-secondary calif-subtitulo">VER RESEÑAS </h2> </a>
+             </div>
+             </div>
+    </div>
     </div>
 </div>
      </c:if>
+
 
 <div class="container mt-3">
      <h2 class="text-white mt-lg-5 ms-5 mb-2">Peliculas similares</h2>
@@ -86,30 +71,32 @@
            
            	  <div class="fila">
                 <div class="tile">
-                <img class="pelicula" src="${pelicula.getPoster()}"
+                <img class="pelicula" src="${pelicula.poster}"
                     alt="">
                 <div class="overlay ">
-                    <img class="pelicula" src="${pelicula.getPoster()}">
+                    <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
+                    <img class="pelicula" src="${pelicula.poster}">
+                    </a>
                     <div class="container informacionPeli d-flex flex-column">
                         <div class="row">
                         <div class="col-lg-4 mt-2">
-                            <p class="text-light clasificacion">${pelicula.getClasificacionPelicula().getDescripcion() }</p>
+                            <p class="text-light clasificacion">${pelicula.clasificacionPelicula.descripcion}</p>
                         </div>
                         <div class="col-lg-4 mt-2">
-                            <p class="text-light duracion">${pelicula.getDuracionEnHoras()}</p>
+                            <p class="text-light duracion">${pelicula.duracionEnHoras}</p>
                         </div>
                         <div class="col-lg-4  fechaEstreno mt-2">
-                            <p class="text-light">${pelicula.getFechaEstreno().getYear()+1900}</p> 
+                            <p class="text-light">${pelicula.fechaEstreno.year+1900}</p>
                         </div>
                       
                         </div>
                          <div class="d-flex justify-content-around">
                         
-                         <p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
+                         <p class="text-light genero mt-1">${pelicula.genero.descripcion}</p>
                           
                  		  <div class="rating-container">
                          <div class="cover"></div>
-                         <jsuites-rating class="estrellas" value="${pelicula.getCalificacion()}
+                         <jsuites-rating class="estrellas" value="${pelicula.calificacion}
                          "tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
                          </div>
  						
@@ -134,5 +121,6 @@
         </c:forEach>
     </section>
 </div>
+
 
     <%@include file="footer.jsp"%>

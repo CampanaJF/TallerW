@@ -5,37 +5,61 @@
     padding: 0;
     box-sizing: border-box;
 }
+.a-calif{
+    text-decoration: none;
+    color: #678;
+}
+.a-calif:hover{
+    color: #678;
+}
+/*.fa{
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    color: #9ab;
+}*/
+.boton-calif{
+    width: 74px;
+    height: 38px;
+    margin-left: 10px;
+}
+.calif-subtitulo{
+    color: #9ab;
+    background-color: #283038;
+}
+/*.fa-duotone .fa-message{
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #9ab;
+}*/
+.clasif-borde{
+    background: #283038;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 0 hsl(0deg 0% 100% / 5%);
+    color: #9ab;
+    display: inline-block;
+    line-height: 1.5;
+    padding: 3px 6px;
+    white-space: nowrap;
+}
+
 .container-rating{
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100%;
+   /* justify-content: center;*/
 }
 
 .rating-wrap{
-    max-width: 480px;
     margin: auto;
-    padding: 15px;
-    box-shadow: 0 0 3px 0 rgba(0,0,0,.2);
+    padding: 10px;
     text-align: center;
 }
 
 .center-rating{
-    width: 162px;
-    margin: auto;
+    margin-left: 25px;
 }
 
-
-#rating-value{
-    width: 110px;
-    margin: 40px auto 0;
-    padding: 10px 5px;
-    text-align: center;
-    box-shadow: inset 0 0 2px 1px rgba(46,204,113,.2);
-    color: #ffffff;
-}
-
-/*styling star rating*/
 .rating{
     border: none;
     float: left;
@@ -43,6 +67,31 @@
 
 .rating > input{
     display: none;
+}
+
+.rating label{
+    font-size: 43px;
+    color: white;
+    padding: 5px;
+    float: right;
+    transition: all 0.2s ease;
+}
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover  ~ label{
+    color: rgb(245, 197, 24);
+}
+input:checked ~ label{
+    color: rgb(245, 197, 24);
+}
+
+/*
+.fa:hover,
+.fa:hover ~ label {
+    color: rgb(245, 197, 24);
+}
+
+input[type="radio"]:checked ~ .fa {
+    color: rgb(245, 197, 24);
 }
 
 .rating > label:before{
@@ -70,12 +119,13 @@
 .rating > input:checked ~ label,
 .rating:not(:checked) > label:hover,
 .rating:not(:checked) > label:hover ~ label{
-    color: #2ce679;
+    color: rgb(245, 197, 24);
 }
 
 .rating > input:checked + label:hover,
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label,
 .rating > input:checked ~ label:hover ~ label{
-    color: #2ddc76;
+    color:rgb(245, 197, 24);
 }
+*/

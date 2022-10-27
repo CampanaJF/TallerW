@@ -26,17 +26,16 @@ public class RepositorioPeliculaTest extends SpringTest {
 	public static final String PELICULA_TITULO ="Back to the future";
 	public static final String PELICULA_TITULO2 ="Indiana Jones: Raiders of the Lost Ark";
 	
-	/* Analizar porque no funciona me tira expected 5 pero tengo 0
 	@Test
     @Transactional
     @Rollback
 	public void queSeListenTodasLasPeliculas() {
 	
-		Pelicula P1 = givenPelicula("1");
-		Pelicula P2 = givenPelicula("2");
-		Pelicula P3 = givenPelicula("3");
-		Pelicula P4 = givenPelicula("4");
-		Pelicula P5 = givenPelicula("5");
+		Pelicula P1 = givenPelicula("Can el volador","2022/08/22");
+		Pelicula P2 = givenPelicula("Marvel DC","2022/10/24");
+		Pelicula P3 = givenPelicula("Dragon ball super","2022/10/21");
+		Pelicula P4 = givenPelicula("El conjuro","2022/10/12");
+		Pelicula P5 = givenPelicula("Nop","2022/10/19");
 			
 		session().save(P1);
     	session().save(P2);
@@ -53,7 +52,7 @@ public class RepositorioPeliculaTest extends SpringTest {
 	
 	private void thenSeObtienenTodasLasPeliculas(List<Pelicula> peliculas) {
 		assertThat(peliculas.size()).isEqualTo(5);
-		assertThat(peliculas.get(2).getTitulo()).isEqualTo("3");
+		assertThat(peliculas.get(2).getTitulo()).isEqualTo("Dragon ball super");
 		
 	}
 	
@@ -64,13 +63,14 @@ public class RepositorioPeliculaTest extends SpringTest {
 	}
 	
 	
-	private Pelicula givenPelicula(String titulo) {
+	private Pelicula givenPelicula(String titulo,String fecha) {
 		Pelicula pelicula = new Pelicula();
-		pelicula.setId(new Random().nextLong());
+		//pelicula.setId(new Random().nextLong());
 		pelicula.setTitulo(titulo);
+		pelicula.setFechaEstreno(new Date(fecha));
 		return pelicula;
 	}
-	*/
+	
 	@Test
 	@Transactional
 	@Rollback
@@ -101,11 +101,12 @@ public class RepositorioPeliculaTest extends SpringTest {
 		Genero genero= givenTengoGeneroDePelicula("Aventura");
 		Pelicula pelicula= givenTengoPeliculas("Back to the future",genero);
 		Pelicula pelicula2= givenTengoPeliculas("Indiana Jones: Raiders of the Lost Ark",genero);
+		Pelicula pelicula3= givenTengoPeliculas("Indiana Jones",genero);
 
 		//cuando consulto por la pelicula
 		List<Pelicula> peliculasSimilares= whenSeListanPeliculasSimilaresPorGenero(genero,pelicula);
 		//entonces obtengo
-		thenObtengoListaPeliculasSimilares(peliculasSimilares,1);
+		thenObtengoListaPeliculasSimilares(peliculasSimilares,2);
 	}
 
 
@@ -132,55 +133,59 @@ public class RepositorioPeliculaTest extends SpringTest {
 		//entonces obtengo un actor
          thenEncuentroPeliculasDeUnActor(peliculasEncontradas,1);
 	}
+
 	@Test
+	@Transactional
+	@Rollback
+	public void meDebeDevolverCeroValoracionesDeUnaPeliculaPorqueNoExisten(){
+
+		//dado que existen peliculas
+		Pelicula pelicula = givenExistePelicula();
+		//cuando listo valoraciones
+		List<Valoracion>valoraciones= whenConsultoPorCalificacionesDeUnaPelicula(pelicula);
+		//entonces obtengo valoraciones
+		thenObtengoCalificaciones(valoraciones,0);
+	}
+    @Test
 	@Transactional
 	@Rollback
 	public void meDebeDevolverUnaListaDeValoracionesDeUnaPelicula(){
 
-		//dado que existen peliculas
-		Pelicula pelicula = givenExistenPeliculas();
-		//dado que existen valoraciones de peliculas
-		givenExistenValoracionesDePeliculas(5,pelicula);
-		givenExistenValoracionesDePeliculas(3,pelicula);
-		//cuando listo valoraciones
-		List<Valoracion>valoraciones= whenListoValoracionesDePeliculas(pelicula);
-		//entonces obtengo valoraciones
-		thenObtengoValoraciones(valoraciones,2);
-	}
-	@Test
-	@Transactional
-	@Rollback
-	public void meDebeDevolverCeroValoracionesDeUnaPeliculaPorqueNoSeHicieronValoraciones(){
-
-		//dado que existen peliculas
-		Pelicula pelicula = givenExistenPeliculas();
-		//cuando listo valoraciones
-		List<Valoracion>valoraciones= whenListoValoracionesDePeliculas(pelicula);
-		//entonces obtengo valoraciones
-		thenObtengoValoraciones(valoraciones,0);
+		Pelicula pelicula = givenExistePelicula();
+			//dado que existen valoraciones de peliculas
+		 givenExistenValoracionesDeUnaPelicula(5,pelicula,"Muy buena");
+		 givenExistenValoracionesDeUnaPelicula(3,pelicula,"Excelente");
+		 givenExistenValoracionesDeUnaPelicula(4,pelicula,"Malisima");
+		// cuando listo las calficaciones
+		List<Valoracion> calificaciones = whenConsultoPorCalificacionesDeUnaPelicula(pelicula);
+		//obtengo calif de la pelicula
+		thenObtengoCalificaciones(calificaciones,3);
 	}
 
-	private void thenObtengoValoraciones(List<Valoracion> valoraciones,int cantidadEsperada) {
-		assertThat(valoraciones).isNotNull();
-		assertThat(valoraciones).hasSize(cantidadEsperada);
+
+
+	private void thenObtengoCalificaciones(List<Valoracion> calificaciones, int cantidadEsperada) {
+		assertThat(calificaciones).isNotNull();
+		assertThat(calificaciones).hasSize(cantidadEsperada);
 	}
 
-	private List<Valoracion> whenListoValoracionesDePeliculas(Pelicula pelicula) {
-		return this.repositorioPelicula.listarValoracionesPorPelicula(pelicula);
+	private void givenExistenValoracionesDeUnaPelicula(int puntos, Pelicula pelicula,String comentario) {
+		Valoracion valoracion = new Valoracion();
+		valoracion.setPuntos(puntos);
+		valoracion.setPelicula(pelicula);
+		valoracion.setComentario(comentario);
+		session().save(valoracion);
 	}
 
-	private Pelicula givenExistenPeliculas() {
-		Pelicula pelicula=new Pelicula();
-		this.session().save(pelicula);
+	private Pelicula givenExistePelicula() {
+		Pelicula pelicula = new Pelicula();
+		session().save(pelicula);
 		return pelicula;
 	}
 
-	private void givenExistenValoracionesDePeliculas(int estrellas, Pelicula pelicula) {
-		Valoracion valoracion = new Valoracion(estrellas,pelicula);
-		this.session().save(valoracion);
+	private List<Valoracion> whenConsultoPorCalificacionesDeUnaPelicula(Pelicula pelicula) {
+		return this.repositorioPelicula.listarValoracionesPorPelicula(pelicula);
 	}
-
-
 
 	private void thenEncuentroPeliculasDeUnActor(List<Pelicula> peliculasEncontradas, int cantidadEsperada) {
 		assertThat(peliculasEncontradas).isNotNull();
