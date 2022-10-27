@@ -49,10 +49,7 @@ public void verificarFiltroPorClasificacion(){
 
 }
 	
-	// Lo comento ya que los otros 2 andan correctamnete pero este no me funciona
-	//Ahora se soluciono pero hay un problema con mockito que los elementos no se eliminaban de la sesion
-	// y eso provocaba que romap
-	
+
 	@Test
     @Transactional
     @Rollback
@@ -64,7 +61,112 @@ public void verificarFiltroCombinado(){
 	
 }
 	
+	@Test
+	 @Transactional
+	 @Rollback
+	public void verificaQueTraigaPeliculasPorDirector(){
+		givenHayPeliculasPorDirector();
+		List<Pelicula>peliculasObtenidasPorDirector=whenBuscoPeliculasPorDirector();
+		thenObtengoPeliculasPorDirector(peliculasObtenidasPorDirector);
+	}
 	
+	
+	@Test
+	 @Transactional
+	 @Rollback
+	public void verificaQueTraigaPeliculasPorTitulo(){
+		givenHayPeliculasPorTitulo();
+		List<Pelicula>peliculasObtenidasPorTitulo=whenBuscoPeliculasPorTitulo();
+		thenObtengoPeliculasPorTitulo(peliculasObtenidasPorTitulo);
+	}
+	
+	
+	@Test
+	 @Transactional
+	 @Rollback
+	public void verificaQueTraigaPeliculasPorCalificacion(){
+		givenHayPeliculasPorCalificacion();
+		List<Pelicula>peliculasObtenidasPorCalificacion=whenBuscoPeliculasPorCalificacion();
+		thenObtengoPeliculasPorCalificacion(peliculasObtenidasPorCalificacion);
+	}
+	
+	
+	
+private void thenObtengoPeliculasPorCalificacion(List<Pelicula> peliculasObtenidasPorCalificacion) {
+	assertEquals(4,peliculasObtenidasPorCalificacion.size());
+	assertEquals(5,peliculasObtenidasPorCalificacion.get(0).getCalificacion(),0.1f);
+		
+	}
+
+private List<Pelicula> whenBuscoPeliculasPorCalificacion() {
+	Filtro filtro=new Filtro(null,null,"Calificacion");
+	List<Pelicula>peliculasObtenidasPorCalificacion=repositorioPelicula.getPeliculasFiltro(filtro);
+	return peliculasObtenidasPorCalificacion;
+	}
+
+private void givenHayPeliculasPorCalificacion() {
+	Pelicula p1=new Pelicula();
+	Pelicula p2=new Pelicula();
+	Pelicula p3=new Pelicula();
+	Pelicula p4=new Pelicula();
+	
+	p1.setCalificacion(5);
+	p1.setCalificacion(2);
+	p1.setCalificacion(1);
+	p1.setCalificacion(4);
+		
+	}
+
+private void thenObtengoPeliculasPorTitulo(List<Pelicula> peliculasObtenidasPorTitulo) {
+	assertEquals(4,peliculasObtenidasPorTitulo.size());
+	assertEquals("Bievenidos al infierno",peliculasObtenidasPorTitulo.get(0).getTitulo());
+		
+	}
+
+private List<Pelicula> whenBuscoPeliculasPorTitulo() {
+	Filtro filtro=new Filtro(null,null,"Titulo");
+	List<Pelicula>peliculasObtenidasPorTitulo=repositorioPelicula.getPeliculasFiltro(filtro);
+	return peliculasObtenidasPorTitulo;
+	}
+
+private void givenHayPeliculasPorTitulo() {
+	Pelicula p1=new Pelicula();
+	Pelicula p2=new Pelicula();
+	Pelicula p3=new Pelicula();
+	Pelicula p4=new Pelicula();
+	
+	p1.setTitulo("Bienvenidos al infierno");
+	p2.setTitulo("30 noches con mi ex ");
+	p3.setTitulo("El paraiso");
+	p4.setTitulo("Nop");
+		
+	}
+
+private void thenObtengoPeliculasPorDirector(List<Pelicula> peliculasObtenidasPorDirector) {
+	assertEquals(4,peliculasObtenidasPorDirector.size());
+	assertEquals("Adrian Suar",peliculasObtenidasPorDirector.get(0).getDirector());
+		
+	}
+
+private List<Pelicula> whenBuscoPeliculasPorDirector() {
+	Filtro filtro=new Filtro(null,null,"Director");
+	List<Pelicula>peliculasObtenidasPorDirector=repositorioPelicula.getPeliculasFiltro(filtro);
+	return peliculasObtenidasPorDirector;
+	}
+
+private void givenHayPeliculasPorDirector() {
+	Pelicula p1=new Pelicula();
+	Pelicula p2=new Pelicula();
+	Pelicula p3=new Pelicula();
+	Pelicula p4=new Pelicula();
+	
+	p1.setDirector("Adrian Suar");
+	p2.setDirector("Lucas Combina");
+	p3.setDirector("Julio Chavez");
+	p4.setDirector("Tetsuro Kodama");
+			
+}
+
 private void givenQueHayPeliculas() {
 	Genero genero=new Genero();
 	Genero genero1=new Genero();
