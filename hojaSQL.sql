@@ -8,36 +8,36 @@ insert into usuario (email,nombre,password) values
                     ('mail@mail.com','main','1234'),
                     ('admin','admin','admin');
 
-insert into formato (tipo) values
- ('2D'),('3D'),('Realidad Aumentada'); 
+insert into formato (id,tipo) values
+ (1,'2D'),(2,'3D'),(3,'Realidad Aumentada'); 
 
-insert into cine (locacion,nombreCine) values ('Calle Falsa 123','CineClub');
+insert into cine (id,locacion,nombreCine) values (1,'Calle Falsa 123','CineClub');
 
-insert into sala (asientosTotales,nombreSala,cine_id) values
-				 (50,'Sala J',1),
-				 (50,'Sala K',1),
-				 (50,'Sala L',1);
+insert into sala (id,asientosTotales,nombreSala,cine_id) values
+				 (1,50,'Sala J',1),
+				 (2,50,'Sala K',1),
+				 (3,50,'Sala L',1);
  
-insert into cine (locacion,nombreCine) values ('Italia 913','Cine Magistral');
+insert into cine (id,locacion,nombreCine) values (2,'Italia 913','Cine Magistral');
  
-insert into sala (asientosTotales,nombreSala,cine_id) values                
-				 (50,'Sala A',2),
-                 (50,'Sala B',2),
-                 (50,'Sala C',2);
+insert into sala (id,asientosTotales,nombreSala,cine_id) values                
+				 (4,50,'Sala A',2),
+                 (5,50,'Sala B',2),
+                 (6,50,'Sala C',2);
                  
- insert into cine (locacion,nombreCine) values ('Etiopia 1865','Grand');
+ insert into cine (id,locacion,nombreCine) values (3,'Etiopia 1865','Grand');
                   
-insert into sala (asientosTotales,nombreSala,cine_id) values                
-				 (50,'Sala 1',3),
-                 (50,'Sala 2',3),
-                 (50,'Sala 3',3);
+insert into sala (id,asientosTotales,nombreSala,cine_id) values                
+				 (7,50,'Sala 1',3),
+                 (8,50,'Sala 2',3),
+                 (9,50,'Sala 3',3);
                  
-insert into cine (locacion,nombreCine) values ('Irlanda 993','Sunshine');          
+insert into cine (id,locacion,nombreCine) values (4,'Irlanda 993','Sunshine');          
       
-insert into sala (asientosTotales,nombreSala,cine_id) values                
-							(50,'Sala X',4),
-							(50,'Sala Z',4),
-							(50,'Sala Y',4);
+insert into sala (id,asientosTotales,nombreSala,cine_id) values                
+							(10,50,'Sala X',4),
+							(11,50,'Sala Z',4),
+							(12,50,'Sala Y',4);
 
 
 INSERT INTO genero (id,descripcion)
@@ -167,32 +167,5 @@ insert into cinepelicula(cine_id,pelicula_id) values
 
 select * from cinepelicula;
 
-/*                 
-select * from funcion
-left join sala on funcion.sala_id = sala.id where
-pelicula_id = 1 and sala.id = 1; 
 
-select * from pelicula p
-join clasificacionPelicula c on p.clasificacionPelicula_id = c.id;
-
-select * from pelicula p
-join genero g on p.genero_id = g.id
-where g.id = 2;
-          
-select count(*) from funcion
-join sala on funcion.sala_id = sala.id
-join asiento on sala.id = asiento.sala_id
-where funcion.id = 1 and asiento.ocupado = 1;	
-
-select count(*) from entrada
-join funcion on entrada.funcion_id = funcion.id 
-join asiento on entrada.asiento_id = asiento.id	
-where funcion.id = 1 and asiento.ocupado = 1;	  
-
-
-select * from entrada;   
-
-select * from funcion;
-
-*/
 

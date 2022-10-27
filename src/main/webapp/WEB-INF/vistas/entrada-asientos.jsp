@@ -24,8 +24,9 @@
 <div class="movie-body">
 
 	<div class="movie-container">
-      <h1> Pelicula titulo</h1>
-      <input type="hidden" id="movie" value="3000">
+      <h1>${funcion.pelicula.titulo} - ${funcion.sala.cine.nombreCine}</h1>
+      <h3 class="text-center">$ ${funcion.precio} - ${funcion.fechaStr} - ${funcion.horario}</h3>
+      <input type="hidden" id="movie" value="${funcion.precio}">
     </div>
 
     <ul class="showcase">
@@ -45,28 +46,43 @@
     
    <form:form action="entrada-compra" modelAttribute="datosEntrada" method="POST"> 
     
-    <div class="containerCustom">
+    
+    <div class="containerCustom w-50">
       <div class="screen"></div>
       
-     <c:forEach items="${filas}" var="fila">
-      <div class="row">
+      <div class="container">
+      <div class="row row-cols-6">
          
-      <c:forEach items="${fila.value}" varStatus="s" var="asiento">
-      
-        <form:checkbox path="asiento.id" value="${asiento.id}" class="seat
-         <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
+      <c:forEach items="${asientos}" varStatus="s" var="asiento">
+
+       
+        
+        <form:checkbox path="asiento.id" value="${asiento.id}"
+        class="col seat <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
+        
          
          
          <%-- 
          <form:checkbox path="asientos[${s.index}].id" value="${asiento.id}" class="seat
-         <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox> --%>
+         <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
+         
+         <div class="col seat <c:if test='${asiento.ocupado == true }'> sold </c:if>"> 
+        <form:checkbox path="asiento.id" value="${asiento.id}"></form:checkbox>
+      </div>
+      
+      <form:checkbox path="asientos[${s.index}].id" value="${asiento.id}" class="seat
+        <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox> 
+      
+      <form:checkbox path="asiento.id" value="${asiento.id}"
+       class="col seat <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
+        --%>
          
                  
       </c:forEach>
       
       </div>
+      </div>
       
-      </c:forEach>
       
 	</div>
     

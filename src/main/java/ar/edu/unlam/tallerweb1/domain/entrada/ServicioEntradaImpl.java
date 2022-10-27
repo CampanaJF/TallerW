@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 import ar.edu.unlam.tallerweb1.exceptions.ErrorDeAsientoException;
 
@@ -44,10 +45,9 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	@Override
 	public void comprarMultiplesEntradas(Funcion funcion,Usuario usuario,List<Asiento> asientos) {
 			
-		for (int i = 0; i < asientos.size(); i++) {
+		for (Asiento asiento : asientos) {
 			
-			comprarUnaEntrada(funcion,usuario,asientos.get(i));
-			
+			comprarUnaEntrada(funcion,usuario,asiento);
 		}
 		
 	}
@@ -91,15 +91,21 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 	
 	@Override
-	public void validarAsiento(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException{
+	public void validarAsiento(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException, AsientoSinIdException{
 		
-		if(asientos.size()==0||asientos==null) {
+		if(asientos==null||asientos.size()==0) {
 			throw new ErrorDeAsientoException();
 		}
 		
 		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) {
 			throw new ErrorDeAsientoException();
 		}
+		
+		for (Asiento asiento : asientos) {
+			if(asiento.getId()==null)
+				throw new AsientoSinIdException();
+		}
+		
 		
 	}
 

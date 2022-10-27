@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -109,9 +108,9 @@ public class ControladorEntrada {
 		
 		ModelMap model = new ModelMap();
 		
+		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()) );
 		
-		
-		model.put("filas", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
+		model.put("asientos", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
 			
 		model.addAttribute("datosEntrada", datosEntrada);
 		
@@ -181,13 +180,17 @@ public class ControladorEntrada {
 		return null;
 	}
 	
-	private HashMap<Integer,List<Asiento>> obtenerAsientosDeLaFuncion(Long funcion){
+	private List<Asiento> obtenerAsientosDeLaFuncion(Long funcion){
 		
 		return this.servicioFuncion.obtenerAsientosDeLaFuncion(funcion);
 	}
 	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
+	}
+	
+	private Funcion obtenerFuncion(Funcion funcion) {
+		return this.servicioFuncion.getFuncion(funcion.getId());
 	}
 
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {

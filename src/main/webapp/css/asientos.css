@@ -1,8 +1,8 @@
 
-
 * {
   box-sizing: border-box;
 }
+
 
 .movie-body {
   background-color: #232222;
@@ -52,14 +52,6 @@
 
 .seat.sold {
   background-color: #555566;
-}
-
-.seat:nth-of-type(2) {
-  margin-right: 18px;
-}
-
-.seat:nth-last-of-type(2) {
-  margin-left: 18px;
 }
 
 .seat:not(.sold):hover {
