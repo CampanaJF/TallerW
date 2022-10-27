@@ -16,7 +16,7 @@
         <c:if test="${empty usuario}">
         
         <form action="busqueda" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto" onsubmit="return validaCaracteres()">
-            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" path="titulo" >
+            <input type="search"  class="form-control searchBeeg form-control-dark" placeholder="Buscar..." name="titulo" id="buscador" path="titulo" >
         </form>
 
         <div class="text-end">
