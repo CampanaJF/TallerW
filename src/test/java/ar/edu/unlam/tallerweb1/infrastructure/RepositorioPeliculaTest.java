@@ -26,17 +26,16 @@ public class RepositorioPeliculaTest extends SpringTest {
 	public static final String PELICULA_TITULO ="Back to the future";
 	public static final String PELICULA_TITULO2 ="Indiana Jones: Raiders of the Lost Ark";
 	
-	/* Analizar porque no funciona me tira expected 5 pero tengo 0
 	@Test
     @Transactional
     @Rollback
 	public void queSeListenTodasLasPeliculas() {
 	
-		Pelicula P1 = givenPelicula("1");
-		Pelicula P2 = givenPelicula("2");
-		Pelicula P3 = givenPelicula("3");
-		Pelicula P4 = givenPelicula("4");
-		Pelicula P5 = givenPelicula("5");
+		Pelicula P1 = givenPelicula("Can el volador","2022/08/22");
+		Pelicula P2 = givenPelicula("Marvel DC","2022/10/24");
+		Pelicula P3 = givenPelicula("Dragon ball super","2022/10/21");
+		Pelicula P4 = givenPelicula("El conjuro","2022/10/12");
+		Pelicula P5 = givenPelicula("Nop","2022/10/19");
 			
 		session().save(P1);
     	session().save(P2);
@@ -53,7 +52,7 @@ public class RepositorioPeliculaTest extends SpringTest {
 	
 	private void thenSeObtienenTodasLasPeliculas(List<Pelicula> peliculas) {
 		assertThat(peliculas.size()).isEqualTo(5);
-		assertThat(peliculas.get(2).getTitulo()).isEqualTo("3");
+		assertThat(peliculas.get(2).getTitulo()).isEqualTo("Dragon ball super");
 		
 	}
 	
@@ -64,13 +63,14 @@ public class RepositorioPeliculaTest extends SpringTest {
 	}
 	
 	
-	private Pelicula givenPelicula(String titulo) {
+	private Pelicula givenPelicula(String titulo,String fecha) {
 		Pelicula pelicula = new Pelicula();
-		pelicula.setId(new Random().nextLong());
+		//pelicula.setId(new Random().nextLong());
 		pelicula.setTitulo(titulo);
+		pelicula.setFechaEstreno(new Date(fecha));
 		return pelicula;
 	}
-	*/
+	
 	@Test
 	@Transactional
 	@Rollback

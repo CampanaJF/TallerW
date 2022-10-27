@@ -23,21 +23,20 @@ function seleccionarFiltro(capsula,filtro){
 	}
 	capsula.style.backgroundColor='#c94f4f';
 	capsula.classList.add("activada");
-}
+	if(filtro ==='filtroGenero'){
+		let genero=document.getElementById("generoFiltro");
+	genero.value=capsula.id
+		
+	}
+	if(filtro==='clasificacion'){
+		let clasificacion=document.getElementById("clasificacionFiltro");
+		clasificacion.value=capsula.id
+		
+	}
 
-function seleccionarGenero(capsula){
- 
-let genero=document.getElementById("generoFiltro");
-genero.value=capsula.id
-
-  
-}
-function seleccionarClasificacion(capsula){
-
-let clasificacion=document.getElementById("clasificacionFiltro");
-clasificacion.value=capsula.id
 
 }
+
 
 function seleccionarOrden(capsula,filtro){
   const capsulaActivada=document.querySelector(`#${filtro} .activada`);
