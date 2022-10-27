@@ -17,7 +17,7 @@ public interface ServicioPelicula {
 
 	Pelicula buscarPeliculaPorId(Long id);
 
-	List<Pelicula> obtenerPeliculasSimilaresPorGenero(String descripcion);
+	List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero,Pelicula pelicula);
 
     void guardarValoracionPelicula(int estrellas, Pelicula pelicula);
 

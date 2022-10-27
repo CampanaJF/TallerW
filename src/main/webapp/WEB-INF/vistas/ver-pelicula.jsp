@@ -16,7 +16,9 @@
 
         <div class="col">
             <div class="text-center">
+
                 <img src="${pelicula.poster}" class="mb-2 mt-5 img-fluid"  >
+
             </div>
         </div>
 
@@ -27,7 +29,7 @@
 
             <a href="entrada-pelicula?peliculaId=${pelicula.id}" type="button" class="btn-lg btn buttonA">Comprar Entradas</a>
         </div>
-        <!--
+<!--
          <div class="col-4">
              <form action="guardar-calificacion" method="post" modelAttribute="datosValoracion" >
              <div class="container-rating">
@@ -39,24 +41,20 @@
 
                              <input type="radio" id="star5" name="estrellas" value="5" path="valoracion.estrellas"></input>
                              <label for="star5" class="full" title="Awesome" path=""></label>
-                             <label for="star4.5" class="half"></label>
-                             <input type="radio" id="star4.5" name="estrellas" value="4.5"></input>
+
                              <label for="star4" class="full"></label>
                              <input type="radio" id="star4" name="estrellas" value="4"/>
-                             <label for="star3.5" class="half"></label>
-                             <input type="radio" id="star3.5" name="estrellas" value="3.5"/>
+
                              <label for="star3" class="full"></label>
                              <input type="radio" id="star3" name="estrellas" value="3"/>
-                             <label for="star2.5" class="half"></label>
-                             <input type="radio" id="star2.5" name="estrellas" value="2.5"/>
+
                              <label for="star2" class="full"></label>
                              <input type="radio" id="star2" name="estrellas" value="2"/>
-                             <label for="star1.5" class="half"></label>
-                             <input type="radio" id="star1.5" name="estrellas" value="1.5"/>
+
+
                              <label for="star1" class="full"></label>
                              <input type="radio" id="star1" name="estrellas" value="1"/>
-                             <label for="star0.5" class="half"></label>
-                             <input type="radio" id="star0.5" name="estrellas" value="0.5"/>
+
                          </fieldset>
                      </div>
                      <div>
@@ -80,7 +78,9 @@
 <div class="container mt-3">
      <h2 class="text-white mt-lg-5 ms-5 mb-2">Peliculas similares</h2>
 
+
     <section class="d-flex flex-row flex-wrap text-center">
+
         <c:forEach items="${similares}" var="pelicula">
             <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
            
@@ -123,7 +123,9 @@
                 <!--  
                 <div>
                     <a href="ver-pelicula?pelicula=${pelicula.id}" class="text-decoration-none">
+
                         <img src="${pelicula.poster}" class="mb-2" style="width:270px;" >
+
                         <h4  class="text-center text-white">${pelicula.titulo}</h4>
                     </a>
                 </div>

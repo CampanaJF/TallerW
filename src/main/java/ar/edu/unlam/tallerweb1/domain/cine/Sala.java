@@ -19,7 +19,7 @@ public class Sala {
 	@ManyToOne
 	private Cine cine;
 	
-	private Long asientosTotales;
+	private Integer asientosTotales;
 	
 	public String getNombreSala() {
 		return nombreSala;
@@ -29,11 +29,11 @@ public class Sala {
 		this.nombreSala = nombreSala;
 	}
 
-	public Long getAsientosTotales() {
+	public Integer getAsientosTotales() {
 		return asientosTotales;
 	}
 
-	public void setAsientosTotales(Long asientosTotales) {
+	public void setAsientosTotales(Integer asientosTotales) {
 		this.asientosTotales = asientosTotales;
 	}
 
@@ -43,14 +43,6 @@ public class Sala {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getAsientos() {
-		return asientosTotales;
-	}
-
-	public void setAsientos(Long asientos) {
-		this.asientosTotales = asientos;
 	}
 
 	public Cine getCine() {
