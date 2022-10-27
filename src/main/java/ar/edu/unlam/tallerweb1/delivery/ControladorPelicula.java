@@ -10,6 +10,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,25 +72,55 @@ public class ControladorPelicula {
 	public ModelAndView verPelicula(@RequestParam Long pelicula,HttpServletRequest request){
 
 		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
-		List<Pelicula> peliculasSimilares = this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada);
-
 		ModelMap model = new ModelMap();
 		model.put("pelicula",peliculaBuscada);
-		model.put("similares",peliculasSimilares);
-		//model.put("datosValoracion",new DatosValoracion());
+		model.put("similares", this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada));
+        model.put("promedio",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
+		model.put("votos",this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(peliculaBuscada).size());
 		model.put("usuario",obtenerUsuarioLogueado(request));
-       //model.put("promedioValoraciones", this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
 
 		return new ModelAndView("ver-pelicula",model);
 	}
-	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.POST)
-	public ModelAndView guardarCalificacion(@ModelAttribute DatosValoracion datosValoracion,
-											final RedirectAttributes redirectAttributes){
+	@RequestMapping(path="/calificar-pelicula", method = RequestMethod.GET)
+	public ModelAndView calificarpelicula(@RequestParam Long pelicula,HttpServletRequest request){
+		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
 
-		this.servicioPelicula.guardarValoracionPelicula(datosValoracion.getValoracion().getEstrellas(), datosValoracion.getValoracion().getPelicula());
+		ModelMap model = new ModelMap();
+		model.put("pelicula",peliculaBuscada);
+		model.put("usuario",obtenerUsuarioLogueado(request));
+		return new ModelAndView("calificar-pelicula",model);
+	}
+	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.GET)
+	public ModelAndView guardarCalificacion(@RequestParam(value="puntos") int puntos,
+											@RequestParam(value = "peliculaId") Long peliculaId,
+											@RequestParam(value = "comentario") String comentario,
+											HttpServletRequest request){
 
-		redirectAttributes.addFlashAttribute("mensaje","Su puntuacion ha sido registrada");
+		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(peliculaId);
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		this.servicioPelicula.guardarValoracionPelicula(puntos,pelicula,comentario,usuario);
+        ModelMap model = new ModelMap();
+        model.put("votos", this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula).size());
+		model.put("comentario", comentario);
+		model.put("mensaje","¡Tu calificación ha sido guardada!");
+		model.put("usuario",usuario);
+		model.put("pelicula",pelicula);
+		model.put("puntos", puntos);
 
-		return new ModelAndView("redirect:/ver-pelicula");
+		return new ModelAndView("calificacionPelicula-exitosa",model);
+	}
+	@RequestMapping(path="/ver-opiniones", method=RequestMethod.GET)
+	public ModelAndView verOpiniones(@RequestParam Long pelicula,HttpServletRequest request){
+		Pelicula pelicula1 = this.servicioPelicula.buscarPeliculaPorId(pelicula);
+		List<Valoracion> valoraciones = this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula1);
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		ModelMap model = new ModelMap();
+		model.put("pelicula",pelicula1);
+		model.put("valoraciones",valoraciones);
+		model.put("usuario",usuario);
+		if(valoraciones.size() == 0){
+                 model.put("sinvaloracion","Todavia no se han echo reseñas");
+		}
+		return  new ModelAndView("ver-opiniones",model);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -92,11 +93,12 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	}
 
 	@Override
-	public void guardarValoracionPelicula(int estrellas, Pelicula pelicula) {
+	public void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario) {
 		final Session session= sessionFactory.getCurrentSession();
-		Valoracion valoracionPelicula = new Valoracion(estrellas,pelicula);
+		Valoracion valoracionPelicula = new Valoracion(puntos,pelicula,comentario,usuario);
 		session.save(valoracionPelicula);
 	}
+
 
 	@Override
 	public List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula) {
@@ -122,6 +124,8 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.add(Restrictions.ne("id",pelicula.getId()))
 				.list();
 	}
+
+
 
 
 	@Override
@@ -164,5 +168,6 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.addOrder(Order.asc("fechaEstreno"))
 				.list();
 	}
+
 
 }

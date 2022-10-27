@@ -5,6 +5,7 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface RepositorioPelicula {
 
@@ -21,7 +22,7 @@ public interface RepositorioPelicula {
 
     List<Pelicula> buscarPeliculasPorActor(String protagonista);
 
-    void guardarValoracionPelicula(int estrellas, Pelicula pelicula);
+    void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario);
 
     List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula);
 
@@ -31,6 +32,7 @@ public interface RepositorioPelicula {
 
 
     List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula);
+
 
 
     List<Pelicula> getProximosEstrenos();
