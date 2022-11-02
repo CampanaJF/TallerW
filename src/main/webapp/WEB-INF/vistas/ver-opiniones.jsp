@@ -62,7 +62,7 @@
     </div>
 </div>
     <div class="col mt-5 ms-5">
-        <img src="${pelicula.poster}" width="240px" height="385px">
+        <img src="${pelicula.poster}">
     </div>
 </div>
 </body>
