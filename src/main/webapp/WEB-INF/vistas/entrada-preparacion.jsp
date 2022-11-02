@@ -45,7 +45,7 @@
 			<c:forEach items="${funciones}" var="funcion">
 			<c:if test="${funcion.formato.tipo == '2D' }">
 					
-				<h4>Horarios para funcion/es 2D</h4>
+				<h4>Horarios para funcion 2D</h4>
                 <div class="container">
                 <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
                 
@@ -65,7 +65,7 @@
 			 <c:forEach items="${funciones}" var="funcion">	
 			 <c:if test="${funcion.formato.tipo == '3D' }">
 					
-				<h4>Horarios para funcion/es 3D</h4>
+				<h4>Horarios para funcion 3D</h4>
                 <div class="container">
                 <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
                 
@@ -85,7 +85,7 @@
 				<c:forEach items="${funciones}" var="funcion">
 				<c:if test="${funcion.formato.tipo == 'Realidad Aumentada' }">
 					
-				 <h4>Horarios funcion/es de Realidad Aumentada</h4>
+				 <h4>Horarios funcion de Realidad Aumentada</h4>
                  <div class="container">
                	 <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
 					
