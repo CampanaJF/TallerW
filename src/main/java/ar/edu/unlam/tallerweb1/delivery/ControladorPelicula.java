@@ -119,7 +119,7 @@ public class ControladorPelicula {
 		model.put("valoraciones",valoraciones);
 		model.put("usuario",usuario);
 		if(valoraciones.size() == 0){
-                 model.put("sinvaloracion","Todavia no se han echo reseñas");
+                 model.put("sinvaloracion","Todavia no se han hecho reseñas");
 		}
 		return  new ModelAndView("ver-opiniones",model);
 	}

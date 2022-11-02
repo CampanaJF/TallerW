@@ -8,15 +8,15 @@
 </head>
 <body class="bgColor">
 <%@include file="header.jsp"%>
-<div class="row">
-
+<div class="container-fluid d-flex">
+	
 <div class="col pt-4 pb-5 mb-5" style="width: 660px; margin-left: 380px">
     <div>
         <h3 style="color:#9ab">Reseñas de</h3>
         <h1 class="mt-2 mb-3 titulo-cartelera text-white">${pelicula.titulo}</h1>
     </div>
     <c:if test="${not empty sinvaloracion}">
-        <h4 class="text-white ">${sinvaloracion} , <a href="calificar-pelicula?pelicula=${pelicula.id}" class="text-decoration-underline" style="color: #ffffff"> califica ahora </a></h4>
+        <h4 class="text-white ">${sinvaloracion} , <a href="calificar-pelicula?pelicula=${pelicula.id}" class="text-decoration-underline" style="color: #ffffff"> calificá ahora </a></h4>
     </c:if>
 <c:forEach items="${valoraciones}" var="val">
     <div>
@@ -62,7 +62,7 @@
     </div>
 </div>
     <div class="col mt-5 ms-5">
-        <img src="${pelicula.poster}" width="240px" height="385px">
+        <img src="${pelicula.poster}">
     </div>
 </div>
 </body>

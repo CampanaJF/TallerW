@@ -268,11 +268,11 @@ public class RepositorioPeliculaTest extends SpringTest {
 		Pelicula peli1=new Pelicula();
 		Pelicula peli2=new Pelicula();
 		Pelicula peli3=new Pelicula();
-		peli1.setFechaEstreno(new Date("2022/10/15") );
+		peli1.setFechaEstreno(new Date("2022/11/15") );
 		peli1.setTitulo("Escalera al infierno");
-		peli2.setFechaEstreno(new Date("2022/10/17") );
+		peli2.setFechaEstreno(new Date("2022/11/17") );
 		peli2.setTitulo("El ladron de los siglos");
-		peli3.setFechaEstreno(new Date("2021/10/01") );
+		peli3.setFechaEstreno(new Date("2021/11/01") );
 		peli3.setTitulo("Can el volador");
 		session().save(peli1);
 		session().save(peli2);
