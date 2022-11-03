@@ -76,45 +76,69 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		
-		if(usuario==null) 
-			throw new DatosEntradaInvalidaException();
-		
-		
-		if(funcion==null) 
-			throw new DatosEntradaInvalidaException();
-		
+		validarUsuarioIngresado(usuario);
+
+		validarFuncionIngresada(funcion);
 		
 		validarAsiento(funcion,asientos);
 		
 	}
 	
 	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
+		
 		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
 	}
 	
 	@Override
-	public void validarAsiento(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException, AsientoSinIdException{
+	public void validarAsiento(Funcion funcion, List<Asiento> asientos){
+		
+		validarAsientosIngresados(asientos);
+		
+		validarIdAsientos(asientos);	
+		
+		validarCantidadDeAsientosDisponibles(funcion,asientos);
+				
+	}
+
+	@Override
+	public void validarFuncionIngresada(Funcion funcion) {
+		
+		if(funcion.getId()==null) 
+			throw new DatosEntradaInvalidaException();
+		
+	}
+
+	@Override
+	public void validarUsuarioIngresado(Usuario usuario) {
+		
+		if(usuario.getId()==null) 
+			throw new DatosEntradaInvalidaException();
+		
+	}
+	
+	@Override
+	public void validarAsientosIngresados(List<Asiento> asientos) throws ErrorDeAsientoException {
 		
 		if(asientos==null||asientos.size()==0) 
 			throw new ErrorDeAsientoException();
 		
+	}
+	
+	@Override
+	public void validarCantidadDeAsientosDisponibles(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException {
 		
 		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) 
-			throw new ErrorDeAsientoException();
-		
+			throw new ErrorDeAsientoException();	
+	}
+
+	@Override
+	public void validarIdAsientos(List<Asiento> asientos)throws AsientoSinIdException {
 		
 		for (Asiento asiento : asientos) {
 			if(asiento.getId()==null)
 				throw new AsientoSinIdException();
 		}
 		
-		
 	}
-
-	
-
-	
-
-
 
 }

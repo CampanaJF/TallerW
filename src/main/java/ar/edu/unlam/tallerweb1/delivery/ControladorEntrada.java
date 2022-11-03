@@ -121,9 +121,9 @@ public class ControladorEntrada {
 		if(usuarioLogueado!=null) 
 			return usuarioLogueado;
 		
-		List<Asiento> asientos = new ArrayList<>();  // Fix temporal para asientos
-		asientos.add(datosEntrada.getAsiento());
-		datosEntrada.setAsientos(asientos);
+//		List<Asiento> asientos = new ArrayList<>();  // Fix temporal para asientos
+//		asientos.add(datosEntrada.getAsiento());
+//		datosEntrada.setAsientos(asientos);
 		
 		try {
 			comprarEntrada(datosEntrada); 

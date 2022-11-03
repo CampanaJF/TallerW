@@ -19,6 +19,16 @@ public interface ServicioEntrada {
 	
 	void validarAsiento(Funcion funcion,List<Asiento> asiento);
 	
+	void validarIdAsientos(List<Asiento> asiento);
+	
+	void validarCantidadDeAsientosDisponibles(Funcion funcion,List<Asiento> asiento);
+	
+	void validarAsientosIngresados(List<Asiento> asiento);
+	
+	void validarFuncionIngresada(Funcion funcion);
+	
+	void validarUsuarioIngresado(Usuario usuario);
+	
 	Entrada getEntrada(Long entrada);
 	
 	List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion);

@@ -11,6 +11,7 @@ public class DatosEntrada {
     private Usuario usuario;
     private List<Asiento> asientos;
     private Asiento asiento;
+    private List<Integer> numeros;
 
     
 	public Funcion getFuncion() {
@@ -36,6 +37,12 @@ public class DatosEntrada {
 	}
 	public void setAsiento(Asiento asiento) {
 		this.asiento = asiento;
+	}
+	public List<Integer> getNumeros() {
+		return numeros;
+	}
+	public void setNumeros(List<Integer> numeros) {
+		this.numeros = numeros;
 	}
 
     
