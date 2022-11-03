@@ -10,7 +10,24 @@ private String orden;
 		this.clasificacion=clasificacion;
 		this.orden=orden;
 	}
+	public static Filtro crearConGenero(Long genero) {
+		return new Filtro(genero, null, null);
+	}
 
+	public static Filtro crearConClasificacion(Long clasificacion) {
+		return new Filtro(null, clasificacion, null);
+	}
+
+	public static Filtro crearConOrden(String orden) {
+		return new Filtro(null, null, orden);
+	}
+	
+	public static Filtro crearConClasificacionYGenero(Long genero,Long clasificacion) {
+		return new Filtro(genero,clasificacion,null);
+	}
+	
+	
+	
 	public Long getGenero() {
 		return genero;
 	}

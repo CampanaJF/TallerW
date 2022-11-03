@@ -1,5 +1,11 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import static org.hibernate.criterion.Order.asc;
+import static org.hibernate.criterion.Order.desc;
+import static org.hibernate.criterion.Restrictions.eq;
+import static org.hibernate.criterion.Restrictions.ne;
+import static org.hibernate.criterion.Restrictions.sqlRestriction;
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +17,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.hibernate.type.IntegerType;
@@ -45,26 +50,26 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		
 		if (filtro.getGenero() != null) {
 			criteria.createAlias("genero", "g",JoinType.INNER_JOIN);
-			criteria.add(Restrictions.eq("g.id", filtro.getGenero()));
+			criteria.add(eq("g.id", filtro.getGenero()));
 		}
 		if (filtro.getClasificacion() != null) {
 			criteria.createAlias("clasificacionPelicula", "p",JoinType.INNER_JOIN);
-			criteria.add(Restrictions.eq("p.id", filtro.getClasificacion()));
+			criteria.add(eq("p.id", filtro.getClasificacion()));
 		}
 		if (filtro.getOrden() != null) {
 			if (filtro.getOrden().equals("Director")) {
-				criteria.addOrder(Order.asc("director"));
+				criteria.addOrder(asc("director"));
 			} else if (filtro.getOrden().equals("Titulo")) {
-				criteria.addOrder(Order.asc("titulo"));
+				criteria.addOrder(asc("titulo"));
 			}else if (filtro.getOrden().equals("Calificacion")) {
-				criteria.addOrder(Order.desc("calificacion"));
+				criteria.addOrder(desc("calificacion"));
 			}
 
 		}
 		
 		criteria
-		.add(Restrictions.sqlRestriction("Month({alias}.fechaEstreno)<=?",fechaActual.getMonth()+1,new IntegerType()))
-		.add(Restrictions.sqlRestriction("YEAR({alias}.fechaEstreno)<=?",fechaActual.getYear()+1900,new IntegerType()));
+		.add(sqlRestriction("Month({alias}.fechaEstreno)<=?",fechaActual.getMonth()+1,new IntegerType()))
+		.add(sqlRestriction("YEAR({alias}.fechaEstreno)<=?",fechaActual.getYear()+1900,new IntegerType()));
 		return criteria.list();
 	}
 	
@@ -80,7 +85,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public Pelicula buscarPeliculaPorId(Long id) {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Pelicula) session.createCriteria(Pelicula.class)
-				.add(Restrictions.eq("id",id))
+				.add(eq("id",id))
 				.uniqueResult();
 	}
 
@@ -88,7 +93,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	@Override
 	public List<Pelicula> buscarPeliculasPorActor(String protagonista) {
 		final Session session= sessionFactory.getCurrentSession();
-		return session.createCriteria(Pelicula.class).add(Restrictions.eq("protagonista",protagonista))
+		return session.createCriteria(Pelicula.class).add(eq("protagonista",protagonista))
 				.list();
 	}
 
@@ -104,7 +109,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula) {
 		final Session session= sessionFactory.getCurrentSession();
 		return session.createCriteria(Valoracion.class)
-				.add(Restrictions.eq("pelicula",pelicula))
+				.add(eq("pelicula",pelicula))
 				.list();
 	}
 
@@ -112,7 +117,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public List<Pelicula> buscarPeliculaPorGenero(Genero genero) {
 		final Session session= sessionFactory.getCurrentSession();
 		return session.createCriteria(Pelicula.class)
-				.add(Restrictions.eq("genero",genero))
+				.add(eq("genero",genero))
 				.list();
 	}
 
@@ -120,8 +125,8 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	public List<Pelicula> obtenerPeliculasSimilaresPorGenero(Genero genero, Pelicula pelicula) {
 		 final Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(Pelicula.class)
-				.add(Restrictions.eq("genero",genero))
-				.add(Restrictions.ne("id",pelicula.getId()))
+				.add(eq("genero",genero))
+				.add(ne("id",pelicula.getId()))
 				.list();
 	}
 
@@ -133,9 +138,9 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		final Session session = sessionFactory.getCurrentSession();
 		Date fechaActual=new Date();
 		return session.createCriteria(Pelicula.class)
-				.add(Restrictions.sqlRestriction("Month({alias}.fechaEstreno)<=?",fechaActual.getMonth()+1,new IntegerType()))
-				.add(Restrictions.sqlRestriction("YEAR({alias}.fechaEstreno)<=?",fechaActual.getYear()+1900,new IntegerType()))
-				.addOrder(Order.desc("fechaEstreno"))
+				.add(sqlRestriction("Month({alias}.fechaEstreno)<=?",fechaActual.getMonth()+1,new IntegerType()))
+				.add(sqlRestriction("YEAR({alias}.fechaEstreno)<=?",fechaActual.getYear()+1900,new IntegerType()))
+				.addOrder(desc("fechaEstreno"))
 				.list();
 	}
 
@@ -148,9 +153,9 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		Date fechaActual=new Date();
 	
 		return (List<Pelicula>) session.createCriteria(Pelicula.class)
-				.add(Restrictions.sqlRestriction("Month({alias}.fechaEstreno)=?",fechaActual.getMonth()+1,new IntegerType()))
-				.add((Restrictions.sqlRestriction("year({alias}.fechaEstreno)=?",fechaActual.getYear()+1900,new IntegerType())))
-				.addOrder(Order.desc("fechaEstreno"))
+				.add(sqlRestriction("Month({alias}.fechaEstreno)=?",fechaActual.getMonth()+1,new IntegerType()))
+				.add((sqlRestriction("year({alias}.fechaEstreno)=?",fechaActual.getYear()+1900,new IntegerType())))
+				.addOrder(desc("fechaEstreno"))
 				.setMaxResults(4)
 				.list();
 	}
@@ -162,10 +167,10 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		Date fechaActual=new Date();
 	
 		return  (List<Pelicula>) session.createCriteria(Pelicula.class)
-				.add((Restrictions.sqlRestriction("year({alias}.fechaEstreno)>=?",fechaActual.getYear()+1900,new IntegerType())))
-				.add(Restrictions.sqlRestriction("Month({alias}.fechaEstreno)>?",fechaActual.getMonth()+1,new IntegerType()))
+				.add((sqlRestriction("year({alias}.fechaEstreno)>=?",fechaActual.getYear()+1900,new IntegerType())))
+				.add(sqlRestriction("Month({alias}.fechaEstreno)>?",fechaActual.getMonth()+1,new IntegerType()))
 				.setMaxResults(4)
-				.addOrder(Order.asc("fechaEstreno"))
+				.addOrder(asc("fechaEstreno"))
 				.list();
 	}
 
