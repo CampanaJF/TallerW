@@ -55,13 +55,14 @@
          
       <c:forEach items="${asientos}" varStatus="s" var="asiento">
 
+       <c:if test="${asiento.ocupado == true }">
+        <form:checkbox path="asiento.id" value="${asiento.id}" disabled="true" checked="checked" />
+       </c:if>
        
-        
-        <form:checkbox path="asiento.id" value="${asiento.id}"
-        class="col seat <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
-        
-         
-         
+        <c:if test="${asiento.ocupado == false }">
+         <form:checkbox path="asiento.id" value="${asiento.id}" disabled="false"/>
+       </c:if>
+              
          <%-- 
          <form:checkbox path="asientos[${s.index}].id" value="${asiento.id}" class="seat
          <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>

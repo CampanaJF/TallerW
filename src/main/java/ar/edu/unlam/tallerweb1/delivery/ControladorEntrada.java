@@ -49,13 +49,8 @@ public class ControladorEntrada {
 	/*TO DO 
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - try catch para casos donde no hay funciones (mejorar)
-	 *      - Que no se pueda comprar mas entradas de las disponibles para esa funcion
 	 *      - Arreglar la forma de validar al usuario
 	 *      
-	 *      - Implementar la seleccion de asientos, probar con solo una funcion para el dia de hoy ,
-	 *       probar con solo un asiento disponible, con multiples , con ninguno o todos
-	 *       
-	 *      -Obtener los asientos de una funcion para mostrarlos en el form
 	 *      
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador

@@ -13,7 +13,7 @@ public interface ServicioEntrada {
 	
 	void comprarMultiplesEntradas(Funcion funcion,Usuario usuario,List<Asiento> asiento);
 	
-	void comprarUnaEntrada(Funcion funcion,Usuario usuario,Asiento asiento);
+	void comprarUnaEntrada(Funcion funcion,Usuario usuario,List<Asiento> asiento);
 	
 	void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asiento);
 	

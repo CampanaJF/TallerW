@@ -33,12 +33,11 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 		validarEntrada(funcion,usuario,asientos);
 			
-		if(asientos.size()>1) {
-			comprarMultiplesEntradas(funcion,usuario,asientos);
-		}
-		else {
-			comprarUnaEntrada(funcion,usuario,asientos.get(0));
-		}
+		if(asientos.size()>1) 
+			comprarMultiplesEntradas(funcion,usuario,asientos);	
+		else 
+			comprarUnaEntrada(funcion,usuario,asientos);
+		
 			
 	}
 	
@@ -47,15 +46,15 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 			
 		for (Asiento asiento : asientos) {
 			
-			comprarUnaEntrada(funcion,usuario,asiento);
+			comprarEntrada(funcion, usuario, asiento);
 		}
 		
 	}
 
 	@Override
-	public void comprarUnaEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
+	public void comprarUnaEntrada(Funcion funcion,Usuario usuario,List<Asiento> asiento) {
 	
-		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
+		comprarEntrada(funcion,usuario,asiento.get(0));
 		
 	}
 	
@@ -78,28 +77,32 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		
-		if(usuario==null) {
+		if(usuario==null) 
 			throw new DatosEntradaInvalidaException();
-		}
 		
-		if(funcion==null) {
+		
+		if(funcion==null) 
 			throw new DatosEntradaInvalidaException();
-		}
+		
 		
 		validarAsiento(funcion,asientos);
 		
 	}
 	
+	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
+		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
+	}
+	
 	@Override
 	public void validarAsiento(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException, AsientoSinIdException{
 		
-		if(asientos==null||asientos.size()==0) {
+		if(asientos==null||asientos.size()==0) 
 			throw new ErrorDeAsientoException();
-		}
 		
-		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) {
+		
+		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) 
 			throw new ErrorDeAsientoException();
-		}
+		
 		
 		for (Asiento asiento : asientos) {
 			if(asiento.getId()==null)

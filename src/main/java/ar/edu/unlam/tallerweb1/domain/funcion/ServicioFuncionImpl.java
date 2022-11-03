@@ -93,14 +93,14 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	@Override
 	public Boolean validarFechaFuncion(Funcion funcion) {
 		
-		Date hoy = new Date();
-		
+		return fechaDentroDeLosProximosTresDias(funcion);
+
+	}
+
+	private boolean fechaDentroDeLosProximosTresDias(Funcion funcion) {
 		Date cuatroDiasDespues = getFechaLimiteDeFunciones();
-	
-		if(funcion.getFecha().after(hoy)&&funcion.getFecha().before(cuatroDiasDespues)) 
-			return true;
-		
-		return false;
+		Date hoy = new Date();
+		return funcion.getFecha().after(hoy)&&funcion.getFecha().before(cuatroDiasDespues);
 	}
 
 	@Override
