@@ -72,8 +72,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 	
-	//Buscar el usuario en el repo,  cual repo?
-	//Diversidad de excepciones
+
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		

@@ -121,7 +121,7 @@ public class ControladorEntrada {
 		if(usuarioLogueado!=null) 
 			return usuarioLogueado;
 		
-		List<Asiento> asientos = new ArrayList<>();
+		List<Asiento> asientos = new ArrayList<>();  // Fix temporal para asientos
 		asientos.add(datosEntrada.getAsiento());
 		datosEntrada.setAsientos(asientos);
 		
@@ -150,7 +150,7 @@ public class ControladorEntrada {
 		
 		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
 		
-		if(null==usuarioLogueado) { // tambien se podria hacer un try catch en el call al servicio usuario
+		if(null==usuarioLogueado) { 
 			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
 			return new ModelAndView("redirect:/registrarme");
 		}

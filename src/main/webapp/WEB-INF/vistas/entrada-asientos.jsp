@@ -34,7 +34,7 @@
         <div class="seat"></div>
         <small>Disponible</small>
       </li>
-      <li>
+      <li> 
         <div class="seat selected"></div>
         <small>Seleccionado/s</small>
       </li>
@@ -47,7 +47,7 @@
    <form:form action="entrada-compra" modelAttribute="datosEntrada" method="POST"> 
     
     
-    <div class="containerCustom w-50">
+    <div class="containerCustom mx-auto w-50">
       <div class="screen"></div>
       
       <div class="container">
@@ -56,26 +56,23 @@
       <c:forEach items="${asientos}" varStatus="s" var="asiento">
 
        <c:if test="${asiento.ocupado == true }">
-        <form:checkbox path="asiento.id" value="${asiento.id}" disabled="true" checked="checked" />
+        <form:checkbox class ="seat sold" path="asiento.id" value="${asiento.id}" disabled="true" checked="checked" />
        </c:if>
        
         <c:if test="${asiento.ocupado == false }">
-         <form:checkbox path="asiento.id" value="${asiento.id}" disabled="false"/>
+         <form:checkbox class ="seat"  path="asiento.id" value="${asiento.id}" disabled="false"/>
        </c:if>
               
          <%-- 
-         <form:checkbox path="asientos[${s.index}].id" value="${asiento.id}" class="seat
-         <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
          
-         <div class="col seat <c:if test='${asiento.ocupado == true }'> sold </c:if>"> 
-        <form:checkbox path="asiento.id" value="${asiento.id}"></form:checkbox>
-      </div>
-      
-      <form:checkbox path="asientos[${s.index}].id" value="${asiento.id}" class="seat
-        <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox> 
-      
-      <form:checkbox path="asiento.id" value="${asiento.id}"
-       class="col seat <c:if test='${asiento.ocupado == true }'> sold </c:if>"></form:checkbox>
+         <c:if test="${asiento.ocupado == true }">
+        <form:checkbox class ="seat sold" path="asiento.id" value="${asiento.id}" disabled="true" checked="checked" />
+       </c:if>
+       
+        <c:if test="${asiento.ocupado == false }">
+         <form:checkbox class ="seat"   path="asientos[${s.index}].id" value="${asiento.id}" disabled="false"/>
+       </c:if>
+
         --%>
          
                  
@@ -88,12 +85,16 @@
 	</div>
     
     <div class="movie-container">
-       <p class="text">Cantidad de Entradas: <span id="count">0</span> Total: $ <span id="total">0</span></p>
+       <p class="text-center">Cantidad de Entradas: <span id="count">0</span> Total: $ <span id="total">0</span></p>
     </div>
     
     <form:hidden path="funcion.id" value="${datosEntrada.funcion.id}" />
     <form:hidden path="usuario.id" value="${datosEntrada.usuario.id}" />
-    <button type="submit" class="mt-3 btn-lg btn buttonA">Comprar Entradas</button>
+    
+    <div class="d-grid gap-2 col-6 mx-auto">
+  	<button type="submit" class="text-center mt-3 btn-lg btn buttonA">Comprar Entradas</button>
+	</div>
+    
     
    </form:form>
 	
