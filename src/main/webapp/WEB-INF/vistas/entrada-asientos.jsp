@@ -55,16 +55,25 @@
          
       <c:forEach items="${asientos}" varStatus="loop" var="asiento">
   
-      
-        <c:if test="${asiento.ocupado == true }">
-        <form:checkbox class ="seat sold" path="asientos[loop.index].id" value="${asiento.id}" disabled="true" checked="checked" />
-       </c:if>
+    
+       
+       <c:if test="${asiento.ocupado == true }">
+        <form:checkbox class ="seat" path="asientos" value="${asiento.id}" disabled="true" checked="checked" />
+       </c:if> 
        
         <c:if test="${asiento.ocupado == false }">
-         <form:checkbox class ="seat"   path="asientos[loop.index].id" value="${asiento.id}" disabled="false"/>
+         <form:checkbox class ="seat"  path="asientos" value="${asiento.id}" disabled="false"/>
        </c:if>
      
          <%-- 
+         
+         <c:if test="${asiento.ocupado == true }">
+        <form:checkbox class ="seat sold" path="numeros" value="${asiento.id}" disabled="true" checked="checked" />
+       </c:if>
+       
+        <c:if test="${asiento.ocupado == false }">
+         <form:checkbox class ="seat"   path="numeros" value="${asiento.id}" disabled="false"/>
+       </c:if>
          
         <c:if test="${asiento.ocupado == true }">
         <form:checkbox class ="seat" path="asiento.id" value="${asiento.id}" disabled="true" checked="checked" />

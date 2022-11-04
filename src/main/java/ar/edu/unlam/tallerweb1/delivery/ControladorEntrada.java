@@ -103,7 +103,7 @@ public class ControladorEntrada {
 		
 		ModelMap model = new ModelMap();
 		
-		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()) );
+		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()));
 		
 		model.put("asientos", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
 			
@@ -195,6 +195,10 @@ public class ControladorEntrada {
 	private void comprarEntrada(DatosEntrada datosEntrada) {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
+	
+//	private void comprarEntrada(DatosEntrada datosEntrada) {
+//		this.servicioEntrada.validarNumeros(datosEntrada.getNumeros());
+//	}
 	
 
 }

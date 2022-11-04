@@ -24,7 +24,6 @@ public class ServicioEntradaDeberia {
 	
 	private ServicioEntradaImpl servicioEntrada = new ServicioEntradaImpl(repositorioEntrada);
 	
-
 	@Test
 	public void poderComprarSoloUnaEntrada() {
 		
@@ -35,8 +34,10 @@ public class ServicioEntradaDeberia {
 		Integer cantidadDeAsientos = 1;
 		
 		List<Asiento> asientos = givenAsientosVacios(cantidadDeAsientos);
+		
+		List<Long> numeros = givenNumeros(cantidadDeAsientos);
 				
-		whenSeCompranEntradas(funcion,usuario,asientos);
+		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
 		
 		thenSeComproUnaEntrada(funcion,usuario,asientos.get(0));
 			
@@ -53,8 +54,10 @@ public class ServicioEntradaDeberia {
 		Integer cantidadDeAsientos = 5;
 				
 		List<Asiento> asientos = givenAsientosVacios(cantidadDeAsientos);
+		
+		List<Long> numeros = givenNumeros(cantidadDeAsientos);
 				
-		whenSeCompranEntradas(funcion,usuario,asientos);
+		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
 		
 		thenSeCompranMultiplesEntradas(funcion,usuario,asientos);
 			
@@ -70,7 +73,9 @@ public class ServicioEntradaDeberia {
 		
 		List<Asiento> asientos = givenAsientosVacios(1);
 		
-		whenSeCompranEntradas(funcion,usuario,asientos);
+		List<Long> numeros = givenNumeros(1);
+		
+		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
 				
 	}
 	
@@ -85,7 +90,9 @@ public class ServicioEntradaDeberia {
 		
 		List<Asiento> asientos = givenAsientosVacios(cantidadDeEntradas);
 		
-		whenSeCompranEntradasSinFuncion(funcion,usuario,asientos);
+		List<Long> numeros = givenNumeros(cantidadDeEntradas);
+		
+		whenSeCompranEntradasSinFuncion(funcion,usuario,numeros,asientos);
 				
 	}
 
@@ -98,7 +105,9 @@ public class ServicioEntradaDeberia {
 		
 		List<Asiento> asientos = givenAsientosVacios(0);
 		
-		whenSeCompranEntradas(funcion,usuario,asientos);
+		List<Long> numeros = givenNumeros(0);
+		
+		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
 				
 	}
 	
@@ -111,25 +120,32 @@ public class ServicioEntradaDeberia {
 		
 		List<Asiento> asientos = givenAsientosVacios(5);
 		
-		whenSeCompranEntradasSinSuficientesAsientos(funcion,usuario,asientos);
+		List<Long> numeros = givenNumeros(5);
+		
+		whenSeCompranEntradasSinSuficientesAsientos(funcion,usuario,numeros,asientos);
 				
 	}
 	
-	private void whenSeCompranEntradas(Funcion funcion,Usuario usuario,List<Asiento> asiento) {
-		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(asiento.size());
-		this.servicioEntrada.comprar(funcion,usuario,asiento);
+	private void whenSeCompranEntradas(Funcion funcion, Usuario usuario, List<Long> numeros, List<Asiento> asientos) {
+		getAsientos(numeros,asientos);
+		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(numeros.size());
+	//	when(this.servicioEntrada.getAsientos(numeros)).thenReturn(asientos);
+		this.servicioEntrada.comprar(funcion,usuario,numeros);
 		
 	}
 	
 	
-	private void whenSeCompranEntradasSinFuncion(Funcion funcion, Usuario usuario, List<Asiento> asientos) {
-		this.servicioEntrada.comprar(funcion,usuario,asientos);
+	private void whenSeCompranEntradasSinFuncion(Funcion funcion, Usuario usuario, List<Long> numeros,List<Asiento> asientos) {
+		getAsientos(numeros,asientos);
+		this.servicioEntrada.comprar(funcion,usuario,numeros);
 		
 	}
 	
-	private void whenSeCompranEntradasSinSuficientesAsientos(Funcion funcion, Usuario usuario, List<Asiento> asientos) {
+	private void whenSeCompranEntradasSinSuficientesAsientos(Funcion funcion, Usuario usuario, List<Long> numeros,List<Asiento> asientos) {
+		getAsientos(numeros,asientos);
 		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(3);
-		this.servicioEntrada.comprar(funcion,usuario,asientos);
+		//when(this.servicioEntrada.getAsientos(numeros)).thenReturn(asientos);
+		this.servicioEntrada.comprar(funcion,usuario,numeros);
 		
 	}
 
@@ -147,6 +163,14 @@ public class ServicioEntradaDeberia {
 		
 	}
 	
+	private void getAsientos(List<Long> numeros,List<Asiento> asientos){
+		
+		for (int i = 0; i < numeros.size(); i++) {
+			when(this.repositorioEntrada.getAsiento(numeros.get(i))).thenReturn(asientos.get(i));
+			
+		}			
+	}
+	
 	private List<Asiento> givenAsientosVacios(Integer cantidad){
 		
 		List<Asiento> asientos = new ArrayList<Asiento>();
@@ -161,10 +185,24 @@ public class ServicioEntradaDeberia {
 		return asientos;
 	}
 	
+	private List<Long> givenNumeros(Integer cantidad){
+	
+		List<Long> numeros = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			
+			
+			numeros.add(new Random().nextLong());		
+		}
+		
+		return numeros;
+	}
+	
 	private Funcion givenFuncion() {
 		
 		Funcion funcion = new Funcion();
 		
+		funcion.setId(new Random().nextLong());
 		funcion.setPelicula(givenPelicula("Indiana Jones"));
 		funcion.setPrecio(599.99);
 		funcion.setSala(givenSala(givenCine("Cinemax"),"Sala 42"));

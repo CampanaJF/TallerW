@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -29,14 +30,16 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public void comprar(Funcion funcion,Usuario usuario,List<Asiento> asientos) {
+	public void comprar(Funcion funcion,Usuario usuario,List<Long> asientos) {
 		
-		validarEntrada(funcion,usuario,asientos);
+		List<Asiento> asientosEncontrados = getAsientos(asientos);
+		
+		validarEntrada(funcion,usuario,asientosEncontrados);
 			
 		if(asientos.size()>1) 
-			comprarMultiplesEntradas(funcion,usuario,asientos);	
+			comprarMultiplesEntradas(funcion,usuario,asientosEncontrados);	
 		else 
-			comprarUnaEntrada(funcion,usuario,asientos);
+			comprarUnaEntrada(funcion,usuario,asientosEncontrados);
 		
 			
 	}
@@ -103,7 +106,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	@Override
 	public void validarFuncionIngresada(Funcion funcion) {
 		
-		if(funcion.getId()==null) 
+		if(funcion==null) 
 			throw new DatosEntradaInvalidaException();
 		
 	}
@@ -111,7 +114,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	@Override
 	public void validarUsuarioIngresado(Usuario usuario) {
 		
-		if(usuario.getId()==null) 
+		if(usuario==null) 
 			throw new DatosEntradaInvalidaException();
 		
 	}
@@ -139,6 +142,30 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 				throw new AsientoSinIdException();
 		}
 		
+	}
+
+	@Override
+	public void validarNumeros(List<Integer> numeros)throws AsientoSinIdException {
+		
+		if(numeros.size()==3) {
+			throw new AsientoSinIdException();
+		}
+		
+		for (Integer integer : numeros) {
+			if(integer==null)
+				throw new AsientoSinIdException();
+		}
+		
+	}
+
+	@Override
+	public List<Asiento> getAsientos(List<Long> asientos) {
+		List<Asiento> asientosSeleccionados = new ArrayList<>();
+		
+		for (Long asiento : asientos) {
+			asientosSeleccionados.add(this.repositorioEntrada.getAsiento(asiento));
+		}
+		return asientosSeleccionados;
 	}
 
 }
