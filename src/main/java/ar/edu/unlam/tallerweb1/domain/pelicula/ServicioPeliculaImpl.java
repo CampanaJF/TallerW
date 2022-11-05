@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,9 +9,10 @@ import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.SerializationUtils;
 
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 
 
 @Service
@@ -24,10 +26,65 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		this.repositorioPelicula=repositorioPelicula;
 	}
 	@Override
-	public List<Pelicula> obtenerPeliculas(Filtro filtro) {
+	public List<PeliculaConEtiquetaDTO> obtenerPeliculas(Filtro filtro) {
+		List<EtiquetaPelicula>etiquetasPeliculas=repositorioPelicula.getPeliculasFiltro(filtro);
+		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
 	
-		return repositorioPelicula.getPeliculasFiltro(filtro);
+		return resultado;
 	}
+	private List<PeliculaConEtiquetaDTO> mapeoPeliculaConEtiquetaDTO(List<EtiquetaPelicula> etiquetasPeliculas) {
+		Long idActual=0L;
+		Pelicula peliculaActual=new Pelicula();
+		List<Etiqueta>etiquetas=new ArrayList<>();
+		List<PeliculaConEtiquetaDTO>resultado=new ArrayList<>();
+		for (EtiquetaPelicula etiquetaPelicula : etiquetasPeliculas) {
+			if(!etiquetaPelicula.getPelicula().getId().equals(idActual)) {
+				if(idActual!=0) {
+				PeliculaConEtiquetaDTO peliculaDTO=new PeliculaConEtiquetaDTO();
+				peliculaDTO.setPelicula(peliculaActual);
+				peliculaDTO.setEtiquetas(etiquetas);
+				resultado.add(peliculaDTO);
+				etiquetas.clear();
+				}
+				peliculaActual=crearPelicula(etiquetaPelicula.getPelicula());
+				idActual=peliculaActual.getId();
+				
+			}
+			
+			etiquetas.add(crearEtiqueta(etiquetaPelicula.getEtiqueta()));
+		
+		}
+		return resultado;
+	}
+	
+	
+	private Pelicula crearPelicula(Pelicula pelicula) {
+		Pelicula peliculaCopia=new Pelicula();
+		peliculaCopia.setCalificacion(pelicula.getCalificacion());
+		peliculaCopia.setDuracion(pelicula.getDuracion());
+		peliculaCopia.setClasificacionPelicula(pelicula.getClasificacionPelicula());
+		peliculaCopia.setDirector(pelicula.getDirector());
+		peliculaCopia.setFechaEstreno(pelicula.getFechaEstreno());
+		peliculaCopia.setGenero(pelicula.getGenero());
+		peliculaCopia.setId(pelicula.getId());
+		peliculaCopia.setPoster(pelicula.getPoster());
+		peliculaCopia.setProtagonista(pelicula.getProtagonista());
+		peliculaCopia.setSinopsis(pelicula.getSinopsis());
+		peliculaCopia.setTitulo(pelicula.getTitulo());
+			
+		return peliculaCopia;
+	}
+	
+	private Etiqueta crearEtiqueta(Etiqueta etiqueta) {
+		Etiqueta etiquetaCopia=new Etiqueta();
+		etiquetaCopia.setDescripcion(etiqueta.getDescripcion());
+		etiquetaCopia.setId(etiqueta.getId());
+	
+			
+		return etiquetaCopia;
+	}
+	
+	
 	@Override
     public List<Pelicula> getPeliculas() {
         return this.repositorioPelicula.getPeliculas();
@@ -41,9 +98,11 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 
     
 	@Override
-	public List<Pelicula> obtenerPeliculaEstrenos() {
+	public List<PeliculaConEtiquetaDTO> obtenerPeliculaEstrenos() {
+		List<EtiquetaPelicula>etiquetasPeliculas=this.repositorioPelicula.getEstrenosDelMes();
+		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
+		return resultado;
 		
-		return this.repositorioPelicula.getEstrenosDelMes();
 	}
 	
 
@@ -86,9 +145,12 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 
 
 	@Override
-	public List<Pelicula> obtenerProximosEstrenos() {
-		// TODO Auto-generated method stub
-		return this.repositorioPelicula.getProximosEstrenos();
+	public List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos() {
+		List<EtiquetaPelicula>etiquetasPeliculas=this.repositorioPelicula.getProximosEstrenos();
+		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
+	
+		return resultado;
+		
 	}
 
 }

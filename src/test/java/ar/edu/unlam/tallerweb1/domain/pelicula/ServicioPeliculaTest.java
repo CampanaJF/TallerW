@@ -5,7 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
-
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioPeliculaImpl;
 
 
@@ -48,14 +48,14 @@ public class ServicioPeliculaTest {
     	//Preparacion
     	Filtro filtro=new Filtro(1L,1L,"Genero");
     	RepositorioPelicula repoPelicula=mock(RepositorioPelicula.class);
-    	List<Pelicula>peliculas=new ArrayList<>();
-    	Pelicula pelicula=new Pelicula();
+    	List<EtiquetaPelicula>peliculas=new ArrayList<>();
+    	EtiquetaPelicula pelicula=new EtiquetaPelicula();
     	peliculas.add(pelicula);
     	when(repoPelicula.getPeliculasFiltro(filtro)).thenReturn(peliculas);
     	servicioPelicula=new ServicioPeliculaImpl(repoPelicula);
     	
     	//Ejecucion
-    	List<Pelicula>listadoPeliculas=servicioPelicula.obtenerPeliculas(filtro);
+    	List<PeliculaConEtiquetaDTO>listadoPeliculas=servicioPelicula.obtenerPeliculas(filtro);
     	assertEquals(1, listadoPeliculas.size());
     	assertNotNull(listadoPeliculas);
     }

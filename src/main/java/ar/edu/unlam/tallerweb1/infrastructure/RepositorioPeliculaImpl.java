@@ -6,11 +6,14 @@ import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.ne;
 import static org.hibernate.criterion.Restrictions.sqlRestriction;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -28,6 +31,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
+import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 
@@ -43,10 +48,11 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public List<Pelicula> getPeliculasFiltro(Filtro filtro) {
+	public List<EtiquetaPelicula> getPeliculasFiltro(Filtro filtro) {
 		final Session session = sessionFactory.getCurrentSession();
 		Date fechaActual=new Date();
-		Criteria criteria = session.createCriteria(Pelicula.class);
+		Criteria criteria = session.createCriteria(EtiquetaPelicula.class);
+		criteria.createAlias("pelicula","pe",JoinType.INNER_JOIN);
 		
 		if (filtro.getGenero() != null) {
 			criteria.createAlias("genero", "g",JoinType.INNER_JOIN);
@@ -68,8 +74,8 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		}
 		
 		criteria
-		.add(sqlRestriction("Month({alias}.fechaEstreno)<=?",fechaActual.getMonth()+1,new IntegerType()))
-		.add(sqlRestriction("YEAR({alias}.fechaEstreno)<=?",fechaActual.getYear()+1900,new IntegerType()));
+		.add(sqlRestriction("Month(fechaEstreno)<=?",fechaActual.getMonth()+1,new IntegerType()))
+		.add(sqlRestriction("YEAR(fechaEstreno)<=?",fechaActual.getYear()+1900,new IntegerType()));
 		return criteria.list();
 	}
 	
@@ -148,30 +154,44 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	//Alias => Cada uno de los registros de la tabla
 	// ? => Lugar  que va a ser remplazado x una variable
 	
-	public List<Pelicula> getEstrenosDelMes() {
+	public List<EtiquetaPelicula> getEstrenosDelMes() {
 		final Session session = sessionFactory.getCurrentSession();
 		Date fechaActual=new Date();
 	
-		return (List<Pelicula>) session.createCriteria(Pelicula.class)
-				.add(sqlRestriction("Month({alias}.fechaEstreno)=?",fechaActual.getMonth()+1,new IntegerType()))
-				.add((sqlRestriction("year({alias}.fechaEstreno)=?",fechaActual.getYear()+1900,new IntegerType())))
-				.addOrder(desc("fechaEstreno"))
+		return (List<EtiquetaPelicula>) session.createCriteria(EtiquetaPelicula.class)
+				.createAlias("pelicula", "p",JoinType.INNER_JOIN)
+				.add(sqlRestriction("Month(fechaEstreno)=?",fechaActual.getMonth()+1,new IntegerType()))
+				.add((sqlRestriction("year(fechaEstreno)=?",fechaActual.getYear()+1900,new IntegerType())))
+				.addOrder(desc("p.fechaEstreno"))
 				.setMaxResults(4)
 				.list();
 	}
 	
 	
 	@Override
-	public List<Pelicula> getProximosEstrenos() {
+	public List<EtiquetaPelicula> getProximosEstrenos() {
 		final Session session = sessionFactory.getCurrentSession();
 		Date fechaActual=new Date();
-	
-		return  (List<Pelicula>) session.createCriteria(Pelicula.class)
-				.add((sqlRestriction("year({alias}.fechaEstreno)>=?",fechaActual.getYear()+1900,new IntegerType())))
-				.add(sqlRestriction("Month({alias}.fechaEstreno)>?",fechaActual.getMonth()+1,new IntegerType()))
+		
+		return  (List<EtiquetaPelicula>) session.createCriteria(EtiquetaPelicula.class)
+				.createAlias("pelicula", "p",JoinType.INNER_JOIN)
+				.add((sqlRestriction("year(fechaEstreno)>=?",fechaActual.getYear()+1900,new IntegerType())))
+				.add(sqlRestriction("Month(fechaEstreno)>?",fechaActual.getMonth()+1,new IntegerType()))
 				.setMaxResults(4)
-				.addOrder(asc("fechaEstreno"))
+				.addOrder(asc("p.fechaEstreno"))
 				.list();
+	}
+	
+	@Override
+	public List<EtiquetaPelicula> obtenerPeliculasConEtiquetas(List<String> historialDeEtiquetas) {
+		final Session session = sessionFactory.getCurrentSession();
+		Criteria criteria=session.createCriteria(EtiquetaPelicula.class);
+			criteria.createAlias("etiqueta", "e",JoinType.INNER_JOIN);
+			criteria.createAlias("pelicula", "p",JoinType.INNER_JOIN);
+			
+			criteria.add(Restrictions.in("e.descripcion",historialDeEtiquetas));
+					
+		return criteria.list();
 	}
 
 

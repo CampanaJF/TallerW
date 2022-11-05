@@ -31,7 +31,10 @@ import java.util.List;
         private Genero genero;
         
         private Integer duracion;
-
+        
+        @OneToMany
+        private List<Etiqueta>etiquetas;
+        
         @ManyToOne
         private ClasificacionPelicula clasificacionPelicula;
 
@@ -103,7 +106,15 @@ import java.util.List;
             this.genero = genero;
         }
 
-        public Integer getDuracion() {
+        public List<Etiqueta> getEtiquetas() {
+			return etiquetas;
+		}
+
+		public void setEtiquetas(List<Etiqueta> etiquetas) {
+			this.etiquetas = etiquetas;
+		}
+
+		public Integer getDuracion() {
             return duracion;
         }
         

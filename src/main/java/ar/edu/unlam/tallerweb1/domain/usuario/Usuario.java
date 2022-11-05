@@ -1,9 +1,14 @@
 package ar.edu.unlam.tallerweb1.domain.usuario;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 
 @Entity
 public class Usuario {
@@ -21,6 +26,9 @@ public class Usuario {
 	private String password;
 	
 	private String rol;
+	
+	@OneToMany
+	private List<Etiqueta>etiquetasVisitadas;
 	
 	@Column(columnDefinition = "boolean default false")
 	private Boolean activo;
@@ -56,6 +64,12 @@ public class Usuario {
 		this.activo = activo;
 	}
 
+	public List<Etiqueta> getEtiquetasVisitadas() {
+		return etiquetasVisitadas;
+	}
+	public void setEtiquetasVisitadas(List<Etiqueta> etiquetasVisitadas) {
+		this.etiquetasVisitadas = etiquetasVisitadas;
+	}
 	public boolean activo() {
 		return activo;
     }
