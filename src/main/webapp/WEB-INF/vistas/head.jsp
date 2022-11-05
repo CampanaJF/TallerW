@@ -12,10 +12,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="css/form.css" rel="stylesheet">
+    <link rel="stylesheet"  href="css/form.css">
     <link rel="stylesheet" href="css/cartelera.css">
-    <link href="css/font.css" rel="stylesheet">
-    <link href="css/estilos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font.css" >
+    <link rel="stylesheet" href="css/estilos.css" >
     <link rel="stylesheet" href="css/perfil-usuario.css">
      <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/valoracionPelicula.css">
