@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
-import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 import ar.edu.unlam.tallerweb1.exceptions.ErrorDeAsientoException;
 
@@ -73,41 +72,51 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 	
-	//Buscar el usuario en el repo,  cual repo?
-	//Diversidad de excepciones
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		
-		if(usuario==null) {
-			throw new DatosEntradaInvalidaException();
-		}
+		validarUsuarioExistente(usuario);
 		
-		if(funcion==null) {
-			throw new DatosEntradaInvalidaException();
-		}
+		validarFuncionExistente(funcion);
 		
 		validarAsiento(funcion,asientos);
 		
 	}
-	
+
 	@Override
-	public void validarAsiento(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException, AsientoSinIdException{
+	public void validarAsiento(Funcion funcion, List<Asiento> asientos) {
 		
-		if(asientos==null||asientos.size()==0) {
-			throw new ErrorDeAsientoException();
+		validarIntegridadDeAsientos(asientos);
+		
+		validarDisponibilidadDeAsientos(funcion, asientos);
+	
+	}
+	
+	private void validarUsuarioExistente(Usuario usuario) {
+		if(usuario==null) {
+			throw new DatosEntradaInvalidaException();
 		}
-		
+	}
+
+	private void validarFuncionExistente(Funcion funcion) {
+		if(funcion==null) {
+			throw new DatosEntradaInvalidaException();
+		}
+	}
+
+	private void validarDisponibilidadDeAsientos(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException {
 		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) {
 			throw new ErrorDeAsientoException();
 		}
-		
-		for (Asiento asiento : asientos) {
-			if(asiento.getId()==null)
-				throw new AsientoSinIdException();
-		}
-		
-		
 	}
+
+	private void validarIntegridadDeAsientos(List<Asiento> asientos) throws ErrorDeAsientoException {
+		if(asientos==null||asientos.size()==0) {
+			throw new ErrorDeAsientoException();
+		}
+	}
+	
+	
 
 	
 
