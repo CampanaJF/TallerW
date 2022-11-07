@@ -84,7 +84,7 @@
                          <div class="d-flex justify-content-around">
 									
 										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
-										<span class="text-light">${etiqueta.getDescripcion()}</span>
+										<p class="text-light ">${etiqueta.getDescripcion()}</p>
 										</c:forEach>
 									</div>
                          
@@ -135,7 +135,7 @@
                          <div class="d-flex justify-content-around">
 									
 										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
-										<span class="text-light">${etiqueta.getDescripcion()}</span>
+										<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
 										</c:forEach>
 									</div>
                          

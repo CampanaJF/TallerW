@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -42,7 +44,7 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 				if(idActual!=0) {
 				PeliculaConEtiquetaDTO peliculaDTO=new PeliculaConEtiquetaDTO();
 				peliculaDTO.setPelicula(peliculaActual);
-				peliculaDTO.setEtiquetas(etiquetas);
+				agregarEtiquetas(peliculaDTO,etiquetas);
 				resultado.add(peliculaDTO);
 				etiquetas.clear();
 				}
@@ -54,12 +56,24 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 			etiquetas.add(crearEtiqueta(etiquetaPelicula.getEtiqueta()));
 		
 		}
+		if(!etiquetasPeliculas.isEmpty()){
+			PeliculaConEtiquetaDTO peliculaDTO=new PeliculaConEtiquetaDTO();
+			peliculaDTO.setPelicula(peliculaActual);
+			agregarEtiquetas(peliculaDTO,etiquetas);
+			resultado.add(peliculaDTO);
+		}
 		return resultado;
 	}
 	
+	private void agregarEtiquetas(PeliculaConEtiquetaDTO pelicula,List<Etiqueta>etiquetas){
+		List<Etiqueta>etiquetasActual=new ArrayList<>();
+		etiquetasActual.addAll(etiquetas);
+		pelicula.setEtiquetas(etiquetasActual);
+	}
 	
 	private Pelicula crearPelicula(Pelicula pelicula) {
 		Pelicula peliculaCopia=new Pelicula();
+		
 		peliculaCopia.setCalificacion(pelicula.getCalificacion());
 		peliculaCopia.setDuracion(pelicula.getDuracion());
 		peliculaCopia.setClasificacionPelicula(pelicula.getClasificacionPelicula());
@@ -101,7 +115,14 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	public List<PeliculaConEtiquetaDTO> obtenerPeliculaEstrenos() {
 		List<EtiquetaPelicula>etiquetasPeliculas=this.repositorioPelicula.getEstrenosDelMes();
 		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
-		return resultado;
+		List<PeliculaConEtiquetaDTO>auxiliar=new ArrayList<>();	
+		for(int i=0;i<resultado.size();i++) {
+				if(i<=4) {
+					auxiliar.add(resultado.get(i));
+				}
+			}
+		return auxiliar;
+		
 		
 	}
 	
@@ -148,8 +169,13 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 	public List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos() {
 		List<EtiquetaPelicula>etiquetasPeliculas=this.repositorioPelicula.getProximosEstrenos();
 		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
-	
-		return resultado;
+		List<PeliculaConEtiquetaDTO>auxiliar=new ArrayList<>();	
+		for(int i=0;i<resultado.size();i++) {
+				if(i<=4) {
+					auxiliar.add(resultado.get(i));
+				}
+			}
+		return auxiliar;
 		
 	}
 
