@@ -54,7 +54,7 @@
   </div>
   
 </div>
-		<h1 class="text-light fw-bolder mt-5">Recomendadas</h1>
+		<h1 class="text-light fw-bolder mt-5 mb-2">Recomendadas</h1>
 		<h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
 		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${proximosEstrenos}">
@@ -84,7 +84,7 @@
                          <div class="d-flex justify-content-around">
 									
 										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
-										<p class="text-light ">${etiqueta.getDescripcion()}</p>
+										<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
 										</c:forEach>
 									</div>
                          

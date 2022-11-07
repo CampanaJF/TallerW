@@ -259,6 +259,7 @@ public class ControladorEntradaDeberia {
 		CinePelicula two = new CinePelicula();
 		CinePelicula three = new CinePelicula(); 
 		
+		
 		one.setCine(cine1);
 		one.setPelicula(pelicula1);
 		two.setCine(cine2);

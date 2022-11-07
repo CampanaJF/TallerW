@@ -226,14 +226,14 @@
 									<div class="d-flex justify-content-around">
 									
 										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
-										<span class="text-light">${etiqueta.getDescripcion()}</span>
+										<span class="text-light  etiquetaDescripcion">${etiqueta.getDescripcion()}</span>
 										</c:forEach>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<a href="ver-pelicula?pelicula=${pelicula.id}"
+					<a href="ver-pelicula?pelicula=${peliculaDTO.getPelicula().id}"
 						class="btn btn-lg text-light" id="comprarEntradas">Comprar
 						Entradas</a>
 				</article>

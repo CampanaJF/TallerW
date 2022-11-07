@@ -19,6 +19,7 @@ import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ClasificacionPelicula;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
@@ -107,6 +108,27 @@ public class FiltroTest extends SpringTest {
 		Pelicula p2 = crearPelicula(null,new Date("2022/10/10"), null,2);
 		Pelicula p3 = crearPelicula(null,new Date("2022/10/10"), null,1);
 		Pelicula p4 = crearPelicula(null,new Date("2022/10/10"), null,4);
+		
+		Etiqueta etiqueta=new Etiqueta();
+		session().save(etiqueta);
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula3=new EtiquetaPelicula();
+		
+		etiquetaPelicula.setPelicula(p1);
+		etiquetaPelicula.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(p2);
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(p3);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+		etiquetaPelicula3.setPelicula(p4);
+		etiquetaPelicula3.setEtiqueta(etiqueta);
+
+		session().save(etiquetaPelicula);
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
+		session().save(etiquetaPelicula3);
 
 	}
 
@@ -128,8 +150,30 @@ public class FiltroTest extends SpringTest {
 		Pelicula p2 =crearPelicula("30 noches con mi ex",new Date("2022/10/10"), null, null);
 		Pelicula p3 = crearPelicula("El paraiso",new Date("2022/10/10"), null, null);
 		Pelicula p4 = crearPelicula("Nop",new Date("2022/10/10"), null, null);
-
+		
+		Etiqueta etiqueta=new Etiqueta();
+		session().save(etiqueta);
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula3=new EtiquetaPelicula();
+		
+		etiquetaPelicula.setPelicula(p1);
+		etiquetaPelicula.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(p2);
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(p3);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+		etiquetaPelicula3.setPelicula(p4);
+		etiquetaPelicula3.setEtiqueta(etiqueta);
+		
+		session().save(etiquetaPelicula);
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
+		session().save(etiquetaPelicula3);
 	}
+
+	
 
 	private void thenObtengoPeliculasPorDirector(List<EtiquetaPelicula> peliculasObtenidasPorDirector) {
 		assertEquals(4, peliculasObtenidasPorDirector.size());
@@ -149,6 +193,26 @@ public class FiltroTest extends SpringTest {
 		Pelicula p3 = crearPelicula(null,new Date("2022/10/10"),"Julio Chavez",null);
 		Pelicula p4 = crearPelicula(null,new Date("2022/10/10"),"Tetsuro Kodama",null);
 
+		Etiqueta etiqueta=new Etiqueta();
+		session().save(etiqueta);
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula3=new EtiquetaPelicula();
+		
+		etiquetaPelicula.setPelicula(p1);
+		etiquetaPelicula.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(p2);
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(p3);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+		etiquetaPelicula3.setPelicula(p4);
+		etiquetaPelicula3.setEtiqueta(etiqueta);
+		
+		session().save(etiquetaPelicula);
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
+		session().save(etiquetaPelicula3);
 	}
 
 	private void givenQueHayPeliculas() {
@@ -161,7 +225,12 @@ public class FiltroTest extends SpringTest {
 		Pelicula pelicula = crearPelicula("Jack en la caja maldita 2",new Date("2022/10/10"),null,null);
 		Pelicula pelicula1 = crearPelicula("Dragon ball super",new Date("2022/10/10"),null,null);
 		Pelicula pelicula2 = crearPelicula("Thor",new Date("2022/10/10"),null,null);
-
+		
+		Etiqueta etiqueta=new Etiqueta();
+		session().save(etiqueta);
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
 	
 		pelicula.setGenero(generoAccion); // Genero Accion
 		pelicula1.setGenero(generoTerror);// Genero Terror
@@ -170,7 +239,18 @@ public class FiltroTest extends SpringTest {
 		pelicula.setClasificacionPelicula(clasificacionATP);
 		pelicula1.setClasificacionPelicula(clasificacionMas16);
 		pelicula2.setClasificacionPelicula(clasificacionMas16); // +16
-
+		
+		etiquetaPelicula.setPelicula(pelicula);
+		etiquetaPelicula.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(pelicula1);
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(pelicula2);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+		
+		session().save(etiquetaPelicula);
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
+		
 	}
 
 	private ClasificacionPelicula crearClasificacion(String clasificacionPelicula) {
@@ -262,12 +342,27 @@ public class FiltroTest extends SpringTest {
 		Pelicula pelicula = crearPelicula("Jack en la caja maldita 2",new Date("2022/10/10"),null,null);
 		Pelicula pelicula1 = crearPelicula("Dragon ball super",new Date("2022/10/10"),null,null);
 		Pelicula pelicula2 = crearPelicula("Thor",new Date("2022/10/10"),null,null);
+		Etiqueta etiqueta=new Etiqueta();
+		session().save(etiqueta);
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
+		
 		
 		pelicula.setGenero(generoAccion);
 		pelicula1.setGenero(generoTerror);
 		pelicula2.setGenero(generoTerror);
-
 		
+		etiquetaPelicula.setPelicula(pelicula);
+		etiquetaPelicula.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(pelicula1);
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(pelicula2);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+
+		session().save(etiquetaPelicula);
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
 	}
 
 	private void givenQueHayPeliculasPorClasificacion() {
@@ -278,11 +373,28 @@ public class FiltroTest extends SpringTest {
 		Pelicula pelicula = crearPelicula("Jack en la caja maldita 2",new Date("2022/10/10"),null,null);
 		Pelicula pelicula1 = crearPelicula("Dragon ball super",new Date("2022/10/10"),null,null);
 		Pelicula pelicula2 = crearPelicula("Thor",new Date("2022/10/10"),null,null);
+		
+		Etiqueta etiqueta=new Etiqueta();
+		session().save(etiqueta);
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
 
 		pelicula.setClasificacionPelicula(clasificacionATP);
 		pelicula1.setClasificacionPelicula(clasificacionMas16);
 		pelicula2.setClasificacionPelicula(clasificacionATP);
 
+		
+		etiquetaPelicula.setPelicula(pelicula);
+		etiquetaPelicula.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(pelicula1);
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(pelicula2);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+		
+		session().save(etiquetaPelicula);
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
 	}
 
 }
