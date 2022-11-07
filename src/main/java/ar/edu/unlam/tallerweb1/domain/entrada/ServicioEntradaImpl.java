@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -29,16 +30,17 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public void comprar(Funcion funcion,Usuario usuario,List<Asiento> asientos) {
+	public void comprar(Funcion funcion,Usuario usuario,List<Long> asientos) {
 		
-		validarEntrada(funcion,usuario,asientos);
+		List<Asiento> asientosEncontrados = getAsientos(asientos);
+		
+		validarEntrada(funcion,usuario,asientosEncontrados);
 			
-		if(asientos.size()>1) {
-			comprarMultiplesEntradas(funcion,usuario,asientos);
-		}
-		else {
-			comprarUnaEntrada(funcion,usuario,asientos.get(0));
-		}
+		if(asientos.size()>1) 
+			comprarMultiplesEntradas(funcion,usuario,asientosEncontrados);	
+		else 
+			comprarUnaEntrada(funcion,usuario,asientosEncontrados);
+		
 			
 	}
 	
@@ -47,15 +49,15 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 			
 		for (Asiento asiento : asientos) {
 			
-			comprarUnaEntrada(funcion,usuario,asiento);
+			comprarEntrada(funcion, usuario, asiento);
 		}
 		
 	}
 
 	@Override
-	public void comprarUnaEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
+	public void comprarUnaEntrada(Funcion funcion,Usuario usuario,List<Asiento> asiento) {
 	
-		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
+		comprarEntrada(funcion,usuario,asiento.get(0));
 		
 	}
 	
@@ -73,46 +75,97 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 	
-	//Buscar el usuario en el repo,  cual repo?
-	//Diversidad de excepciones
+
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		
-		if(usuario==null) {
-			throw new DatosEntradaInvalidaException();
-		}
-		
-		if(funcion==null) {
-			throw new DatosEntradaInvalidaException();
-		}
+		validarUsuarioIngresado(usuario);
+
+		validarFuncionIngresada(funcion);
 		
 		validarAsiento(funcion,asientos);
 		
 	}
 	
+	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
+		
+		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
+	}
+	
 	@Override
-	public void validarAsiento(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException, AsientoSinIdException{
+	public void validarAsiento(Funcion funcion, List<Asiento> asientos){
 		
-		if(asientos==null||asientos.size()==0) {
-			throw new ErrorDeAsientoException();
-		}
+		validarAsientosIngresados(asientos);
 		
-		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) {
+		validarIdAsientos(asientos);	
+		
+		validarCantidadDeAsientosDisponibles(funcion,asientos);
+				
+	}
+
+	@Override
+	public void validarFuncionIngresada(Funcion funcion) {
+		
+		if(funcion==null) 
+			throw new DatosEntradaInvalidaException();
+		
+	}
+
+	@Override
+	public void validarUsuarioIngresado(Usuario usuario) {
+		
+		if(usuario==null) 
+			throw new DatosEntradaInvalidaException();
+		
+	}
+	
+	@Override
+	public void validarAsientosIngresados(List<Asiento> asientos) throws ErrorDeAsientoException {
+		
+		if(asientos==null||asientos.size()==0) 
 			throw new ErrorDeAsientoException();
-		}
+		
+	}
+	
+	@Override
+	public void validarCantidadDeAsientosDisponibles(Funcion funcion, List<Asiento> asientos) throws ErrorDeAsientoException {
+		
+		if(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())<asientos.size()) 
+			throw new ErrorDeAsientoException();	
+	}
+
+	@Override
+	public void validarIdAsientos(List<Asiento> asientos)throws AsientoSinIdException {
 		
 		for (Asiento asiento : asientos) {
 			if(asiento.getId()==null)
 				throw new AsientoSinIdException();
 		}
 		
+	}
+
+	@Override
+	public void validarNumeros(List<Integer> numeros)throws AsientoSinIdException {
+		
+		if(numeros.size()==3) {
+			throw new AsientoSinIdException();
+		}
+		
+		for (Integer integer : numeros) {
+			if(integer==null)
+				throw new AsientoSinIdException();
+		}
 		
 	}
 
-	
-
-	
-
-
+	@Override
+	public List<Asiento> getAsientos(List<Long> asientos) {
+		List<Asiento> asientosSeleccionados = new ArrayList<>();
+		
+		for (Long asiento : asientos) {
+			asientosSeleccionados.add(this.repositorioEntrada.getAsiento(asiento));
+		}
+		return asientosSeleccionados;
+	}
 
 }

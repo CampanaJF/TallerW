@@ -98,9 +98,17 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		final Session session = sessionFactory.getCurrentSession();
 		Criterion rest1 = Restrictions.eq("id", Id);
 		
-		Usuario encontrado = (Usuario) session.createCriteria(Usuario.class).add(rest1).uniqueResult();
+		return (Usuario) session.createCriteria(Usuario.class).add(rest1).uniqueResult();
 		
-		return encontrado;
+	}
+
+	@Override
+	public Asiento getAsiento(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		Criterion rest1 = Restrictions.eq("id", id);
+		
+		return (Asiento) session.createCriteria(Asiento.class).add(rest1).uniqueResult();
+
 	}
 	
 	
