@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.exceptions.EmailEnUsoException;
-import ar.edu.unlam.tallerweb1.exceptions.PasswordLenghtException;
-import ar.edu.unlam.tallerweb1.exceptions.PasswordsDiferentesException;
 
 @Service("servicioLogin")
 @Transactional
@@ -24,23 +22,16 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	}
 
 	@Override
-	public void registrarUsuario(String email, String password, String passwordRe, String nombre) {
+	public void registrarUsuario(String email, String password, String nombre) {
 
 		if(!validarEmail(email))
 			throw new EmailEnUsoException();
-		
-		if(!validarPass(password,passwordRe))
-			throw new PasswordsDiferentesException();
-		
-		if(!validarPassLenght(password))
-			throw new PasswordLenghtException();
-		
+			
 		Usuario nuevo = new Usuario();
 		nuevo.setEmail(email);
 		nuevo.setNombre(nombre);
 		nuevo.setPassword(password);
 		
-			
 		repositorioUsuario.guardar(nuevo);
 		
 	}
@@ -48,19 +39,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Override
 	public Boolean validarEmail(String email) {
 		return repositorioUsuario.validarEmail(email);
-	}
-
-	@Override
-	public Boolean validarPassLenght(String password) {
-		return password.length()>12;	
-	}
-
-	@Override
-	public Boolean validarPass(String password,String passwordRe) {
-		if(password.equals(passwordRe))
-			return true;
-		
-		return false;
 	}
 
 	@Override

@@ -19,4 +19,6 @@ public interface RepositorioEntrada {
 	Integer getCantidadAsientosVacios(Long funcion);
 
 	Usuario getUsuario(Long Id);
+	
+	Asiento getAsiento(Long id);
 }

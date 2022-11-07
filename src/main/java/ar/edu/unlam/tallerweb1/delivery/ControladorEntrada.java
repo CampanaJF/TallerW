@@ -49,13 +49,8 @@ public class ControladorEntrada {
 	/*TO DO 
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - try catch para casos donde no hay funciones (mejorar)
-	 *      - Que no se pueda comprar mas entradas de las disponibles para esa funcion
 	 *      - Arreglar la forma de validar al usuario
 	 *      
-	 *      - Implementar la seleccion de asientos, probar con solo una funcion para el dia de hoy ,
-	 *       probar con solo un asiento disponible, con multiples , con ninguno o todos
-	 *       
-	 *      -Obtener los asientos de una funcion para mostrarlos en el form
 	 *      
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
@@ -72,7 +67,7 @@ public class ControladorEntrada {
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
-		model.put("cines", cines);
+		model.put("cines", this.servicioCine.getCines(peliculaId));
 		model.put("pelicula",cines.get(0).getPelicula());
 		
 		model.addAttribute("datosCine", new DatosCine());
@@ -83,7 +78,6 @@ public class ControladorEntrada {
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
 	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos,
 									   	   HttpServletRequest request,final RedirectAttributes redirectAttributes) {
-		
 			
 		try {
 			obtenerFuncionesPor(datos);
@@ -108,10 +102,9 @@ public class ControladorEntrada {
 		
 		ModelMap model = new ModelMap();
 		
-		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()) );
-		
+		model.put("usuario", obtenerUsuarioLogueado(request));
+		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()));
 		model.put("asientos", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
-			
 		model.addAttribute("datosEntrada", datosEntrada);
 		
 		return new ModelAndView("entrada-asientos",model);
@@ -126,10 +119,6 @@ public class ControladorEntrada {
 		if(usuarioLogueado!=null) 
 			return usuarioLogueado;
 		
-		List<Asiento> asientos = new ArrayList<>();
-		asientos.add(datosEntrada.getAsiento());
-		datosEntrada.setAsientos(asientos);
-		
 		try {
 			comprarEntrada(datosEntrada); 
 		}catch(DatosEntradaInvalidaException q) {
@@ -140,12 +129,14 @@ public class ControladorEntrada {
 		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
 																  							datosEntrada.getFuncion().getId());
 		ModelMap model = new ModelMap();
-		model.put("usuario", usuarioLogueado);
+		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("entradas", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
 	}
+	
+	
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
 	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request,
@@ -155,14 +146,13 @@ public class ControladorEntrada {
 		
 		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
 		
-		if(null==usuarioLogueado) { // tambien se podria hacer un try catch en el call al servicio usuario
+		if(null==usuarioLogueado) { 
 			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
 			return new ModelAndView("redirect:/registrarme");
 		}
 		
 		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
 
-	
 		model.put("usuario", usuarioLogueado);
 		model.put("entrada", entradaEncontrada);
 
@@ -200,6 +190,7 @@ public class ControladorEntrada {
 	private void comprarEntrada(DatosEntrada datosEntrada) {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
+	
 	
 
 }

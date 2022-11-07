@@ -9,9 +9,9 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 public class DatosEntrada {
 	private Funcion funcion;
     private Usuario usuario;
-    private List<Asiento> asientos;
+    private List<Long> asientos;
     private Asiento asiento;
-
+    private List<Integer> numeros;
     
 	public Funcion getFuncion() {
 		return funcion;
@@ -25,10 +25,10 @@ public class DatosEntrada {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public List<Asiento> getAsientos() {
+	public List<Long> getAsientos() {
 		return asientos;
 	}
-	public void setAsientos(List<Asiento> asientos) {
+	public void setAsientos(List<Long> asientos) {
 		this.asientos = asientos;
 	}
 	public Asiento getAsiento() {
@@ -36,6 +36,12 @@ public class DatosEntrada {
 	}
 	public void setAsiento(Asiento asiento) {
 		this.asiento = asiento;
+	}
+	public List<Integer> getNumeros() {
+		return numeros;
+	}
+	public void setNumeros(List<Integer> numeros) {
+		this.numeros = numeros;
 	}
 
     

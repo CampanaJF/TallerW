@@ -28,12 +28,13 @@
   padding: 5px 15px 5px 15px;
   -moz-appearance: none;
   -webkit-appearance: none;
-  appearance: none;
+  appearance: none; 
 }
 
 .containerCustom {
   perspective: 1000px;
   margin-bottom: 30px;
+  width: 50em;
 }
 
 .seat {
@@ -47,7 +48,7 @@
 }
 
 .seat.selected {
-  background-color: #b41717;
+  background-color:#007aff;
 }
 
 .seat.sold {

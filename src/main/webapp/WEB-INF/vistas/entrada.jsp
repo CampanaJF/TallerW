@@ -24,7 +24,7 @@
 
 <c:if test="${not empty entrada}">				  
 <div class="container">
-  <h1 class="upcomming">Entrada/s</h1>
+  <h1 class="upcomming">Entrada/s para ${entrada.funcion.pelicula.titulo}-${entrada.funcion.horario}</h1>
   
   	<div class="item">
   
