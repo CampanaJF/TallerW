@@ -67,7 +67,7 @@ public class ControladorEntrada {
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
-		model.put("cines", cines);
+		model.put("cines", this.servicioCine.getCines(peliculaId));
 		model.put("pelicula",cines.get(0).getPelicula());
 		
 		model.addAttribute("datosCine", new DatosCine());
@@ -78,7 +78,6 @@ public class ControladorEntrada {
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
 	public ModelAndView entradaPreparacion(@ModelAttribute("datosCine") DatosCine datos,
 									   	   HttpServletRequest request,final RedirectAttributes redirectAttributes) {
-		
 			
 		try {
 			obtenerFuncionesPor(datos);
@@ -103,10 +102,9 @@ public class ControladorEntrada {
 		
 		ModelMap model = new ModelMap();
 		
+		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()));
-		
 		model.put("asientos", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
-			
 		model.addAttribute("datosEntrada", datosEntrada);
 		
 		return new ModelAndView("entrada-asientos",model);
@@ -121,10 +119,6 @@ public class ControladorEntrada {
 		if(usuarioLogueado!=null) 
 			return usuarioLogueado;
 		
-//		List<Asiento> asientos = new ArrayList<>();  // Fix temporal para asientos
-//		asientos.add(datosEntrada.getAsiento());
-//		datosEntrada.setAsientos(asientos);
-		
 		try {
 			comprarEntrada(datosEntrada); 
 		}catch(DatosEntradaInvalidaException q) {
@@ -135,12 +129,14 @@ public class ControladorEntrada {
 		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
 																  							datosEntrada.getFuncion().getId());
 		ModelMap model = new ModelMap();
-		model.put("usuario", usuarioLogueado);
+		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("entradas", entradaComprada);
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
 	}
+	
+	
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
 	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request,
@@ -157,7 +153,6 @@ public class ControladorEntrada {
 		
 		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
 
-	
 		model.put("usuario", usuarioLogueado);
 		model.put("entrada", entradaEncontrada);
 
@@ -196,9 +191,6 @@ public class ControladorEntrada {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
 	
-//	private void comprarEntrada(DatosEntrada datosEntrada) {
-//		this.servicioEntrada.validarNumeros(datosEntrada.getNumeros());
-//	}
 	
 
 }
