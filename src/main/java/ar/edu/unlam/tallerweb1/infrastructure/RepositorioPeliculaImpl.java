@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import static org.hibernate.criterion.Order.asc;
 import static org.hibernate.criterion.Order.desc;
 import static org.hibernate.criterion.Restrictions.eq;
+import static org.hibernate.criterion.Restrictions.in;
 import static org.hibernate.criterion.Restrictions.ne;
 import static org.hibernate.criterion.Restrictions.sqlRestriction;
 
@@ -193,7 +194,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 			criteria.createAlias("etiqueta", "e",JoinType.INNER_JOIN);
 			criteria.createAlias("pelicula", "p",JoinType.INNER_JOIN);
 			
-			criteria.add(Restrictions.in("e.descripcion",historialDeEtiquetas));
+			criteria.add(in("e.descripcion",historialDeEtiquetas));
 			
 					
 		return criteria.list();
