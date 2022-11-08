@@ -117,7 +117,7 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
 		List<PeliculaConEtiquetaDTO>auxiliar=new ArrayList<>();	
 		for(int i=0;i<resultado.size();i++) {
-				if(i<=4) {
+				if(i<4) {
 					auxiliar.add(resultado.get(i));
 				}
 			}
@@ -171,7 +171,7 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
 		List<PeliculaConEtiquetaDTO>auxiliar=new ArrayList<>();	
 		for(int i=0;i<resultado.size();i++) {
-				if(i<=4) {
+				if(i<4) {
 					auxiliar.add(resultado.get(i));
 				}
 			}

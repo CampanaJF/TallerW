@@ -193,7 +193,8 @@ public class ControladorEntrada {
 	}
 	
 	private void comprarEntrada(DatosEntrada datosEntrada) {
-		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
+		//this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
+		this.servicioEntrada.comprar(null,null,null);
 	}
 	
 	
