@@ -12,7 +12,9 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface ServicioPelicula {
     List<Pelicula> getPeliculas();
+    
 	public List<Pelicula> obtenerPeliculas(Filtro filtro);
+	
 	List<Pelicula> buscarPeliculas(String titulo);
 
 	List<Pelicula> obtenerPeliculaEstrenos();
@@ -24,7 +26,6 @@ public interface ServicioPelicula {
     void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario);
 
     Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
-
 
 	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 

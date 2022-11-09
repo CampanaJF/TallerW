@@ -50,7 +50,7 @@ public class ControladorEntrada {
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - try catch para casos donde no hay funciones (mejorar)
 	 *      - Arreglar la forma de validar al usuario
-	 *      
+	 *      - Manejar las etiquetas a almacenar desde la compra de la entrada.
 	 *      
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
