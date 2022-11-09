@@ -44,18 +44,19 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 				formatFechaFuncion(funcion);
 				siguientesFunciones.add(funcion);
 			}
-			
 		}
 		
-		if(siguientesFunciones.isEmpty())
-			throw new NoSeEncontraronFuncionesException();
+		validarFuncionesEncontradas(siguientesFunciones);
 		
 		return siguientesFunciones;
 	}
+
+	@Override
+	public void validarFuncionesEncontradas(List<Funcion> siguientesFunciones) {
+		if(siguientesFunciones.isEmpty())
+			throw new NoSeEncontraronFuncionesException();
+	}
 	
-	// El numero de asientos por fila (10) no debe estar hardcoded, se puede agregar a sala y obtenerlo de ahi
-	// Aun asi la view quiza no responda bien a ciertos tamaños de sala
-	// Test esto
 	@Override
 	public List<Asiento> obtenerAsientosDeLaFuncion(Long funcion) {
 		
@@ -64,16 +65,17 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	}
 
 	@Override
-	public void formatFechaFuncion(Funcion funcion) {
+	public void formatFechaFuncion(Funcion funcion) {	
 		
-		if(funcion.getFechaStr()==null) {
+		if(validarFormatoExistente(funcion)) {
+			
 		SimpleDateFormat formato = new SimpleDateFormat ("dd-MM-yyyy");
 		
 		funcion.setFechaStr(formato.format(funcion.getFecha()));
 		
 		this.repositorioFuncion.update(funcion);
 		
-		}
+		}	
 		
 	}
 
@@ -93,14 +95,14 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	@Override
 	public Boolean validarFechaFuncion(Funcion funcion) {
 		
-		Date hoy = new Date();
-		
+		return fechaDentroDeLosProximosTresDias(funcion);
+
+	}
+
+	private boolean fechaDentroDeLosProximosTresDias(Funcion funcion) {
 		Date cuatroDiasDespues = getFechaLimiteDeFunciones();
-	
-		if(funcion.getFecha().after(hoy)&&funcion.getFecha().before(cuatroDiasDespues)) 
-			return true;
-		
-		return false;
+		Date hoy = new Date();
+		return funcion.getFecha().after(hoy)&&funcion.getFecha().before(cuatroDiasDespues);
 	}
 
 	@Override
@@ -108,6 +110,15 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		
 		Integer asientosOcupados = this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
 		if(funcion.getSala().getAsientosTotales()-asientosOcupados>0)
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public Boolean validarFormatoExistente(Funcion funcion) {
+		
+		if(funcion.getFechaStr()==null) 
 			return true;
 		
 		return false;

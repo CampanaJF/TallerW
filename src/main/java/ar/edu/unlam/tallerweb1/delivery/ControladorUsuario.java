@@ -81,18 +81,19 @@ public class ControladorUsuario {
 			@ModelAttribute("datosUsuario") DatosUsuario datosUsuario, final RedirectAttributes redirectAttributes) {
 		
 		String mensaje="Se Registro Exitosamente!";
-			
+		
 		try {
-            servicioUsuario.registrarUsuario(datosUsuario.getEmail(),datosUsuario.getPassword(),
-            								 datosUsuario.getPasswordRe(),datosUsuario.getNombre());
-        } catch (EmailEnUsoException eeue) {
+			validarPassword(datosUsuario.getPassword(),datosUsuario.getPasswordRe());
+		} catch (PasswordLenghtException e) {
+			mensaje="La contraseña debe tener por lo menos 12 caracteres!";
+		} catch (PasswordsDiferentesException e) {
+			mensaje="La contraseñas deben ser iguales!";
+		}
+		
+		try {
+            servicioUsuario.registrarUsuario(datosUsuario.getEmail(),datosUsuario.getPassword(),datosUsuario.getNombre());
+        } catch (EmailEnUsoException e) {
         	mensaje="El Email ya esta en uso!";
-        	
-        } catch (PasswordsDiferentesException pde) {
-        	mensaje="Las contraseÃ±as son diferentes!";
-        	
-        } catch (PasswordLenghtException ple) {
-        	mensaje="La contraseÃ±a debe tener almenos 12 caracteres!";
         }
 		
 		if(mensaje!="Se Registro Exitosamente!") {
@@ -136,6 +137,21 @@ public class ControladorUsuario {
 	
 	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
 		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	}
+	
+	public void validarPassword(String password, String passwordRe) {
+		validarPasswordLenght(password);
+		validarPasswordSimilitud(password,passwordRe);
+	}
+		
+	public void validarPasswordLenght(String password) throws PasswordLenghtException {
+		if(password.length()<12)
+			throw new PasswordLenghtException();
+	}
+
+	public void validarPasswordSimilitud(String password,String passwordRe) throws PasswordsDiferentesException{	
+		if(!(password.equals(passwordRe)))
+			throw new PasswordsDiferentesException();	
 	}
 
 
