@@ -22,6 +22,8 @@ import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
@@ -35,15 +37,17 @@ public class ControladorEntrada {
 	private final ServicioUsuario servicioUsuario;
 	private final ServicioFuncion servicioFuncion;
 	private final ServicioCine servicioCine;
+	private final ServicioPelicula servicioPelicula;
 	
 	@Autowired
 	public ControladorEntrada(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario,
-							  ServicioFuncion servicioFuncion,ServicioCine servicioCine) {
+							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioPelicula servicioPelicula) {
 		
 		this.servicioEntrada = servicioEntrada;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
+		this.servicioPelicula=servicioPelicula;
 	}
 	
 	/*TO DO 
@@ -63,13 +67,14 @@ public class ControladorEntrada {
 		
 				
 		List<CinePelicula> cines = this.servicioCine.getCines(peliculaId);
-		
+		//Se utilizo este servicio para no depender de la lista de cines
+		// que puede venir null y genera excepcion
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("cines", this.servicioCine.getCines(peliculaId));
 		model.put("pelicula",cines.get(0).getPelicula());
-		
+
 		model.addAttribute("datosCine", new DatosCine());
 		
 		return new ModelAndView ("entrada-pelicula",model);
@@ -188,7 +193,8 @@ public class ControladorEntrada {
 	}
 	
 	private void comprarEntrada(DatosEntrada datosEntrada) {
-		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
+		//this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
+		this.servicioEntrada.comprar(null,null,null);
 	}
 	
 	

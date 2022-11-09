@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
@@ -39,8 +40,8 @@ public class ControladorHome {
 		//model.put("error", mensaje);
 		model.put("usuario", userId);
 	
-		List<Pelicula>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
-		List<Pelicula>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
+		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
+		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		
 		model.put("peliculasEstrenos", peliculasEstrenos);
 		model.put("proximosEstrenos", proximosEstrenos);

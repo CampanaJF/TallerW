@@ -22,6 +22,7 @@ import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ServicioClasificacio
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 public class ControladorHomeTest {
@@ -43,7 +44,7 @@ public class ControladorHomeTest {
 	
 	@Test
 	public void cuandoCargueElHomeQueSeCarguePeliculasEstrenos() {
-		List<Pelicula>peliculasEstrenos=givenCargarHome();
+		List<PeliculaConEtiquetaDTO>peliculasEstrenos=givenCargarHome();
 		ModelAndView mav=whenConsultaPeliculasEstrenos(peliculasEstrenos);
 		thenDevuelvePeliculasEstrenos(mav);
 	}
@@ -54,17 +55,17 @@ public class ControladorHomeTest {
 		
 	}
 
-	private ModelAndView whenConsultaPeliculasEstrenos(List<Pelicula>peliculasEstrenos) {
+	private ModelAndView whenConsultaPeliculasEstrenos(List<PeliculaConEtiquetaDTO>peliculasEstrenos) {
 		
 		ModelAndView mav=controlador.irAHome(mockRequest,"");
 		return mav;
 	}
 
-	private List<Pelicula> givenCargarHome() {
+	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
 		controlador=new ControladorHome(servicioSession,servicioPelicula);
-		Pelicula pelicula=new Pelicula();
-		Pelicula pelicula2=new Pelicula();
-		List<Pelicula> peliculasEstrenos=new ArrayList<>();
+		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
+		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();
+		List<PeliculaConEtiquetaDTO> peliculasEstrenos=new ArrayList<>();
 		peliculasEstrenos.add(pelicula);
 		peliculasEstrenos.add(pelicula2);
 		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);

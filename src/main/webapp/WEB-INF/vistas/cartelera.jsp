@@ -189,45 +189,51 @@
 			</c:forEach>
 		</section>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
-			<c:forEach var="pelicula" items="${peliculas}">
+			<c:forEach var="peliculaDTO" items="${peliculasDTO}">
 				<article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
 					<div class="fila">
 						<div class="tile">
-							<img class="pelicula" src="${pelicula.getPoster()}" alt="">
+							<img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}" alt="">
 							<div class="overlay ">
-								<img class="pelicula" src="${pelicula.getPoster()}">
+								<img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}">
 								<div class="container informacionPeli d-flex flex-column">
 									<div class="row">
 										<div class="col-lg-4 mt-2">
-											<p class="text-light clasificacion">${pelicula.getClasificacionPelicula().getDescripcion() }</p>
+											<p class="text-light clasificacion">${peliculaDTO.getPelicula().getClasificacionPelicula().getDescripcion() }</p>
 										</div>
 										<div class="col-lg-4 mt-2">
-											<p class="text-light duracion">${pelicula.getDuracionEnHoras()}</p>
+											<p class="text-light duracion">${peliculaDTO.getPelicula().getDuracionEnHoras()}</p>
 										</div>
 										<div class="col-lg-4  fechaEstreno mt-2">
-											<p class="text-light">${pelicula.getFechaEstreno().getYear()+1900}</p>
+											<p class="text-light">${peliculaDTO.getPelicula().getFechaEstreno().getYear()+1900}</p>
 										</div>
 
 									</div>
 									<div class="d-flex justify-content-around">
 
-										<p class="text-light genero mt-1">${pelicula.getGenero().getDescripcion() }</p>
+										<p class="text-light genero mt-1">${peliculaDTO.getPelicula().getGenero().getDescripcion() }</p>
 
 										<div class="rating-container">
 											<div class="cover"></div>
 											<jsuites-rating class="estrellas"
-												value="${pelicula.getCalificacion()}
+												value="${peliculaDTO.getPelicula().getCalificacion()}
                          "
 												tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
 										</div>
 
 
 									</div>
+									<div class="d-flex justify-content-around">
+									
+										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
+										<span class="text-light  etiquetaDescripcion">${etiqueta.getDescripcion()}</span>
+										</c:forEach>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<a href="ver-pelicula?pelicula=${pelicula.id}"
+					<a href="ver-pelicula?pelicula=${peliculaDTO.getPelicula().id}"
 						class="btn btn-lg text-light" id="comprarEntradas">Comprar
 						Entradas</a>
 				</article>
