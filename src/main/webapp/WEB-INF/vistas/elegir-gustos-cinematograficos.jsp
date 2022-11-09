@@ -28,17 +28,21 @@
 </c:if>
 <h1 class="text-center text-white mt-3 mb-2"> Elige alguno de estos generos para una mejor experiencia</h1>
 <section class="d-flex  flex-row flex-wrap text-center justify-content-center align-items-center">
-<form:form action="procesar-elegir-gustos" method="post" modelAttribute="datosGenero">
+ <form:form action="procesar-elegir-gustos" method="post" modelAttribute="datosGenero">
         <article class="col-4 p-5 m-5">
           <c:forEach items="${generos}" var="genero">
-              <form:checkbox path="id" value="${genero.id}" id="${genero.id}"/>
-              <form:label for="${genero.id}" path="id" class="text-white"> ${genero.descripcion} </form:label>
+
+              <form:checkbox path="generos" value="${genero.id}" id="${genero.id}"/>
+              <form:label for="${genero.id}" path="generos" class="text-white"> ${genero.descripcion} </form:label>
           </c:forEach>
+           <form:hidden path="usuario.id" value="${usuario.id}"></form:hidden>
            <div>
                <form:button class="buttonA mt-3">Continuar</form:button>
            </div>
         </article>
 </form:form>
+
+
 </section>
 </body>
 </html>

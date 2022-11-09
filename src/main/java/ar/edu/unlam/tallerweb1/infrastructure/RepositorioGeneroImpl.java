@@ -1,11 +1,14 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -49,19 +52,23 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
     }
 
     @Override
-    public void guardarGeneroElegidoPorUsuario(Genero genero) {
-        sessionFactory.getCurrentSession().save(genero);
+    public void guardarGeneroElegidoPorUsuario(GeneroUsuario generoUsuario) {
+        sessionFactory.getCurrentSession().save(generoUsuario);
     }
 
     @Override
-    public void obtenerGenerosElegidosPorUsuario() {
-
-    }
-   /* private List<Pelicula> peliculasPorGeneroElegido(Usuario usuario){
+    public List<Genero> obtenerGenerosElegidosPorUsuario(Usuario generoUsuario) {
         Session session = sessionFactory.getCurrentSession();
-               return session.createCriteria(Genero.class)
-                       .add(Restrictions.eq("usuario",usuario))
-                       .setMaxResults(3)
-                       .list() ;
-    }*/
+        return  session.createCriteria(GeneroUsuario.class)
+                .add(Restrictions.eq("usuario", generoUsuario))
+                .list();
+    }
+
+    @Override
+    public Genero getGenero(Long id) {
+        final Session session = sessionFactory.getCurrentSession();
+        Criterion rest1 = Restrictions.eq("id", id);
+        return (Genero) session.createCriteria(Genero.class).add(rest1).uniqueResult();
+    }
+
 }

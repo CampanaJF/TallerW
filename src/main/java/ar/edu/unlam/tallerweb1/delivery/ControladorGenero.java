@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.ManyToOne;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -32,19 +33,20 @@ public class ControladorGenero {
     }
 
     @RequestMapping(path = "/elegir-gustos", method = RequestMethod.GET)
-    public ModelAndView elegirGustos(){
+    public ModelAndView elegirGustos(HttpServletRequest request){
         ModelMap model = new ModelMap();
+        model.put("usuario",obtenerUsuarioLogueado(request));
         model.put("datosGenero", new DatosGenero());
         model.put("generos", this.servicioGenero.listarGeneros());
         return new ModelAndView("elegir-gustos-cinematograficos",model);
     }
 
     @RequestMapping(path = "/procesar-elegir-gustos", method = RequestMethod.POST)
-    public ModelAndView procesarElegirGustos(@ModelAttribute("datosGenero") DatosGenero datosGenero,HttpServletRequest request){
-        this.servicioGenero.guardarGeneroElegidoPorUsuario(datosGenero.getId(),obtenerUsuarioLogueado(request));
+    public ModelAndView procesarElegirGustos(@ModelAttribute(value = "datosGenero")DatosGenero  datosGenero, HttpServletRequest request){
+        this.servicioGenero.guardarGeneroElegidoPorUsuario(datosGenero.getGeneros(),obtenerUsuarioLogueado(request));
         ModelMap model = new ModelMap();
         model.put("usuario",obtenerUsuarioLogueado(request));
-        model.put("datosGenero",datosGenero);
-      return new ModelAndView("elegir-gustos-ok",model);
+      //  model.put("generosElegidos", this.servicioGenero.obtenerGenerosElegidosPorUsuario(obtenerUsuarioLogueado(request)));
+      return new ModelAndView("redirect:/home");
     }
 }

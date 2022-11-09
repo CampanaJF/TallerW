@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.genero;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +13,9 @@ public interface RepositorioGenero {
 
     List<Genero> obtenerDescrpcionesGeneroPorId(Long idGenero);
 
-    void guardarGeneroElegidoPorUsuario(Genero genero);
+    void guardarGeneroElegidoPorUsuario(GeneroUsuario genero);
 
-    void obtenerGenerosElegidosPorUsuario();
+    List<Genero> obtenerGenerosElegidosPorUsuario(Usuario generoUsuario);
+
+    Genero getGenero(Long asiento);
 }

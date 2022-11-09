@@ -1,10 +1,14 @@
 package ar.edu.unlam.tallerweb1.domain.genero;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosGenero;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -39,12 +43,36 @@ public class ServicioGeneroImpl implements ServicioGenero{
     }
 
     @Override
-    public void guardarGeneroElegidoPorUsuario(Long id, Usuario usuario) {
-        Genero genero = new Genero();
-        genero.setId(id);
-        genero.setUsuario(usuario);
-        repositorioGenero.guardarGeneroElegidoPorUsuario(genero);
+    public void guardarGeneroElegidoPorUsuario(List<Long> genero, Usuario usuario) {
+
+        List<Genero> generos = getGeneros(genero);
+
+       for (Genero genero1: generos ) {
+             GeneroUsuario generoUsuario1 = new GeneroUsuario();
+             generoUsuario1.setUsuario(usuario);
+             generoUsuario1.setGenero(genero1);
+           repositorioGenero.guardarGeneroElegidoPorUsuario(generoUsuario1);
+        }
     }
+
+    @Override
+    public List<Genero> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
+        return repositorioGenero.obtenerGenerosElegidosPorUsuario(usuario);
+    }
+
+    private List<Genero> getGeneros(List<Long>generos){
+        List<Genero> generosElegidos = new ArrayList<>();
+
+        if(generos.get(0) == null){
+            throw  new AsientoSinIdException();
+        }
+
+        for (Long genero : generos) {
+            generosElegidos.add(this.repositorioGenero.getGenero(genero));
+        }
+        return generosElegidos;
+    }
+
 
 
 }

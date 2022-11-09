@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,24 +52,44 @@ public class RepositorioGeneroTest extends SpringTest {
     @Transactional
     @Rollback
     public void queVerifiqueQueUnUsuarioEligioVariosGeneros(){
-        Usuario usuario = dadoQueExisteUnUsuario();
-        dadoQueExistenGenerosQueEligioUnUsuario(1L,"Anime",usuario);
-        dadoQueExistenGenerosQueEligioUnUsuario(3L,"Suspenso",usuario);
-        dadoQueExistenGenerosQueEligioUnUsuario(4L,"Comedia",usuario);
-         //cuando consulto por generos que eligio un usuario
 
-        //entonces obtengo cantidad de generos por usuario
+           Usuario usuario = dadoQueExisteUnUsuario();
+           Genero genero = dadoQueExisteUnGenero("Accion");
+           Genero genero2 = dadoQueExisteUnGenero("Suspenso");
+            dadoQueExistenGenerosDeUnUsuario(usuario,genero);
+            dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
+            dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
+
+           List<Genero> generosPorUsuario = cuandoConsultoPorLosGenerosDeUnUsuario(usuario);
+
+           entoncesObtengoGenerosElegidosPorElUsuario(generosPorUsuario,3);
     }
+
+    private void entoncesObtengoGenerosElegidosPorElUsuario(List<Genero> generosPorUsuario, int cantidadEsperada ) {
+        assertThat(generosPorUsuario).isNotNull();
+        assertThat(generosPorUsuario).hasSize(cantidadEsperada);
+    }
+
+    private List<Genero> cuandoConsultoPorLosGenerosDeUnUsuario(Usuario generoUsuario) {
+        return repositorioGenero.obtenerGenerosElegidosPorUsuario(generoUsuario);
+    }
+
     private Usuario dadoQueExisteUnUsuario(){
         Usuario usuario = new Usuario();
         session().save(usuario);
         return usuario;
     }
-    private void dadoQueExistenGenerosQueEligioUnUsuario(Long generoId,String descripcion, Usuario usuario){
-        Genero genero1 = new Genero();
-        genero1.setId(generoId);
-        genero1.setDescripcion(descripcion);
-        genero1.setUsuario(usuario);
-        session().save(genero1);
+    private Genero dadoQueExisteUnGenero(String descripcion){
+        Genero genero = new Genero();
+        genero.setDescripcion(descripcion);
+        session().save(genero);
+        return  genero;
+    }
+    private GeneroUsuario dadoQueExistenGenerosDeUnUsuario(Usuario usuario, Genero genero){
+        GeneroUsuario generoUsuario = new GeneroUsuario();
+        generoUsuario.setUsuario(usuario);
+        generoUsuario.setGenero(genero);
+        session().save(generoUsuario);
+        return generoUsuario;
     }
 }
