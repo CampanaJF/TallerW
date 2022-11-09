@@ -23,7 +23,7 @@ public interface ServicioPelicula {
 
     void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario);
 
-    Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
+    double obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 
 
 	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);

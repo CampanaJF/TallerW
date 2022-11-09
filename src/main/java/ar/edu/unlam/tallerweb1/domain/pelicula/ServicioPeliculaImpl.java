@@ -68,9 +68,9 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		return this.repositorioPelicula.listarValoracionesPorPelicula(pelicula);
 	}
 	@Override
-	public Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada) {
+	public double obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada) {
 		Long suma=0L;
-		Long promedioValoracion=0L;
+		double promedioValoracion=0L;
 		List<Valoracion> valoraciones= obtenerCalificacionesDeUnaPelicula(peliculaBuscada);
 		int cantidadValoraciones = valoraciones.size();
 
@@ -78,7 +78,7 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 			for (Valoracion val:valoraciones) {
 				suma=suma+val.getPuntos();
 			}
-			promedioValoracion=suma/valoraciones.size();
+			promedioValoracion=(double)suma/valoraciones.size();
 		}
 
 		return promedioValoracion;

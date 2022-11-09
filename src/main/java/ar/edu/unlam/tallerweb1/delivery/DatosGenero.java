@@ -1,20 +1,12 @@
-package ar.edu.unlam.tallerweb1.domain.genero;
+package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
-import javax.persistence.*;
+public class DatosGenero {
 
-@Entity
-public class Genero {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String descripcion;
-
-    @ManyToOne
     private Usuario usuario;
 
     public Usuario getUsuario() {
@@ -31,13 +23,5 @@ public class Genero {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 }

@@ -8,4 +8,10 @@ public interface RepositorioGenero {
     List<Genero> getGeneros();
 
 	Genero getDescripcionById(Long id);
+
+    List<Genero> obtenerDescrpcionesGeneroPorId(Long idGenero);
+
+    void guardarGeneroElegidoPorUsuario(Genero genero);
+
+    void obtenerGenerosElegidosPorUsuario();
 }

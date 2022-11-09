@@ -101,7 +101,7 @@ public class ControladorUsuario {
 		}
 
 		redirectAttributes.addFlashAttribute("mensaje",mensaje);
-		return new ModelAndView("redirect:/home");
+		return new ModelAndView("redirect:/elegir-gustos");
 			
 	}
 	
