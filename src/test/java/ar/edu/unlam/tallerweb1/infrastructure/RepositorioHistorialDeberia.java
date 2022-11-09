@@ -11,6 +11,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.domain.historial.Historial;
 import ar.edu.unlam.tallerweb1.domain.historial.RepositorioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
@@ -24,6 +25,7 @@ public class RepositorioHistorialDeberia extends SpringTest{
 	// Controlar la cantidad de etiquetas maxima que puede tener un usuario almacenadas
 	// recomendacion de peliculas basado en lo que se vio en el pasado (usar etiquetas)
 	// se debe establecer cuando el cliente compra entradas
+	// Buscar que no haya etiquetas repetidas antes de agregarlas (principalmente en servicio pero necesita repo para eso)
 	
 	@Test
 	@Transactional
@@ -39,6 +41,39 @@ public class RepositorioHistorialDeberia extends SpringTest{
 		
 	}
 	
+	@Test
+	@Transactional
+	@Rollback
+	public void actualizarElHistorialDelUsuarioConLasEtiquetasMasRecientes() {
+		
+		Usuario usuario = givenUsuario();
+		
+		List <Etiqueta> etiquetasPrevias = givenEtiquetas(6);
+		
+		List <Etiqueta> nuevasEtiquetas = givenEtiquetas(3);
+		
+		givenHistorialPreExistente(usuario,etiquetasPrevias);
+		
+		whenSeActualizaElHistorial(usuario,nuevasEtiquetas);
+		
+		thenSeActualizoElHistorial(usuario);
+		
+	}
+	
+	private void thenSeActualizoElHistorial(Usuario usuario) {
+		assertThat(repositorioHistorial.obtenerHistorial(usuario).get(0).getId()).isEqualTo(7);
+		
+	}
+
+	private void whenSeActualizaElHistorial(Usuario usuario, List<Etiqueta> nuevasEtiquetas) {
+		repositorioHistorial.actualizarHistorial(usuario,nuevasEtiquetas);
+	}
+
+	private void givenHistorialPreExistente(Usuario usuario, List<Etiqueta> etiquetasPrevias) {
+		repositorioHistorial.agregarAlHistorial(usuario,etiquetasPrevias);
+		
+	}
+
 	private void thenSeAgregoAlHistorial(Usuario usuario) {
 		assertThat(repositorioHistorial.obtenerHistorial(usuario).size()).isEqualTo(3);
 		

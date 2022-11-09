@@ -16,7 +16,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 @SuppressWarnings({ "unchecked", "deprecation" })
-@Repository("repositorioEntrada")
+@Repository("repositorioHistorial")
 @Transactional
 public class RepositorioHistorialImpl implements RepositorioHistorial{
 	
@@ -50,6 +50,23 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 			session.save(historial);
 		}
 		
+	}
+
+	@Override
+	public void actualizarHistorial(Usuario usuario, List<Etiqueta> nuevasEtiquetas) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		List<Historial> historialDelUsuario = obtenerHistorial(usuario);
+		
+		for (int i = 0; i < nuevasEtiquetas.size(); i++) {
+			
+		historialDelUsuario.get(i).setEtiqueta(nuevasEtiquetas.get(i));
+		
+		session.update(historialDelUsuario.get(i));
+		
+		}
+				
 	}
 
 }

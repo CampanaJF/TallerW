@@ -11,4 +11,6 @@ public interface RepositorioHistorial {
 
 	void agregarAlHistorial(Usuario usuario, List<Etiqueta> etiquetasDeLaPelicula);
 
+	void actualizarHistorial(Usuario usuario, List<Etiqueta> nuevasEtiquetas);
+
 }
