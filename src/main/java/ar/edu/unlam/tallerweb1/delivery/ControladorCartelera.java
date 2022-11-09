@@ -19,8 +19,10 @@ import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ServicioClasificacio
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 @Controller
@@ -55,7 +57,7 @@ public class ControladorCartelera {
     Filtro filtro=new Filtro(genero,clasificacion,orden);
     List<Genero> listaGeneros = this.servicioGenero.listarGeneros();
     List<ClasificacionPelicula>listaClasificacion=this.servicioClasificacion.listarClasificacion();
-    List<Pelicula>peliculas=this.servicioPelicula.obtenerPeliculas(filtro);
+    List<PeliculaConEtiquetaDTO>peliculas=this.servicioPelicula.obtenerPeliculas(filtro);
     List<String>filtrosSeleccionados=new ArrayList<>();
     
     if(genero!=null) filtrosSeleccionados.add(this.servicioGenero.getDescripcionGeneroById(genero));
@@ -65,7 +67,7 @@ public class ControladorCartelera {
     model.put("usuario", userId);
     model.put("generos",listaGeneros);
     model.put("clasificaciones",listaClasificacion);
-    model.put("peliculas",peliculas);
+    model.put("peliculasDTO",peliculas);
     model.put("filtrosSeleccionados", filtrosSeleccionados);
 
     

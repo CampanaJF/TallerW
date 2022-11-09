@@ -36,6 +36,14 @@
 				
 				
 				<form:form class="mt-4" action="entrada-preparacion" modelAttribute="datosCine" method="POST">
+					<form:hidden path="pelicula" value="${pelicula.id}" />
+					
+					<c:if test="${empty cines}">
+					<p class="text-light">Esta pelicula no se encuentra disponible</p>
+					
+					</c:if>
+					
+					<c:if test="${not empty cines}">
 					
 				<form:select class="form-select" path="cine" >
 							  
@@ -46,13 +54,9 @@
 				 </c:forEach>
 				 
 				</form:select>
-				
-				
-				<form:hidden path="pelicula" value="${pelicula.id}" />
-				
-				
+					
 				<button type="submit" class=" mt-4 btn-lg btn buttonA">Comprar Entradas</button>
-				
+					</c:if>
 				</form:form> 
 				
 			</div>

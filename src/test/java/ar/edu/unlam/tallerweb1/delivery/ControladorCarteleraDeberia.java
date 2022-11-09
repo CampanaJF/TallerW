@@ -17,6 +17,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -77,7 +78,7 @@ public class ControladorCarteleraDeberia {
 	}
 
 	private void givenSeObtieneListaPeliculas(Filtro filtro) {
-		List<Pelicula> listaPelicula=new ArrayList<>();
+		List<PeliculaConEtiquetaDTO> listaPelicula=new ArrayList<>();
 		when(this.servicioPelicula.obtenerPeliculas(filtro)).thenReturn(listaPelicula);
 	}
 

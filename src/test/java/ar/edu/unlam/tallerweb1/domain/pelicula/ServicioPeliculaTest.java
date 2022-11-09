@@ -5,7 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
-
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioPeliculaImpl;
 
 
@@ -46,16 +46,21 @@ public class ServicioPeliculaTest {
     public void listarPeliculas(){
     	
     	//Preparacion
-    	Filtro filtro=new Filtro(1L,1L,"Genero");
+    	Filtro filtro=new Filtro(1L,1L,"Director");
     	RepositorioPelicula repoPelicula=mock(RepositorioPelicula.class);
-    	List<Pelicula>peliculas=new ArrayList<>();
+    	List<EtiquetaPelicula>peliculas=new ArrayList<>();
+    	EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+    	Etiqueta etiqueta=new Etiqueta();
     	Pelicula pelicula=new Pelicula();
-    	peliculas.add(pelicula);
+    	pelicula.setId(1L);
+    	etiquetaPelicula.setEtiqueta(etiqueta);
+    	etiquetaPelicula.setPelicula(pelicula);
+    	peliculas.add(etiquetaPelicula);
     	when(repoPelicula.getPeliculasFiltro(filtro)).thenReturn(peliculas);
     	servicioPelicula=new ServicioPeliculaImpl(repoPelicula);
     	
     	//Ejecucion
-    	List<Pelicula>listadoPeliculas=servicioPelicula.obtenerPeliculas(filtro);
+    	List<PeliculaConEtiquetaDTO>listadoPeliculas=servicioPelicula.obtenerPeliculas(filtro);
     	assertEquals(1, listadoPeliculas.size());
     	assertNotNull(listadoPeliculas);
     }
@@ -107,55 +112,70 @@ public class ServicioPeliculaTest {
     public void consultarQueDevuelvaLosEstrenosDelMes() {
     	
     	givenPeliculasEstrenosDelMes();
-    	List<Pelicula>peliculasEstrenos=whenConsultoEstrenoDelMes();
+    	List<PeliculaConEtiquetaDTO>peliculasEstrenos=whenConsultoEstrenoDelMes();
     	thenObtengoEstrenoDelMes(peliculasEstrenos);
     }
     
     @Test
     public void consultarLosProximosEstrenos(){
     	givenProximosEstrenos();
-    	List<Pelicula>proximosEstrenos=whenConsultoProximosEstrenos();
+    	List<PeliculaConEtiquetaDTO>proximosEstrenos=whenConsultoProximosEstrenos();
     	thenObtengoProximosEstrenos(proximosEstrenos);
     	
     }
-	private void thenObtengoProximosEstrenos(List<Pelicula> proximosEstrenos) {
+	private void thenObtengoProximosEstrenos(List<PeliculaConEtiquetaDTO> proximosEstrenos) {
 		assertEquals(2,proximosEstrenos.size());
 		
 	}
 
-	private List<Pelicula> whenConsultoProximosEstrenos() {
+	private List<PeliculaConEtiquetaDTO> whenConsultoProximosEstrenos() {
 		// TODO Auto-generated method stub
 		return servicioPelicula.obtenerProximosEstrenos();
 	}
 
-	private void thenObtengoEstrenoDelMes(List<Pelicula>peliculasEstrenos) {
+	private void thenObtengoEstrenoDelMes(List<PeliculaConEtiquetaDTO>peliculasEstrenos) {
 		assertEquals(2,peliculasEstrenos.size());
 		
 	}
 
-	private List<Pelicula> whenConsultoEstrenoDelMes() {
+	private List<PeliculaConEtiquetaDTO> whenConsultoEstrenoDelMes() {
 		return servicioPelicula.obtenerPeliculaEstrenos();
 		
 	}
 
 	private void givenPeliculasEstrenosDelMes() {
-		Pelicula pelicula=new Pelicula();
-		Pelicula pelicula2=new Pelicula();
-	
-		List<Pelicula>peliculasEstrenos=new ArrayList<>();
-		peliculasEstrenos.add(pelicula);
-		peliculasEstrenos.add(pelicula2);
+		List<EtiquetaPelicula> peliculasEstrenos = obtenerPeliculasEstrenos();
 		when(repositorioPelicula.getEstrenosDelMes()).thenReturn(peliculasEstrenos);
 		
 	}
+
+	private List<EtiquetaPelicula> obtenerPeliculasEstrenos() {
+		EtiquetaPelicula etiqueta1=new EtiquetaPelicula();
+		EtiquetaPelicula etiqueta2=new EtiquetaPelicula();
+		Etiqueta etiqueta=new Etiqueta();
+		
+		Pelicula pelicula =new Pelicula();
+		Pelicula pelicula2=new Pelicula();
+		pelicula.setId(1L);
+		pelicula2.setId(2L);
+		
+		etiqueta1.setEtiqueta(etiqueta);
+		etiqueta2.setEtiqueta(etiqueta);
+		
+		etiqueta1.setPelicula(pelicula);
+		etiqueta2.setPelicula(pelicula2);
+		
+		List<EtiquetaPelicula>peliculasEstrenos=new ArrayList<>();
+		peliculasEstrenos.add(etiqueta1);
+		peliculasEstrenos.add(etiqueta2);
+		return peliculasEstrenos;
+	}
 	
 	private void givenProximosEstrenos() {
-		Pelicula pelicula=new Pelicula();
-		Pelicula pelicula2=new Pelicula();
+		
 	
-		List<Pelicula>proximasEstrenos=new ArrayList<>();
-		proximasEstrenos.add(pelicula);
-		proximasEstrenos.add(pelicula2);
+		List<EtiquetaPelicula>proximasEstrenos=obtenerPeliculasEstrenos();
+		
 		when(repositorioPelicula.getProximosEstrenos()).thenReturn(proximasEstrenos);
 		
 	}
