@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -10,12 +11,16 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
+import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 
@@ -36,41 +41,56 @@ public class RepositorioPeliculaTest extends SpringTest {
 		Pelicula P3 = givenPelicula("Dragon ball super","2022/10/21");
 		Pelicula P4 = givenPelicula("El conjuro","2022/10/12");
 		Pelicula P5 = givenPelicula("Nop","2022/10/19");
-			
+		Etiqueta etiqueta=new Etiqueta();
+		EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula3=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula4=new EtiquetaPelicula();
+		
 		session().save(P1);
     	session().save(P2);
     	session().save(P3);
     	session().save(P4);
     	session().save(P5);
-		
+    	session().save(etiqueta);
     	
-    	List <Pelicula> peliculas = whenSeListanTodasLasPeliculas();
+    	etiquetaPelicula.setPelicula(P1);
+    	etiquetaPelicula.setEtiqueta(etiqueta);
+    	etiquetaPelicula1.setPelicula(P2);
+    	etiquetaPelicula1.setEtiqueta(etiqueta);
+    	etiquetaPelicula2.setPelicula(P3);
+    	etiquetaPelicula2.setEtiqueta(etiqueta);
+    	etiquetaPelicula3.setPelicula(P4);
+    	etiquetaPelicula3.setEtiqueta(etiqueta);
+    	etiquetaPelicula4.setPelicula(P5);
+    	etiquetaPelicula4.setEtiqueta(etiqueta);
+    	
+    	session().save(etiquetaPelicula);
+    	session().save(etiquetaPelicula1);
+    	session().save(etiquetaPelicula2);
+    	session().save(etiquetaPelicula3);
+    	session().save(etiquetaPelicula4);
+    	
+    	
+    	List <EtiquetaPelicula> peliculas = whenSeListanTodasLasPeliculas();
     	
     	thenSeObtienenTodasLasPeliculas(peliculas);
 		
 	}
 	
-	private void thenSeObtienenTodasLasPeliculas(List<Pelicula> peliculas) {
-		assertThat(peliculas.size()).isEqualTo(5);
-		assertThat(peliculas.get(2).getTitulo()).isEqualTo("Dragon ball super");
-		
+	@Test
+    @Transactional
+    @Rollback
+	public void devolverPeliculasConEtiquetas() {
+		givenPeliculasConEtiquetas();
+		List<EtiquetaPelicula>peliculas=whenConsultoPeliculasConEtiquetas();
+		thenSeObtienePeliculasConEtiquetas(peliculas);
 	}
-	
-	private List<Pelicula> whenSeListanTodasLasPeliculas() {
-		Filtro filtro=new Filtro(null,null,null);
-		return this.repositorioPelicula.getPeliculasFiltro(filtro);
-		
-	}
+
 	
 	
-	private Pelicula givenPelicula(String titulo,String fecha) {
-		Pelicula pelicula = new Pelicula();
-		//pelicula.setId(new Random().nextLong());
-		pelicula.setTitulo(titulo);
-		pelicula.setFechaEstreno(new Date(fecha));
-		return pelicula;
-	}
-	
+
 	@Test
 	@Transactional
 	@Rollback
@@ -161,7 +181,86 @@ public class RepositorioPeliculaTest extends SpringTest {
 		//obtengo calif de la pelicula
 		thenObtengoCalificaciones(calificaciones,3);
 	}
+    
 
+	
+	private void givenPeliculasConEtiquetas() {
+	Pelicula pelicula=givenPelicula("Dragon ball Super","2022/11/10");
+	Etiqueta susto=crearEtiqueta("Susto");
+	Etiqueta pelea=crearEtiqueta("Pelea");
+	session().save(pelicula);
+	EtiquetaPelicula etiquetaPelicula=crearEtiquetaPelicula(susto,pelicula);
+	EtiquetaPelicula etiquetaPelicula2=crearEtiquetaPelicula(pelea,pelicula);
+	
+		
+	}
+	
+	private void thenSeObtienePeliculasConEtiquetas(List<EtiquetaPelicula>peliculasConEtiquetas) {
+		// TODO Auto-generated method stub
+		assertEquals(2,peliculasConEtiquetas.size());
+		
+	}
+
+	private List<EtiquetaPelicula> whenConsultoPeliculasConEtiquetas() {
+		List<String>historialEtiquetas=new ArrayList<>();
+		historialEtiquetas.add("Susto");
+		historialEtiquetas.add("Pelea");
+		List<EtiquetaPelicula>peliculasConEtiquetas=this.repositorioPelicula.obtenerPeliculasConEtiquetas(historialEtiquetas);
+		
+		return peliculasConEtiquetas;
+	}
+	
+
+	private EtiquetaPelicula crearEtiquetaPelicula(Etiqueta susto, Pelicula pelicula) {
+	EtiquetaPelicula etiquetaPelicula=new EtiquetaPelicula();
+	etiquetaPelicula.setPelicula(pelicula);
+	etiquetaPelicula.setEtiqueta(susto);
+	session().save(etiquetaPelicula);
+	return etiquetaPelicula;
+	}
+
+	private Etiqueta crearEtiqueta(String descripcion) {
+		Etiqueta etiqueta=new Etiqueta();
+		etiqueta.setDescripcion(descripcion);
+		session().save(etiqueta);
+		return etiqueta;
+	}
+
+	private void thenSeObtienenTodasLasPeliculas(List<EtiquetaPelicula> peliculas) {
+		assertThat(peliculas.size()).isEqualTo(5);
+		assertThat(peliculas.get(2).getPelicula().getTitulo()).isEqualTo("Dragon ball super");
+		
+	}
+	
+	private List<EtiquetaPelicula> whenSeListanTodasLasPeliculas() {
+		Filtro filtro=new Filtro(null,null,null);
+		return this.repositorioPelicula.getPeliculasFiltro(filtro);
+		
+	}
+	
+	
+	private Pelicula givenPelicula(String titulo,String fecha) {
+		Pelicula pelicula = new Pelicula();
+		//pelicula.setId(new Random().nextLong());
+		pelicula.setTitulo(titulo);
+		pelicula.setFechaEstreno(new Date(fecha));
+		return pelicula;
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 	private void thenObtengoCalificaciones(List<Valoracion> calificaciones, int cantidadEsperada) {
@@ -246,20 +345,20 @@ public class RepositorioPeliculaTest extends SpringTest {
 	@Rollback
 	public void consultaQueDevuelveLosEstrenosDelMes() {
 		givenQueHayPeliculasEstrenosCargadas();
-		List<Pelicula> peliculas= whenConsultoPorLosEstrenos();
-		
+		List<EtiquetaPelicula> peliculas= whenConsultoPorLosEstrenos();
+	
 		thenObtengoEstrenos(peliculas,2);
 		
 		
 		
 	}
 
-	private void thenObtengoEstrenos(List<Pelicula> peliculas, int i) {
+	private void thenObtengoEstrenos(List<EtiquetaPelicula> peliculas, int i) {
 		assertEquals(i,peliculas.size());
 		
 	}
 
-	private List<Pelicula> whenConsultoPorLosEstrenos() {
+	private List<EtiquetaPelicula> whenConsultoPorLosEstrenos() {
 		
 		return repositorioPelicula.getEstrenosDelMes();
 	}
@@ -274,10 +373,28 @@ public class RepositorioPeliculaTest extends SpringTest {
 		peli2.setTitulo("El ladron de los siglos");
 		peli3.setFechaEstreno(new Date("2021/11/01") );
 		peli3.setTitulo("Can el volador");
+		Etiqueta etiqueta=new Etiqueta();
+		EtiquetaPelicula etiquetaPelicula1=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
+		EtiquetaPelicula etiquetaPelicula3=new EtiquetaPelicula();
+		
 		session().save(peli1);
 		session().save(peli2);
 		session().save(peli3);
+		session().save(etiqueta);
 		
+		etiquetaPelicula1.setEtiqueta(etiqueta);
+		etiquetaPelicula1.setPelicula(peli1);
+		etiquetaPelicula2.setEtiqueta(etiqueta);
+		etiquetaPelicula2.setPelicula(peli2);
+		etiquetaPelicula3.setEtiqueta(etiqueta);
+		etiquetaPelicula3.setPelicula(peli3);
+		
+		session().save(etiquetaPelicula1);
+		session().save(etiquetaPelicula2);
+		session().save(etiquetaPelicula3);
+		
+	
 	}
 	
 	

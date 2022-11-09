@@ -22,6 +22,10 @@ public interface ServicioFuncion {
 	
 	Boolean validarAsientosDisponibles(Funcion funcion);
 	
+	Boolean validarFormatoExistente(Funcion funcion);
+	
+	void validarFuncionesEncontradas(List<Funcion> siguientesFunciones);
+	
 	
 
 }

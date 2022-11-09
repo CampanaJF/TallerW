@@ -8,16 +8,16 @@ import java.util.List;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface ServicioPelicula {
     List<Pelicula> getPeliculas();
-    
-	public List<Pelicula> obtenerPeliculas(Filtro filtro);
+	public List<PeliculaConEtiquetaDTO> obtenerPeliculas(Filtro filtro);
 	
 	List<Pelicula> buscarPeliculas(String titulo);
 
-	List<Pelicula> obtenerPeliculaEstrenos();
+	List<PeliculaConEtiquetaDTO> obtenerPeliculaEstrenos();
 
 	Pelicula buscarPeliculaPorId(Long id);
 
@@ -30,7 +30,8 @@ public interface ServicioPelicula {
 	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 
 	//List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada);
-	List<Pelicula> obtenerProximosEstrenos();
+	List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos();
+	
 
 
 }

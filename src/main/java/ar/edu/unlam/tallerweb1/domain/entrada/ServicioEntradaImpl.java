@@ -145,20 +145,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 
 	@Override
-	public void validarNumeros(List<Integer> numeros)throws AsientoSinIdException {
-		
-		if(numeros.size()==3) {
-			throw new AsientoSinIdException();
-		}
-		
-		for (Integer integer : numeros) {
-			if(integer==null)
-				throw new AsientoSinIdException();
-		}
-		
-	}
-
-	@Override
 	public List<Asiento> getAsientos(List<Long> asientos) {
 		List<Asiento> asientosSeleccionados = new ArrayList<>();
 		
@@ -167,5 +153,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		}
 		return asientosSeleccionados;
 	}
+
 
 }
