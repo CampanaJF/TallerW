@@ -9,6 +9,7 @@ import java.util.List;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface ServicioPelicula {
@@ -27,12 +28,15 @@ public interface ServicioPelicula {
 
     void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario);
 
-    Long obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
+    double obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 
 	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 
-	//List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada);
 	List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos();
-	
+
+	List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
+
+	List<EtiquetaPelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario);
+	List<PeliculaConEtiquetaDTO> obtenerPeliculasEnBaseAGeneroElegido(Usuario usuario);
 
 }

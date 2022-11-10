@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
+import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.exceptions.*;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
@@ -23,11 +25,12 @@ public class ControladorUsuario {
 
 	private ServicioUsuario servicioUsuario;
 	private ServicioSession servicioSession;
-
+    private ServicioPelicula servicioPelicula;
 	@Autowired
-	public ControladorUsuario(ServicioUsuario servicioUsuario,ServicioSession servicioSession){
+	public ControladorUsuario(ServicioUsuario servicioUsuario, ServicioSession servicioSession, ServicioPelicula servicioPelicula){
 		this.servicioUsuario = servicioUsuario;
 		this.servicioSession = servicioSession;
+		this.servicioPelicula= servicioPelicula;
 	}
 
 
@@ -52,10 +55,16 @@ public class ControladorUsuario {
 
 		Usuario usuarioBuscado = servicioUsuario.loginUsuario(datosUsuario.getEmail(), datosUsuario.getPassword());
 		
-		if (usuarioBuscado != null) {
+		if (usuarioBuscado != null && eligioUnGenero(usuarioBuscado)) {
+
 			servicioSession.setUserId(usuarioBuscado.getId(), request);
 			return new ModelAndView("redirect:/home");
-		} else {
+
+		} else if(usuarioBuscado != null ) {
+
+			servicioSession.setUserId(usuarioBuscado.getId(), request);
+			return new ModelAndView("redirect:/elegir-gustos");
+		}else{
 			model.put("error", "Usuario o clave incorrecta!");
 		}
 		return new ModelAndView("login", model);
@@ -85,9 +94,9 @@ public class ControladorUsuario {
 		try {
 			validarPassword(datosUsuario.getPassword(),datosUsuario.getPasswordRe());
 		} catch (PasswordLenghtException e) {
-			mensaje="La contraseña debe tener por lo menos 12 caracteres!";
+			mensaje="La contraseï¿½a debe tener por lo menos 12 caracteres!";
 		} catch (PasswordsDiferentesException e) {
-			mensaje="La contraseñas deben ser iguales!";
+			mensaje="La contraseï¿½as deben ser iguales!";
 		}
 		
 		try {
@@ -102,7 +111,7 @@ public class ControladorUsuario {
 		}
 
 		redirectAttributes.addFlashAttribute("mensaje",mensaje);
-		return new ModelAndView("redirect:/home");
+		return new ModelAndView("redirect:/login");
 			
 	}
 	
@@ -153,9 +162,12 @@ public class ControladorUsuario {
 		if(!(password.equals(passwordRe)))
 			throw new PasswordsDiferentesException();	
 	}
+	private Boolean eligioUnGenero(Usuario usuarioBuscado){
+		if(this.servicioPelicula.obtenerGenerosElegidosPorUsuario(usuarioBuscado).size() > 0)
+			return true;
+		return false;
+	}
 
-
-	
 	
 	
 }

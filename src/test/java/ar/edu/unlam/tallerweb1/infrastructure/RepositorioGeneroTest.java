@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.genero.RepositorioGenero;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -45,4 +47,6 @@ public class RepositorioGeneroTest extends SpringTest {
 }
     //Agregar para tipo de genero
     //busqueda por genero por genero/clasificacion por clasificacion busqueda sin filtro
+
+
 }

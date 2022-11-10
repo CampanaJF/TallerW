@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -181,10 +183,24 @@ public class RepositorioPeliculaTest extends SpringTest {
 		//obtengo calif de la pelicula
 		thenObtengoCalificaciones(calificaciones,3);
 	}
-    
+	@Test
+	@Transactional
+	@Rollback
+	public void devolverPeliculasEnBaseAGustosElegidos() {
+		//un usuario
 
-	
-	private void givenPeliculasConEtiquetas() {
+		//gusto (genero)
+
+		//un usuario elige un genero o varios
+
+		// cuando consulto por peliculas en base a gustos elegidos
+
+		//then se obtiene peliculas
+
+	}
+
+
+		private void givenPeliculasConEtiquetas() {
 	Pelicula pelicula=givenPelicula("Dragon ball Super","2022/11/10");
 	Etiqueta susto=crearEtiqueta("Susto");
 	Etiqueta pelea=crearEtiqueta("Pelea");
@@ -246,22 +262,6 @@ public class RepositorioPeliculaTest extends SpringTest {
 		pelicula.setFechaEstreno(new Date(fecha));
 		return pelicula;
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
 	private void thenObtengoCalificaciones(List<Valoracion> calificaciones, int cantidadEsperada) {
 		assertThat(calificaciones).isNotNull();
@@ -396,9 +396,47 @@ public class RepositorioPeliculaTest extends SpringTest {
 		
 	
 	}
-	
-	
-	
+
+	@Test
+	@Transactional
+	@Rollback
+	public void queVerifiqueQueUnUsuarioEligioVariosGeneros(){
+		Usuario usuario = dadoQueExisteUnUsuario();
+		Genero genero = dadoQueExisteUnGenero("Accion");
+		Genero genero2 = dadoQueExisteUnGenero("Suspenso");
+		dadoQueExistenGenerosDeUnUsuario(usuario,genero);
+		dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
+		dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
+		List<GeneroUsuario> generosPorUsuario = cuandoConsultoPorLosGenerosDeUnUsuario(usuario);
+		entoncesObtengoGenerosElegidosPorElUsuario(generosPorUsuario,3);
+	}
+	private void entoncesObtengoGenerosElegidosPorElUsuario(List<GeneroUsuario> generosPorUsuario, int cantidadEsperada ) {
+		assertThat(generosPorUsuario).isNotNull();
+		assertThat(generosPorUsuario).hasSize(cantidadEsperada);
+	}
+
+	private List<GeneroUsuario> cuandoConsultoPorLosGenerosDeUnUsuario(Usuario generoUsuario) {
+		return repositorioPelicula.obtenerGenerosElegidosPorUsuario(generoUsuario);
+	}
+
+	private Usuario dadoQueExisteUnUsuario(){
+		Usuario usuario = new Usuario();
+		session().save(usuario);
+		return usuario;
+	}
+	private Genero dadoQueExisteUnGenero(String descripcion){
+		Genero genero = new Genero();
+		genero.setDescripcion(descripcion);
+		session().save(genero);
+		return  genero;
+	}
+	private GeneroUsuario dadoQueExistenGenerosDeUnUsuario(Usuario usuario, Genero genero){
+		GeneroUsuario generoUsuario = new GeneroUsuario();
+		generoUsuario.setUsuario(usuario);
+		generoUsuario.setGenero(genero);
+		session().save(generoUsuario);
+		return generoUsuario;
+	}
 
 }
 
