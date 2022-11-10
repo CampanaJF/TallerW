@@ -12,15 +12,15 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (98,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,1,9);
 
  
-update funcion set fecha='2022-11-04 21:00' where id = 90;
-update funcion set fecha='2022-11-04 21:00' where id = 91;
-update funcion set fecha='2022-11-04 21:00' where id = 92;
-update funcion set fecha='2022-11-03 21:00' where id = 93;
-update funcion set fecha='2022-11-04 21:00' where id = 94;
-update funcion set fecha='2022-11-05 21:00' where id = 95;
-update funcion set fecha='2022-11-05 21:00' where id = 96;
-update funcion set fecha='2022-11-05 21:00' where id = 97;
-update funcion set fecha='2022-11-04 21:00' where id = 98;
+update funcion set fecha='2022-11-10 21:00' where id = 90;
+update funcion set fecha='2022-11-11 21:00' where id = 91;
+update funcion set fecha='2022-11-12 21:00' where id = 92;
+update funcion set fecha='2022-11-11 21:00' where id = 93;
+update funcion set fecha='2022-11-10 21:00' where id = 94;
+update funcion set fecha='2022-11-11 21:00' where id = 95;
+update funcion set fecha='2022-11-11 21:00' where id = 96;
+update funcion set fecha='2022-11-10 21:00' where id = 97;
+update funcion set fecha='2022-11-11 21:00' where id = 98;
                     
 drop procedure if exists EP_recorrerFunciones;
 DELIMITER //

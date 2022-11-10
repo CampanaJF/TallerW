@@ -67,18 +67,22 @@ public class ControladorEntrada {
 	public ModelAndView entradaPelicula(HttpServletRequest request,@RequestParam("peliculaId") Long peliculaId) {
 		
 				
-		List<CinePelicula> cines = this.servicioCine.getCines(peliculaId);
+		List<CinePelicula> cines = obtenerCines(peliculaId);
 		//Se utilizo este servicio para no depender de la lista de cines
 		// que puede venir null y genera excepcion
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
-		model.put("cines", this.servicioCine.getCines(peliculaId));
+		model.put("cines", obtenerCines(peliculaId));
 		model.put("pelicula",cines.get(0).getPelicula());
 
 		model.addAttribute("datosCine", new DatosCine());
 		
 		return new ModelAndView ("entrada-pelicula",model);
+	}
+
+	private List<CinePelicula> obtenerCines(Long peliculaId) {
+		return this.servicioCine.getCines(peliculaId);
 	}
 	
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
@@ -134,7 +138,7 @@ public class ControladorEntrada {
 		
 		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
 		
-		this.servicioHistorial.agregarAlHistorial(datosEntrada.getUsuario(),datosEntrada.getFuncion().getPelicula());
+		this.servicioHistorial.agregarAlHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
 		
 		ModelMap model = new ModelMap();
 		model.put("usuario", obtenerUsuarioLogueado(request));
