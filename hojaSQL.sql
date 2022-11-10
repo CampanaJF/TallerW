@@ -319,6 +319,10 @@ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
 					(78,26,25);
                     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad8ac95788888efd67b5a083c399dd29b046ab67
    insert into etiqueta (id,descripcion) values
 (1,'Susto'),
 (2,'Pelea'),
@@ -346,10 +350,6 @@ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
 (24,'Adultos'),
 (25,'Acción'),
 (26,'Drama');
-=======
-              
->>>>>>> eea452c66f71698f29989df1c50d149e481db831
-
 
 
 insert into valoracion(comentario, puntos, pelicula_id, usuario_id)

@@ -41,7 +41,6 @@ public class ControladorHomeTest {
 	HttpServletRequest mockRequest;
 	HttpSession mockSession;
 
-
 	@Before
     public void init(){
 		servicioUsuario=mock(ServicioUsuario.class);

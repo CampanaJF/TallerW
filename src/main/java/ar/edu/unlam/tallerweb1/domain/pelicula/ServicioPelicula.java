@@ -34,7 +34,6 @@ public interface ServicioPelicula {
 
 	List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos();
 
-
 	List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
 
 	List<EtiquetaPelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario);
