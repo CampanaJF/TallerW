@@ -12,6 +12,7 @@ import org.junit.Test;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -21,6 +22,31 @@ public class ServicioHistorialDeberia {
 	
 	private ServicioHistorialImpl servicioHistorial = new ServicioHistorialImpl(repositorioHistorial);
 	
+	@Test
+	public void mapearPeliculaConEtiquetaDTO() {
+		
+		Pelicula pelicula = givenPelicula();
+		
+		List<Etiqueta> etiquetas = givenEtiquetas(3);
+		
+		List<EtiquetaPelicula> etiquetasPelicula = givenEtiquetaPelicula(etiquetas,pelicula);
+		
+		List<PeliculaConEtiquetaDTO> DTO = whenSeMapea(etiquetasPelicula);
+		
+		thenSeMapeoCorrectamente(DTO);
+	}
+	
+	private void thenSeMapeoCorrectamente(List<PeliculaConEtiquetaDTO> DTO) {
+		verify(this.repositorioHistorial,times(1)).obtenerEtiquetasDePelicula(DTO.get(0).getPelicula());
+		assertThat(DTO.size()).isEqualTo(1);
+	}
+
+	private List<PeliculaConEtiquetaDTO> whenSeMapea(List<EtiquetaPelicula> etiquetasPelicula) {
+		when(this.repositorioHistorial.obtenerEtiquetasDePelicula(etiquetasPelicula.get(0).getPelicula())).thenReturn(etiquetasPelicula);
+		return this.servicioHistorial.mapeoHistorial(etiquetasPelicula);
+		
+	}
+
 	@Test
 	public void agregarEtiquetasAlHistorialDelUsuario() {
 		Usuario usuario = givenUsuario();

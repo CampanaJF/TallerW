@@ -2,7 +2,7 @@ package ar.edu.unlam.tallerweb1.domain.historial;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 
 import javax.transaction.Transactional;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -48,27 +49,6 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	}
 	
 	@Override
-	public List <EtiquetaPelicula> obtenerPeliculasDeLasEtiquetasDelUsuario(Usuario usuario,Integer indice) {
-		
-		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelHistorial(usuario);
-
-		return obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice));
-	}
-
-	private List<EtiquetaPelicula> obtener4PeliculasDeLasEtiqueta(Etiqueta etiqueta) {
-		
-		List<EtiquetaPelicula> encontradas = obtenerPeliculasDeLaEtiqueta(etiqueta);
-		List<EtiquetaPelicula> resultado = new ArrayList<>();
-		
-		for (EtiquetaPelicula etiquetaPelicula : encontradas) {
-			if(resultado.size()<4)
-				resultado.add(etiquetaPelicula);
-		}
-		
-		return resultado;
-	}
-
-	@Override
 	public List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
 		
 		List<Historial> historialDelUsuario = obtenerHistorialUsuario(usuario);
@@ -96,6 +76,49 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		return etiquetas;
 	}
 	
+	@Override
+	public List <PeliculaConEtiquetaDTO> obtenerPeliculasDeLasEtiquetasDelUsuario(Usuario usuario,Integer indice) {
+		
+		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelHistorial(usuario);
+		
+		return mapeoHistorial( obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)));
+	}
+	
+
+
+	private List<EtiquetaPelicula> obtener4PeliculasDeLasEtiqueta(Etiqueta etiqueta) {
+		
+		List<EtiquetaPelicula> encontradas = obtenerPeliculasDeLaEtiqueta(etiqueta);
+		List<EtiquetaPelicula> resultado = new ArrayList<>();
+		
+		for (EtiquetaPelicula etiquetaPelicula : encontradas) {
+			if(resultado.size()<4)
+				resultado.add(etiquetaPelicula);
+		}
+		
+		return resultado;
+	}
+	
+	public List<PeliculaConEtiquetaDTO> mapeoHistorial(List<EtiquetaPelicula> etiquetasPeliculas){
+		
+		List<PeliculaConEtiquetaDTO> resultado = new ArrayList<>();
+		Long idPelicula = 0L;
+		
+		for (EtiquetaPelicula etiquetaPelicula : etiquetasPeliculas) {
+			if(idPelicula!=etiquetaPelicula.getPelicula().getId()) {
+			PeliculaConEtiquetaDTO peliculaDTO=new PeliculaConEtiquetaDTO();
+			
+			peliculaDTO.setPelicula(etiquetaPelicula.getPelicula());
+			peliculaDTO.setEtiquetas(obtenerEtiquetasDePelicula(etiquetaPelicula.getPelicula()));
+			
+			idPelicula = etiquetaPelicula.getPelicula().getId();
+			resultado.add(peliculaDTO);	
+			}
+		
+		}
+		
+		return resultado;
+	}
 	
 	
 	@Override
@@ -128,22 +151,5 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		this.repositorioHistorial.agregarAlHistorial(usuario, etiquetas);
 	}
 	
-	private int obtenerIndice() {
-		
-		Random r = new Random();
-		int low = 0;
-		int high = 5;
-		int result = r.nextInt(high-low) + low;
-		
-		return result;
-	}
 
-
-
-	
-	
-	
-
-	
-	
 }

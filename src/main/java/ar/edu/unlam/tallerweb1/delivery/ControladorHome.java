@@ -42,15 +42,21 @@ public class ControladorHome {
 		ModelMap model = new ModelMap();
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 		 
-
-		if(usuario!=null) {
-			List<EtiquetaPelicula> peliculasHistorial = servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario);
-			model.put("historial", peliculasHistorial);
+	    
+		if(usuario!=null) {		
+			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
+			Integer primerIndice = obtenerIndice(indiceMax);
+			Integer segundoIndice = obtenerIndice(indiceMax,primerIndice);
+		
+			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
+			model.put("historialA", peliculasHistorialA);
+			
+			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
+			model.put("historialB", peliculasHistorialB);
 		}
 		
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
-		
 		
 		model.put("usuario", usuario);
 		
@@ -59,15 +65,31 @@ public class ControladorHome {
 		
 		return new ModelAndView("home",model);
 	}
+
 	
-	private int obtenerIndice(Usuario usuario) {
+	private int obtenerIndice(Integer indiceMax) {
 		
 		Random r = new Random();
 		int low = 0;
-		int high = obtenerEtiquetasDelHistorial(usuario).size();
-		int result = r.nextInt(high-low) + low;
+		int high = indiceMax;
+		int resultado = r.nextInt(high-low);
 		
-		return result;
+		return resultado;
+	}
+	
+	private int obtenerIndice(Integer indiceMax,Integer indice) {
+	
+		Integer resultado = obtenerIndice(indiceMax);
+		
+		while(resultado==indice) {
+			resultado = obtenerIndice(indiceMax);
+		}
+			
+		return resultado;
+	}
+	
+	private List<PeliculaConEtiquetaDTO> obtenerPeliculasDelHistorial(Usuario usuario, Integer indice) {
+		return servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario,indice);
 	}
 
 	private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
