@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -13,6 +14,8 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +43,7 @@ public class ControladorHomeTest {
 
 	@Before
     public void init(){
-    
+		servicioUsuario=mock(ServicioUsuario.class);
         servicioPelicula = mock(ServicioPelicula.class);
         servicioHistorial = mock(ServicioHistorial.class);
         servicioUsuario = mock(ServicioUsuario.class);
@@ -119,5 +122,6 @@ public class ControladorHomeTest {
 	
 	return etiqueta;
 	}
+
 
 }

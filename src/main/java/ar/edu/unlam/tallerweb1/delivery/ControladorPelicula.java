@@ -113,14 +113,17 @@ public class ControladorPelicula {
 	public ModelAndView verOpiniones(@RequestParam Long pelicula,HttpServletRequest request){
 		Pelicula pelicula1 = this.servicioPelicula.buscarPeliculaPorId(pelicula);
 		List<Valoracion> valoraciones = this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula1);
-		Usuario usuario = obtenerUsuarioLogueado(request);
 		ModelMap model = new ModelMap();
 		model.put("pelicula",pelicula1);
 		model.put("valoraciones",valoraciones);
-		model.put("usuario",usuario);
-		if(valoraciones.size() == 0){
+		model.put("usuario",obtenerUsuarioLogueado(request));
+		if(noHayValoraciones(valoraciones))
                  model.put("sinvaloracion","Todavia no se han hecho reseñas");
-		}
+
 		return  new ModelAndView("ver-opiniones",model);
+	}
+
+	private boolean noHayValoraciones(List<Valoracion> valoraciones) {
+		return valoraciones.size() == 0;
 	}
 }

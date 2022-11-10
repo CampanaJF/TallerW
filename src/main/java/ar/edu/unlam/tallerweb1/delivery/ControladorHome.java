@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,10 +19,11 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 
 @Controller
 public class ControladorHome {
+
 
 	private ServicioUsuario servicioUsuario;
 	private ServicioPelicula servicioPelicula;
@@ -32,15 +34,15 @@ public class ControladorHome {
 		this.servicioUsuario = servicioUsuario;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
-	}
 
+	}
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
 		ModelMap model = new ModelMap();
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 		 
-	    
+
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
 			Integer primerIndice = obtenerIndice(indiceMax);
@@ -53,6 +55,7 @@ public class ControladorHome {
 			model.put("historialB", peliculasHistorialB);
 		}
 		
+		List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		
@@ -60,7 +63,7 @@ public class ControladorHome {
 		
 		model.put("peliculasEstrenos", peliculasEstrenos);
 		model.put("proximosEstrenos", proximosEstrenos);
-		
+		model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 		return new ModelAndView("home",model);
 	}
 
@@ -96,7 +99,7 @@ public class ControladorHome {
 	
 	private Boolean validarHistorialExistente(Usuario usuario) {
 		
-		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario)==null) 
+		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).get(0).getId()==null) 
 			return false;
 		
 		return true;
