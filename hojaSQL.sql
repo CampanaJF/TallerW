@@ -319,7 +319,93 @@ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
 (23,'Inquietante'),
 (24,'Adultos'),
 (25,'Acción'),
-(26,'Drama');                
+(26,'Drama');
 
 
 
+insert into valoracion(comentario, puntos, pelicula_id, usuario_id)
+values ('Muy buena',4,1,1),
+       ('Me gusto',3,1,2),
+       ('No me gusto',2,1,3),
+       ('Muy buena',5,2,1),
+       ('Me gusto',3,2,2),
+       ('No me gusto',1,2,3),
+       ('Excelente',5,3,1),
+       ('Muy buena. La recomiendo',5,3,2),
+       ('No me gusto tanto',3,3,3),
+       ('Muy buena',4,4,1),
+       ('Me gusto',3,4,2),
+       ('No me gusto',1,4,3),
+       ('Muy buena',4,5,1),
+       ('Me gusto',4,5,2),
+       ('Excelente',5,5,3),
+       ('Me encanto',4,6,1),
+       ('Me gusto',3,6,2),
+       ('Horrible',1,6,3),
+       ('Muy buena',4,7,1),
+       ('Me gusto',4,7,2),
+       ('Malisima',2,7,3),
+       ('Buenisima',5,8,1),
+       ('Me gusto',4,8,2),
+       ('Aburrida',2,8,3),
+       ('La recomiendo',4,9,1),
+       ('Me gusto',5,9,2),
+       ('No me gusto. Esperaba mas',2,9,3),
+       ('Me encanta',4,10,1),
+       ('Buena peli',3,10,2),
+       ('No me gusto',2,10,3),
+       ('Muy buena',4,11,1),
+       ('Me gusto',3,11,2),
+       ('No me gusto',2,11,3),
+       ('Muy buena',5,12,1),
+       ('Me gusto',3,12,2),
+       ('No me gusto',1,12,3),
+       ('Excelente',5,13,1),
+       ('Muy buena. La recomiendo',5,13,2),
+       ('No me gusto tanto',3,13,3),
+       ('Muy buena',4,14,1),
+       ('Me gusto',3,14,2),
+       ('No me gusto',1,14,3),
+       ('Muy buena',4,15,1),
+       ('Me gusto',4,15,2),
+       ('Excelente',5,15,3),
+       ('Me encanto',4,16,1),
+       ('Me gusto',3,16,2),
+       ('Horrible',1,16,3),
+       ('Muy buena',4,17,1),
+       ('Me gusto',4,17,2),
+       ('Malisima',2,17,3),
+       ('Buenisima',5,18,1),
+       ('Me gusto',4,18,2),
+       ('Aburrida',2,18,3),
+       ('La recomiendo',4,19,1),
+       ('Me gusto',5,19,2),
+       ('No me gusto. Esperaba mas',2,19,3),
+       ('Me encanta',4,20,1),
+       ('Buena peli',3,20,2),
+       ('No me gusto',2,20,3),
+       ('Buenisima',5,21,1),
+       ('Me gusto',4,21,2),
+       ('Aburrida',2,21,3),
+       ('La recomiendo',4,22,1),
+       ('Me gusto',5,22,2),
+       ('No me gusto. Esperaba mas',2,22,3),
+       ('Me encanta',4,23,1),
+       ('Buena peli',3,23,2),
+       ('No me gusto',2,23,3);
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("1","Acción",'img/peliculas/tren-bala.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("2","Anime",'img/peliculas/db-super.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("3","Suspenso",'img/peliculas/nop.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("4","Comedia",'img/peliculas/30-noches-con-mi-ex.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("5","Drama",'img/peliculas/carajita.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("6","Terror",'img/peliculas/invitacion-al-infierno.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("7","Biografica",'img/peliculas/elvis.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("8","Animación",'img/peliculas/minion.jpg');

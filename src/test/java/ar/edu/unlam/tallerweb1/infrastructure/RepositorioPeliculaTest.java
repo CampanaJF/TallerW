@@ -260,22 +260,6 @@ public class RepositorioPeliculaTest extends SpringTest {
 		pelicula.setFechaEstreno(new Date(fecha));
 		return pelicula;
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
 	private void thenObtengoCalificaciones(List<Valoracion> calificaciones, int cantidadEsperada) {
 		assertThat(calificaciones).isNotNull();
@@ -410,9 +394,20 @@ public class RepositorioPeliculaTest extends SpringTest {
 		
 	
 	}
-	
-	
-	
+
+/*	@Test
+	@Transactional
+	@Rollback
+	public void consultaQueDevuelveLasPeliculasSegunGeneroElegido() {
+
+		List<EtiquetaPelicula> peliculas= whenConsultoPorPeliculasElegidasPorGenero();
+
+		thenObtengoPeliculasElegidasPorGenero(peliculas,2);
+	}
+
+	private List<EtiquetaPelicula> whenConsultoPorPeliculasElegidasPorGenero() {
+		return this.repositorioPelicula.
+	}*/
 
 }
 

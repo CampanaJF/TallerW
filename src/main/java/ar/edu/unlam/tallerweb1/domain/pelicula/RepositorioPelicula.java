@@ -6,6 +6,7 @@ import java.util.List;
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.helper.Filtro;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface RepositorioPelicula {
@@ -40,6 +41,7 @@ public interface RepositorioPelicula {
 
 	List<EtiquetaPelicula> obtenerPeliculasConEtiquetas(List<String> historialDeEtiquetas);
 
-	
+    List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
+    List<EtiquetaPelicula> obtenerPeliculasPor(Genero genero);
 
 }

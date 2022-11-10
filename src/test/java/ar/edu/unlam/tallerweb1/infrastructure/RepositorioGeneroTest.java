@@ -60,17 +60,17 @@ public class RepositorioGeneroTest extends SpringTest {
             dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
             dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
 
-           List<Genero> generosPorUsuario = cuandoConsultoPorLosGenerosDeUnUsuario(usuario);
+           List<GeneroUsuario> generosPorUsuario = cuandoConsultoPorLosGenerosDeUnUsuario(usuario);
 
            entoncesObtengoGenerosElegidosPorElUsuario(generosPorUsuario,3);
     }
 
-    private void entoncesObtengoGenerosElegidosPorElUsuario(List<Genero> generosPorUsuario, int cantidadEsperada ) {
+    private void entoncesObtengoGenerosElegidosPorElUsuario(List<GeneroUsuario> generosPorUsuario, int cantidadEsperada ) {
         assertThat(generosPorUsuario).isNotNull();
         assertThat(generosPorUsuario).hasSize(cantidadEsperada);
     }
 
-    private List<Genero> cuandoConsultoPorLosGenerosDeUnUsuario(Usuario generoUsuario) {
+    private List<GeneroUsuario> cuandoConsultoPorLosGenerosDeUnUsuario(Usuario generoUsuario) {
         return repositorioGenero.obtenerGenerosElegidosPorUsuario(generoUsuario);
     }
 

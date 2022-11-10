@@ -180,14 +180,20 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 
 		return criteria.list();
 	}
-
-	public List<Genero> obtenerGeneroUsuario(Usuario usuario){
-		final Session session = sessionFactory.getCurrentSession();
-
-		 session.createCriteria(GeneroUsuario.class)
-				 .add(Restrictions.eq("usuario",usuario))
-		          .list();
-
-		return null;
+	@Override
+	public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
+		Session session = sessionFactory.getCurrentSession();
+		return  session.createCriteria(GeneroUsuario.class)
+				.add(Restrictions.eq("usuario", usuario))
+				.list();
 	}
+	@Override
+	public List<EtiquetaPelicula> obtenerPeliculasPor(Genero genero) {
+		final Session session = sessionFactory.getCurrentSession();
+		return  session.createCriteria(EtiquetaPelicula.class)
+				.createAlias("pelicula", "p")
+				.add(Restrictions.eq("p.genero",genero))
+				.list();
+	}
+
 }

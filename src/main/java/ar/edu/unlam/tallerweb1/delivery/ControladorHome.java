@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,13 +25,16 @@ public class ControladorHome {
 
 	private ServicioSession servicioSession;
 	ServicioPelicula servicioPelicula;
-
+     private ServicioUsuario servicioUsuario;
 	@Autowired
-	public ControladorHome(ServicioSession servicioSession,ServicioPelicula servicioPelicula){
+	public ControladorHome(ServicioSession servicioSession,ServicioPelicula servicioPelicula,ServicioUsuario servicioUsuario){
 		this.servicioSession = servicioSession;
 		this.servicioPelicula=servicioPelicula;
+		this.servicioUsuario=servicioUsuario;
 	}
-
+	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
+		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	}
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
@@ -38,15 +42,15 @@ public class ControladorHome {
 		Long userId = this.servicioSession.getUserId(request);
 		 
 		//model.put("error", mensaje);
-		model.put("usuario", userId);
-	    /**Debo devolver  una lista de peliculas en base a los gustos (generos) cinematograficos del usuario **/
-      //  List<Pelicula> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasPorGustoElegido();
+		model.put("usuario", obtenerUsuarioLogueado(request));
+
+        List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(obtenerUsuarioLogueado(request));
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		
 		model.put("peliculasEstrenos", peliculasEstrenos);
 		model.put("proximosEstrenos", proximosEstrenos);
-		
+		model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 		return new ModelAndView("home",model);
 	}
 

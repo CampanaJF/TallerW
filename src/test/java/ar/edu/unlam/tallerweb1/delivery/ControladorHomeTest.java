@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +29,15 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 public class ControladorHomeTest {
-
+/*
 	ServicioPelicula servicioPelicula;
 	HttpServletRequest mockRequest;
 	HttpSession mockSession;
 	ServicioSession servicioSession;
+	ServicioUsuario servicioUsuario;
 	@Before
     public void init(){
-    
+		servicioUsuario=mock(ServicioUsuario.class);
         servicioPelicula = mock(ServicioPelicula.class);
         mockRequest = mock(HttpServletRequest.class);
     	mockSession = mock(HttpSession.class);
@@ -62,7 +66,8 @@ public class ControladorHomeTest {
 	}
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
-		controlador=new ControladorHome(servicioSession,servicioPelicula);
+		controlador=new ControladorHome(servicioSession,servicioPelicula,servicioUsuario);
+		Usuario usuario = new Usuario();
 		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
 		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();
 		List<PeliculaConEtiquetaDTO> peliculasEstrenos=new ArrayList<>();
@@ -70,25 +75,10 @@ public class ControladorHomeTest {
 		peliculasEstrenos.add(pelicula2);
 		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);
 		when(servicioSession.getUserId(mockRequest)).thenReturn(1L);
+		when(servicioUsuario.getUsuario(anyLong())).thenReturn(usuario);
 		return peliculasEstrenos;
 		
 	}
 
-	@Test
-	public void alIrAHomeSeVisualizanPeliculasBasadasEnElGustoCinematografico(){
-		//when voy al home
-		ModelAndView mav = cuandoVoyAlHome();
-		//entoncesEncuentroPeliculasBasadasEnElGusto(mav, 1);
-		//entonces encuentro peliculas basadas en el gusto
-	}
-	private ModelAndView cuandoVoyAlHome(){
-		 ModelAndView mav = controlador.irAHome(mockRequest, null);
-		 return mav;
-	}
-	/*private List<Pelicula> entoncesEncuentroPeliculasBasadasEnElGusto(ModelAndView mav, int cantidadEsperada){
-		List<Pelicula> peliculas = new ArrayList<>();
-		Pelicula pelicula = new Pelicula();
-		peliculas.add(pelicula);
-		//when(servicioGenero.)
-	}*/
+*/
 }

@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.genero;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosGenero;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
@@ -10,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 @Service
 @Transactional
 public class ServicioGeneroImpl implements ServicioGenero{
@@ -56,16 +59,12 @@ public class ServicioGeneroImpl implements ServicioGenero{
     }
 
     @Override
-    public List<Genero> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
+    public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
         return repositorioGenero.obtenerGenerosElegidosPorUsuario(usuario);
     }
 
     private List<Genero> getGeneros(List<Long>generos){
         List<Genero> generosElegidos = new ArrayList<>();
-
-        if(generos.get(0) == null){
-            throw  new AsientoSinIdException();
-        }
 
         for (Long genero : generos) {
             generosElegidos.add(this.repositorioGenero.getGenero(genero));
@@ -73,6 +72,17 @@ public class ServicioGeneroImpl implements ServicioGenero{
         return generosElegidos;
     }
 
+    @Override
+    public  List<Pelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario){
 
+        List<GeneroUsuario> generosElegidos = obtenerGenerosElegidosPorUsuario(usuario);
+        List<Pelicula> peliculas = null;
+       
+        for(GeneroUsuario genero: generosElegidos) {
+             peliculas = this.repositorioGenero.obtenerPeliculasPor(genero.getGenero());
+        }
+
+     return peliculas;
+    }
 
 }
