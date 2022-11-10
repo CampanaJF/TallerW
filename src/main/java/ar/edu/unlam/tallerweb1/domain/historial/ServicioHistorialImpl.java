@@ -80,8 +80,11 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	public List <PeliculaConEtiquetaDTO> obtenerPeliculasDeLasEtiquetasDelUsuario(Usuario usuario,Integer indice) {
 		
 		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelHistorial(usuario);
-		
-		return mapeoHistorial( obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)));
+
+	
+		return mapeoHistorial( obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)),
+																etiquetasDelUsuario.get(indice).getDescripcion());
+
 	}
 	
 
@@ -99,7 +102,7 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		return resultado;
 	}
 	
-	public List<PeliculaConEtiquetaDTO> mapeoHistorial(List<EtiquetaPelicula> etiquetasPeliculas){
+	public List<PeliculaConEtiquetaDTO> mapeoHistorial(List<EtiquetaPelicula> etiquetasPeliculas,String descripcion){
 		
 		List<PeliculaConEtiquetaDTO> resultado = new ArrayList<>();
 		Long idPelicula = 0L;
@@ -108,6 +111,8 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 			if(idPelicula!=etiquetaPelicula.getPelicula().getId()) {
 			PeliculaConEtiquetaDTO peliculaDTO=new PeliculaConEtiquetaDTO();
 			
+
+			peliculaDTO.setDescripcionEtiqueta(descripcion);
 			peliculaDTO.setPelicula(etiquetaPelicula.getPelicula());
 			peliculaDTO.setEtiquetas(obtenerEtiquetasDePelicula(etiquetaPelicula.getPelicula()));
 			

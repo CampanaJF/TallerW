@@ -15,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
-import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
-import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;

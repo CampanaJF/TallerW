@@ -150,7 +150,7 @@
         </section>
         
         <c:if test="${not empty historialB}">  
-        <h1 class="text-light fw-bolder">${historialB.get(0).etiquetas.get(0).descripcion}</h1>
+        <h1 class="text-light fw-bolder">${historialB.get(0).descripcionEtiqueta}</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach  var="historial" items="${historialB}">
             <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
@@ -202,7 +202,7 @@
 		</c:if>
         
         <c:if test="${not empty historialA}">  
-        <h1 class="text-light fw-bolder">${historialA.get(0).etiquetas.get(0).descripcion}</h1>
+        <h1 class="text-light fw-bolder">${historialA.get(0).descripcionEtiqueta}</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach  var="historial" items="${historialA}">
             <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">

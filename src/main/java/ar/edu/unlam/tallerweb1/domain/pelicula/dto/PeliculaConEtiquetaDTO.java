@@ -9,6 +9,8 @@ public class PeliculaConEtiquetaDTO {
 
 	private Pelicula pelicula;
 	
+	private String descripcionEtiqueta;
+	
 	private List<Etiqueta> etiquetas;
 
 	public Pelicula getPelicula() {
@@ -25,6 +27,14 @@ public class PeliculaConEtiquetaDTO {
 
 	public void setEtiquetas(List<Etiqueta> etiquetas) {
 		this.etiquetas = etiquetas;
+	}
+
+	public String getDescripcionEtiqueta() {
+		return descripcionEtiqueta;
+	}
+
+	public void setDescripcionEtiqueta(String descripcionEtiqueta) {
+		this.descripcionEtiqueta = descripcionEtiqueta;
 	}
 	
 

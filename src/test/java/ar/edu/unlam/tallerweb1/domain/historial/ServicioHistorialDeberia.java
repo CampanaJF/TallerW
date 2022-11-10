@@ -43,7 +43,7 @@ public class ServicioHistorialDeberia {
 
 	private List<PeliculaConEtiquetaDTO> whenSeMapea(List<EtiquetaPelicula> etiquetasPelicula) {
 		when(this.repositorioHistorial.obtenerEtiquetasDePelicula(etiquetasPelicula.get(0).getPelicula())).thenReturn(etiquetasPelicula);
-		return this.servicioHistorial.mapeoHistorial(etiquetasPelicula);
+		return this.servicioHistorial.mapeoHistorial(etiquetasPelicula,"wew");
 		
 	}
 

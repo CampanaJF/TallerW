@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ServicioClasificacion;
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
@@ -70,14 +72,16 @@ public class ControladorHomeTest {
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
 		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial);
+		Usuario usuario = givenUsuario();
 		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
 		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();
 		List<PeliculaConEtiquetaDTO> peliculasEstrenos=new ArrayList<>();
 		peliculasEstrenos.add(pelicula);
 		peliculasEstrenos.add(pelicula2);
-		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);
 		mocksSessionRequests();
-		when(servicioUsuario.getUsuario(5L)).thenReturn(givenUsuario());
+		when(servicioHistorial.obtenerEtiquetasDelHistorial(usuario)).thenReturn(givenEtiquetas(3));
+		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);
+		when(servicioUsuario.getUsuario(5L)).thenReturn(usuario);
 		return peliculasEstrenos;
 		
 	}
@@ -95,5 +99,25 @@ public class ControladorHomeTest {
 	    when(mockRequest.getSession().getAttribute("ID")).thenReturn(5L);
 
 	 }
+	
+
+	public List<Etiqueta> givenEtiquetas(Integer cantidad){
+		
+		List<Etiqueta> etiquetas = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			etiquetas.add(givenEtiqueta());	
+		}
+	
+		return etiquetas;	
+	}
+
+	public Etiqueta givenEtiqueta () {
+	
+	Etiqueta etiqueta = new Etiqueta();
+	etiqueta.setId(new Random().nextLong());
+	
+	return etiqueta;
+	}
 
 }
