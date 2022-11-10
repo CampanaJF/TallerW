@@ -41,7 +41,7 @@ public class ControladorHome {
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 		 
 	    
-		if(usuario!=null) {		
+		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
 			Integer primerIndice = obtenerIndice(indiceMax);
 			Integer segundoIndice = obtenerIndice(indiceMax,primerIndice);
@@ -92,6 +92,15 @@ public class ControladorHome {
 
 	private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
 		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+	}
+	
+	private Boolean validarHistorialExistente(Usuario usuario) {
+		
+		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario)==null) 
+			return false;
+		
+		return true;
+		
 	}
 	
 	
