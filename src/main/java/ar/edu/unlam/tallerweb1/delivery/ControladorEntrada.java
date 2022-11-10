@@ -22,6 +22,7 @@ import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
+import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
@@ -37,17 +38,17 @@ public class ControladorEntrada {
 	private final ServicioUsuario servicioUsuario;
 	private final ServicioFuncion servicioFuncion;
 	private final ServicioCine servicioCine;
-	private final ServicioPelicula servicioPelicula;
+	private final ServicioHistorial servicioHistorial;
 	
 	@Autowired
 	public ControladorEntrada(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario,
-							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioPelicula servicioPelicula) {
+							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioHistorial servicioHistorial) {
 		
 		this.servicioEntrada = servicioEntrada;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
-		this.servicioPelicula=servicioPelicula;
+		this.servicioHistorial = servicioHistorial;
 	}
 	
 	/*TO DO 
@@ -131,8 +132,10 @@ public class ControladorEntrada {
 			return new ModelAndView("redirect:/home");	
 		}
 		
-		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
-																  							datosEntrada.getFuncion().getId());
+		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
+		
+		this.servicioHistorial.agregarAlHistorial(datosEntrada.getUsuario(),datosEntrada.getFuncion().getPelicula());
+		
 		ModelMap model = new ModelMap();
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("entradas", entradaComprada);
@@ -140,8 +143,7 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("entrada",model);
 	}
-	
-	
+
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
 	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request,
@@ -194,6 +196,11 @@ public class ControladorEntrada {
 	
 	private void comprarEntrada(DatosEntrada datosEntrada) {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
+	}
+	
+	private List<Entrada> obtenerEntradasDeLaFuncion(DatosEntrada datosEntrada) {
+		return this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
+																  	datosEntrada.getFuncion().getId());
 	}
 	
 	

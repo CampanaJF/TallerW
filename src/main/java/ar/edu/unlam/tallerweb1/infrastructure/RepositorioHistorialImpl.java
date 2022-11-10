@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.domain.historial.Historial;
 import ar.edu.unlam.tallerweb1.domain.historial.RepositorioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
+import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 @SuppressWarnings({ "unchecked", "deprecation" })
@@ -37,6 +39,7 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 
 	@Override
 	public void agregarAlHistorial(Usuario usuario, List<Etiqueta> etiquetasDeLaPelicula) {
+		
 		final Session session = sessionFactory.getCurrentSession();
 		
 		for (Etiqueta etiqueta : etiquetasDeLaPelicula) {
@@ -67,6 +70,16 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 		
 		}
 				
+	}
+
+	@Override
+	public List<EtiquetaPelicula> obtenerEtiquetasDePelicula(Pelicula pelicula) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("pelicula.id", pelicula.getId());
+		
+		return session.createCriteria(EtiquetaPelicula.class).add(rest1).list();
+
 	}
 
 }

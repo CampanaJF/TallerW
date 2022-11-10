@@ -11,7 +11,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.domain.historial.Historial;
 import ar.edu.unlam.tallerweb1.domain.historial.RepositorioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
@@ -27,6 +26,8 @@ public class RepositorioHistorialDeberia extends SpringTest{
 	// se debe establecer cuando el cliente compra entradas
 	// Buscar que no haya etiquetas repetidas antes de agregarlas (principalmente en servicio pero necesita repo para eso)
 	
+	
+
 	@Test
 	@Transactional
 	@Rollback
