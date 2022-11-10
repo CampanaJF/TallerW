@@ -142,9 +142,7 @@
             
         </c:forEach>
         </section>
-		
-		
-		
+        
 		<h1 class="text-light fw-bolder mt-2">Estrenos del mes</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${peliculasEstrenos}">
@@ -194,6 +192,110 @@
             
         </c:forEach>
         </section>
+        
+        <c:if test="${not empty historialB}">  
+        <h1 class="text-light fw-bolder">${historialB.get(0).descripcionEtiqueta}</h1>
+		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
+        <c:forEach  var="historial" items="${historialB}">
+            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+                <div class="fila">
+                <div class="tile">
+                <img class="pelicula" src="${historial.getPelicula().getPoster()}"
+                    alt="">
+                <div class="overlay ">
+                    <img class="pelicula" src="${historial.getPelicula().getPoster()}">
+                    <div class="container informacionPeli d-flex flex-column">
+                        <div class="row">
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light clasificacion">${historial.getPelicula().getClasificacionPelicula().getDescripcion() }</p>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light duracion">${historial.getPelicula().getDuracionEnHoras()}</p>
+                        </div>
+                        <div class="col-lg-4  fechaEstreno mt-2">
+                            <p class="text-light">${historial.getPelicula().getFechaEstreno().getYear()+1900}</p> 
+                        </div>
+                      
+                        </div>
+                         <div class="d-flex justify-content-around">
+                         <p class="text-light genero mt-1">${historial.getPelicula().getGenero().getDescripcion() }</p>
+                         <div class="rating-container">
+                         <div class="cover"></div>
+                         <jsuites-rating class="estrellas" value="${historial.getPelicula().getCalificacion()}
+                         "tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+                         </div>
+                         </div>
+                         <div class="d-flex justify-content-around">
+									
+							<c:forEach var="etiqueta" items="${historial.getEtiquetas()}">
+								<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
+							</c:forEach>
+						</div>        
+                    </div>
+                </div>
+                </div>
+                </div>
+              
+                <a href="ver-pelicula?pelicula=${historial.getPelicula().id}" class="btn btn-lg text-light" id="comprarEntradas">Comprar
+                Entradas</a>
+            </article>
+            
+        </c:forEach>
+        </section>
+
+		</c:if>
+        
+        <c:if test="${not empty historialA}">  
+        <h1 class="text-light fw-bolder">${historialA.get(0).descripcionEtiqueta}</h1>
+		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
+        <c:forEach  var="historial" items="${historialA}">
+            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+                <div class="fila">
+                <div class="tile">
+                <img class="pelicula" src="${historial.getPelicula().getPoster()}"
+                    alt="">
+                <div class="overlay ">
+                    <img class="pelicula" src="${historial.getPelicula().getPoster()}">
+                    <div class="container informacionPeli d-flex flex-column">
+                        <div class="row">
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light clasificacion">${historial.getPelicula().getClasificacionPelicula().getDescripcion() }</p>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light duracion">${historial.getPelicula().getDuracionEnHoras()}</p>
+                        </div>
+                        <div class="col-lg-4  fechaEstreno mt-2">
+                            <p class="text-light">${historial.getPelicula().getFechaEstreno().getYear()+1900}</p> 
+                        </div>
+                      
+                        </div>
+                         <div class="d-flex justify-content-around">
+                         <p class="text-light genero mt-1">${historial.getPelicula().getGenero().getDescripcion() }</p>
+                         <div class="rating-container">
+                         <div class="cover"></div>
+                         <jsuites-rating class="estrellas" value="${historial.getPelicula().getCalificacion()}
+                         "tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+                         </div>
+                         </div>
+                         <div class="d-flex justify-content-around">
+									
+							<c:forEach var="etiqueta" items="${historial.getEtiquetas()}">
+								<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
+							</c:forEach>
+						</div>        
+                    </div>
+                </div>
+                </div>
+                </div>
+              
+                <a href="ver-pelicula?pelicula=${historial.getPelicula().id}" class="btn btn-lg text-light" id="comprarEntradas">Comprar
+                Entradas</a>
+            </article>
+            
+        </c:forEach>
+        </section>
+
+		</c:if>
 		
 		</main>
 		

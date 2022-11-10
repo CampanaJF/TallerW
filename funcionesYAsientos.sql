@@ -1,5 +1,24 @@
 use cineclub;
 
+call EP_recorrerFuncionesB();
+
+drop procedure if exists EP_recorrerFuncionesB;
+DELIMITER //
+create procedure EP_recorrerFuncionesB()
+begin
+
+	declare contador int default 99;
+	
+	while contador < 145
+	do
+		call EP_crearAsientosYEntradasVacias(contador);
+	
+	set contador = contador + 1;
+	end while;
+
+end//
+DELIMITER ;
+
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
 					(90,'2022-10-27 21:00','21:00','Ingles',750.00,true,2,1,1),
                     (91,'2022-10-28 21:00','21:00','Ingles',750.00,false,3,1,2),
@@ -10,26 +29,66 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (96,'2022-10-28 21:00','15:00','Ingles',750.00,false,1,1,7),
                     (97,'2022-10-27 23:00','22:00','Ingles',750.00,true,2,1,8),
                     (98,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,1,9);
+                    
+insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+					(190,'2022-10-27 21:00','21:00','Ingles',750.00,true,2,2,1),
+                    (191,'2022-10-28 21:00','21:00','Ingles',750.00,false,3,2,2),
+                    (192,'2022-10-29 21:00','21:00','Ingles',750.00,true,1,2,3),
+                    (193,'2022-10-26 21:00','21:00','Ingles',750.00,false,1,2,4),
+                    (194,'2022-10-28 21:00','17:00','Ingles',750.00,true,2,2,5),
+                    (195,'2022-10-29 21:00','12:00','Ingles',750.00,true,3,2,6),
+                    (196,'2022-10-28 21:00','15:00','Ingles',750.00,false,1,2,7),
+                    (197,'2022-10-27 23:00','22:00','Ingles',750.00,true,2,2,8),
+                    (198,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,2,9);
 
  
-update funcion set fecha='2022-11-04 21:00' where id = 90;
-update funcion set fecha='2022-11-04 21:00' where id = 91;
-update funcion set fecha='2022-11-04 21:00' where id = 92;
-update funcion set fecha='2022-11-03 21:00' where id = 93;
-update funcion set fecha='2022-11-04 21:00' where id = 94;
-update funcion set fecha='2022-11-05 21:00' where id = 95;
-update funcion set fecha='2022-11-05 21:00' where id = 96;
-update funcion set fecha='2022-11-05 21:00' where id = 97;
-update funcion set fecha='2022-11-04 21:00' where id = 98;
+ 
+update funcion set fecha='2022-11-11 21:00' where id = 90;
+update funcion set fecha='2022-11-11 21:00' where id = 91;
+update funcion set fecha='2022-11-12 21:00' where id = 92;
+update funcion set fecha='2022-11-11 21:00' where id = 93;
+update funcion set fecha='2022-11-13 21:00' where id = 94;
+update funcion set fecha='2022-11-11 21:00' where id = 95;
+update funcion set fecha='2022-11-12 21:00' where id = 96;
+update funcion set fecha='2022-11-11 21:00' where id = 97;
+update funcion set fecha='2022-11-11 21:00' where id = 98;
+
+update funcion set fecha='2022-11-25 21:00' where id = 190;
+update funcion set fecha='2022-11-26 21:00' where id = 191;
+update funcion set fecha='2022-11-27 21:00' where id = 192;
+update funcion set fecha='2022-11-11 21:00' where id = 193;
+update funcion set fecha='2022-11-13 21:00' where id = 194;
+update funcion set fecha='2022-11-11 21:00' where id = 195;
+update funcion set fecha='2022-11-12 21:00' where id = 196;
+update funcion set fecha='2022-11-11 21:00' where id = 197;
+update funcion set fecha='2022-11-11 21:00' where id = 198;
+
                     
 drop procedure if exists EP_recorrerFunciones;
 DELIMITER //
 create procedure EP_recorrerFunciones()
 begin
 
-	declare contador int default 90;
+	declare contador int default 190;
 	
-	while contador < 99
+	while contador < 199
+	do
+		call EP_crearAsientosYEntradasVacias(contador);
+	
+	set contador = contador + 1;
+	end while;
+
+end//
+DELIMITER ;
+
+drop procedure if exists EP_recorrerFuncionesB;
+DELIMITER //
+create procedure EP_recorrerFuncionesB()
+begin
+
+	declare contador int default 99;
+	
+	while contador < 145
 	do
 		call EP_crearAsientosYEntradasVacias(contador);
 	

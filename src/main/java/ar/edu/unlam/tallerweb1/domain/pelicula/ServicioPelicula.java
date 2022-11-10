@@ -13,8 +13,11 @@ import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface ServicioPelicula {
+	
     List<Pelicula> getPeliculas();
+    
 	public List<PeliculaConEtiquetaDTO> obtenerPeliculas(Filtro filtro);
+	
 	List<Pelicula> buscarPeliculas(String titulo);
 
 	List<PeliculaConEtiquetaDTO> obtenerPeliculaEstrenos();
@@ -27,13 +30,14 @@ public interface ServicioPelicula {
 
     double obtenerPromedioValoracionesPorPelicula(Pelicula peliculaBuscada);
 
-
 	List<Valoracion> obtenerCalificacionesDeUnaPelicula(Pelicula pelicula);
 
 	List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos();
+
 
 	List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
 
 	List<EtiquetaPelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario);
 	List<PeliculaConEtiquetaDTO> obtenerPeliculasEnBaseAGeneroElegido(Usuario usuario);
+
 }
