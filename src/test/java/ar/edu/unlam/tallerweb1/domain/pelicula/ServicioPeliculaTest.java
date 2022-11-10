@@ -6,6 +6,8 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioPeliculaImpl;
 
 
@@ -179,9 +181,60 @@ public class ServicioPeliculaTest {
 		when(repositorioPelicula.getProximosEstrenos()).thenReturn(proximasEstrenos);
 		
 	}
-    
-    
-    
-    
-    
+
+	@Test
+	public void verificarQueDevuelvaPeliculasEnBaseAGeneroElegido(){
+
+		Usuario usuario = dadoQueExisteUnUsuario();
+
+		Genero genero = dadoQueExisteUnGenero();
+
+		givenHayPeliculas(usuario,genero);
+
+		dadoQueExisteGenerosDeUnUsuario(usuario);
+
+		List<PeliculaConEtiquetaDTO> peliculas = cuandoConsultoPorPeliculasEnBaseAGenero(usuario);
+
+		thenObtengoPeliculasEnBaseAGeneroElegido(peliculas);
+	}
+	private void givenHayPeliculas(Usuario usuario,Genero genero){
+		List<EtiquetaPelicula> etiquetaPeliculas = new ArrayList<>();
+
+		EtiquetaPelicula etiqueta1=new EtiquetaPelicula();
+		Etiqueta etiqueta=new Etiqueta();
+		Pelicula pelicula =new Pelicula();
+		pelicula.setGenero(genero);
+		etiqueta1.setEtiqueta(etiqueta);
+		etiqueta1.setPelicula(pelicula);
+		etiquetaPeliculas.add(etiqueta1);
+
+		when(repositorioPelicula.obtenerPeliculasPor(anyObject())).thenReturn(etiquetaPeliculas);
+	}
+
+	private void thenObtengoPeliculasEnBaseAGeneroElegido(List<PeliculaConEtiquetaDTO> peliculas ) {
+		assertThat(peliculas).isNotNull();
+		verify(repositorioPelicula,times(1)).obtenerGenerosElegidosPorUsuario(anyObject());
+
+	}
+
+
+	private void dadoQueExisteGenerosDeUnUsuario(Usuario usuario) {
+		List<GeneroUsuario> generoUsuarios = new ArrayList<>();
+		when((repositorioPelicula.obtenerGenerosElegidosPorUsuario(usuario))).thenReturn(generoUsuarios);
+	}
+
+	private List<PeliculaConEtiquetaDTO> cuandoConsultoPorPeliculasEnBaseAGenero(Usuario usuario) {
+		return servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+	}
+	private Usuario dadoQueExisteUnUsuario(){
+		Usuario usuario = new Usuario();
+		return usuario;
+	}
+	private Genero dadoQueExisteUnGenero(){
+		Genero genero = new Genero();
+		return genero;
+	}
+
+
+
 }

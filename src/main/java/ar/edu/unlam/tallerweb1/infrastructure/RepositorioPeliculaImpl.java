@@ -7,14 +7,12 @@ import static org.hibernate.criterion.Restrictions.in;
 import static org.hibernate.criterion.Restrictions.ne;
 import static org.hibernate.criterion.Restrictions.sqlRestriction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -181,6 +179,21 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		criteria.add(in("e.descripcion", historialDeEtiquetas));
 
 		return criteria.list();
+	}
+	@Override
+	public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
+		Session session = sessionFactory.getCurrentSession();
+		return  session.createCriteria(GeneroUsuario.class)
+				.add(Restrictions.eq("usuario", usuario))
+				.list();
+	}
+	@Override
+	public List<EtiquetaPelicula> obtenerPeliculasPor(Genero genero) {
+		final Session session = sessionFactory.getCurrentSession();
+		return  session.createCriteria(EtiquetaPelicula.class)
+				.createAlias("pelicula", "p")
+				.add(Restrictions.eq("p.genero",genero))
+				.list();
 	}
 
 }

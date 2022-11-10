@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 @Controller
 public class ControladorHome {
 
+
 	private ServicioUsuario servicioUsuario;
 	private ServicioPelicula servicioPelicula;
 	private ServicioHistorial servicioHistorial;
@@ -32,14 +34,17 @@ public class ControladorHome {
 		this.servicioUsuario = servicioUsuario;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
-	}
 
+	}
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
 		ModelMap model = new ModelMap();
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 		 
+
+    List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(obtenerUsuarioLogueado(request));
+
 	    
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
@@ -53,6 +58,7 @@ public class ControladorHome {
 			model.put("historialB", peliculasHistorialB);
 		}
 		
+
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		
@@ -60,7 +66,7 @@ public class ControladorHome {
 		
 		model.put("peliculasEstrenos", peliculasEstrenos);
 		model.put("proximosEstrenos", proximosEstrenos);
-		
+		model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 		return new ModelAndView("home",model);
 	}
 

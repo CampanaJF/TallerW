@@ -108,5 +108,33 @@ public class ControladorPeliculaTest {
 		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
 	}
 
+	@Test
+	public void queAlCalificarUnaPeliculaLeMuestreVistaExitosa(){
+		 ModelAndView mav = whenIrAGuardarCalificacion();
+		 thenObtengoLaVista(mav);
+	}
+    @Test
+	public void queMuestreLaVistaDeOpinionesDeUnaPelicula(){
+		 ModelAndView mav = whenIrAVerOpiniones();
+		 thenObtengoLaVistaDeOpiniones(mav);
+	}
+
+	private void thenObtengoLaVistaDeOpiniones(ModelAndView mav) {
+		 assertThat(mav.getViewName()).isEqualTo("ver-opiniones");
+	}
+
+	private ModelAndView whenIrAVerOpiniones() {
+		 mocksSessionRequests();
+	 return this.controladorPelicula.verOpiniones(2L,mockRequest);
+	 }
+
+	private void thenObtengoLaVista(ModelAndView mav) {
+		 assertThat(mav.getViewName()).isEqualTo("calificacionPelicula-exitosa");
+	}
+
+	private ModelAndView whenIrAGuardarCalificacion() {
+		 mocksSessionRequests();
+		 return this.controladorPelicula.guardarCalificacion(4,2L,"buena",mockRequest);
+	}
 
 }
