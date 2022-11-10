@@ -98,9 +98,7 @@
             
         </c:forEach>
         </section>
-		
-		
-		
+        
 		<h1 class="text-light fw-bolder mt-2">Estrenos del mes</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${peliculasEstrenos}">
@@ -150,6 +148,62 @@
             
         </c:forEach>
         </section>
+        
+        <c:if test="${not empty historial}"> 
+        <c:forEach var="etiqueta" items="${historial.getEtiqueta()}"> 
+        
+        <h1 class="text-light fw-bolder mt-2">${etiqueta.descripcion}</h1>
+		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
+        <c:forEach var="peliculaDTO" items="${historial.getPelicula()}">
+            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+                <div class="fila">
+                <div class="tile">
+                <img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}"
+                    alt="">
+                <div class="overlay ">
+                    <img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}">
+                    <div class="container informacionPeli d-flex flex-column">
+                        <div class="row">
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light clasificacion">${peliculaDTO.getPelicula().getClasificacionPelicula().getDescripcion() }</p>
+                        </div>
+                        <div class="col-lg-4 mt-2">
+                            <p class="text-light duracion">${peliculaDTO.getPelicula().getDuracionEnHoras()}</p>
+                        </div>
+                        <div class="col-lg-4  fechaEstreno mt-2">
+                            <p class="text-light">${peliculaDTO.getPelicula().getFechaEstreno().getYear()+1900}</p> 
+                        </div>
+                      
+                        </div>
+                         <div class="d-flex justify-content-around">
+                         <p class="text-light genero mt-1">${peliculaDTO.getPelicula().getGenero().getDescripcion() }</p>
+                         <div class="rating-container">
+                         <div class="cover"></div>
+                         <jsuites-rating class="estrellas" value="${peliculaDTO.getPelicula().getCalificacion()}
+                         "tooltip="Muy mala, Mala, Regular, Buena, Muy buena"></jsuites-rating>
+                         </div>
+                         </div>
+                         <div class="d-flex justify-content-around">
+									
+										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
+										<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
+										</c:forEach>
+									</div>
+                         
+                    </div>
+                </div>
+                </div>
+                </div>
+              
+                <a href="ver-pelicula?pelicula=${peliculaDTO.getPelicula().id}" class="btn btn-lg text-light" id="comprarEntradas">Comprar
+                Entradas</a>
+            </article>
+            
+        </c:forEach>
+        </section>
+        
+        </c:forEach>
+		</c:if>
 		
 		</main>
 		

@@ -12,7 +12,9 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface ServicioPelicula {
+	
     List<Pelicula> getPeliculas();
+    
 	public List<PeliculaConEtiquetaDTO> obtenerPeliculas(Filtro filtro);
 	
 	List<Pelicula> buscarPeliculas(String titulo);
@@ -32,6 +34,5 @@ public interface ServicioPelicula {
 	//List<Valoracion> obtenerValoracionesPorPelicula(Pelicula buscada);
 	List<PeliculaConEtiquetaDTO> obtenerProximosEstrenos();
 	
-
 
 }

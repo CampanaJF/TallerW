@@ -20,24 +20,31 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ServicioClasificacion;
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
+import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
+import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public class ControladorHomeTest {
 
 	ServicioPelicula servicioPelicula;
+	ServicioUsuario servicioUsuario;
+	ServicioHistorial servicioHistorial;
 	HttpServletRequest mockRequest;
 	HttpSession mockSession;
-	ServicioSession servicioSession;
+
 	@Before
     public void init(){
     
         servicioPelicula = mock(ServicioPelicula.class);
+        servicioHistorial = mock(ServicioHistorial.class);
+        servicioUsuario = mock(ServicioUsuario.class);
         mockRequest = mock(HttpServletRequest.class);
     	mockSession = mock(HttpSession.class);
-    	servicioSession=mock(ServicioSession.class);
+
 	}
 	@Autowired
 	private ControladorHome controlador;
@@ -62,16 +69,31 @@ public class ControladorHomeTest {
 	}
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
-		controlador=new ControladorHome(servicioSession,servicioPelicula);
+		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial);
 		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
 		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();
 		List<PeliculaConEtiquetaDTO> peliculasEstrenos=new ArrayList<>();
 		peliculasEstrenos.add(pelicula);
 		peliculasEstrenos.add(pelicula2);
 		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);
-		when(servicioSession.getUserId(mockRequest)).thenReturn(1L);
+		mocksSessionRequests();
+		when(servicioUsuario.getUsuario(5L)).thenReturn(givenUsuario());
 		return peliculasEstrenos;
 		
 	}
+	
+	private Usuario givenUsuario() {
+		Usuario usuario = new Usuario();
+		
+		usuario.setId(5L);
+		
+		return usuario;
+	}
+	
+	private void mocksSessionRequests() {
+	    when(mockRequest.getSession()).thenReturn(mockSession);
+	    when(mockRequest.getSession().getAttribute("ID")).thenReturn(5L);
+
+	 }
 
 }

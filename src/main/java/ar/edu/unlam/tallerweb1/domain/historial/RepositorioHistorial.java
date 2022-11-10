@@ -17,4 +17,6 @@ public interface RepositorioHistorial {
 	
 	List<EtiquetaPelicula> obtenerEtiquetasDePelicula(Pelicula pelicula);
 
+	List<EtiquetaPelicula> obtenerPeliculasDeLaEtiqueta(Etiqueta etiqueta);
+
 }

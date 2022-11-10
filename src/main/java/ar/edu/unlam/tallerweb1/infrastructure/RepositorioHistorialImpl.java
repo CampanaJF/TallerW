@@ -82,4 +82,13 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 
 	}
 
+	@Override
+	public List<EtiquetaPelicula> obtenerPeliculasDeLaEtiqueta(Etiqueta etiqueta) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("etiqueta.id", etiqueta.getId());
+
+		return session.createCriteria(EtiquetaPelicula.class).add(rest1).list();
+	}
+
 }
