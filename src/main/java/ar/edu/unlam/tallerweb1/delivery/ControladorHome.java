@@ -19,7 +19,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+
 
 @Controller
 public class ControladorHome {
@@ -43,9 +43,6 @@ public class ControladorHome {
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 		 
 
-    List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(obtenerUsuarioLogueado(request));
-
-	    
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
 			Integer primerIndice = obtenerIndice(indiceMax);
@@ -58,7 +55,7 @@ public class ControladorHome {
 			model.put("historialB", peliculasHistorialB);
 		}
 		
-
+		List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		

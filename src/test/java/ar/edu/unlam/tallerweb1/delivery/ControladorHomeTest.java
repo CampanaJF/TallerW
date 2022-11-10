@@ -34,7 +34,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public class ControladorHomeTest {
-/*
+
 	ServicioPelicula servicioPelicula;
 	ServicioUsuario servicioUsuario;
 	ServicioHistorial servicioHistorial;
@@ -123,5 +123,5 @@ public class ControladorHomeTest {
 	return etiqueta;
 	}
 
-*/
+
 }
