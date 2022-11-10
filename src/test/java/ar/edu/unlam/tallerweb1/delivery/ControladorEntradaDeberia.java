@@ -27,6 +27,7 @@ import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
+import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
@@ -41,11 +42,12 @@ public class ControladorEntradaDeberia {
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
 	private final ServicioFuncion servicioFuncion = mock(ServicioFuncion.class);
 	private final ServicioCine servicioCine = mock(ServicioCine.class);
+	private final ServicioHistorial servicioHistorial = mock(ServicioHistorial.class);
 	
 	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
 	
 	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioEntrada,servicioUsuario,
-																					servicioFuncion,servicioCine,null);
+																				servicioFuncion,servicioCine,servicioHistorial);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
