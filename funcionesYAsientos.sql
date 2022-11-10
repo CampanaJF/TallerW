@@ -1,5 +1,24 @@
 use cineclub;
 
+call EP_recorrerFuncionesB();
+
+drop procedure if exists EP_recorrerFuncionesB;
+DELIMITER //
+create procedure EP_recorrerFuncionesB()
+begin
+
+	declare contador int default 99;
+	
+	while contador < 145
+	do
+		call EP_crearAsientosYEntradasVacias(contador);
+	
+	set contador = contador + 1;
+	end while;
+
+end//
+DELIMITER ;
+
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
 					(90,'2022-10-27 21:00','21:00','Ingles',750.00,true,2,1,1),
                     (91,'2022-10-28 21:00','21:00','Ingles',750.00,false,3,1,2),
@@ -12,15 +31,15 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (98,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,1,9);
 
  
-update funcion set fecha='2022-11-04 21:00' where id = 90;
-update funcion set fecha='2022-11-04 21:00' where id = 91;
-update funcion set fecha='2022-11-04 21:00' where id = 92;
-update funcion set fecha='2022-11-03 21:00' where id = 93;
-update funcion set fecha='2022-11-04 21:00' where id = 94;
-update funcion set fecha='2022-11-05 21:00' where id = 95;
-update funcion set fecha='2022-11-05 21:00' where id = 96;
-update funcion set fecha='2022-11-05 21:00' where id = 97;
-update funcion set fecha='2022-11-04 21:00' where id = 98;
+update funcion set fecha='2022-11-11 21:00' where id = 90;
+update funcion set fecha='2022-11-11 21:00' where id = 91;
+update funcion set fecha='2022-11-12 21:00' where id = 92;
+update funcion set fecha='2022-11-11 21:00' where id = 93;
+update funcion set fecha='2022-11-13 21:00' where id = 94;
+update funcion set fecha='2022-11-11 21:00' where id = 95;
+update funcion set fecha='2022-11-12 21:00' where id = 96;
+update funcion set fecha='2022-11-11 21:00' where id = 97;
+update funcion set fecha='2022-11-11 21:00' where id = 98;
                     
 drop procedure if exists EP_recorrerFunciones;
 DELIMITER //
@@ -30,6 +49,23 @@ begin
 	declare contador int default 90;
 	
 	while contador < 99
+	do
+		call EP_crearAsientosYEntradasVacias(contador);
+	
+	set contador = contador + 1;
+	end while;
+
+end//
+DELIMITER ;
+
+drop procedure if exists EP_recorrerFuncionesB;
+DELIMITER //
+create procedure EP_recorrerFuncionesB()
+begin
+
+	declare contador int default 99;
+	
+	while contador < 145
 	do
 		call EP_crearAsientosYEntradasVacias(contador);
 	

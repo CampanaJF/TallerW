@@ -22,6 +22,7 @@ import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
+import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
@@ -37,24 +38,24 @@ public class ControladorEntrada {
 	private final ServicioUsuario servicioUsuario;
 	private final ServicioFuncion servicioFuncion;
 	private final ServicioCine servicioCine;
-	private final ServicioPelicula servicioPelicula;
+	private final ServicioHistorial servicioHistorial;
 	
 	@Autowired
 	public ControladorEntrada(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario,
-							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioPelicula servicioPelicula) {
+							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioHistorial servicioHistorial) {
 		
 		this.servicioEntrada = servicioEntrada;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
-		this.servicioPelicula=servicioPelicula;
+		this.servicioHistorial = servicioHistorial;
 	}
 	
 	/*TO DO 
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - try catch para casos donde no hay funciones (mejorar)
 	 *      - Arreglar la forma de validar al usuario
-	 *      
+	 *      - Manejar las etiquetas a almacenar desde la compra de la entrada.
 	 *      
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
@@ -66,18 +67,22 @@ public class ControladorEntrada {
 	public ModelAndView entradaPelicula(HttpServletRequest request,@RequestParam("peliculaId") Long peliculaId) {
 		
 				
-		List<CinePelicula> cines = this.servicioCine.getCines(peliculaId);
+		List<CinePelicula> cines = obtenerCines(peliculaId);
 		//Se utilizo este servicio para no depender de la lista de cines
 		// que puede venir null y genera excepcion
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
-		model.put("cines", this.servicioCine.getCines(peliculaId));
+		model.put("cines", obtenerCines(peliculaId));
 		model.put("pelicula",cines.get(0).getPelicula());
 
 		model.addAttribute("datosCine", new DatosCine());
 		
 		return new ModelAndView ("entrada-pelicula",model);
+	}
+
+	private List<CinePelicula> obtenerCines(Long peliculaId) {
+		return this.servicioCine.getCines(peliculaId);
 	}
 	
 	@RequestMapping(path = "/entrada-preparacion", method = RequestMethod.POST)
@@ -131,8 +136,10 @@ public class ControladorEntrada {
 			return new ModelAndView("redirect:/home");	
 		}
 		
-		List <Entrada> entradaComprada = this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
-																  							datosEntrada.getFuncion().getId());
+		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
+		
+		this.servicioHistorial.agregarAlHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
+		
 		ModelMap model = new ModelMap();
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("entradas", entradaComprada);
@@ -140,8 +147,7 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("entrada",model);
 	}
-	
-	
+
 	
 	@RequestMapping(path = "/ver-entrada", method = RequestMethod.GET)
 	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request,
@@ -194,6 +200,11 @@ public class ControladorEntrada {
 	
 	private void comprarEntrada(DatosEntrada datosEntrada) {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
+	}
+	
+	private List<Entrada> obtenerEntradasDeLaFuncion(DatosEntrada datosEntrada) {
+		return this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
+																  	datosEntrada.getFuncion().getId());
 	}
 	
 	

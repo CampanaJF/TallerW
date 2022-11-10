@@ -208,12 +208,37 @@ insert into pelicula (id,director,duracion,fechaEstreno,poster,protagonista,sino
   (148,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,26,7),
   (149,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,26,6);
 
-
+insert into etiqueta (id,descripcion) values
+(1,'Susto'),
+(2,'Pelea'),
+(3,'Fascinante'),
+(4,'Tenebroso'),
+(5,'Ciencia Ficción'),
+(6,'Emoción'),
+(7,'Animación'),
+(8,'Informativa'),
+(9,'Descriptiva'),
+(10,'Emotivo'),
+(11,'Impactante'),
+(12,'Tensión'),
+(13,'Para niños'),
+(14,'Historica'),
+(15,'Interesante'),
+(16,'Optimista'),
+(17,'Emocionante'),
+(18,'Viaje'),
+(19,'Tesoro'),
+(20,'Fantasia'),
+(21,'Romantico'),
+(22,'Divertida'),
+(23,'Inquietante'),
+(24,'Adultos'),
+(25,'Acción'),
+(26,'Drama');  
 
 
 
 insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
-					
                     (1,16,1),
                     (2,17,1),
                     (3,18,1),
@@ -293,33 +318,7 @@ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
 					(77,23,25),
 					(78,26,25);
                     
-   insert into etiqueta (id,descripcion) values
-(1,'Susto'),
-(2,'Pelea'),
-(3,'Fascinante'),
-(4,'Tenebroso'),
-(5,'Ciencia Ficción'),
-(6,'Emoción'),
-(7,'Animación'),
-(8,'Informativa'),
-(9,'Descriptiva'),
-(10,'Emotivo'),
-(11,'Impactante'),
-(12,'Tensión'),
-(13,'Para niños'),
-(14,'Historica'),
-(15,'Interesante'),
-(16,'Optimista'),
-(17,'Emocionante'),
-(18,'Viaje'),
-(19,'Tesoro'),
-(20,'Fantasia'),
-(21,'Romantico'),
-(22,'Divertida'),
-(23,'Inquietante'),
-(24,'Adultos'),
-(25,'Acción'),
-(26,'Drama');                
+              
 
 
 
