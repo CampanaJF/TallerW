@@ -48,48 +48,5 @@ public class RepositorioGeneroTest extends SpringTest {
     //Agregar para tipo de genero
     //busqueda por genero por genero/clasificacion por clasificacion busqueda sin filtro
 
-    @Test
-    @Transactional
-    @Rollback
-    public void queVerifiqueQueUnUsuarioEligioVariosGeneros(){
 
-           Usuario usuario = dadoQueExisteUnUsuario();
-           Genero genero = dadoQueExisteUnGenero("Accion");
-           Genero genero2 = dadoQueExisteUnGenero("Suspenso");
-            dadoQueExistenGenerosDeUnUsuario(usuario,genero);
-            dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
-            dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
-
-           List<GeneroUsuario> generosPorUsuario = cuandoConsultoPorLosGenerosDeUnUsuario(usuario);
-
-           entoncesObtengoGenerosElegidosPorElUsuario(generosPorUsuario,3);
-    }
-
-    private void entoncesObtengoGenerosElegidosPorElUsuario(List<GeneroUsuario> generosPorUsuario, int cantidadEsperada ) {
-        assertThat(generosPorUsuario).isNotNull();
-        assertThat(generosPorUsuario).hasSize(cantidadEsperada);
-    }
-
-    private List<GeneroUsuario> cuandoConsultoPorLosGenerosDeUnUsuario(Usuario generoUsuario) {
-        return repositorioGenero.obtenerGenerosElegidosPorUsuario(generoUsuario);
-    }
-
-    private Usuario dadoQueExisteUnUsuario(){
-        Usuario usuario = new Usuario();
-        session().save(usuario);
-        return usuario;
-    }
-    private Genero dadoQueExisteUnGenero(String descripcion){
-        Genero genero = new Genero();
-        genero.setDescripcion(descripcion);
-        session().save(genero);
-        return  genero;
-    }
-    private GeneroUsuario dadoQueExistenGenerosDeUnUsuario(Usuario usuario, Genero genero){
-        GeneroUsuario generoUsuario = new GeneroUsuario();
-        generoUsuario.setUsuario(usuario);
-        generoUsuario.setGenero(genero);
-        session().save(generoUsuario);
-        return generoUsuario;
-    }
 }

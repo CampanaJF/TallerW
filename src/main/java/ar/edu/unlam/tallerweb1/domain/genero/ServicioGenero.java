@@ -13,9 +13,6 @@ public interface ServicioGenero {
     String getDescripcionGeneroById(Long id);
 
     List<Genero> obtenerDescrpcionesGeneroPorId(Long idGenero);
-
     void guardarGeneroElegidoPorUsuario(List<Long> generos, Usuario usuario);
-    List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
-    List<Pelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario);
 
 }

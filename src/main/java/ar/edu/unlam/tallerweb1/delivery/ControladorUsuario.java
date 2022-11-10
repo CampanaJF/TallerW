@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
+import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.exceptions.*;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
@@ -24,12 +25,12 @@ public class ControladorUsuario {
 
 	private ServicioUsuario servicioUsuario;
 	private ServicioSession servicioSession;
-    private ServicioGenero servicioGenero;
+    private ServicioPelicula servicioPelicula;
 	@Autowired
-	public ControladorUsuario(ServicioUsuario servicioUsuario, ServicioSession servicioSession, ServicioGenero servicioGenero){
+	public ControladorUsuario(ServicioUsuario servicioUsuario, ServicioSession servicioSession, ServicioPelicula servicioPelicula){
 		this.servicioUsuario = servicioUsuario;
 		this.servicioSession = servicioSession;
-		this.servicioGenero= servicioGenero;
+		this.servicioPelicula= servicioPelicula;
 	}
 
 
@@ -162,7 +163,7 @@ public class ControladorUsuario {
 			throw new PasswordsDiferentesException();	
 	}
 	private Boolean eligioUnGenero(Usuario usuarioBuscado){
-		if(this.servicioGenero.obtenerGenerosElegidosPorUsuario(usuarioBuscado).size() > 0)
+		if(this.servicioPelicula.obtenerGenerosElegidosPorUsuario(usuarioBuscado).size() > 0)
 			return true;
 		return false;
 	}

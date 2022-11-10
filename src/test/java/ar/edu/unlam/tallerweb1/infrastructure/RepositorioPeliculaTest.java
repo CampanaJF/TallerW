@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -395,19 +397,46 @@ public class RepositorioPeliculaTest extends SpringTest {
 	
 	}
 
-/*	@Test
+	@Test
 	@Transactional
 	@Rollback
-	public void consultaQueDevuelveLasPeliculasSegunGeneroElegido() {
-
-		List<EtiquetaPelicula> peliculas= whenConsultoPorPeliculasElegidasPorGenero();
-
-		thenObtengoPeliculasElegidasPorGenero(peliculas,2);
+	public void queVerifiqueQueUnUsuarioEligioVariosGeneros(){
+		Usuario usuario = dadoQueExisteUnUsuario();
+		Genero genero = dadoQueExisteUnGenero("Accion");
+		Genero genero2 = dadoQueExisteUnGenero("Suspenso");
+		dadoQueExistenGenerosDeUnUsuario(usuario,genero);
+		dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
+		dadoQueExistenGenerosDeUnUsuario(usuario,genero2);
+		List<GeneroUsuario> generosPorUsuario = cuandoConsultoPorLosGenerosDeUnUsuario(usuario);
+		entoncesObtengoGenerosElegidosPorElUsuario(generosPorUsuario,3);
+	}
+	private void entoncesObtengoGenerosElegidosPorElUsuario(List<GeneroUsuario> generosPorUsuario, int cantidadEsperada ) {
+		assertThat(generosPorUsuario).isNotNull();
+		assertThat(generosPorUsuario).hasSize(cantidadEsperada);
 	}
 
-	private List<EtiquetaPelicula> whenConsultoPorPeliculasElegidasPorGenero() {
-		return this.repositorioPelicula.
-	}*/
+	private List<GeneroUsuario> cuandoConsultoPorLosGenerosDeUnUsuario(Usuario generoUsuario) {
+		return repositorioPelicula.obtenerGenerosElegidosPorUsuario(generoUsuario);
+	}
+
+	private Usuario dadoQueExisteUnUsuario(){
+		Usuario usuario = new Usuario();
+		session().save(usuario);
+		return usuario;
+	}
+	private Genero dadoQueExisteUnGenero(String descripcion){
+		Genero genero = new Genero();
+		genero.setDescripcion(descripcion);
+		session().save(genero);
+		return  genero;
+	}
+	private GeneroUsuario dadoQueExistenGenerosDeUnUsuario(Usuario usuario, Genero genero){
+		GeneroUsuario generoUsuario = new GeneroUsuario();
+		generoUsuario.setUsuario(usuario);
+		generoUsuario.setGenero(genero);
+		session().save(generoUsuario);
+		return generoUsuario;
+	}
 
 }
 

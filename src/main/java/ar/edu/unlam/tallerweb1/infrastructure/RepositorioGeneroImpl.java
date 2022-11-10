@@ -49,42 +49,16 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
                 .add(Restrictions.eq("id", idGenero))
                 .list();
     }
-
     @Override
     public void guardarGeneroElegidoPorUsuario(GeneroUsuario generoUsuario) {
         sessionFactory.getCurrentSession().save(generoUsuario);
     }
 
-
-
-
-
-
     @Override
     public Genero getGenero(Long id) {
         final Session session = sessionFactory.getCurrentSession();
-        Criterion rest1 = Restrictions.eq("id", id);
-        return (Genero) session.createCriteria(Genero.class).add(rest1).uniqueResult();
+        return (Genero) session.createCriteria(Genero.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
     }
-
-    @Override
-    public List<Pelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario) {
-        return null;
-    }
-    @Override
-    public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
-        Session session = sessionFactory.getCurrentSession();
-        return  session.createCriteria(GeneroUsuario.class)
-                .add(Restrictions.eq("usuario", usuario))
-                .list();
-    }
-    @Override
-    public List<Pelicula> obtenerPeliculasPor(Genero genero) {
-        final Session session = sessionFactory.getCurrentSession();
-      return  session.createCriteria(Pelicula.class)
-                .add(Restrictions.eq("genero",genero))
-                .list();
-    }
-
-
 }

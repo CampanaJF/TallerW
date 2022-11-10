@@ -50,17 +50,12 @@ public class ServicioGeneroImpl implements ServicioGenero{
 
         List<Genero> generos = getGeneros(genero);
 
-       for (Genero genero1: generos ) {
+       for (Genero genero1: generos) {
              GeneroUsuario generoUsuario1 = new GeneroUsuario();
              generoUsuario1.setUsuario(usuario);
              generoUsuario1.setGenero(genero1);
            repositorioGenero.guardarGeneroElegidoPorUsuario(generoUsuario1);
         }
-    }
-
-    @Override
-    public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario) {
-        return repositorioGenero.obtenerGenerosElegidosPorUsuario(usuario);
     }
 
     private List<Genero> getGeneros(List<Long>generos){
@@ -71,18 +66,4 @@ public class ServicioGeneroImpl implements ServicioGenero{
         }
         return generosElegidos;
     }
-
-    @Override
-    public  List<Pelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario){
-
-        List<GeneroUsuario> generosElegidos = obtenerGenerosElegidosPorUsuario(usuario);
-        List<Pelicula> peliculas = null;
-       
-        for(GeneroUsuario genero: generosElegidos) {
-             peliculas = this.repositorioGenero.obtenerPeliculasPor(genero.getGenero());
-        }
-
-     return peliculas;
-    }
-
 }

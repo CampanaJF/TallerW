@@ -15,10 +15,6 @@ public interface RepositorioGenero {
 
     void guardarGeneroElegidoPorUsuario(GeneroUsuario genero);
 
-    List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
-
     Genero getGenero(Long asiento);
 
-    List<Pelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario);
-    List<Pelicula> obtenerPeliculasPor(Genero genero);
 }

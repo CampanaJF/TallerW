@@ -6,6 +6,8 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPeliculaImpl;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioPeliculaImpl;
 
 
@@ -179,37 +181,60 @@ public class ServicioPeliculaTest {
 		when(repositorioPelicula.getProximosEstrenos()).thenReturn(proximasEstrenos);
 		
 	}
-    
-  /*  @Test
-    public void queSePuedaObtenerUnPromedioDeValoracionesDeUnaPelicula(){
-        Pelicula pelicula = new Pelicula();
-        givenExistePelicula(pelicula);
-        Valoracion valoracion1 = new Valoracion(4,pelicula,"Buena",null);
-        Valoracion valoracion2 = new Valoracion(5,pelicula,"Excelente",null);
-        Valoracion valoracion3 = new Valoracion(4,pelicula,"Me gusto",null);
-        givenExistenValoracionesDeUnaPelicula(valoracion1);
-        givenExistenValoracionesDeUnaPelicula(valoracion2);
-        givenExistenValoracionesDeUnaPelicula(valoracion3);
-        Long promedio = whenObtengoPromedioDeValoracionesPorPelicula(pelicula);
-        thenObtengoPromedioDeValoracionesDeUnaPelicula(promedio,4L);
-    }
 
-    private void thenObtengoPromedioDeValoracionesDeUnaPelicula(Long promedio, Long promedioEsperado) {
-        assertThat(promedio).isEqualTo(promedioEsperado);
-    }
+	@Test
+	public void verificarQueDevuelvaPeliculasEnBaseAGeneroElegido(){
 
-    private double whenObtengoPromedioDeValoracionesPorPelicula(Pelicula pelicula){
-        return this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(pelicula);
-    }
-    private void  givenExistenValoracionesDeUnaPelicula(Valoracion valoracion){
-        List<Valoracion> valoracionList = new ArrayList<>();
-        valoracionList.add(valoracion);
-        when(this.repositorioPelicula.listarValoracionesPorPelicula(valoracion.getPelicula())).thenReturn(valoracionList);
-    }
-    private void givenExistePelicula(Pelicula pelicula){
-        List<Pelicula> peliculaList = new ArrayList<>();
-        peliculaList.add(pelicula);
-        when(this.repositorioPelicula.getPeliculas()).thenReturn(peliculaList);
-    }
-*/
+		Usuario usuario = dadoQueExisteUnUsuario();
+
+		Genero genero = dadoQueExisteUnGenero();
+
+		givenHayPeliculas(usuario,genero);
+
+		dadoQueExisteGenerosDeUnUsuario(usuario);
+
+		List<PeliculaConEtiquetaDTO> peliculas = cuandoConsultoPorPeliculasEnBaseAGenero(usuario);
+
+		thenObtengoPeliculasEnBaseAGeneroElegido(peliculas);
+	}
+	private void givenHayPeliculas(Usuario usuario,Genero genero){
+		List<EtiquetaPelicula> etiquetaPeliculas = new ArrayList<>();
+
+		EtiquetaPelicula etiqueta1=new EtiquetaPelicula();
+		Etiqueta etiqueta=new Etiqueta();
+		Pelicula pelicula =new Pelicula();
+		pelicula.setGenero(genero);
+		etiqueta1.setEtiqueta(etiqueta);
+		etiqueta1.setPelicula(pelicula);
+		etiquetaPeliculas.add(etiqueta1);
+
+		when(repositorioPelicula.obtenerPeliculasPor(anyObject())).thenReturn(etiquetaPeliculas);
+	}
+
+	private void thenObtengoPeliculasEnBaseAGeneroElegido(List<PeliculaConEtiquetaDTO> peliculas ) {
+		assertThat(peliculas).isNotNull();
+		verify(repositorioPelicula,times(1)).obtenerGenerosElegidosPorUsuario(anyObject());
+
+	}
+
+
+	private void dadoQueExisteGenerosDeUnUsuario(Usuario usuario) {
+		List<GeneroUsuario> generoUsuarios = new ArrayList<>();
+		when((repositorioPelicula.obtenerGenerosElegidosPorUsuario(usuario))).thenReturn(generoUsuarios);
+	}
+
+	private List<PeliculaConEtiquetaDTO> cuandoConsultoPorPeliculasEnBaseAGenero(Usuario usuario) {
+		return servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+	}
+	private Usuario dadoQueExisteUnUsuario(){
+		Usuario usuario = new Usuario();
+		return usuario;
+	}
+	private Genero dadoQueExisteUnGenero(){
+		Genero genero = new Genero();
+		return genero;
+	}
+
+
+
 }
