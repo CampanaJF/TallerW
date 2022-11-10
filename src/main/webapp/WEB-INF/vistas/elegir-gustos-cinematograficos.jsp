@@ -26,23 +26,28 @@
         <h5 class="text-center text-white">${mensaje}</h5>
     </div>
 </c:if>
-<h1 class="text-center text-white mt-3 mb-2"> Elige alguno de estos generos para una mejor experiencia</h1>
-<section class="d-flex  flex-row flex-wrap text-center justify-content-center align-items-center">
- <form:form action="procesar-elegir-gustos" method="post" modelAttribute="datosGenero">
-        <article class="col-4 p-5 m-5">
-          <c:forEach items="${generos}" var="genero">
+<h1 class="text-center text-white mt-3 mb-2"> Elige tus generos favoritos para una mejor experiencia</h1>
+<!--d-flex flex-row flex-wrap
+<div class="d-flex flex-row flex-wrap p-5 text-white text-center justify-content-center">-->
 
-              <form:checkbox path="generos" value="${genero.id}" id="${genero.id}"/>
-              <form:label for="${genero.id}" path="generos" class="text-white"> ${genero.descripcion} </form:label>
+ <form:form action="procesar-elegir-gustos" method="post" modelAttribute="datosGenero">
+       <section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
+          <c:forEach items="${generos}" var="genero">
+              <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+               <div class="img-fluid">
+                   <img src="${genero.poster}" width="200px" height="230px">
+               </div>
+              <div  class="d-flex  flex-row flex-wrap mt-2 text-center justify-content-center align-items-center" >
+                  <form:checkbox path="generos" value="${genero.id}" id="${genero.id}"/>
+                  <form:label for="${genero.id}" path="generos" class="text-white"> ${genero.descripcion} </form:label>
+              </div>
+              </article>
           </c:forEach>
            <form:hidden path="usuario.id" value="${usuario.id}"></form:hidden>
-           <div>
-               <form:button class="buttonA mt-3">Continuar</form:button>
+           <div style="margin-left: 50%">
+               <form:button class="buttonA mt-3 " >Continuar</form:button>
            </div>
-        </article>
 </form:form>
-
-
-</section>
+    </section>
 </body>
 </html>

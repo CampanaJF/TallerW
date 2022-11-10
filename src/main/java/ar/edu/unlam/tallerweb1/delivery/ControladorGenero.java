@@ -46,7 +46,6 @@ public class ControladorGenero {
         this.servicioGenero.guardarGeneroElegidoPorUsuario(datosGenero.getGeneros(),obtenerUsuarioLogueado(request));
         ModelMap model = new ModelMap();
         model.put("usuario",obtenerUsuarioLogueado(request));
-      //  model.put("generosElegidos", this.servicioGenero.obtenerGenerosElegidosPorUsuario(obtenerUsuarioLogueado(request)));
-      return new ModelAndView("redirect:/home");
+       return new ModelAndView("redirect:/home");
     }
 }

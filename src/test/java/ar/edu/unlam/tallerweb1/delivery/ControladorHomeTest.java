@@ -74,4 +74,21 @@ public class ControladorHomeTest {
 		
 	}
 
+	@Test
+	public void alIrAHomeSeVisualizanPeliculasBasadasEnElGustoCinematografico(){
+		//when voy al home
+		ModelAndView mav = cuandoVoyAlHome();
+		//entoncesEncuentroPeliculasBasadasEnElGusto(mav, 1);
+		//entonces encuentro peliculas basadas en el gusto
+	}
+	private ModelAndView cuandoVoyAlHome(){
+		 ModelAndView mav = controlador.irAHome(mockRequest, null);
+		 return mav;
+	}
+	/*private List<Pelicula> entoncesEncuentroPeliculasBasadasEnElGusto(ModelAndView mav, int cantidadEsperada){
+		List<Pelicula> peliculas = new ArrayList<>();
+		Pelicula pelicula = new Pelicula();
+		peliculas.add(pelicula);
+		//when(servicioGenero.)
+	}*/
 }

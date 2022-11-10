@@ -14,6 +14,7 @@ public class Genero {
 
     private String descripcion;
 
+    private String poster;
     @ManyToOne
     private Usuario usuario;
 
@@ -39,5 +40,14 @@ public class Genero {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

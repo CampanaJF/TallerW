@@ -181,10 +181,24 @@ public class RepositorioPeliculaTest extends SpringTest {
 		//obtengo calif de la pelicula
 		thenObtengoCalificaciones(calificaciones,3);
 	}
-    
+	@Test
+	@Transactional
+	@Rollback
+	public void devolverPeliculasEnBaseAGustosElegidos() {
+		//un usuario
 
-	
-	private void givenPeliculasConEtiquetas() {
+		//gusto (genero)
+
+		//un usuario elige un genero o varios
+
+		// cuando consulto por peliculas en base a gustos elegidos
+
+		//then se obtiene peliculas
+
+	}
+
+
+		private void givenPeliculasConEtiquetas() {
 	Pelicula pelicula=givenPelicula("Dragon ball Super","2022/11/10");
 	Etiqueta susto=crearEtiqueta("Susto");
 	Etiqueta pelea=crearEtiqueta("Pelea");

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ServicioGeneroTest {
+    private final HttpServletRequest mockRequest= mock(HttpServletRequest.class);
+
     @Autowired
     private RepositorioGenero repositorioGenero;
 
@@ -23,6 +26,7 @@ public class ServicioGeneroTest {
 
     @Before
     public void init(){
+
         repositorioGenero = mock(RepositorioGenero.class);
         servicioGenero = new ServicioGeneroImpl(repositorioGenero);
     }
@@ -34,4 +38,9 @@ public class ServicioGeneroTest {
         verify(repositorioGenero,times(1)).getGeneros();
         assertEquals(listaGeneros,listaGenerosRecuperados);
     }
+    @Test
+    public void queDevuelvaLosGenerosElegidosDelUsuario(){
+
+    }
+
 }

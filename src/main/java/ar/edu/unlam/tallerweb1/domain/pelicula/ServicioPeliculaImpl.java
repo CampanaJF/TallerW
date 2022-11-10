@@ -158,7 +158,7 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 			for (Valoracion val:valoraciones) {
 				suma=suma+val.getPuntos();
 			}
-			promedioValoracion=(double)suma/valoraciones.size();
+			promedioValoracion=Math.round(((double)suma/valoraciones.size())*10.0)/10.0;
 		}
 
 		return promedioValoracion;

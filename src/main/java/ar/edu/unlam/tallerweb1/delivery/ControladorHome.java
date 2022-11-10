@@ -39,7 +39,8 @@ public class ControladorHome {
 		 
 		//model.put("error", mensaje);
 		model.put("usuario", userId);
-	
+	    /**Debo devolver  una lista de peliculas en base a los gustos (generos) cinematograficos del usuario **/
+      //  List<Pelicula> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasPorGustoElegido();
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		

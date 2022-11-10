@@ -7,14 +7,12 @@ import static org.hibernate.criterion.Restrictions.in;
 import static org.hibernate.criterion.Restrictions.ne;
 import static org.hibernate.criterion.Restrictions.sqlRestriction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import ar.edu.unlam.tallerweb1.domain.genero.Genero;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Valoracion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -183,4 +181,13 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 		return criteria.list();
 	}
 
+	public List<Genero> obtenerGeneroUsuario(Usuario usuario){
+		final Session session = sessionFactory.getCurrentSession();
+
+		 session.createCriteria(GeneroUsuario.class)
+				 .add(Restrictions.eq("usuario",usuario))
+		          .list();
+
+		return null;
+	}
 }
