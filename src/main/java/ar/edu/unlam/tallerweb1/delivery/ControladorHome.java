@@ -99,7 +99,7 @@ public class ControladorHome {
 	
 	private Boolean validarHistorialExistente(Usuario usuario) {
 		
-		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario)==null) 
+		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).get(0).getId()==null) 
 			return false;
 		
 		return true;
