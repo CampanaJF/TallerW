@@ -72,6 +72,7 @@ public class ControladorHome {
 		return new ModelAndView("home",model);
 	}
 
+	// pasar a service para mock
 	
 	private int obtenerIndice(Integer indiceMax) {
 		
