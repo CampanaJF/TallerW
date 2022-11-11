@@ -36,6 +36,7 @@ public class ControladorHome {
 		this.servicioHistorial = servicioHistorial;
 
 	}
+	
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
@@ -53,17 +54,21 @@ public class ControladorHome {
 			
 			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
 			model.put("historialB", peliculasHistorialB);
+			
+			model.put("usuario", usuario);
+			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+			
+			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 		}
 		
-		List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+		
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		
-		model.put("usuario", usuario);
 		
 		model.put("peliculasEstrenos", peliculasEstrenos);
 		model.put("proximosEstrenos", proximosEstrenos);
-		model.put("peliculasGeneroElegido", peliculasGeneroElegido);
+		
 		return new ModelAndView("home",model);
 	}
 
@@ -99,7 +104,7 @@ public class ControladorHome {
 	
 	private Boolean validarHistorialExistente(Usuario usuario) {
 		
-		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).get(0).getId()==null) 
+		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).size()<3) 
 			return false;
 		
 		return true;
