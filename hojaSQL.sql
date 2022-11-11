@@ -317,12 +317,7 @@ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
                     (76,11,25),
 					(77,23,25),
 					(78,26,25);
-                    
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> ad8ac95788888efd67b5a083c399dd29b046ab67
    insert into etiqueta (id,descripcion) values
 (1,'Susto'),
 (2,'Pelea'),

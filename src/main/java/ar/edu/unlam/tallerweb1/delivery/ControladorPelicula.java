@@ -24,41 +24,22 @@ import java.util.List;
 
 
 @Controller
-public class ControladorPelicula {
+public class ControladorPelicula extends ControladorBase{
 	
 	private final ServicioSession servicioSession;
 	private ServicioPelicula servicioPelicula;
 	private ServicioUsuario servicioUsuario;
 	@Autowired
 	public ControladorPelicula(ServicioSession servicioSession, ServicioPelicula servicioPelicula, ServicioUsuario servicioUsuario) {
+		super(servicioUsuario);
+		this.servicioPelicula=servicioPelicula;
 		this.servicioSession=servicioSession;
-		this.servicioPelicula = servicioPelicula;
-		this.servicioUsuario=servicioUsuario;
 	}
-	
-	@RequestMapping(path = "/pelicula", method = RequestMethod.GET)
-	public ModelAndView verPelicula(HttpServletRequest request) { //@RequestParam("peliculaId") Long peliculaId
-		
-		Long userId = this.servicioSession.getUserId(request);
-		
-		String pelicula = "pelicula.exe";
-				
-		ModelMap model = new ModelMap();
-			
-		if (userId==null) {
-			model.put("pelicula", pelicula);
-			
-			return new ModelAndView("pelicula",model);
-        }
-				
-		model.put("usuario", userId);
-		model.put("pelicula", pelicula);
-		
-		return new ModelAndView("pelicula",model);
+	@Override
+	public Usuario obtenerUsuarioLogueado(HttpServletRequest request){
+		return super.obtenerUsuarioLogueado(request);
 	}
-	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-	}
+
     @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value="titulo")String titulo,HttpServletRequest request) {
 
