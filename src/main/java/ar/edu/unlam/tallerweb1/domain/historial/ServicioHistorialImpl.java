@@ -53,7 +53,6 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 				
 				if(historialUsuario.get(j).getEtiqueta().equals(etiquetasNuevas.get(j)))
 					repetidos.add(historialUsuario.get(j));
-				
 			}
 			
 		}

@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.historial;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class Historial {
 	
 	@ManyToOne
 	private Etiqueta etiqueta;
+	
+	private Date creacion;
 
 	public Long getId() {
 		return id;
@@ -44,6 +48,14 @@ public class Historial {
 
 	public void setEtiqueta(Etiqueta etiqueta) {
 		this.etiqueta = etiqueta;
+	}
+
+	public Date getCreacion() {
+		return creacion;
+	}
+
+	public void setCreacion(Date creacion) {
+		this.creacion = creacion;
 	}
 	
 	
