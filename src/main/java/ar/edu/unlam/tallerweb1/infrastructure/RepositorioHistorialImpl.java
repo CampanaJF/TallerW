@@ -36,6 +36,15 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 		
 		return session.createCriteria(Historial.class).add(rest1).list();
 	}
+	
+	@Override
+	public void guardarEnElHistorial(Historial historial) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.save(historial);
+		
+	}
 
 	@Override
 	public void agregarAlHistorial(Usuario usuario, List<Etiqueta> etiquetasDeLaPelicula) {

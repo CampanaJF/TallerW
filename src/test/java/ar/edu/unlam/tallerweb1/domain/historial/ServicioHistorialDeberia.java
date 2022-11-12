@@ -9,6 +9,8 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.google.protobuf.Any;
+
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
@@ -46,13 +48,13 @@ public class ServicioHistorialDeberia {
 		return this.servicioHistorial.mapeoHistorial(etiquetasPelicula,"wew");
 		
 	}
-
+	
 	@Test
-	public void agregarEtiquetasAlHistorialDelUsuario() {
+	public void agregarMultiplesEtiquetasAlHistorialDelUsuario() {
 		Usuario usuario = givenUsuario();
 		Pelicula pelicula = givenPelicula();
 		
-		List<Etiqueta> etiquetas = givenEtiquetas(3);
+		List<Etiqueta> etiquetas = givenEtiquetas(6);
 		
 		List<EtiquetaPelicula> etiquetasPelicula = givenEtiquetaPelicula(etiquetas,pelicula);
 		
@@ -61,16 +63,33 @@ public class ServicioHistorialDeberia {
 		thenSeAgregaronEtiquetasAlHistorial(usuario,etiquetas);
 	}
 
-
-
 	private void thenSeAgregaronEtiquetasAlHistorial(Usuario usuario,List<Etiqueta> etiquetas) {
-		verify(this.repositorioHistorial,times(1)).agregarAlHistorial(usuario,etiquetas);
+		verify(this.repositorioHistorial,times(6)).guardarEnElHistorial(any(Historial.class));
+		
+	}
+
+	@Test
+	public void agregarUnaEtiquetaAlHistorialDelUsuario() {
+		Usuario usuario = givenUsuario();
+		Pelicula pelicula = givenPelicula();
+		
+		List<Etiqueta> etiquetas = givenEtiquetas(1);
+		
+		List<EtiquetaPelicula> etiquetasPelicula = givenEtiquetaPelicula(etiquetas,pelicula);
+		
+		whenSeAgreganEtiquetasAlHistorial(usuario,pelicula,etiquetasPelicula);
+		
+		thenSeAgregoUnaEtiquetaAlHistorial(usuario,etiquetas);
+	}
+
+	private void thenSeAgregoUnaEtiquetaAlHistorial(Usuario usuario,List<Etiqueta> etiquetas) {
+		verify(this.repositorioHistorial,times(1)).guardarEnElHistorial(any(Historial.class));
 		
 	}
 
 	private void whenSeAgreganEtiquetasAlHistorial(Usuario usuario,Pelicula pelicula,List<EtiquetaPelicula> etiquetasPelicula) {
 		when(this.repositorioHistorial.obtenerEtiquetasDePelicula(pelicula)).thenReturn(etiquetasPelicula);
-		this.servicioHistorial.agregarAlHistorial(usuario,pelicula);
+		this.servicioHistorial.guardarEnElHistorial(usuario,pelicula);
 		
 	}
 
@@ -95,7 +114,7 @@ public class ServicioHistorialDeberia {
 
 	private List<Etiqueta> whenSeObtienenLasEtiquetasDelHistorial(Usuario usuario, List<Historial> historialUsuario) {
 		when(this.repositorioHistorial.obtenerHistorial(usuario)).thenReturn(historialUsuario);
-		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+		return this.servicioHistorial.obtenerEtiquetasDelUsuario(usuario);
 	}
 
 

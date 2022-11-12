@@ -8,6 +8,8 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 public interface RepositorioHistorial {
+	
+	void guardarEnElHistorial(Historial historial);
 
 	List<Historial> obtenerHistorial(Usuario usuario);
 

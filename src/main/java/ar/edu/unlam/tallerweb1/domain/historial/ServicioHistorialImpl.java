@@ -29,6 +29,51 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	}
 	
 	@Override
+	public void guardarEnElHistorial(Usuario usuario, Pelicula pelicula) {
+		
+		List<Etiqueta> etiquetasNuevas = obtenerEtiquetasDePelicula(pelicula);
+		
+		List<Historial> historialUsuario = obtenerHistorialUsuario(usuario);
+		
+		if(historialMaximaCapacidad(historialUsuario)) 
+		guardarHistorialNuevo(usuario,etiquetasNuevas);
+		else 
+		actualizarHistorial(usuario,etiquetasNuevas,historialUsuario);
+		
+	}
+
+	
+	
+	private void actualizarHistorial(Usuario usuario, List<Etiqueta> etiquetasNuevas,List<Historial> historialUsuario) {
+			
+		List<Historial> repetidos = new ArrayList<>();
+		
+		for (int i = 0; i < etiquetasNuevas.size(); i++) {
+			for (int j = 0; j < historialUsuario.size(); j++) {
+				
+				if(historialUsuario.get(j).getEtiqueta().equals(etiquetasNuevas.get(j)))
+					repetidos.add(historialUsuario.get(j));
+				
+			}
+			
+		}
+		
+	}
+
+	private void guardarHistorialNuevo(Usuario usuario,List<Etiqueta> etiquetas) {
+		
+		for (Etiqueta etiqueta : etiquetas) {
+			Historial nuevo = new Historial();
+			
+			nuevo.setEtiqueta(etiqueta);
+			nuevo.setUsuario(usuario);
+			
+			guardarEnElHistorial(nuevo);
+		}
+	}
+
+
+	@Override
 	public void agregarAlHistorial(Usuario usuario, Pelicula pelicula) {
 		
 		List<Etiqueta> etiquetasNuevas = obtenerEtiquetasNoRepetidas(usuario,obtenerEtiquetasDePelicula(pelicula));
@@ -36,20 +81,20 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		if(historialLleno(usuario))
 			crearHistorial(usuario, etiquetasNuevas);
 		else
-			actualizarHistorial(usuario, etiquetasNuevas);
+			actualizarHistorialUsuario(usuario, etiquetasNuevas);
 		
 	}
 
 	@Override
 	public List<Etiqueta> obtenerEtiquetasNoRepetidas(Usuario usuario, List<Etiqueta> etiquetasNuevas) {
 			
-		etiquetasNuevas.removeAll(obtenerEtiquetasDelHistorial(usuario));
+		etiquetasNuevas.removeAll(obtenerEtiquetasDelUsuario(usuario));
 		
 		return etiquetasNuevas;
 	}
 	
 	@Override
-	public List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
+	public List<Etiqueta> obtenerEtiquetasDelUsuario(Usuario usuario) {
 		
 		List<Historial> historialDelUsuario = obtenerHistorialUsuario(usuario);
 		
@@ -79,7 +124,7 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	@Override
 	public List <PeliculaConEtiquetaDTO> obtenerPeliculasDeLasEtiquetasDelUsuario(Usuario usuario,Integer indice) {
 		
-		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelHistorial(usuario);
+		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelUsuario(usuario);
 
 	
 		return mapeoHistorial( obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)),
@@ -148,13 +193,23 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	}
 
 
-	private void actualizarHistorial(Usuario usuario, List<Etiqueta> etiquetas) {
+	private void actualizarHistorialUsuario(Usuario usuario, List<Etiqueta> etiquetas) {
 		this.repositorioHistorial.actualizarHistorial(usuario, etiquetas);
 	}
 
 	private void crearHistorial(Usuario usuario, List<Etiqueta> etiquetas) {
 		this.repositorioHistorial.agregarAlHistorial(usuario, etiquetas);
 	}
+	
+	private void guardarEnElHistorial(Historial nuevo) {
+		this.repositorioHistorial.guardarEnElHistorial(nuevo);
+	}
+	
+	private boolean historialMaximaCapacidad(List<Historial> historialUsuario) {
+		return historialUsuario.size()<=3;
+	}
+
+
 	
 
 }

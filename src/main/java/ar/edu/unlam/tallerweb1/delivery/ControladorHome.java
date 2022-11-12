@@ -100,12 +100,12 @@ public class ControladorHome {
 	}
 
 	private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
-		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+		return this.servicioHistorial.obtenerEtiquetasDelUsuario(usuario);
 	}
 	
 	private Boolean validarHistorialExistente(Usuario usuario) {
 		
-		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).size()<3) 
+		if(this.servicioHistorial.obtenerEtiquetasDelUsuario(usuario).size()<3) 
 			return false;
 		
 		return true;

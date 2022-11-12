@@ -82,7 +82,7 @@ public class ControladorHomeTest {
 		peliculasEstrenos.add(pelicula);
 		peliculasEstrenos.add(pelicula2);
 		mocksSessionRequests();
-		when(servicioHistorial.obtenerEtiquetasDelHistorial(usuario)).thenReturn(givenEtiquetas(3));
+		when(servicioHistorial.obtenerEtiquetasDelUsuario(usuario)).thenReturn(givenEtiquetas(3));
 		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);
 		when(servicioUsuario.getUsuario(5L)).thenReturn(usuario);
 		return peliculasEstrenos;
