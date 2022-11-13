@@ -45,6 +45,14 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 		session.save(historial);
 		
 	}
+	
+	@Override
+	public void actualizarHistorial(Historial historialActualizado) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.update(historialActualizado);
+	}
 
 	@Override
 	public void agregarAlHistorial(Usuario usuario, List<Etiqueta> etiquetasDeLaPelicula) {
@@ -80,7 +88,7 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 		}
 				
 	}
-
+	
 	@Override
 	public List<EtiquetaPelicula> obtenerEtiquetasDePelicula(Pelicula pelicula) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -99,5 +107,7 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 
 		return session.createCriteria(EtiquetaPelicula.class).add(rest1).list();
 	}
+
+	
 
 }

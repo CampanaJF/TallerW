@@ -35,10 +35,10 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		
 		List<Historial> historialUsuario = obtenerHistorialUsuario(usuario);
 		
-		if(historialMaximaCapacidad(historialUsuario)) 
-		guardarHistorialNuevo(usuario,etiquetasNuevas);
-		else 
+		if(!(historialMaximaCapacidad(historialUsuario))) 
 		actualizarHistorial(usuario,etiquetasNuevas,historialUsuario);
+		else 
+		guardarHistorialNuevo(usuario,etiquetasNuevas);
 		
 	}
 
@@ -46,17 +46,66 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	
 	private void actualizarHistorial(Usuario usuario, List<Etiqueta> etiquetasNuevas,List<Historial> historialUsuario) {
 			
-		List<Historial> repetidos = new ArrayList<>();
+		List<Etiqueta> repetidas = obtenerRepetidos(etiquetasNuevas,historialUsuario);
+		
+		etiquetasNuevas.removeAll(repetidas);
+		
+		for (Etiqueta etiqueta : etiquetasNuevas) {
+			
+			Historial actualizado = obtenerHistorialAReemplazar(repetidas,historialUsuario);
+			actualizado.setEtiqueta(etiqueta);
+			actualizarHistorial(actualizado);
+			
+		}
+					
+	}
+
+	// si de la lista del historial obtengo el primer historial que no sea repetido en lugar de reccorerlo como una array
+	
+	private void actualizar(List<Historial> historialUsuario,List<Etiqueta> repetidas, Etiqueta etiqueta) {
+		
+		for (int j = 0; j < historialUsuario.size(); j++) {
+			if(validarRepetida(repetidas,historialUsuario.get(j).getEtiqueta())) 
+				historialUsuario.get(j).setEtiqueta(etiqueta);
+				actualizarHistorial(historialUsuario.get(j));							
+		}
+		
+	}
+	
+	private Historial obtenerHistorialAReemplazar(List<Etiqueta> repetidas,List<Historial> historialUsuario) {
+		
+		Historial obtenido = new Historial();
+		
+		for (Historial historial : historialUsuario) {
+			if(validarRepetida(repetidas,historial.getEtiqueta()))
+				return historial;
+		}
+		
+		return obtenido;
+	}
+
+	public Boolean validarRepetida(List<Etiqueta> repetidas,Etiqueta historial) {
+		
+		if(repetidas.contains(historial)) 
+			return false;
+		
+		return true;
+	}
+
+	public List<Etiqueta> obtenerRepetidos(List<Etiqueta> etiquetasNuevas, List<Historial> historialUsuario) {
+		
+		List<Etiqueta> repetidos = new ArrayList<>();
 		
 		for (int i = 0; i < etiquetasNuevas.size(); i++) {
 			for (int j = 0; j < historialUsuario.size(); j++) {
-				
-				if(historialUsuario.get(j).getEtiqueta().equals(etiquetasNuevas.get(j)))
-					repetidos.add(historialUsuario.get(j));
+				if(historialUsuario.get(j).getEtiqueta().equals(etiquetasNuevas.get(i))) 
+					repetidos.add(historialUsuario.get(j).getEtiqueta());	
+					
 			}
 			
 		}
 		
+		return repetidos;
 	}
 
 	private void guardarHistorialNuevo(Usuario usuario,List<Etiqueta> etiquetas) {
@@ -206,6 +255,10 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 	
 	private boolean historialMaximaCapacidad(List<Historial> historialUsuario) {
 		return historialUsuario.size()<=3;
+	}
+	
+	private void actualizarHistorial(Historial historialUsuario) {
+		this.repositorioHistorial.actualizarHistorial(historialUsuario);
 	}
 
 

@@ -17,6 +17,8 @@ public interface RepositorioHistorial {
 
 	void actualizarHistorial(Usuario usuario, List<Etiqueta> nuevasEtiquetas);
 	
+	void actualizarHistorial(Historial historialActualizado);
+	
 	List<EtiquetaPelicula> obtenerEtiquetasDePelicula(Pelicula pelicula);
 
 	List<EtiquetaPelicula> obtenerPeliculasDeLaEtiqueta(Etiqueta etiqueta);

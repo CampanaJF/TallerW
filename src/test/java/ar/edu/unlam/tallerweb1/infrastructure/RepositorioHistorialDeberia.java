@@ -23,15 +23,7 @@ public class RepositorioHistorialDeberia extends SpringTest{
 
 	@Autowired
     private RepositorioHistorial repositorioHistorial;
-	
-	// Controlar la cantidad de etiquetas maxima que puede tener un usuario almacenadas
-	// recomendacion de peliculas basado en lo que se vio en el pasado (usar etiquetas)
-	// se debe establecer cuando el cliente compra entradas
-	// Buscar que no haya etiquetas repetidas antes de agregarlas (principalmente en servicio pero necesita repo para eso)
-	
-	// Test 0 guardadas
-	// test 6 guardadas sin repetir
-	// test 6 guardadas y repetidas almenos 1
+
 	
 	@Test
 	@Transactional
