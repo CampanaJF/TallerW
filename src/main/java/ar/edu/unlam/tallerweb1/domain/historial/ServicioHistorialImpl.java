@@ -13,7 +13,6 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
-import ar.edu.unlam.tallerweb1.domain.pelicula.dto.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -23,13 +22,10 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 public class ServicioHistorialImpl implements ServicioHistorial{
 	
 	private RepositorioHistorial repositorioHistorial;
-	
-	private ServicioRandomizer servicioRandomizer;
 
 	@Autowired
-	public ServicioHistorialImpl(RepositorioHistorial repositorioHistorial,ServicioRandomizer serivicioRandomizer) {
+	public ServicioHistorialImpl(RepositorioHistorial repositorioHistorial) {
 		this.repositorioHistorial = repositorioHistorial;
-		this.servicioRandomizer = servicioRandomizer;
 	}
 	
 	@Override

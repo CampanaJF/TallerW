@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.domain.pelicula.dto;
+package ar.edu.unlam.tallerweb1.domain.helper;
 
 import java.util.Random;
 

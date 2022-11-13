@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ServicioClasificacion;
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
+import ar.edu.unlam.tallerweb1.domain.helper.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
@@ -38,6 +39,7 @@ public class ControladorHomeTest {
 	ServicioPelicula servicioPelicula;
 	ServicioUsuario servicioUsuario;
 	ServicioHistorial servicioHistorial;
+	ServicioRandomizer servicioRandomizer;
 	HttpServletRequest mockRequest;
 	HttpSession mockSession;
 
@@ -46,6 +48,7 @@ public class ControladorHomeTest {
 		servicioUsuario=mock(ServicioUsuario.class);
         servicioPelicula = mock(ServicioPelicula.class);
         servicioHistorial = mock(ServicioHistorial.class);
+        servicioRandomizer = mock(ServicioRandomizer.class);
         servicioUsuario = mock(ServicioUsuario.class);
         mockRequest = mock(HttpServletRequest.class);
     	mockSession = mock(HttpSession.class);
@@ -74,7 +77,7 @@ public class ControladorHomeTest {
 	}
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
-		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial);
+		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer);
 		Usuario usuario = givenUsuario();
 		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
 		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();

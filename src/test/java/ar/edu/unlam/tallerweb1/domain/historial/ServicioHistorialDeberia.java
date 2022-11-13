@@ -13,7 +13,6 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
-import ar.edu.unlam.tallerweb1.domain.pelicula.dto.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -21,9 +20,7 @@ public class ServicioHistorialDeberia {
 	
 	private RepositorioHistorial repositorioHistorial = mock(RepositorioHistorial.class);
 	
-	private ServicioRandomizer servicioRandomizer = mock(ServicioRandomizer.class);
-	
-	private ServicioHistorialImpl servicioHistorial = new ServicioHistorialImpl(repositorioHistorial,servicioRandomizer);
+	private ServicioHistorialImpl servicioHistorial = new ServicioHistorialImpl(repositorioHistorial);
 	
 	@Test
 	public void validarSiUnaEtiquetaEstaRepetida() {
