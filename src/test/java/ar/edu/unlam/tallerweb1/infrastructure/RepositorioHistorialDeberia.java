@@ -55,28 +55,6 @@ public class RepositorioHistorialDeberia extends SpringTest{
 	}
 
 
-	@Test
-	@Transactional
-	@Rollback
-	public void listarTodasLasPeliculasConLasEtiquetasDelUsuario() {
-		
-		Usuario usuario = givenUsuario();
-		List <Etiqueta> etiquetasPrevias = givenEtiquetas(6);
-		givenHistorialPreExistente(usuario,etiquetasPrevias);
-		
-		Pelicula primera = givenPelicula("primera");
-		Pelicula segunda = givenPelicula("segunda");
-		Pelicula tercera = givenPelicula("tercera");
-		
-		givenEtiquetaPelicula(etiquetasPrevias.get(0),primera);
-		givenEtiquetaPelicula(etiquetasPrevias.get(1),segunda);
-		givenEtiquetaPelicula(etiquetasPrevias.get(1),tercera);
-		
-		List<EtiquetaPelicula> peliculas = whenSeObtienenPeliculas(etiquetasPrevias.get(1));
-		
-		thenSeObtienenLasPeliculas(peliculas);
-	}
-
 	private void thenSeObtienenLasPeliculas(List<EtiquetaPelicula> peliculas) {
 		assertThat(peliculas.get(0).getPelicula().getTitulo()).isEqualTo("segunda");
 		assertThat(peliculas.get(1).getPelicula().getTitulo()).isEqualTo("tercera");
@@ -88,51 +66,11 @@ public class RepositorioHistorialDeberia extends SpringTest{
 		
 	}
 
-	@Test
-	@Transactional
-	@Rollback
-	public void agregarAlHistorialLasEtiquetasDeLaPelicula() {
-		
-		Usuario usuario = givenUsuario();
-		List <Etiqueta> etiquetasDeLaPelicula = givenEtiquetas(3);
-		
-		whenAgregaAlHistorial(usuario,etiquetasDeLaPelicula);
-		
-		thenSeAgregoAlHistorial(usuario);
-		
-	}
-	
-	@Test
-	@Transactional
-	@Rollback
-	public void actualizarElHistorialDelUsuarioConLasEtiquetasMasRecientes() {
-		
-		Usuario usuario = givenUsuario();
-		
-		List <Etiqueta> etiquetasPrevias = givenEtiquetas(6);
-		
-		List <Etiqueta> nuevasEtiquetas = givenEtiquetas(3);
-		
-		givenHistorialPreExistente(usuario,etiquetasPrevias);
-		
-		whenSeActualizaElHistorial(usuario,nuevasEtiquetas);
-		
-		thenSeActualizoElHistorial(usuario,nuevasEtiquetas);
-		
-	}
+
 	
 	private void thenSeActualizoElHistorial(Usuario usuario,List<Etiqueta> etiquetasNuevas) {
 		assertThat(repositorioHistorial.obtenerHistorial(usuario).size()).isEqualTo(6);
 	//	assertThat(repositorioHistorial.obtenerHistorial(usuario).containsAll(etiquetasNuevas)).isTrue();
-		
-	}
-
-	private void whenSeActualizaElHistorial(Usuario usuario, List<Etiqueta> nuevasEtiquetas) {
-		repositorioHistorial.actualizarHistorial(usuario,nuevasEtiquetas);
-	}
-
-	private void givenHistorialPreExistente(Usuario usuario, List<Etiqueta> etiquetasPrevias) {
-		repositorioHistorial.agregarAlHistorial(usuario,etiquetasPrevias);
 		
 	}
 
@@ -141,10 +79,6 @@ public class RepositorioHistorialDeberia extends SpringTest{
 		
 	}
 
-	private void whenAgregaAlHistorial(Usuario usuario, List<Etiqueta> etiquetasDeLaPelicula) {
-		repositorioHistorial.agregarAlHistorial(usuario,etiquetasDeLaPelicula);
-		
-	}
 	
 	private List<Historial> historialUsuario(Usuario usuario){
 		return this.repositorioHistorial.obtenerHistorial(usuario);

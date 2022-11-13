@@ -17,10 +17,6 @@ public interface ServicioHistorial {
 	
 	List<Etiqueta> obtenerEtiquetasDePelicula(Pelicula pelicula);
 	
-	void agregarAlHistorial(Usuario usuario, Pelicula pelicula);
-	
-	Boolean historialLleno(Usuario usuario);
-	
 	List<PeliculaConEtiquetaDTO> obtenerPeliculasDeLasEtiquetasDelUsuario(Usuario usuario,Integer indice);
 
 

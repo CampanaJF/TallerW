@@ -9,12 +9,11 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.google.protobuf.Any;
-
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
@@ -22,13 +21,9 @@ public class ServicioHistorialDeberia {
 	
 	private RepositorioHistorial repositorioHistorial = mock(RepositorioHistorial.class);
 	
-	private ServicioHistorialImpl servicioHistorial = new ServicioHistorialImpl(repositorioHistorial);
+	private ServicioRandomizer servicioRandomizer = mock(ServicioRandomizer.class);
 	
-	
-	// Test 0 guardadas
-	// test 6 guardadas sin repetir
-	// test 6 guardadas y repetidas almenos 1
-	
+	private ServicioHistorialImpl servicioHistorial = new ServicioHistorialImpl(repositorioHistorial,servicioRandomizer);
 	
 	@Test
 	public void validarSiUnaEtiquetaEstaRepetida() {

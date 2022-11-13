@@ -13,19 +13,23 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.EtiquetaPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.pelicula.dto.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 
 
 @Service("servicioHistorial")
 @Transactional
-public class ServicioHistorialImpl implements ServicioHistorial {
+public class ServicioHistorialImpl implements ServicioHistorial{
 	
 	private RepositorioHistorial repositorioHistorial;
+	
+	private ServicioRandomizer servicioRandomizer;
 
 	@Autowired
-	public ServicioHistorialImpl(RepositorioHistorial repositorioHistorial) {
+	public ServicioHistorialImpl(RepositorioHistorial repositorioHistorial,ServicioRandomizer serivicioRandomizer) {
 		this.repositorioHistorial = repositorioHistorial;
+		this.servicioRandomizer = servicioRandomizer;
 	}
 	
 	@Override
@@ -36,15 +40,13 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		List<Historial> historialUsuario = obtenerHistorialUsuario(usuario);
 		
 		if(!(historialMaximaCapacidad(historialUsuario))) 
-		actualizarHistorial(usuario,etiquetasNuevas,historialUsuario);
+		actualizarHistorial(usuario,pelicula,etiquetasNuevas,historialUsuario);
 		else 
-		guardarHistorialNuevo(usuario,etiquetasNuevas);
+		guardarHistorialNuevo(usuario,pelicula,etiquetasNuevas);
 		
 	}
 
-	
-	
-	private void actualizarHistorial(Usuario usuario, List<Etiqueta> etiquetasNuevas,List<Historial> historialUsuario) {
+	private void actualizarHistorial(Usuario usuario,Pelicula pelicula,List<Etiqueta> etiquetasNuevas,List<Historial> historialUsuario) {
 			
 		List<Etiqueta> repetidas = obtenerRepetidos(etiquetasNuevas,historialUsuario);
 		
@@ -54,24 +56,13 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 			
 			Historial actualizado = obtenerHistorialAReemplazar(repetidas,historialUsuario);
 			actualizado.setEtiqueta(etiqueta);
+			actualizado.setPelicula(pelicula);
 			actualizarHistorial(actualizado);
 			
 		}
 					
 	}
 
-	// si de la lista del historial obtengo el primer historial que no sea repetido en lugar de reccorerlo como una array
-	
-	private void actualizar(List<Historial> historialUsuario,List<Etiqueta> repetidas, Etiqueta etiqueta) {
-		
-		for (int j = 0; j < historialUsuario.size(); j++) {
-			if(validarRepetida(repetidas,historialUsuario.get(j).getEtiqueta())) 
-				historialUsuario.get(j).setEtiqueta(etiqueta);
-				actualizarHistorial(historialUsuario.get(j));							
-		}
-		
-	}
-	
 	private Historial obtenerHistorialAReemplazar(List<Etiqueta> repetidas,List<Historial> historialUsuario) {
 		
 		Historial obtenido = new Historial();
@@ -108,29 +99,17 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		return repetidos;
 	}
 
-	private void guardarHistorialNuevo(Usuario usuario,List<Etiqueta> etiquetas) {
+	private void guardarHistorialNuevo(Usuario usuario,Pelicula pelicula,List<Etiqueta> etiquetas) {
 		
 		for (Etiqueta etiqueta : etiquetas) {
 			Historial nuevo = new Historial();
 			
 			nuevo.setEtiqueta(etiqueta);
 			nuevo.setUsuario(usuario);
+			nuevo.setPelicula(pelicula);
 			
 			guardarEnElHistorial(nuevo);
 		}
-	}
-
-
-	@Override
-	public void agregarAlHistorial(Usuario usuario, Pelicula pelicula) {
-		
-		List<Etiqueta> etiquetasNuevas = obtenerEtiquetasNoRepetidas(usuario,obtenerEtiquetasDePelicula(pelicula));
-		
-		if(historialLleno(usuario))
-			crearHistorial(usuario, etiquetasNuevas);
-		else
-			actualizarHistorialUsuario(usuario, etiquetasNuevas);
-		
 	}
 
 	@Override
@@ -175,7 +154,7 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelUsuario(usuario);
 
 	
-		return mapeoHistorial( obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)),
+		return mapeoHistorial(obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)),
 																etiquetasDelUsuario.get(indice).getDescripcion());
 
 	}
@@ -204,7 +183,6 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 			if(idPelicula!=etiquetaPelicula.getPelicula().getId()) {
 			PeliculaConEtiquetaDTO peliculaDTO=new PeliculaConEtiquetaDTO();
 			
-
 			peliculaDTO.setDescripcionEtiqueta(descripcion);
 			peliculaDTO.setPelicula(etiquetaPelicula.getPelicula());
 			peliculaDTO.setEtiquetas(obtenerEtiquetasDePelicula(etiquetaPelicula.getPelicula()));
@@ -216,16 +194,6 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		}
 		
 		return resultado;
-	}
-	
-	
-	@Override
-	public Boolean historialLleno(Usuario usuario) {
-		
-		if(obtenerHistorialUsuario(usuario).size()<6)
-			return true;
-		
-		return false;
 	}
 	
 	private List<EtiquetaPelicula> obtenerPeliculasDeLaEtiqueta(Etiqueta etiqueta) {
@@ -240,15 +208,6 @@ public class ServicioHistorialImpl implements ServicioHistorial {
 		return this.repositorioHistorial.obtenerHistorial(usuario);
 	}
 
-
-	private void actualizarHistorialUsuario(Usuario usuario, List<Etiqueta> etiquetas) {
-		this.repositorioHistorial.actualizarHistorial(usuario, etiquetas);
-	}
-
-	private void crearHistorial(Usuario usuario, List<Etiqueta> etiquetas) {
-		this.repositorioHistorial.agregarAlHistorial(usuario, etiquetas);
-	}
-	
 	private void guardarEnElHistorial(Historial nuevo) {
 		this.repositorioHistorial.guardarEnElHistorial(nuevo);
 	}
