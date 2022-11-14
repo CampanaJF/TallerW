@@ -148,22 +148,35 @@ public class ServicioHistorialImpl implements ServicioHistorial{
 	public List <PeliculaConEtiquetaDTO> obtenerPeliculasDeLasEtiquetasDelUsuario(Usuario usuario,Integer indice) {
 		
 		List<Etiqueta> etiquetasDelUsuario = obtenerEtiquetasDelUsuario(usuario);
+		
+		List<Pelicula> peliculasVistas = obtenerPeliculasVistasDelUsuario(usuario);
 
-	
-		return mapeoHistorial(obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice)),
+		
+		return mapeoHistorial(obtener4PeliculasDeLasEtiqueta(etiquetasDelUsuario.get(indice),peliculasVistas),
 																etiquetasDelUsuario.get(indice).getDescripcion());
 
 	}
 	
+	private List<Pelicula> obtenerPeliculasVistasDelUsuario(Usuario usuario) {
+		
+		List <Historial> historialUsuario = obtenerHistorialUsuario(usuario);
+		
+		List<Pelicula> peliculasVistas = new ArrayList<>();
+		
+		for (Historial historial : historialUsuario) {
+			peliculasVistas.add(historial.getPelicula());
+		}
+		
+		return peliculasVistas;
+	}
 
-
-	private List<EtiquetaPelicula> obtener4PeliculasDeLasEtiqueta(Etiqueta etiqueta) {
+	private List<EtiquetaPelicula> obtener4PeliculasDeLasEtiqueta(Etiqueta etiqueta,List<Pelicula> vistas) {
 		
 		List<EtiquetaPelicula> encontradas = obtenerPeliculasDeLaEtiqueta(etiqueta);
 		List<EtiquetaPelicula> resultado = new ArrayList<>();
 		
 		for (EtiquetaPelicula etiquetaPelicula : encontradas) {
-			if(resultado.size()<4)
+			if(validarPelicula(resultado,vistas,etiquetaPelicula))
 				resultado.add(etiquetaPelicula);
 		}
 		
@@ -191,6 +204,32 @@ public class ServicioHistorialImpl implements ServicioHistorial{
 		
 		return resultado;
 	}
+	
+	private Boolean validarPelicula(List <EtiquetaPelicula> resultado,List<Pelicula> vistas,EtiquetaPelicula etiquetaPelicula) {
+		
+		if(validarCantidadARecomendar(resultado)&&validarPeliculaVista(vistas,etiquetaPelicula))
+			return true;
+		
+		return false;
+	}
+	
+	private Boolean validarCantidadARecomendar(List <EtiquetaPelicula> resultado) {
+		
+		if(resultado.size()<4)
+			return true;
+		
+		return false;
+	}
+	
+	private Boolean validarPeliculaVista(List<Pelicula> vistas,EtiquetaPelicula etiquetaPelicula) {
+		
+		if(vistas.contains(etiquetaPelicula.getPelicula()))
+			return false;
+		
+		return true;
+	}
+	
+	
 	
 	private List<EtiquetaPelicula> obtenerPeliculasDeLaEtiqueta(Etiqueta etiqueta) {
 		return this.repositorioHistorial.obtenerPeliculasDeLaEtiqueta(etiqueta);
