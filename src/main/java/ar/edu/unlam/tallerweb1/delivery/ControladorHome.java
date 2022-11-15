@@ -18,6 +18,7 @@ import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
+import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
 
@@ -28,12 +29,15 @@ public class ControladorHome {
 	private ServicioUsuario servicioUsuario;
 	private ServicioPelicula servicioPelicula;
 	private ServicioHistorial servicioHistorial;
+	private ServicioSession servicioSession;
 
 	@Autowired
-	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,ServicioHistorial servicioHistorial){
+	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
+			ServicioHistorial servicioHistorial,ServicioSession servicioSession){
 		this.servicioUsuario = servicioUsuario;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
+		this.servicioSession=servicioSession;
 
 	}
 	
@@ -42,7 +46,7 @@ public class ControladorHome {
 		
 		ModelMap model = new ModelMap();
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-		 
+	   
 
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
@@ -54,11 +58,15 @@ public class ControladorHome {
 			
 			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
 			model.put("historialB", peliculasHistorialB);
-			
+			  
 			model.put("usuario", usuario);
 			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
 			
 			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
+			
+		}else {
+			 Long userId = this.servicioSession.getUserId(request);
+			 model.put("usuario", userId);
 		}
 		
 		

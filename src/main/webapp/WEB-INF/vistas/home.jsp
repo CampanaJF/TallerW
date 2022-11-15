@@ -54,13 +54,13 @@
   </div>
   
 </div>
-		<h1 class="text-light fw-bolder mt-5 mb-2">Recomendadas para ti</h1>
+		<h1 class="text-light fw-bolder mt-5 mb-2">Recomendadas para vos</h1>
             <section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
                 <c:forEach var="peliculasGenero" items="${peliculasGeneroElegido}">
                     <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
                         <div class="fila">
                             <div class="tile">
-                                <img class="pelicula" src="${peliculasGenero.pelicula.poster}"
+                                <img class="pelicula mx-xl-5" src="${peliculasGenero.pelicula.poster}"
                                      alt="">
                                 <div class="overlay ">
                                     <img class="pelicula" src="${peliculasGenero.pelicula.poster}">
@@ -102,11 +102,12 @@
             <h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
 		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${proximosEstrenos}">
-            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+            <article class="col-lg-4 col-xl-4 col-xxl-3  mt-4 mb-5 pb-5 ">
                 <div class="fila">
-                <div class="tile">
+                <div class="tile mx-xl-auto">
                 <img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}"
                     alt="">
+                 
                 <div class="overlay ">
                     <img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}">
                     <div class="container informacionPeli d-flex flex-column">
@@ -136,19 +137,25 @@
                 </div>
                 </div>
                 </div>
-              
-               
-            </article>
+              		<div class="contenedorProximamente mx-5 mx-xl-auto mx-xxl-5  m-auto ">
+                 <p class="text-light">Próximamente</p>    
+            </div>
+            <a href="ver-pelicula?pelicula=${peliculaDTO.getPelicula().id}" class="btn btn-lg text-light mt-2 informacionProximamente">
+            Más información
+            </a>
             
+            
+            </article>
+      
         </c:forEach>
         </section>
         
 		<h1 class="text-light fw-bolder mt-2">Estrenos del mes</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${peliculasEstrenos}">
-            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+            <article class="col-lg-4 col-xl-4 col-xxl-3 mt-4 mb-5 pb-5 ">
                 <div class="fila">
-                <div class="tile">
+                <div class="tile mx-xl-auto">
                 <img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}"
                     alt="">
                 <div class="overlay ">

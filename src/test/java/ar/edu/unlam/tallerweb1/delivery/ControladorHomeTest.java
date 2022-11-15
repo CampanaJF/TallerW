@@ -38,6 +38,7 @@ public class ControladorHomeTest {
 	ServicioPelicula servicioPelicula;
 	ServicioUsuario servicioUsuario;
 	ServicioHistorial servicioHistorial;
+	ServicioSession servicioSession;
 	HttpServletRequest mockRequest;
 	HttpSession mockSession;
 
@@ -47,9 +48,10 @@ public class ControladorHomeTest {
         servicioPelicula = mock(ServicioPelicula.class);
         servicioHistorial = mock(ServicioHistorial.class);
         servicioUsuario = mock(ServicioUsuario.class);
+        servicioSession=mock(ServicioSession.class);
         mockRequest = mock(HttpServletRequest.class);
     	mockSession = mock(HttpSession.class);
-
+    	controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioSession);
 	}
 	@Autowired
 	private ControladorHome controlador;
@@ -74,7 +76,7 @@ public class ControladorHomeTest {
 	}
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
-		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial);
+		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioSession);
 		Usuario usuario = givenUsuario();
 		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
 		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();

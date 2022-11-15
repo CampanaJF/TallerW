@@ -27,6 +27,8 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.RepositorioPelicula;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FiltroTest extends SpringTest {
 
+	//Agregar metodos como crearPelicula,clasificacion,Etiquetas en SpringTest para ahorrar codigo
+	
 	@Autowired
 	private RepositorioPelicula repositorioPelicula;
 
@@ -253,29 +255,7 @@ public class FiltroTest extends SpringTest {
 		
 	}
 
-	private ClasificacionPelicula crearClasificacion(String clasificacionPelicula) {
-		ClasificacionPelicula clasificacion = new ClasificacionPelicula();	
-		clasificacion.setDescripcion(clasificacionPelicula);
-		session().save(clasificacion);
-		return clasificacion;
-	}
-
-	private Genero crearGenero(String genero) {
-		Genero genero1 = new Genero();
-		genero1.setDescripcion(genero);
-		session().save(genero1);
-		return genero1;
-		
-	}
-	private Pelicula crearPelicula(String titulo,Date fechaEstreno,String director,Integer calificacion) {
-		Pelicula pelicula = new Pelicula();
-		pelicula.setTitulo(titulo);
-		pelicula.setFechaEstreno(fechaEstreno);
-		pelicula.setDirector(director);
-		pelicula.setCalificacion(calificacion);
-		session().save(pelicula);
-		return pelicula;
-	}
+	
 
 	private List<EtiquetaPelicula> whenBuscoPeliculasPorClasificacionYGenero() {
 		List<EtiquetaPelicula> peliculasObtenidasPorClasificacionYGenero = repositorioPelicula
@@ -366,7 +346,7 @@ public class FiltroTest extends SpringTest {
 	}
 
 	private void givenQueHayPeliculasPorClasificacion() {
-
+//Metodo en la superclase que genere la clasificacion,etiquetas
 		ClasificacionPelicula clasificacionATP=crearClasificacion("ATP");
 		ClasificacionPelicula clasificacionMas16=crearClasificacion("+16");
 
