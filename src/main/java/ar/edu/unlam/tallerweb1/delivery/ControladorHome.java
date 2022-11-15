@@ -24,92 +24,89 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 @Controller
 public class ControladorHome {
 
-	private ServicioUsuario servicioUsuario;
-	private ServicioPelicula servicioPelicula;
-	private ServicioHistorial servicioHistorial;
+    private ServicioUsuario servicioUsuario;
+    private ServicioPelicula servicioPelicula;
+    private ServicioHistorial servicioHistorial;
 
-	@Autowired
-	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,ServicioHistorial servicioHistorial){
-		this.servicioUsuario = servicioUsuario;
-		this.servicioPelicula = servicioPelicula;
-		this.servicioHistorial = servicioHistorial;
+    @Autowired
+    public ControladorHome(ServicioUsuario servicioUsuario, ServicioPelicula servicioPelicula, ServicioHistorial servicioHistorial) {
+        this.servicioUsuario = servicioUsuario;
+        this.servicioPelicula = servicioPelicula;
+        this.servicioHistorial = servicioHistorial;
 
-	}
-	    private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-			return this.servicioUsuario.getUsuario((Long) request.getSession().getAttribute("ID"));
-		}
-		@RequestMapping(path = "/home", method = RequestMethod.GET)
-	    public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
-		
-		ModelMap model = new ModelMap();
-	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-		 
+    }
+
+    private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
+        return this.servicioUsuario.getUsuario((Long) request.getSession().getAttribute("ID"));
+    }
+
+    @RequestMapping(path = "/home", method = RequestMethod.GET)
+    public ModelAndView irAHome(HttpServletRequest request, @ModelAttribute("error") String mensaje) {
+
+        ModelMap model = new ModelMap();
+        Usuario usuario = servicioUsuario.getUsuario((Long) request.getSession().getAttribute("ID"));
 
 
+        if (usuario != null && validarHistorialExistente(usuario)) {
+            Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
+            Integer primerIndice = obtenerIndice(indiceMax);
+            Integer segundoIndice = obtenerIndice(indiceMax, primerIndice);
 
-		if(usuario!=null&&validarHistorialExistente(usuario)) {		
-			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
-			Integer primerIndice = obtenerIndice(indiceMax);
-			Integer segundoIndice = obtenerIndice(indiceMax,primerIndice);
-		
-			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
-			model.put("historialA", peliculasHistorialA);
-			
-			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
-			model.put("historialB", peliculasHistorialB);
-		}
-		
+            List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario, primerIndice);
+            model.put("historialA", peliculasHistorialA);
 
-		List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+            List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
+            model.put("historialB", peliculasHistorialB);
+        }
 
-		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
-		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
-		
-		model.put("usuario", usuario);
-		
-		model.put("peliculasEstrenos", peliculasEstrenos);
-		model.put("proximosEstrenos", proximosEstrenos);
-		model.put("peliculasGeneroElegido", peliculasGeneroElegido);
-		return new ModelAndView("home",model);
-	}
+        List<PeliculaConEtiquetaDTO> peliculasEstrenos = servicioPelicula.obtenerPeliculaEstrenos();
+        List<PeliculaConEtiquetaDTO> proximosEstrenos = servicioPelicula.obtenerProximosEstrenos();
 
-	
-	private int obtenerIndice(Integer indiceMax) {
-		
-		Random r = new Random();
-		int low = 0;
-		int high = indiceMax;
-		int resultado = r.nextInt(high-low);
-		
-		return resultado;
-	}
-	
-	private int obtenerIndice(Integer indiceMax,Integer indice) {
-	
-		Integer resultado = obtenerIndice(indiceMax);
-		
-		while(resultado==indice) {
-			resultado = obtenerIndice(indiceMax);
-		}
-			
-		return resultado;
-	}
-	
-	private List<PeliculaConEtiquetaDTO> obtenerPeliculasDelHistorial(Usuario usuario, Integer indice) {
-		return servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario,indice);
-	}
+        model.put("usuario", usuario);
 
-	private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
-		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
-	}
-	
-	private Boolean validarHistorialExistente(Usuario usuario) {
-		
-		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).get(0).getId()==null) 
-			return false;
-		
-		return true;
-		
-	}
+        model.put("peliculasEstrenos", peliculasEstrenos);
+        model.put("proximosEstrenos", proximosEstrenos);
+        model.put("peliculasGeneroElegido", servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario));
+        return new ModelAndView("home", model);
+    }
+
+
+    private int obtenerIndice(Integer indiceMax) {
+
+        Random r = new Random();
+        int low = 0;
+        int high = indiceMax;
+        int resultado = r.nextInt(high - low);
+
+        return resultado;
+    }
+
+    private int obtenerIndice(Integer indiceMax, Integer indice) {
+
+        Integer resultado = obtenerIndice(indiceMax);
+
+        while (resultado == indice) {
+            resultado = obtenerIndice(indiceMax);
+        }
+
+        return resultado;
+    }
+
+    private List<PeliculaConEtiquetaDTO> obtenerPeliculasDelHistorial(Usuario usuario, Integer indice) {
+        return servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario, indice);
+    }
+
+    private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
+        return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+    }
+
+    private Boolean validarHistorialExistente(Usuario usuario) {
+
+        if (this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).get(0).getId() == null)
+            return false;
+
+        return true;
+
+    }
 
 }

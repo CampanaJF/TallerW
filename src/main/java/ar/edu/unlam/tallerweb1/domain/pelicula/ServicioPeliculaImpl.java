@@ -1,9 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.pelicula;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -194,24 +191,15 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		List<EtiquetaPelicula> peliculas = new ArrayList<>();
 
 		for (GeneroUsuario genero : generosElegidos) {
-			peliculas = this.repositorioPelicula.obtenerPeliculasPor(genero.getGenero());
+			peliculas.addAll(this.repositorioPelicula.obtenerPeliculasPor(genero.getGenero()));
 		}
-
 		return peliculas;
 	}
 	@Override
 	public List<PeliculaConEtiquetaDTO> obtenerPeliculasEnBaseAGeneroElegido(Usuario usuario) {
 		List<EtiquetaPelicula> etiquetasPeliculas = obtenerPeliculasPorGeneroElegido(usuario);
-
-		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
-
-		List<PeliculaConEtiquetaDTO> auxiliar = new ArrayList<>();
-		for (int i = 0; i < resultado.size(); i++) {
-			if (i < 4) {
-				auxiliar.add(resultado.get(i));
-			}
-		}
-		return auxiliar;
+		Collections.shuffle(etiquetasPeliculas);
+		return mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas.subList(0,3));
 	}
 
 
