@@ -2,7 +2,7 @@ drop database cineclub;
 create schema cineclub; 
 use cineclub;
 
-
+select * from pelicula;
 insert into usuario (email,nombre,password) values
 					('pacofranco45@gmail.com','Franco','1234'),
                     ('mail@mail.com','main','1234'),
@@ -417,6 +417,10 @@ values ('Muy buena',4,1,1),
        ('Me encanta',4,23,1),
        ('Buena peli',3,23,2),
        ('No me gusto',2,23,3);
+
+select * from historial;
+       
+       
 INSERT INTO genero (id,descripcion,poster)
 VALUES ("1","Acción",'img/peliculas/tren-bala.jpg');
 INSERT INTO genero (id,descripcion,poster)
@@ -433,3 +437,20 @@ INSERT INTO genero (id,descripcion,poster)
 VALUES ("7","Biografica",'img/peliculas/elvis.jpg');
 INSERT INTO genero (id,descripcion,poster)
 VALUES ("8","Animación",'img/peliculas/minion.jpg');
+
+update genero set poster='img/peliculas/minion.jpg' where id = 8;
+update genero set poster='img/peliculas/elvis.jpg' where id = 7;
+update genero set poster='img/peliculas/invitacion-al-infierno.jpg' where id = 6;
+update genero set poster='img/peliculas/carajita.jpg' where id = 5;
+update genero set poster='img/peliculas/30-noches-con-mi-ex.jpg' where id = 4;
+update genero set poster='img/peliculas/nop.jpg' where id = 3;
+update genero set poster='img/peliculas/db-super.jpg' where id = 2;
+update genero set poster='img/peliculas/tren-bala.jpg'where id = 1;
+
+delete from historial;
+
+
+
+select * from historial;
+
+insert into historial (id,etiqueta_id,usuario_id) values (1,16,2),(2,17,2),(3,18,2),(4,19,2),(5,10,2),(6,20,2);

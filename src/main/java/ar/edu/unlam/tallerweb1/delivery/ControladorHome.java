@@ -36,77 +36,88 @@ public class ControladorHome {
 
     }
 
+
     private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
         return this.servicioUsuario.getUsuario((Long) request.getSession().getAttribute("ID"));
     }
 
-    @RequestMapping(path = "/home", method = RequestMethod.GET)
-    public ModelAndView irAHome(HttpServletRequest request, @ModelAttribute("error") String mensaje) {
 
-        ModelMap model = new ModelMap();
-        Usuario usuario = servicioUsuario.getUsuario((Long) request.getSession().getAttribute("ID"));
+	@RequestMapping(path = "/home", method = RequestMethod.GET)
+	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
+		
+		ModelMap model = new ModelMap();
+	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+		 
 
+		if(usuario!=null&&validarHistorialExistente(usuario)) {		
+			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
+			Integer primerIndice = obtenerIndice(indiceMax);
+			Integer segundoIndice = obtenerIndice(indiceMax,primerIndice);
+		
+			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
+			model.put("historialA", peliculasHistorialA);
+			
+			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
+			model.put("historialB", peliculasHistorialB);
+			
+			model.put("usuario", usuario);
+			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+			
+			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
+		}
+		
+		
+		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
+		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
+		
+		
+		model.put("peliculasEstrenos", peliculasEstrenos);
+		model.put("proximosEstrenos", proximosEstrenos);
+		
+		return new ModelAndView("home",model);
+	}
 
-        if (usuario != null && validarHistorialExistente(usuario)) {
-            Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
-            Integer primerIndice = obtenerIndice(indiceMax);
-            Integer segundoIndice = obtenerIndice(indiceMax, primerIndice);
+	// pasar a service para mock
+	
+	private int obtenerIndice(Integer indiceMax) {
+		
+		Random r = new Random();
+		int low = 0;
+		int high = indiceMax;
+		int resultado = r.nextInt(high-low);
+		
+		return resultado;
+	}
+	
+	private int obtenerIndice(Integer indiceMax,Integer indice) {
+	
+		Integer resultado = obtenerIndice(indiceMax);
+		
+		while(resultado==indice) {
+			resultado = obtenerIndice(indiceMax);
+		}
+			
+		return resultado;
+	}
+	
+	private List<PeliculaConEtiquetaDTO> obtenerPeliculasDelHistorial(Usuario usuario, Integer indice) {
+		return servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario,indice);
+	}
 
-            List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario, primerIndice);
-            model.put("historialA", peliculasHistorialA);
+	private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
+		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+	}
+	
+	private Boolean validarHistorialExistente(Usuario usuario) {
+		
+		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).size()<3) 
+			return false;
+		
+		return true;
+		
+	}
+	
+	
 
-            List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
-            model.put("historialB", peliculasHistorialB);
-        }
-
-        List<PeliculaConEtiquetaDTO> peliculasEstrenos = servicioPelicula.obtenerPeliculaEstrenos();
-        List<PeliculaConEtiquetaDTO> proximosEstrenos = servicioPelicula.obtenerProximosEstrenos();
-
-        model.put("usuario", usuario);
-
-        model.put("peliculasEstrenos", peliculasEstrenos);
-        model.put("proximosEstrenos", proximosEstrenos);
-        model.put("peliculasGeneroElegido", servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario));
-        return new ModelAndView("home", model);
-    }
-
-
-    private int obtenerIndice(Integer indiceMax) {
-
-        Random r = new Random();
-        int low = 0;
-        int high = indiceMax;
-        int resultado = r.nextInt(high - low);
-
-        return resultado;
-    }
-
-    private int obtenerIndice(Integer indiceMax, Integer indice) {
-
-        Integer resultado = obtenerIndice(indiceMax);
-
-        while (resultado == indice) {
-            resultado = obtenerIndice(indiceMax);
-        }
-
-        return resultado;
-    }
-
-    private List<PeliculaConEtiquetaDTO> obtenerPeliculasDelHistorial(Usuario usuario, Integer indice) {
-        return servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario, indice);
-    }
-
-    private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
-        return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
-    }
-
-    private Boolean validarHistorialExistente(Usuario usuario) {
-
-        if (this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).get(0).getId() == null)
-            return false;
-
-        return true;
-
-    }
 
 }

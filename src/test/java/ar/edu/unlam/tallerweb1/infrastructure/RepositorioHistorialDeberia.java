@@ -28,6 +28,10 @@ public class RepositorioHistorialDeberia extends SpringTest{
 	// se debe establecer cuando el cliente compra entradas
 	// Buscar que no haya etiquetas repetidas antes de agregarlas (principalmente en servicio pero necesita repo para eso)
 	
+	// Test 0 guardadas
+	// test 6 guardadas sin repetir
+	// test 6 guardadas y repetidas almenos 1
+	
 	@Test
 	@Transactional
 	@Rollback
@@ -90,12 +94,13 @@ public class RepositorioHistorialDeberia extends SpringTest{
 		
 		whenSeActualizaElHistorial(usuario,nuevasEtiquetas);
 		
-		thenSeActualizoElHistorial(usuario);
+		thenSeActualizoElHistorial(usuario,nuevasEtiquetas);
 		
 	}
 	
-	private void thenSeActualizoElHistorial(Usuario usuario) {
+	private void thenSeActualizoElHistorial(Usuario usuario,List<Etiqueta> etiquetasNuevas) {
 		assertThat(repositorioHistorial.obtenerHistorial(usuario).size()).isEqualTo(6);
+		assertThat(repositorioHistorial.obtenerHistorial(usuario).containsAll(etiquetasNuevas)).isTrue();
 		
 	}
 
