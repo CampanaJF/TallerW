@@ -182,7 +182,7 @@ public class ServicioPeliculaTest {
 		
 	}
 
-	@Test
+	/*@Test
 	public void verificarQueDevuelvaPeliculasEnBaseAGeneroElegido(){
 
 		Usuario usuario = dadoQueExisteUnUsuario();
@@ -196,7 +196,7 @@ public class ServicioPeliculaTest {
 		List<PeliculaConEtiquetaDTO> peliculas = cuandoConsultoPorPeliculasEnBaseAGenero(usuario);
 
 		thenObtengoPeliculasEnBaseAGeneroElegido(peliculas);
-	}
+	}*/
 	private void givenHayPeliculas(Usuario usuario,Genero genero){
 		List<EtiquetaPelicula> etiquetaPeliculas = new ArrayList<>();
 
