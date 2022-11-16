@@ -64,29 +64,24 @@ public class ControladorPelicula extends ControladorBase{
 	}
 	@RequestMapping(path="/calificar-pelicula", method = RequestMethod.GET)
 	public ModelAndView calificarpelicula(@RequestParam Long pelicula,HttpServletRequest request){
-		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
-
 		ModelMap model = new ModelMap();
-		model.put("pelicula",peliculaBuscada);
+		model.put("pelicula",this.servicioPelicula.buscarPeliculaPorId(pelicula));
 		model.put("usuario",obtenerUsuarioLogueado(request));
+		model.put("datosValoracion",new DatosValoracion());
 		return new ModelAndView("calificar-pelicula",model);
 	}
-	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.GET)
-	public ModelAndView guardarCalificacion(@RequestParam(value="puntos") int puntos,
-											@RequestParam(value = "peliculaId") Long peliculaId,
-											@RequestParam(value = "comentario") String comentario,
+	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.POST)
+	public ModelAndView guardarCalificacion(@ModelAttribute("datosValoracion")DatosValoracion  datosValoracion,
 											HttpServletRequest request){
 
-		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(peliculaId);
+		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(datosValoracion.getPelicula().getId());
 		Usuario usuario = obtenerUsuarioLogueado(request);
-		this.servicioPelicula.guardarValoracionPelicula(puntos,pelicula,comentario,usuario);
-        ModelMap model = new ModelMap();
-        model.put("votos", this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula).size());
-		model.put("comentario", comentario);
-		model.put("mensaje","¡Tu calificación ha sido guardada!");
+		this.servicioPelicula.guardarValoracionPelicula(datosValoracion.getPuntos(),pelicula,datosValoracion.getComentarios(),usuario);
+		ModelMap model = new ModelMap();
+		model.put("comentario", datosValoracion.getComentarios());
 		model.put("usuario",usuario);
 		model.put("pelicula",pelicula);
-		model.put("puntos", puntos);
+		model.put("puntos", datosValoracion.getPuntos());
 
 		return new ModelAndView("calificacionPelicula-exitosa",model);
 	}

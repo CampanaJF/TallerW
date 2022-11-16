@@ -4,13 +4,13 @@
 <html>
 <head>
     <%@include file="head.jsp"%>
-    <title>Title</title>
+    <title>Calificaci&oacute;n</title>
 </head>
 <body class="bgColor">
 <%@include file="header.jsp"%>
-<c:if test="${not empty mensaje}">
-    <h2 class="text-white text-center mt-2">${mensaje}</h2>
-</c:if>
+
+<h2 class="text-white text-center mt-2">¡Tu calificaci&oacute;n ha sido guardada!</h2>
+
 <div class="text-center">
     <img src="${pelicula.poster}"  class="img-fluid" width="270" height="345">
 </div>
@@ -50,7 +50,7 @@
 </div>
 <div class="text-white text-center mt-2">
     <h3>Comentario:</h3>
-    <p>${comentario}</p>
+    <h4>${comentario}</h4>
 </div>
 <div class="text-center mt-2 mb-2">
     <a href="ver-pelicula?pelicula=${pelicula.id}" class="btn btn-secondary">Volver</a>

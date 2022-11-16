@@ -139,7 +139,13 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 
 	@Override
 	public void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario) {
-		this.repositorioPelicula.guardarValoracionPelicula(puntos, pelicula, comentario, usuario);
+		Valoracion nuevaValoracion = new Valoracion();
+		nuevaValoracion.setPuntos(puntos);
+		nuevaValoracion.setPelicula(pelicula);
+		nuevaValoracion.setComentario(comentario);
+		nuevaValoracion.setUsuario(usuario);
+
+		this.repositorioPelicula.guardarValoracionPelicula(nuevaValoracion);
 	}
 
 	@Override
