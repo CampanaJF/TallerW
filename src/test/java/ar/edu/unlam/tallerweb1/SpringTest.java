@@ -49,6 +49,7 @@ public abstract class SpringTest {
 		pelicula.setFechaEstreno(fechaEstreno);
 		pelicula.setDirector(director);
 		pelicula.setCalificacion(calificacion);
+		pelicula.setEnCartelera(0);
 		session().save(pelicula);
 		return pelicula;
 	}

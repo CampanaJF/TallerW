@@ -242,6 +242,11 @@ public class FiltroTest extends SpringTest {
 		pelicula1.setClasificacionPelicula(clasificacionMas16);
 		pelicula2.setClasificacionPelicula(clasificacionMas16); // +16
 		
+		pelicula.setEnCartelera(0);
+		pelicula1.setEnCartelera(0);
+		pelicula2.setEnCartelera(0);
+		
+		
 		etiquetaPelicula.setPelicula(pelicula);
 		etiquetaPelicula.setEtiqueta(etiqueta);
 		etiquetaPelicula1.setPelicula(pelicula1);
@@ -333,6 +338,10 @@ public class FiltroTest extends SpringTest {
 		pelicula1.setGenero(generoTerror);
 		pelicula2.setGenero(generoTerror);
 		
+		pelicula.setEnCartelera(0);
+		pelicula1.setEnCartelera(0);
+		pelicula2.setEnCartelera(0);
+		
 		etiquetaPelicula.setPelicula(pelicula);
 		etiquetaPelicula.setEtiqueta(etiqueta);
 		etiquetaPelicula1.setPelicula(pelicula1);
@@ -364,7 +373,9 @@ public class FiltroTest extends SpringTest {
 		pelicula1.setClasificacionPelicula(clasificacionMas16);
 		pelicula2.setClasificacionPelicula(clasificacionATP);
 
-		
+		pelicula.setEnCartelera(0);
+		pelicula1.setEnCartelera(0);
+		pelicula2.setEnCartelera(0);
 		etiquetaPelicula.setPelicula(pelicula);
 		etiquetaPelicula.setEtiqueta(etiqueta);
 		etiquetaPelicula1.setPelicula(pelicula1);
