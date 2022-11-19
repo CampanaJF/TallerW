@@ -26,14 +26,12 @@ import java.util.List;
 @Controller
 public class ControladorPelicula extends ControladorBase{
 	
-	private final ServicioSession servicioSession;
 	private ServicioPelicula servicioPelicula;
 	private ServicioUsuario servicioUsuario;
 	@Autowired
-	public ControladorPelicula(ServicioSession servicioSession, ServicioPelicula servicioPelicula, ServicioUsuario servicioUsuario) {
+	public ControladorPelicula(ServicioPelicula servicioPelicula, ServicioUsuario servicioUsuario) {
 		super(servicioUsuario);
 		this.servicioPelicula=servicioPelicula;
-		this.servicioSession=servicioSession;
 	}
 	@Override
 	public Usuario obtenerUsuarioLogueado(HttpServletRequest request){

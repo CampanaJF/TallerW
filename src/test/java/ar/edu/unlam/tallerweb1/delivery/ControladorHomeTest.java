@@ -78,9 +78,6 @@ public class ControladorHomeTest {
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
 
-
-		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial);
-
 		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer);
 
 		Usuario usuario = givenUsuario();

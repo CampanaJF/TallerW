@@ -37,7 +37,7 @@ public class ControladorHome {
 		this.servicioHistorial = servicioHistorial;
 		this.servicioRandomizer = servicioRandomizer;
 
-
+	}
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		

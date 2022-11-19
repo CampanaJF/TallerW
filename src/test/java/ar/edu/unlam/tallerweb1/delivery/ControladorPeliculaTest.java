@@ -27,11 +27,9 @@ import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 public class ControladorPeliculaTest {
 
-	private final ServicioSession servicioSession = mock(ServicioSession.class);
-
 	private final ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
-	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession,servicioPelicula,servicioUsuario);
+	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioPelicula,servicioUsuario);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
