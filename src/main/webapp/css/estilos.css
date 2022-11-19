@@ -14,7 +14,11 @@ background-color: #b41717 !important;
 border-color: #b41717 !important;
 }
 
+#map{
+	width:70%;
+	height:350px;
 
+}
 .nav-text:hover{
     color:#b83b3b !important;
 }
@@ -26,7 +30,9 @@ border-color: #b41717 !important;
 .bgColor{
   background-color: #232222;
 }
-
+footer{
+	background-color:#070707;
+}
 .btnBeeg{
   width: 10em;
   height: 5em;

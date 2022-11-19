@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
@@ -27,11 +28,12 @@ import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 public class ControladorPeliculaTest {
 
-	private final ServicioSession servicioSession = mock(ServicioSession.class);
-
 	private final ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
-	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession,servicioPelicula,servicioUsuario);
+	private final ServicioCine servicioCine = mock(ServicioCine.class);
+	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioPelicula,
+  servicioUsuario,servicioCine);
+
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
@@ -39,40 +41,12 @@ public class ControladorPeliculaTest {
 
 	private ModelAndView mav = new ModelAndView();
 
-	@Test
-	public void queSePuedanVerLosDetallesDeUnaPelicula(){
-		
-    	whenSeIngresaAUnaPelicula();
-    	
-    	thenSeVenLosDetallesDeLaPelicula();
-	
-	}
-	
-	private void whenSeIngresaAUnaPelicula() {
-		mocksSessionRequests();
-
-		mav = this.controladorPelicula.verPelicula(mockRequest);
-		
-	}
-
-	private void thenSeVenLosDetallesDeLaPelicula() {
-		assertThat(mav.getViewName()).isEqualTo("pelicula");
-		
-	}
-	
-	/*	
-	public Pelicula givenPelicula(String nombre) {
-    	Pelicula pelicula = new Pelicula ();
-
-    	return pelicula;
-    } */
 	
 	 private void mocksSessionRequests() {
 	    when(mockRequest.getSession()).thenReturn(mockSession);
 	    when(mockRequest.getSession().getAttribute("ID")).thenReturn(1L);
 
 	 }
-
 
 	@Test
 	public void queSePuedaRealizarUnaBusquedaDePeliculasExitosamente(){
@@ -86,7 +60,11 @@ public class ControladorPeliculaTest {
 		ModelAndView mav = whenBuscoPelicula();
 		thenNoEncuentroPeliculas(mav);
 	}
-
+	@Test
+	public void queMuestreLaVistaDeOpinionesDeUnaPelicula(){
+		ModelAndView mav = whenIrAVerOpiniones();
+		thenObtengoLaVistaDeOpiniones(mav);
+	}
 	private void givenQueLaPeliculaExiste(){
 		List<Pelicula> peliculaList = new LinkedList<>();
 		when(this.servicioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(peliculaList);
@@ -108,16 +86,7 @@ public class ControladorPeliculaTest {
 		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
 	}
 
-	@Test
-	public void queAlCalificarUnaPeliculaLeMuestreVistaExitosa(){
-		 ModelAndView mav = whenIrAGuardarCalificacion();
-		 thenObtengoLaVista(mav);
-	}
-    @Test
-	public void queMuestreLaVistaDeOpinionesDeUnaPelicula(){
-		 ModelAndView mav = whenIrAVerOpiniones();
-		 thenObtengoLaVistaDeOpiniones(mav);
-	}
+
 
 	private void thenObtengoLaVistaDeOpiniones(ModelAndView mav) {
 		 assertThat(mav.getViewName()).isEqualTo("ver-opiniones");
@@ -128,13 +97,5 @@ public class ControladorPeliculaTest {
 	 return this.controladorPelicula.verOpiniones(2L,mockRequest);
 	 }
 
-	private void thenObtengoLaVista(ModelAndView mav) {
-		 assertThat(mav.getViewName()).isEqualTo("calificacionPelicula-exitosa");
-	}
-
-	private ModelAndView whenIrAGuardarCalificacion() {
-		 mocksSessionRequests();
-		 return this.controladorPelicula.guardarCalificacion(4,2L,"buena",mockRequest);
-	}
 
 }

@@ -7,6 +7,18 @@
     position: absolute;
 }
 .etiquetaDescripcion{
-	font-size:10px;
-	
+	font-size:10px;	
+}
+
+.contenedorProximamente{
+width:200px;	
+background-color:#000000;
+}
+.informacionProximamente{
+	background-color: #A60B2A;
+	width:300px;
+}
+.carousel-inner{
+	width:800px !important;
+	margin:auto;
 }

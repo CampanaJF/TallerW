@@ -30,48 +30,30 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 	}
 
 	@Override
+	public void guardarEnElHistorial(Historial historial) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.save(historial);
+		
+	}
+	
+	@Override
+	public void actualizarHistorial(Historial historialActualizado) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.update(historialActualizado);
+	}
+	
+	@Override
 	public List<Historial> obtenerHistorial(Usuario usuario) {
 		final Session session = sessionFactory.getCurrentSession();
 		Criterion rest1 = Restrictions.eq("usuario.id", usuario.getId());
 		
 		return session.createCriteria(Historial.class).add(rest1).list();
 	}
-
-	@Override
-	public void agregarAlHistorial(Usuario usuario, List<Etiqueta> etiquetasDeLaPelicula) {
-		
-		final Session session = sessionFactory.getCurrentSession();
-		
-		for (Etiqueta etiqueta : etiquetasDeLaPelicula) {
-			
-			Historial historial = new Historial();
-			
-			historial.setUsuario(usuario);
-			
-			historial.setEtiqueta(etiqueta);
-			
-			session.save(historial);
-		}
-		
-	}
-
-	@Override
-	public void actualizarHistorial(Usuario usuario, List<Etiqueta> nuevasEtiquetas) {
-		
-		final Session session = sessionFactory.getCurrentSession();
-		
-		List<Historial> historialDelUsuario = obtenerHistorial(usuario);
-		
-		for (int i = 0; i < nuevasEtiquetas.size(); i++) {
-			
-		historialDelUsuario.get(i).setEtiqueta(nuevasEtiquetas.get(i));
-		
-		session.update(historialDelUsuario.get(i));
-		
-		}
-				
-	}
-
+	
 	@Override
 	public List<EtiquetaPelicula> obtenerEtiquetasDePelicula(Pelicula pelicula) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -90,5 +72,7 @@ public class RepositorioHistorialImpl implements RepositorioHistorial{
 
 		return session.createCriteria(EtiquetaPelicula.class).add(rest1).list();
 	}
+
+	
 
 }

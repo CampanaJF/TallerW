@@ -76,6 +76,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 
 		criteria.add(sqlRestriction("Month(fechaEstreno)<=?", fechaActual.getMonth() + 1, new IntegerType()))
 				.add(sqlRestriction("YEAR(fechaEstreno)<=?", fechaActual.getYear() + 1900, new IntegerType()))
+				.add(Restrictions.eq("pe.enCartelera", 0))
 				.addOrder(Order.desc("pe.id"));
 
 		return criteria.list();
@@ -101,10 +102,9 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 	}
 
 	@Override
-	public void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario) {
+	public void guardarValoracionPelicula(Valoracion valoracion) {
 		final Session session = sessionFactory.getCurrentSession();
-		Valoracion valoracionPelicula = new Valoracion(puntos, pelicula, comentario, usuario);
-		session.save(valoracionPelicula);
+        session.save(valoracion);	
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 										new IntegerType()))
 								.add(sqlRestriction("Month(fechaEstreno)>?", fechaActual.getMonth() + 1,
 										new IntegerType()))))
-
+				.add(eq("p.enCartelera", 1))
 				.addOrder(desc("p.fechaEstreno")).addOrder(asc("p.id")).list();
 	}
 
@@ -195,5 +195,7 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.add(Restrictions.eq("p.genero",genero))
 				.list();
 	}
+
+	
 
 }

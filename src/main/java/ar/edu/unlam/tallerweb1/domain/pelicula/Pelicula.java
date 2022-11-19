@@ -39,8 +39,20 @@ import java.util.List;
         private ClasificacionPelicula clasificacionPelicula;
 
         private Date fechaEstreno;
+        
+        private Integer enCartelera;
+        
+        
+        
+		public Integer getEnCartelera() {
+			return enCartelera;
+		}
 
-        public Long getId() {
+		public void setEnCartelera(Integer enCartelera) {
+			this.enCartelera = enCartelera;
+		}
+
+		public Long getId() {
             return id;
         }
 

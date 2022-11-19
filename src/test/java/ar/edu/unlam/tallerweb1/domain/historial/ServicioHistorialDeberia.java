@@ -23,6 +23,99 @@ public class ServicioHistorialDeberia {
 	private ServicioHistorialImpl servicioHistorial = new ServicioHistorialImpl(repositorioHistorial);
 	
 	@Test
+	public void validarSiUnaEtiquetaEstaRepetida() {
+		
+		Etiqueta repetida1 = givenEtiqueta();
+		Etiqueta noRepetida = givenEtiqueta();
+		
+		List<Etiqueta> etiquetas = givenEtiquetas(2);
+		etiquetas.add(repetida1);
+		etiquetas.add(noRepetida);
+		
+		Boolean res = whenSeValidaConUnaRepetida(etiquetas,repetida1);
+		
+		thenSeValidoComoFalse(res);
+		
+	}
+	
+	private void thenSeValidoComoFalse(Boolean res) {
+		assertThat(res).isFalse();
+		
+	}
+
+	private Boolean whenSeValidaConUnaRepetida(List<Etiqueta> etiquetas, Etiqueta repetida1) {
+		return this.servicioHistorial.validarRepetida(etiquetas, repetida1);
+	}
+
+	@Test
+	public void actualizarElHistorialDelUsuarioConDosEtiquetasRepetidas() {
+		
+		Usuario usuario = givenUsuario();
+		Etiqueta repetida1 = givenEtiqueta();
+		Etiqueta repetida2 = givenEtiqueta();
+		Pelicula pelicula = givenPelicula();
+		List<Etiqueta> etiquetasNuevas = givenEtiquetas(1);
+		etiquetasNuevas.add(repetida1);
+		etiquetasNuevas.add(repetida2);
+		
+		List<EtiquetaPelicula> etiquetasPelicula = givenEtiquetaPelicula(etiquetasNuevas,pelicula);
+		
+		List<Etiqueta> etiquetasHistorial = givenEtiquetas(4);
+		etiquetasHistorial.add(repetida1);
+		etiquetasHistorial.add(repetida2);
+		List <Historial> historial = givenHistorialUsuario(usuario,etiquetasHistorial); 
+		
+		whenSeActualizaElHistorialDelUsuarioConDosRepetidas(usuario,pelicula,etiquetasPelicula,historial);
+		
+		thenSeActualizoElHistorial(usuario,pelicula);
+		
+	}
+	
+	private void thenSeActualizoElHistorial(Usuario usuario,Pelicula pelicula) {
+		verify(this.repositorioHistorial,times(1)).obtenerEtiquetasDePelicula(pelicula);
+		verify(this.repositorioHistorial,times(1)).obtenerHistorial(usuario);
+		verify(this.repositorioHistorial,times(1)).actualizarHistorial(any(Historial.class));	
+	}
+
+	private void whenSeActualizaElHistorialDelUsuarioConDosRepetidas(Usuario usuario, Pelicula pelicula,
+														List<EtiquetaPelicula> etiquetasPelicula, List<Historial> historial) {
+		
+		when(this.repositorioHistorial.obtenerEtiquetasDePelicula(pelicula)).thenReturn(etiquetasPelicula);
+		when(this.repositorioHistorial.obtenerHistorial(usuario)).thenReturn(historial);
+		this.servicioHistorial.guardarEnElHistorial(usuario, pelicula);
+		
+	}
+
+	@Test
+	public void obtenerLaListaDeEtiquetasRepetidas() {
+		
+		Usuario usuario = givenUsuario();
+		Etiqueta repetida = givenEtiqueta();
+		List<Etiqueta> etiquetas = givenEtiquetas(2);
+		etiquetas.add(repetida);
+		
+		List<Etiqueta> etiquetasHistorial = givenEtiquetas(5);
+		etiquetasHistorial.add(repetida);
+		List <Historial> historial = givenHistorialUsuario(usuario,etiquetasHistorial); 
+		
+		List <Etiqueta> repetidasEncontradas = whenSeObtienenLasRepetidas(etiquetas,historial);
+		
+		thenSeObtuvieronLasRepetidas(repetidasEncontradas,repetida);
+		
+	}
+	
+	private void thenSeObtuvieronLasRepetidas(List<Etiqueta> etiquetasRepetidas,Etiqueta repetida) {
+		assertThat(etiquetasRepetidas.contains(repetida));
+		assertThat(etiquetasRepetidas.size()).isEqualTo(1);
+		
+	}
+
+	private List <Etiqueta> whenSeObtienenLasRepetidas(List<Etiqueta> etiquetas, List<Historial> historial) {
+		return this.servicioHistorial.obtenerRepetidos(etiquetas,historial);
+		
+	}
+
+	@Test
 	public void mapearPeliculaConEtiquetaDTO() {
 		
 		Pelicula pelicula = givenPelicula();
@@ -46,13 +139,13 @@ public class ServicioHistorialDeberia {
 		return this.servicioHistorial.mapeoHistorial(etiquetasPelicula,"wew");
 		
 	}
-
+	
 	@Test
-	public void agregarEtiquetasAlHistorialDelUsuario() {
+	public void agregarMultiplesEtiquetasAlHistorialDelUsuario() {
 		Usuario usuario = givenUsuario();
 		Pelicula pelicula = givenPelicula();
 		
-		List<Etiqueta> etiquetas = givenEtiquetas(3);
+		List<Etiqueta> etiquetas = givenEtiquetas(6);
 		
 		List<EtiquetaPelicula> etiquetasPelicula = givenEtiquetaPelicula(etiquetas,pelicula);
 		
@@ -61,16 +154,33 @@ public class ServicioHistorialDeberia {
 		thenSeAgregaronEtiquetasAlHistorial(usuario,etiquetas);
 	}
 
-
-
 	private void thenSeAgregaronEtiquetasAlHistorial(Usuario usuario,List<Etiqueta> etiquetas) {
-		verify(this.repositorioHistorial,times(1)).agregarAlHistorial(usuario,etiquetas);
+		verify(this.repositorioHistorial,times(6)).guardarEnElHistorial(any(Historial.class));
+		
+	}
+
+	@Test
+	public void agregarUnaEtiquetaAlHistorialDelUsuario() {
+		Usuario usuario = givenUsuario();
+		Pelicula pelicula = givenPelicula();
+		
+		List<Etiqueta> etiquetas = givenEtiquetas(1);
+		
+		List<EtiquetaPelicula> etiquetasPelicula = givenEtiquetaPelicula(etiquetas,pelicula);
+		
+		whenSeAgreganEtiquetasAlHistorial(usuario,pelicula,etiquetasPelicula);
+		
+		thenSeAgregoUnaEtiquetaAlHistorial(usuario,etiquetas);
+	}
+
+	private void thenSeAgregoUnaEtiquetaAlHistorial(Usuario usuario,List<Etiqueta> etiquetas) {
+		verify(this.repositorioHistorial,times(1)).guardarEnElHistorial(any(Historial.class));
 		
 	}
 
 	private void whenSeAgreganEtiquetasAlHistorial(Usuario usuario,Pelicula pelicula,List<EtiquetaPelicula> etiquetasPelicula) {
 		when(this.repositorioHistorial.obtenerEtiquetasDePelicula(pelicula)).thenReturn(etiquetasPelicula);
-		this.servicioHistorial.agregarAlHistorial(usuario,pelicula);
+		this.servicioHistorial.guardarEnElHistorial(usuario,pelicula);
 		
 	}
 
@@ -95,7 +205,7 @@ public class ServicioHistorialDeberia {
 
 	private List<Etiqueta> whenSeObtienenLasEtiquetasDelHistorial(Usuario usuario, List<Historial> historialUsuario) {
 		when(this.repositorioHistorial.obtenerHistorial(usuario)).thenReturn(historialUsuario);
-		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+		return this.servicioHistorial.obtenerEtiquetasDelUsuario(usuario);
 	}
 
 

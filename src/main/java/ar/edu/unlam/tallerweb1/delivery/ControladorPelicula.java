@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 
@@ -10,55 +12,35 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
 import java.util.List;
 
 
 @Controller
-public class ControladorPelicula {
+public class ControladorPelicula extends ControladorBase{
 	
-	private final ServicioSession servicioSession;
 	private ServicioPelicula servicioPelicula;
 	private ServicioUsuario servicioUsuario;
+	private ServicioCine servicioCine;
 	@Autowired
-	public ControladorPelicula(ServicioSession servicioSession, ServicioPelicula servicioPelicula, ServicioUsuario servicioUsuario) {
-		this.servicioSession=servicioSession;
+
+	public ControladorPelicula(ServicioPelicula servicioPelicula,ServicioUsuario servicioUsuario,ServicioCine servicioCine) {
+		super(servicioUsuario);
 		this.servicioPelicula = servicioPelicula;
-		this.servicioUsuario=servicioUsuario;
+		this.servicioCine=servicioCine;
+
 	}
-	
-	@RequestMapping(path = "/pelicula", method = RequestMethod.GET)
-	public ModelAndView verPelicula(HttpServletRequest request) { //@RequestParam("peliculaId") Long peliculaId
-		
-		Long userId = this.servicioSession.getUserId(request);
-		
-		String pelicula = "pelicula.exe";
-				
-		ModelMap model = new ModelMap();
-			
-		if (userId==null) {
-			model.put("pelicula", pelicula);
-			
-			return new ModelAndView("pelicula",model);
-        }
-				
-		model.put("usuario", userId);
-		model.put("pelicula", pelicula);
-		
-		return new ModelAndView("pelicula",model);
+	@Override
+	public Usuario obtenerUsuarioLogueado(HttpServletRequest request){
+		return super.obtenerUsuarioLogueado(request);
 	}
-	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-	}
+
     @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
 	public ModelAndView buscar(@RequestParam(value="titulo")String titulo,HttpServletRequest request) {
 
@@ -72,40 +54,37 @@ public class ControladorPelicula {
 	public ModelAndView verPelicula(@RequestParam Long pelicula,HttpServletRequest request){
 
 		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
+		String listadoDeCines=this.servicioCine.getCinesUbicacion();
 		ModelMap model = new ModelMap();
 		model.put("pelicula",peliculaBuscada);
 		model.put("similares", this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada));
         model.put("promedio",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
 		model.put("votos",this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(peliculaBuscada).size());
 		model.put("usuario",obtenerUsuarioLogueado(request));
+		model.put("listadoDeCines", listadoDeCines);
 
 		return new ModelAndView("ver-pelicula",model);
 	}
 	@RequestMapping(path="/calificar-pelicula", method = RequestMethod.GET)
 	public ModelAndView calificarpelicula(@RequestParam Long pelicula,HttpServletRequest request){
-		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
-
 		ModelMap model = new ModelMap();
-		model.put("pelicula",peliculaBuscada);
+		model.put("pelicula",this.servicioPelicula.buscarPeliculaPorId(pelicula));
 		model.put("usuario",obtenerUsuarioLogueado(request));
+		model.put("datosValoracion",new DatosValoracion());
 		return new ModelAndView("calificar-pelicula",model);
 	}
-	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.GET)
-	public ModelAndView guardarCalificacion(@RequestParam(value="puntos") int puntos,
-											@RequestParam(value = "peliculaId") Long peliculaId,
-											@RequestParam(value = "comentario") String comentario,
+	@RequestMapping(path="/guardar-calificacion", method=RequestMethod.POST)
+	public ModelAndView guardarCalificacion(@ModelAttribute("datosValoracion")DatosValoracion  datosValoracion,
 											HttpServletRequest request){
 
-		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(peliculaId);
+		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(datosValoracion.getPelicula().getId());
 		Usuario usuario = obtenerUsuarioLogueado(request);
-		this.servicioPelicula.guardarValoracionPelicula(puntos,pelicula,comentario,usuario);
-        ModelMap model = new ModelMap();
-        model.put("votos", this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula).size());
-		model.put("comentario", comentario);
-		model.put("mensaje","¡Tu calificación ha sido guardada!");
+		this.servicioPelicula.guardarValoracionPelicula(datosValoracion.getPuntos(),pelicula,datosValoracion.getComentarios(),usuario);
+		ModelMap model = new ModelMap();
+		model.put("comentario", datosValoracion.getComentarios());
 		model.put("usuario",usuario);
 		model.put("pelicula",pelicula);
-		model.put("puntos", puntos);
+		model.put("puntos", datosValoracion.getPuntos());
 
 		return new ModelAndView("calificacionPelicula-exitosa",model);
 	}
