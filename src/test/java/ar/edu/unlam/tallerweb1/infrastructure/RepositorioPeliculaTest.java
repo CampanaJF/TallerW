@@ -49,7 +49,11 @@ public class RepositorioPeliculaTest extends SpringTest {
 		EtiquetaPelicula etiquetaPelicula2=new EtiquetaPelicula();
 		EtiquetaPelicula etiquetaPelicula3=new EtiquetaPelicula();
 		EtiquetaPelicula etiquetaPelicula4=new EtiquetaPelicula();
-		
+		P1.setEnCartelera(0);
+		P2.setEnCartelera(0);
+		P3.setEnCartelera(0);
+		P4.setEnCartelera(0);
+		P5.setEnCartelera(0);
 		session().save(P1);
     	session().save(P2);
     	session().save(P3);
