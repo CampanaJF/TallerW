@@ -34,5 +34,9 @@ void comprar(Funcion funcion,Usuario usuario,List<Long> asientos);
 	Entrada getEntrada(Long entrada);
 	
 	List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion);
+
+	List<Entrada> obtenerEntradasVigentes(Usuario usuarioLogueado);
+
+	void cancelarReserva(Long entrada);
 	
 }

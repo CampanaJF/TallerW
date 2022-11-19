@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -75,7 +76,20 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 	
-
+	@Override
+	public List<Entrada> obtenerEntradasVigentes(Usuario usuarioLogueado) {
+		List<Entrada> entradasDelUsuario = this.repositorioEntrada.getEntradasCompradasDelUsuario(usuarioLogueado);
+		List<Entrada> entradasVigentes = new ArrayList<>();
+		
+		for (Entrada entrada : entradasDelUsuario) {
+			
+			if (validarEntradaVigente(entrada)) 
+				entradasVigentes.add(entrada);	
+		}
+		
+		return entradasVigentes;
+	}
+	
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		
@@ -153,6 +167,23 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		}
 		return asientosSeleccionados;
 	}
+	
+	private Boolean validarEntradaVigente(Entrada entrada) {
+		Date hoy = new Date();
+		
+		if (entrada.getFuncion().getFecha().before(hoy)) 
+			return true;
+		
+		return false;
+	}
+
+	@Override
+	public void cancelarReserva(Long entrada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 
 }

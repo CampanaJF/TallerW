@@ -55,7 +55,57 @@ public class ControladorEntradaDeberia {
 	
 	private ModelAndView mav = new ModelAndView();
 	
+	@Test
+	public void permitirVerTodasLasEntradasAunVigentes() {
+		
+		List<Entrada> entradas = givenEntradas(5);
+		Usuario usuarioLogueado = givenUsuario();
+		
+		whenSeQuierenVerLasEntradasVigentesDeUnUsuario(1L,entradas,usuarioLogueado);
+		
+		thenSeListanSusEntradas();
+		
+	}
 	
+	private void thenSeListanSusEntradas() {
+		assertThat(mav.getViewName()).isEqualTo("entrada");
+		assertThat(mav.getModel().get("entradas")).isNotNull();
+		
+	}
+
+	private void whenSeQuierenVerLasEntradasVigentesDeUnUsuario(long l,List<Entrada> entradas,Usuario usuarioLogueado) {
+		mocksSessionRequests();
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
+		when(servicioEntrada.obtenerEntradasVigentes(usuarioLogueado)).thenReturn(entradas);;
+		mav = this.controladorEntrada.verEntradasVigentes(mockRequest,null);	
+		
+	}
+
+	
+
+
+	@Test
+	public void permitirCancelarUnaReserva() {
+		
+		Long entrada = 5L;
+		
+		whenSeCancelarUnaReserva(entrada);
+		
+		thenSeCanceloLaReserva();
+	}
+	
+	
+	private void thenSeCanceloLaReserva() {
+		assertThat(mav.getViewName()).isEqualTo("redirect:/ver-entradas");
+		
+	}
+
+
+	private void whenSeCancelarUnaReserva(Long entrada) {
+		mav = this.controladorEntrada.cancelarReserva(entrada,mockRequest,redirectAttributes);	
+	}
+
+
 	@Test
 	public void permitirElegirElCineParaComprarUnaEntrada(){
 		
@@ -277,6 +327,27 @@ public class ControladorEntradaDeberia {
 		return cines;
 	}
 	
+	private List<Entrada> givenEntradas(Integer cantidad) {
+		
+		List<Entrada> entradas = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			entradas.add(givenEntrada());
+			
+		}
+		
+		return entradas;
+		
+	}
+	
+	private Entrada givenEntrada() {
+		Entrada entrada = new Entrada();
+		entrada.setId(new Random().nextLong());
+		return entrada;
+	}
+
+
+
 	private List<Asiento> givenAsientos(Integer cantidad){
 		
 		List<Asiento> asientos = new ArrayList<>();

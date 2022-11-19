@@ -15,10 +15,14 @@ public interface RepositorioEntrada {
 	Entrada getEntrada(Long funcion,Long asiento);
 	
 	List<Entrada> getEntradasCompradasDelUsuario(Long id, Long id2);
+	
+	List<Entrada> getEntradasCompradasDelUsuario(Usuario usuarioLogueado);
 
 	Integer getCantidadAsientosVacios(Long funcion);
 
 	Usuario getUsuario(Long Id);
 	
 	Asiento getAsiento(Long id);
+
+	
 }

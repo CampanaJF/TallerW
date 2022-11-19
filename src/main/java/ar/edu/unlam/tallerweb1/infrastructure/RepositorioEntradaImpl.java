@@ -110,6 +110,15 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		return (Asiento) session.createCriteria(Asiento.class).add(rest1).uniqueResult();
 
 	}
+
+	@Override
+	public List<Entrada> getEntradasCompradasDelUsuario(Usuario usuarioLogueado) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Criterion rest1 = Restrictions.eq("usuario.id", usuarioLogueado.getId());
+
+		return session.createCriteria(Entrada.class).add(rest1).list();
+	}
 	
 	
 
