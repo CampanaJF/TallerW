@@ -112,6 +112,11 @@ public class ControladorEntrada {
 		
 		ModelMap model = new ModelMap();
 		
+		if(validarAsientosFuncion(datosEntrada)) {
+			this.servicioEntrada.agregarAPendientes(datosEntrada.getFuncion(),datosEntrada.getUsuario());
+			redirectAttributes.addFlashAttribute("mensaje","No Hay asientos para esa funcion, le avisaremos si se libera uno");
+			return new ModelAndView("redirect:/home");
+		}
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("funcion", obtenerFuncion(datosEntrada.getFuncion()));
 		model.put("asientos", obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
@@ -119,7 +124,7 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("entrada-asientos",model);
 	}
-		
+	
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
 	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
 									 HttpServletRequest request,final RedirectAttributes redirectAttributes) {
@@ -238,10 +243,15 @@ public class ControladorEntrada {
 	}
 	
 	private List<Entrada> obtenerEntradasDeLaFuncion(DatosEntrada datosEntrada) {
-		return this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),
+		return this.servicioEntrada.obtenerEntradasVigentes(datosEntrada.getUsuario().getId(),
 																  	datosEntrada.getFuncion().getId());
 	}
+	
+	private boolean validarAsientosFuncion(DatosEntrada datosEntrada) {
+		return !(this.servicioFuncion.validarAsientosDisponibles(datosEntrada.getFuncion()));
+	}
 
+	
 	
 
 	

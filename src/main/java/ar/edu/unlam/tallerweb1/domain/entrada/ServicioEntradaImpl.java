@@ -70,29 +70,20 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 
-	// agregarle la validacion de vigencia
 	// cambiar a funcionEntradas
 	@Override
-	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
+	public List<Entrada> obtenerEntradasVigentes(Long usuario,Long funcion) {
 		
-		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario,funcion);
+		return obtenerVigentes(obtenerLasEntradasDelUsuarioParaLaFuncion(usuario, funcion));
 		
 	}
-	
+
 	@Override
 	public List<Entrada> obtenerEntradasVigentes(Usuario usuarioLogueado) {
-		List<Entrada> entradasDelUsuario = this.repositorioEntrada.getEntradasCompradasDelUsuario(usuarioLogueado);
-		List<Entrada> entradasVigentes = new ArrayList<>();
 		
-		for (Entrada entrada : entradasDelUsuario) {
-			
-			if (validarEntradaVigente(entrada)) 
-				entradasVigentes.add(entrada);	
-		}
-		
-		return entradasVigentes;
+		return obtenerVigentes(obtenerTodasLasEntradasDelUsuario(usuarioLogueado));
 	}
-	
+
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
 		
@@ -102,11 +93,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 		validarAsiento(funcion,asientos);
 		
-	}
-	
-	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
-		
-		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
 	}
 	
 	@Override
@@ -171,22 +157,14 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		return asientosSeleccionados;
 	}
 	
-	private Boolean validarEntradaVigente(Entrada entrada) {
-		Date hoy = new Date();
-		
-		if (entrada.getFuncion().getFecha().after(hoy)) 
-			return true;
-		
-		return false;
-	}
-
+	// agregar el disparador de buscar un usuario que quiera esta entrada aca
 	@Override
 	public void cancelarReserva(Long entrada) {
 		this.repositorioEntrada.cancelarReserva(entrada);
 	
 	}
 	
-	// todo , utilizar un metodo para extraer las entradas de cada funcion
+	// todo, utilizar un metodo para extraer las entradas de cada funcion
 	private List<FuncionEntradas> formatearEntradas(List<Entrada> entradas){
 		
 		List<FuncionEntradas> funcionEntradas = new ArrayList<>();
@@ -200,6 +178,52 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		}
 		
 		return null;
+	}
+	
+	private List<Entrada> obtenerTodasLasEntradasDelUsuario(Usuario usuarioLogueado) {
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuarioLogueado);
+	}
+	
+	private List<Entrada> obtenerLasEntradasDelUsuarioParaLaFuncion(Long usuario, Long funcion) {
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario,funcion);
+	}
+	
+	private List<Entrada> obtenerVigentes(List<Entrada> entradasDelUsuario) {
+		
+		List<Entrada> entradasVigentes = new ArrayList<>();
+		
+		for (Entrada entrada : entradasDelUsuario) {
+			
+			if (validarEntradaVigente(entrada)) 
+				entradasVigentes.add(entrada);	
+		}
+		
+		return entradasVigentes;
+	}
+	
+	private Boolean validarEntradaVigente(Entrada entrada) {
+		Date hoy = new Date();
+		
+		if (entrada.getFuncion().getFecha().after(hoy)) 
+			return true;
+		
+		return false;
+	}
+	
+	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
+		
+		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
+	}
+
+	@Override
+	public void agregarAPendientes(Funcion funcion, Usuario usuario) {
+		EntradaPendiente entradaPendiente = new EntradaPendiente();
+		
+		entradaPendiente.setFuncion(funcion);
+		entradaPendiente.setUsuario(usuario);
+		
+		this.repositorioEntrada.agregarAPendientes(entradaPendiente);
+		
 	}
 
 	

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
+import ar.edu.unlam.tallerweb1.domain.entrada.EntradaPendiente;
 import ar.edu.unlam.tallerweb1.domain.entrada.RepositorioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
@@ -44,6 +45,7 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 
 	@Override
 	public void comprarEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
+		final Session session = sessionFactory.getCurrentSession();
 		
 		Entrada entrada = getEntrada(funcion.getId(),asiento.getId());
 		
@@ -51,7 +53,7 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		
 		entrada.getAsiento().setOcupado(true);
 		
-		sessionFactory.getCurrentSession().update(entrada);
+		session.update(entrada);
 		
 	}
 
@@ -122,14 +124,22 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 
 	@Override
 	public void cancelarReserva(Long entradaId) {
+		final Session session = sessionFactory.getCurrentSession();
 		
 		Entrada entrada = getEntrada(entradaId);
 		
 		entrada.setUsuario(null);
 		
-		entrada.getAsiento().setOcupado(false);
+		session.update(entrada);
 		
-		sessionFactory.getCurrentSession().update(entrada);
+	}
+
+	@Override
+	public void agregarAPendientes(EntradaPendiente entradaPendiente) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.save(entradaPendiente);
 		
 	}
 	

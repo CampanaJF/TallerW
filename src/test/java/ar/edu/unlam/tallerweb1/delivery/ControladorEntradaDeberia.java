@@ -184,6 +184,7 @@ public class ControladorEntradaDeberia {
 		mocksSessionRequests();
 		
 		//when(this.servicioFuncion.obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
+		when(this.servicioFuncion.validarAsientosDisponibles(datosEntrada.getFuncion())).thenReturn(true);
 		
 		mav = this.controladorEntrada.entradaAsientos(datosEntrada,mockRequest,redirectAttributes);	
 		
@@ -219,7 +220,7 @@ public class ControladorEntradaDeberia {
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		//when(this.servicioEntrada.comprar(datosEntrada.getFuncion(), datosEntrada.getUsuario(), asientos)).thenReturn()
-		when(this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),datosEntrada.getFuncion().getId())).thenReturn(entrada);
+		when(this.servicioEntrada.obtenerEntradasVigentes(datosEntrada.getUsuario().getId(),datosEntrada.getFuncion().getId())).thenReturn(entrada);
 		mav = this.controladorEntrada.entradaCompra(datosEntrada,mockRequest,redirectAttributes);	
 	}
 

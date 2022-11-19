@@ -26,5 +26,7 @@ public interface RepositorioEntrada {
 
 	void cancelarReserva(Long entrada);
 
+	void agregarAPendientes(EntradaPendiente entradaPendiente);
+
 	
 }
