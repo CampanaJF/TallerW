@@ -7,6 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+
 @Service("servicioCine")
 @Transactional
 public class ServicioCineImpl implements ServicioCine{
@@ -28,6 +32,13 @@ public class ServicioCineImpl implements ServicioCine{
 	public List<CinePelicula> getCines(Long pelicula){
 		
 		return this.repositorioCine.getCines(pelicula);
+	}
+
+	@Override
+	public String getCinesUbicacion() {
+		// TODO Auto-generated method stub
+		List<Cine> cines=this.repositorioCine.getCines();
+		return new Gson().toJson(cines);
 	}
 
 }

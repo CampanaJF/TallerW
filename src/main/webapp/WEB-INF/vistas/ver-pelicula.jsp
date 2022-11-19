@@ -16,7 +16,7 @@
 				<div class="col">
 					<div class="text-center">
 
-						<img src="${pelicula.poster}" class="mb-2 mt-5 img-fluid">
+						<img src="${pelicula.poster}" class="mb-2 mt-5 ">
 
 					</div>
 				</div>
@@ -95,7 +95,10 @@
 		</div>
 	</c:if>
 
-
+	<div class="container d-flex mt-5">
+	<div id="map" class="m-auto"></div>
+	</div>
+	
 	<div class="container mt-3">
 		<h2 class="text-white mt-lg-5 ms-5 mb-2">Peliculas similares</h2>
 
@@ -159,6 +162,9 @@
 			</c:forEach>
 		</section>
 	</div>
-
-
+	
+	<script>
+	const data=${listadoDeCines}
+	
+	</script>
 	<%@include file="footer.jsp"%>

@@ -24,6 +24,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 @Controller
 public class ControladorHome {
 
+
     private ServicioUsuario servicioUsuario;
     private ServicioPelicula servicioPelicula;
     private ServicioHistorial servicioHistorial;
@@ -36,14 +37,14 @@ public class ControladorHome {
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
 		this.servicioRandomizer = servicioRandomizer;
-
 	}
+  
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
 		ModelMap model = new ModelMap();
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-		 
+	   
 
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer primerIndice = obtenerIndice(indiceMax(usuario));
@@ -54,11 +55,14 @@ public class ControladorHome {
 			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario,
 																					obtenerIndice(indiceMax(usuario),primerIndice));
 			model.put("historialB", peliculasHistorialB);
-			
+			  
 			model.put("usuario", usuario);
 			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
 			
 			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
+			
+		}else {
+			 model.put("usuario", usuario);
 		}
 		
 		

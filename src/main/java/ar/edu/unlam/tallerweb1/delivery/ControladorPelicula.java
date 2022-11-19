@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 
@@ -10,16 +12,13 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -28,10 +27,14 @@ public class ControladorPelicula extends ControladorBase{
 	
 	private ServicioPelicula servicioPelicula;
 	private ServicioUsuario servicioUsuario;
+	private ServicioCine servicioCine;
 	@Autowired
-	public ControladorPelicula(ServicioPelicula servicioPelicula, ServicioUsuario servicioUsuario) {
+
+	public ControladorPelicula(ServicioPelicula servicioPelicula,ServicioUsuario servicioUsuario,ServicioCine servicioCine) {
 		super(servicioUsuario);
-		this.servicioPelicula=servicioPelicula;
+		this.servicioPelicula = servicioPelicula;
+		this.servicioCine=servicioCine;
+
 	}
 	@Override
 	public Usuario obtenerUsuarioLogueado(HttpServletRequest request){
@@ -51,12 +54,14 @@ public class ControladorPelicula extends ControladorBase{
 	public ModelAndView verPelicula(@RequestParam Long pelicula,HttpServletRequest request){
 
 		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
+		String listadoDeCines=this.servicioCine.getCinesUbicacion();
 		ModelMap model = new ModelMap();
 		model.put("pelicula",peliculaBuscada);
 		model.put("similares", this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada));
         model.put("promedio",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
 		model.put("votos",this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(peliculaBuscada).size());
 		model.put("usuario",obtenerUsuarioLogueado(request));
+		model.put("listadoDeCines", listadoDeCines);
 
 		return new ModelAndView("ver-pelicula",model);
 	}

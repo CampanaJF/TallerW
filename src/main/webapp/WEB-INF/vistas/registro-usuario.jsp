@@ -41,13 +41,13 @@
 		
 			<div class="form-floating">
 			  <form:input type="password" path="passwordRe" class="form-control" id="floatingPassword" placeholder="Password"/>
-			  <label for="floatingPassword">Repita su Contraseña</label>
+			  <label for="floatingPassword">Repetí tu Contraseña</label>
 			</div>
            
           <button class="mt-2 w-100 buttonA btn-lg btn-primary" type="submit">Ingresar</button>
 	  </form:form>
 	  
-	  <a class="text-center nav-link px-2 text-white nav-text" href="login">¿Ya tenes una cuenta? Ingresa aca</a>
+	  <a class="text-center nav-link px-2 text-white nav-text" href="login">¿Ya tenés una cuenta? Ingresá acá</a>
 
 </main>
   

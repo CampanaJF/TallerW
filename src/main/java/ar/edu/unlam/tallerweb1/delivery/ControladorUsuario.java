@@ -94,9 +94,9 @@ public class ControladorUsuario {
 		try {
 			validarPassword(datosUsuario.getPassword(),datosUsuario.getPasswordRe());
 		} catch (PasswordLenghtException e) {
-			mensaje="La contrase�a debe tener por lo menos 12 caracteres!";
+			mensaje="La contraseña debe tener por lo menos 12 caracteres!";
 		} catch (PasswordsDiferentesException e) {
-			mensaje="La contrase�as deben ser iguales!";
+			mensaje="La contraseñas deben ser iguales!";
 		}
 		
 		try {

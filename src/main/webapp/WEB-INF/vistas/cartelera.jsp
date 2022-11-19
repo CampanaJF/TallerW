@@ -190,9 +190,9 @@
 		</section>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
 			<c:forEach var="peliculaDTO" items="${peliculasDTO}">
-				<article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+				<article class="col-lg-4 col-xl-4 col-xxl-3 mt-4 mb-5 pb-5 ">
 					<div class="fila">
-						<div class="tile">
+						<div class="tile mx-xl-4 mx-xxl-4">
 							<img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}" alt="">
 							<div class="overlay ">
 								<img class="pelicula" src="${peliculaDTO.getPelicula().getPoster()}">
