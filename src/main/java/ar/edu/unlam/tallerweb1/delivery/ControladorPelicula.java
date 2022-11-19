@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.cine.Cine;
+import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 
@@ -29,11 +31,14 @@ public class ControladorPelicula {
 	private final ServicioSession servicioSession;
 	private ServicioPelicula servicioPelicula;
 	private ServicioUsuario servicioUsuario;
+	private ServicioCine servicioCine;
 	@Autowired
-	public ControladorPelicula(ServicioSession servicioSession, ServicioPelicula servicioPelicula, ServicioUsuario servicioUsuario) {
+	public ControladorPelicula(ServicioSession servicioSession, ServicioPelicula servicioPelicula,
+			ServicioUsuario servicioUsuario,ServicioCine servicioCine) {
 		this.servicioSession=servicioSession;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioUsuario=servicioUsuario;
+		this.servicioCine=servicioCine;
 	}
 	
 	@RequestMapping(path = "/pelicula", method = RequestMethod.GET)
@@ -72,12 +77,14 @@ public class ControladorPelicula {
 	public ModelAndView verPelicula(@RequestParam Long pelicula,HttpServletRequest request){
 
 		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
+		String listadoDeCines=this.servicioCine.getCinesUbicacion();
 		ModelMap model = new ModelMap();
 		model.put("pelicula",peliculaBuscada);
 		model.put("similares", this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada));
         model.put("promedio",this.servicioPelicula.obtenerPromedioValoracionesPorPelicula(peliculaBuscada));
 		model.put("votos",this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(peliculaBuscada).size());
 		model.put("usuario",obtenerUsuarioLogueado(request));
+		model.put("listadoDeCines", listadoDeCines);
 
 		return new ModelAndView("ver-pelicula",model);
 	}

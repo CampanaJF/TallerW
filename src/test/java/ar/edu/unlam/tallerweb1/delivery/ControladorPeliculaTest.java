@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
@@ -31,7 +32,8 @@ public class ControladorPeliculaTest {
 
 	private final ServicioPelicula servicioPelicula = mock(ServicioPelicula.class);
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
-	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession,servicioPelicula,servicioUsuario);
+	private final ServicioCine servicioCine = mock(ServicioCine.class);
+	private final ControladorPelicula controladorPelicula = new ControladorPelicula(servicioSession,servicioPelicula,servicioUsuario,servicioCine);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);

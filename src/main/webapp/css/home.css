@@ -18,3 +18,7 @@ background-color:#000000;
 	background-color: #A60B2A;
 	width:300px;
 }
+.carousel-inner{
+	width:800px !important;
+	margin:auto;
+}

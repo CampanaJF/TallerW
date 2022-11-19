@@ -54,7 +54,9 @@
   </div>
   
 </div>
+		<c:if test="${not empty usuario}">
 		<h1 class="text-light fw-bolder mt-5 mb-2">Recomendadas para vos</h1>
+		
             <section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
                 <c:forEach var="peliculasGenero" items="${peliculasGeneroElegido}">
                     <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
@@ -97,7 +99,7 @@
 
                 </c:forEach>
             </section>
-
+				</c:if>
 
             <h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
 		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
@@ -137,7 +139,7 @@
                 </div>
                 </div>
                 </div>
-              		<div class="contenedorProximamente mx-5 mx-xl-auto mx-xxl-5  m-auto ">
+              		<div class="contenedorProximamente mx-auto mx-xl-auto mx-xxl-auto m-auto ">
                  <p class="text-light">Próximamente</p>    
             </div>
             <a href="ver-pelicula?pelicula=${peliculaDTO.getPelicula().id}" class="btn btn-lg text-light mt-2 informacionProximamente">
