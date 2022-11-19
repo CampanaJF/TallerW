@@ -24,5 +24,7 @@ public interface RepositorioEntrada {
 	
 	Asiento getAsiento(Long id);
 
+	void cancelarReserva(Long entrada);
+
 	
 }

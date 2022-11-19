@@ -119,6 +119,19 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 
 		return session.createCriteria(Entrada.class).add(rest1).list();
 	}
+
+	@Override
+	public void cancelarReserva(Long entradaId) {
+		
+		Entrada entrada = getEntrada(entradaId);
+		
+		entrada.setUsuario(null);
+		
+		entrada.getAsiento().setOcupado(false);
+		
+		sessionFactory.getCurrentSession().update(entrada);
+		
+	}
 	
 	
 

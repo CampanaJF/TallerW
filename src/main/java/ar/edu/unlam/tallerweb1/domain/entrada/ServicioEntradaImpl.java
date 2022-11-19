@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.helper.FuncionEntradas;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
@@ -69,6 +70,8 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 
+	// agregarle la validacion de vigencia
+	// cambiar a funcionEntradas
 	@Override
 	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
 		
@@ -171,7 +174,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	private Boolean validarEntradaVigente(Entrada entrada) {
 		Date hoy = new Date();
 		
-		if (entrada.getFuncion().getFecha().before(hoy)) 
+		if (entrada.getFuncion().getFecha().after(hoy)) 
 			return true;
 		
 		return false;
@@ -179,8 +182,24 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 
 	@Override
 	public void cancelarReserva(Long entrada) {
-		// TODO Auto-generated method stub
+		this.repositorioEntrada.cancelarReserva(entrada);
+	
+	}
+	
+	// todo , utilizar un metodo para extraer las entradas de cada funcion
+	private List<FuncionEntradas> formatearEntradas(List<Entrada> entradas){
 		
+		List<FuncionEntradas> funcionEntradas = new ArrayList<>();
+		
+		for (Entrada entrada : entradas) {
+			FuncionEntradas funcionEntrada = new FuncionEntradas();
+			
+			funcionEntrada.setFuncion(entrada.getFuncion());
+			funcionEntrada.setEntradas(entradas);
+			
+		}
+		
+		return null;
 	}
 
 	

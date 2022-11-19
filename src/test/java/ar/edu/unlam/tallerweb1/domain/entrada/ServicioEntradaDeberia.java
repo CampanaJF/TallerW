@@ -1,8 +1,11 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -24,6 +27,57 @@ public class ServicioEntradaDeberia {
 	
 	private ServicioEntradaImpl servicioEntrada = new ServicioEntradaImpl(repositorioEntrada);
 	
+	@Test
+	public void cancelarUnaEntrada() {
+		
+		Long entrada = 5L;
+		
+		whenSeCancelaUnaReserva(entrada);
+		
+		thenSeCancelo(entrada);
+	}
+	
+	private void thenSeCancelo(Long entrada) {
+		verify(this.repositorioEntrada,times(1)).cancelarReserva(entrada);
+		
+	}
+
+	private void whenSeCancelaUnaReserva(Long entrada) {
+		this.servicioEntrada.cancelarReserva(entrada);
+		
+	}
+
+	@Test
+	public void listarEntradasVigentes() {
+		
+		Usuario usuario = givenUsuario(1L,"Okarin");
+		
+		List<Entrada> entradasVigentes = givenEntradasVigentes(3);
+		List<Entrada> entradasNoVigentes = givenEntradasNoVigentes(3);
+		
+		List<Entrada> entradas = new ArrayList<>();
+		
+		entradas.addAll(entradasVigentes);
+		entradas.addAll(entradasNoVigentes);
+		
+		List<Entrada> obtenidas= whenSeListanLasEntradas(usuario,entradas);
+		
+		thenSeObtienenSoloLasVigentes(obtenidas,usuario);
+		
+	}
+	
+	private void thenSeObtienenSoloLasVigentes(List<Entrada> obtenidas,Usuario usuario) {
+		verify(this.repositorioEntrada,times(1)).getEntradasCompradasDelUsuario(usuario);
+		assertThat(obtenidas.size()).isEqualTo(3);
+		
+	}
+
+	private List<Entrada> whenSeListanLasEntradas(Usuario usuario, List<Entrada> entradas) {
+		when(this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario)).thenReturn(entradas);
+		return this.servicioEntrada.obtenerEntradasVigentes(usuario);
+		
+	}
+
 	@Test
 	public void poderComprarSoloUnaEntrada() {
 		
@@ -129,7 +183,6 @@ public class ServicioEntradaDeberia {
 	private void whenSeCompranEntradas(Funcion funcion, Usuario usuario, List<Long> numeros, List<Asiento> asientos) {
 		getAsientos(numeros,asientos);
 		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(numeros.size());
-	//	when(this.servicioEntrada.getAsientos(numeros)).thenReturn(asientos);
 		this.servicioEntrada.comprar(funcion,usuario,numeros);
 		
 	}
@@ -144,7 +197,6 @@ public class ServicioEntradaDeberia {
 	private void whenSeCompranEntradasSinSuficientesAsientos(Funcion funcion, Usuario usuario, List<Long> numeros,List<Asiento> asientos) {
 		getAsientos(numeros,asientos);
 		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(3);
-		//when(this.servicioEntrada.getAsientos(numeros)).thenReturn(asientos);
 		this.servicioEntrada.comprar(funcion,usuario,numeros);
 		
 	}
@@ -245,5 +297,78 @@ public class ServicioEntradaDeberia {
     	usuario.setNombre(nombre);
     	return usuario;
     }
+	
+	public Date givenFechaInvalida() {
+
+		return new Date();
+	}
+	
+	public Date givenFechaValida() {
+		
+		Date dt = new Date();
+		
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(dt); 
+		c.add(Calendar.DATE, 2);
+		dt = c.getTime();
+		
+		return dt;
+	}
+	
+	private List<Entrada> givenEntradasVigentes(Integer cantidad){
+		
+		List<Entrada> entradas = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			Entrada entrada = new Entrada();
+			
+			entrada.setFuncion(givenFuncionVigente());
+			
+			entradas.add(entrada);
+		}
+		
+		return entradas;
+		
+	}
+	
+	private List<Entrada> givenEntradasNoVigentes(Integer cantidad){
+		
+		List<Entrada> entradas = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			Entrada entrada = new Entrada();
+			
+			entrada.setFuncion(givenFuncionNoVigente());
+			
+			entradas.add(entrada);
+		}
+		
+		return entradas;
+		
+	}
+
+	private Funcion givenFuncionVigente() {
+		Funcion funcion = new Funcion();
+		
+		funcion.setId(new Random().nextLong());
+		funcion.setPelicula(givenPelicula("Indiana Jones"));
+		funcion.setPrecio(599.99);
+		funcion.setFecha(givenFechaValida());
+		funcion.setSala(givenSala(givenCine("Cinemax"),"Sala 42"));
+		
+		return funcion;
+	}
+	
+	private Funcion givenFuncionNoVigente() {
+		Funcion funcion = new Funcion();
+		
+		funcion.setId(new Random().nextLong());
+		funcion.setPelicula(givenPelicula("Indiana Jones"));
+		funcion.setPrecio(599.99);
+		funcion.setFecha(givenFechaInvalida());
+		funcion.setSala(givenSala(givenCine("Cinemax"),"Sala 42"));
+		
+		return funcion;
+	}
 
 }
