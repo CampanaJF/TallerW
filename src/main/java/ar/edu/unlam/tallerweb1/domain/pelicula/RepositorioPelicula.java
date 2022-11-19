@@ -24,7 +24,7 @@ public interface RepositorioPelicula {
 
     List<Pelicula> buscarPeliculasPorActor(String protagonista);
 
-    void guardarValoracionPelicula(int puntos, Pelicula pelicula, String comentario, Usuario usuario);
+    void guardarValoracionPelicula(Valoracion valoracion);
 
     List<Valoracion> listarValoracionesPorPelicula(Pelicula pelicula);
 

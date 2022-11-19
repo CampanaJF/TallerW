@@ -39,40 +39,12 @@ public class ControladorPeliculaTest {
 
 	private ModelAndView mav = new ModelAndView();
 
-	@Test
-	public void queSePuedanVerLosDetallesDeUnaPelicula(){
-		
-    	whenSeIngresaAUnaPelicula();
-    	
-    	thenSeVenLosDetallesDeLaPelicula();
-	
-	}
-	
-	private void whenSeIngresaAUnaPelicula() {
-		mocksSessionRequests();
-
-		mav = this.controladorPelicula.verPelicula(mockRequest);
-		
-	}
-
-	private void thenSeVenLosDetallesDeLaPelicula() {
-		assertThat(mav.getViewName()).isEqualTo("pelicula");
-		
-	}
-	
-	/*	
-	public Pelicula givenPelicula(String nombre) {
-    	Pelicula pelicula = new Pelicula ();
-
-    	return pelicula;
-    } */
 	
 	 private void mocksSessionRequests() {
 	    when(mockRequest.getSession()).thenReturn(mockSession);
 	    when(mockRequest.getSession().getAttribute("ID")).thenReturn(1L);
 
 	 }
-
 
 	@Test
 	public void queSePuedaRealizarUnaBusquedaDePeliculasExitosamente(){
@@ -86,7 +58,11 @@ public class ControladorPeliculaTest {
 		ModelAndView mav = whenBuscoPelicula();
 		thenNoEncuentroPeliculas(mav);
 	}
-
+	@Test
+	public void queMuestreLaVistaDeOpinionesDeUnaPelicula(){
+		ModelAndView mav = whenIrAVerOpiniones();
+		thenObtengoLaVistaDeOpiniones(mav);
+	}
 	private void givenQueLaPeliculaExiste(){
 		List<Pelicula> peliculaList = new LinkedList<>();
 		when(this.servicioPelicula.buscarPeliculas(PELICULA_TITULO)).thenReturn(peliculaList);
@@ -108,16 +84,7 @@ public class ControladorPeliculaTest {
 		assertThat(mav.getViewName()).isEqualTo("pelicula-buscada");
 	}
 
-	@Test
-	public void queAlCalificarUnaPeliculaLeMuestreVistaExitosa(){
-		 ModelAndView mav = whenIrAGuardarCalificacion();
-		 thenObtengoLaVista(mav);
-	}
-    @Test
-	public void queMuestreLaVistaDeOpinionesDeUnaPelicula(){
-		 ModelAndView mav = whenIrAVerOpiniones();
-		 thenObtengoLaVistaDeOpiniones(mav);
-	}
+
 
 	private void thenObtengoLaVistaDeOpiniones(ModelAndView mav) {
 		 assertThat(mav.getViewName()).isEqualTo("ver-opiniones");
@@ -128,13 +95,5 @@ public class ControladorPeliculaTest {
 	 return this.controladorPelicula.verOpiniones(2L,mockRequest);
 	 }
 
-	private void thenObtengoLaVista(ModelAndView mav) {
-		 assertThat(mav.getViewName()).isEqualTo("calificacionPelicula-exitosa");
-	}
-
-	private ModelAndView whenIrAGuardarCalificacion() {
-		 mocksSessionRequests();
-		 return this.controladorPelicula.guardarCalificacion(4,2L,"buena",mockRequest);
-	}
 
 }

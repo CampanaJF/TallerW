@@ -24,11 +24,10 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 @Controller
 public class ControladorHome {
 
-
-	private ServicioUsuario servicioUsuario;
-	private ServicioPelicula servicioPelicula;
-	private ServicioHistorial servicioHistorial;
-	private ServicioRandomizer servicioRandomizer;
+    private ServicioUsuario servicioUsuario;
+    private ServicioPelicula servicioPelicula;
+    private ServicioHistorial servicioHistorial;
+	  private ServicioRandomizer servicioRandomizer;
 	
 	@Autowired
 	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
@@ -38,8 +37,7 @@ public class ControladorHome {
 		this.servicioHistorial = servicioHistorial;
 		this.servicioRandomizer = servicioRandomizer;
 
-	}
-	
+
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		

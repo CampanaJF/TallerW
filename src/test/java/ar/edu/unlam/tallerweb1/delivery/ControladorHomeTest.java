@@ -77,8 +77,14 @@ public class ControladorHomeTest {
 	}
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
+
+
+		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial);
+
 		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer);
+
 		Usuario usuario = givenUsuario();
+
 		PeliculaConEtiquetaDTO pelicula=new PeliculaConEtiquetaDTO();
 		PeliculaConEtiquetaDTO pelicula2=new PeliculaConEtiquetaDTO();
 		List<PeliculaConEtiquetaDTO> peliculasEstrenos=new ArrayList<>();
@@ -87,6 +93,7 @@ public class ControladorHomeTest {
 		mocksSessionRequests();
 		when(servicioHistorial.obtenerEtiquetasDelUsuario(usuario)).thenReturn(givenEtiquetas(3));
 		when(servicioPelicula.obtenerPeliculaEstrenos()).thenReturn(peliculasEstrenos);
+
 		when(servicioUsuario.getUsuario(5L)).thenReturn(usuario);
 		return peliculasEstrenos;
 		
@@ -125,6 +132,5 @@ public class ControladorHomeTest {
 	
 	return etiqueta;
 	}
-
 
 }

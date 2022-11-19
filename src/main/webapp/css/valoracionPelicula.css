@@ -12,12 +12,7 @@
 .a-calif:hover{
     color: #678;
 }
-/*.fa{
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
-    color: #9ab;
-}*/
+
 .boton-calif{
     width: 74px;
     height: 38px;
@@ -27,12 +22,7 @@
     color: #9ab;
     background-color: #283038;
 }
-/*.fa-duotone .fa-message{
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
-    color: #9ab;
-}*/
+
 .clasif-borde{
     background: #283038;
     border-radius: 3px;
@@ -47,7 +37,6 @@
 .container-rating{
     display: flex;
     align-items: center;
-   /* justify-content: center;*/
 }
 
 .rating-wrap{
