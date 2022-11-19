@@ -57,8 +57,6 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
     @Override
     public Genero getGenero(Long id) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Genero) session.createCriteria(Genero.class)
-                .add(Restrictions.eq("id", id))
-                .uniqueResult();
+        return session.get(Genero.class,id);
     }
 }
