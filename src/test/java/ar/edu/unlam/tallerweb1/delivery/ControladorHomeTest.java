@@ -51,10 +51,9 @@ public class ControladorHomeTest {
         servicioHistorial = mock(ServicioHistorial.class);
         servicioRandomizer = mock(ServicioRandomizer.class);
         servicioUsuario = mock(ServicioUsuario.class);
-        servicioSession=mock(ServicioSession.class);
         mockRequest = mock(HttpServletRequest.class);
     	mockSession = mock(HttpSession.class);
-    	controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioSession);
+    	controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer);
 	}
 	@Autowired
 	private ControladorHome controlador;

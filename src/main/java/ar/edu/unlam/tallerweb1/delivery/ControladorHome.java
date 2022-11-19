@@ -18,7 +18,6 @@ import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
 import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
-import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
 
@@ -63,8 +62,7 @@ public class ControladorHome {
 			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 			
 		}else {
-			 Long userId = this.servicioSession.getUserId(request);
-			 model.put("usuario", userId);
+			 model.put("usuario", usuario);
 		}
 		
 		
