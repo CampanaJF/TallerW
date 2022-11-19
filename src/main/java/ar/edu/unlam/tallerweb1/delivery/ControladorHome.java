@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.domain.helper.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
 import ar.edu.unlam.tallerweb1.domain.pelicula.ServicioPelicula;
@@ -27,19 +27,15 @@ public class ControladorHome {
     private ServicioUsuario servicioUsuario;
     private ServicioPelicula servicioPelicula;
     private ServicioHistorial servicioHistorial;
-
-    @Autowired
-    public ControladorHome(ServicioUsuario servicioUsuario, ServicioPelicula servicioPelicula, ServicioHistorial servicioHistorial) {
-        this.servicioUsuario = servicioUsuario;
-        this.servicioPelicula = servicioPelicula;
-        this.servicioHistorial = servicioHistorial;
-
-    }
-
-
-    private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-        return this.servicioUsuario.getUsuario((Long) request.getSession().getAttribute("ID"));
-    }
+	  private ServicioRandomizer servicioRandomizer;
+	
+	@Autowired
+	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
+							ServicioHistorial servicioHistorial,ServicioRandomizer servicioRandomizer){
+		this.servicioUsuario = servicioUsuario;
+		this.servicioPelicula = servicioPelicula;
+		this.servicioHistorial = servicioHistorial;
+		this.servicioRandomizer = servicioRandomizer;
 
 
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
@@ -50,14 +46,13 @@ public class ControladorHome {
 		 
 
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
-			Integer indiceMax = obtenerEtiquetasDelHistorial(usuario).size();
-			Integer primerIndice = obtenerIndice(indiceMax);
-			Integer segundoIndice = obtenerIndice(indiceMax,primerIndice);
-		
+			Integer primerIndice = obtenerIndice(indiceMax(usuario));
+
 			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
 			model.put("historialA", peliculasHistorialA);
 			
-			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario, segundoIndice);
+			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario,
+																					obtenerIndice(indiceMax(usuario),primerIndice));
 			model.put("historialB", peliculasHistorialB);
 			
 			model.put("usuario", usuario);
@@ -77,40 +72,29 @@ public class ControladorHome {
 		return new ModelAndView("home",model);
 	}
 
-	// pasar a service para mock
-	
+	private int indiceMax(Usuario usuario) {
+		return obtenerEtiquetasDelHistorial(usuario).size();
+	}
+
+	private int obtenerIndice(Integer indiceMax, Integer primerIndice) {
+		return this.servicioRandomizer.obtenerIndice(indiceMax,primerIndice);
+	}
+
 	private int obtenerIndice(Integer indiceMax) {
-		
-		Random r = new Random();
-		int low = 0;
-		int high = indiceMax;
-		int resultado = r.nextInt(high-low);
-		
-		return resultado;
+		return this.servicioRandomizer.obtenerIndice(indiceMax);
 	}
-	
-	private int obtenerIndice(Integer indiceMax,Integer indice) {
-	
-		Integer resultado = obtenerIndice(indiceMax);
-		
-		while(resultado==indice) {
-			resultado = obtenerIndice(indiceMax);
-		}
-			
-		return resultado;
-	}
-	
+
 	private List<PeliculaConEtiquetaDTO> obtenerPeliculasDelHistorial(Usuario usuario, Integer indice) {
 		return servicioHistorial.obtenerPeliculasDeLasEtiquetasDelUsuario(usuario,indice);
 	}
 
 	private List<Etiqueta> obtenerEtiquetasDelHistorial(Usuario usuario) {
-		return this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario);
+		return this.servicioHistorial.obtenerEtiquetasDelUsuario(usuario);
 	}
 	
 	private Boolean validarHistorialExistente(Usuario usuario) {
 		
-		if(this.servicioHistorial.obtenerEtiquetasDelHistorial(usuario).size()<3) 
+		if(this.servicioHistorial.obtenerEtiquetasDelUsuario(usuario).size()<3) 
 			return false;
 		
 		return true;

@@ -138,7 +138,7 @@ public class ControladorEntrada {
 		
 		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
 		
-		this.servicioHistorial.agregarAlHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
+		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
 		
 		ModelMap model = new ModelMap();
 		model.put("usuario", obtenerUsuarioLogueado(request));

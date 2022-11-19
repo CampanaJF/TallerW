@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.historial;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
+import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
 @Entity
@@ -21,6 +23,17 @@ public class Historial {
 	
 	@ManyToOne
 	private Etiqueta etiqueta;
+	
+	@ManyToOne
+	private Pelicula pelicula;
+	
+	public Pelicula getPelicula() {
+		return pelicula;
+	}
+
+	public void setPelicula(Pelicula pelicula) {
+		this.pelicula = pelicula;
+	}
 
 	public Long getId() {
 		return id;
@@ -45,6 +58,7 @@ public class Historial {
 	public void setEtiqueta(Etiqueta etiqueta) {
 		this.etiqueta = etiqueta;
 	}
+
 	
 	
 	
