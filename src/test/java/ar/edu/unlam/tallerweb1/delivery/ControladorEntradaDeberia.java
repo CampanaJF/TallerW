@@ -55,7 +55,57 @@ public class ControladorEntradaDeberia {
 	
 	private ModelAndView mav = new ModelAndView();
 	
+	@Test
+	public void permitirVerTodasLasEntradasAunVigentes() {
+		
+		List<Entrada> entradas = givenEntradas(5);
+		Usuario usuarioLogueado = givenUsuario();
+		
+		whenSeQuierenVerLasEntradasVigentesDeUnUsuario(1L,entradas,usuarioLogueado);
+		
+		thenSeListanSusEntradas();
+		
+	}
 	
+	private void thenSeListanSusEntradas() {
+		assertThat(mav.getViewName()).isEqualTo("entrada");
+		assertThat(mav.getModel().get("entradas")).isNotNull();
+		
+	}
+
+	private void whenSeQuierenVerLasEntradasVigentesDeUnUsuario(long l,List<Entrada> entradas,Usuario usuarioLogueado) {
+		mocksSessionRequests();
+		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
+		when(servicioEntrada.obtenerEntradasVigentes(usuarioLogueado)).thenReturn(entradas);;
+		mav = this.controladorEntrada.verEntradasVigentes(mockRequest,null);	
+		
+	}
+
+	
+
+
+	@Test
+	public void permitirCancelarUnaReserva() {
+		
+		Long entrada = 5L;
+		
+		whenSeCancelarUnaReserva(entrada);
+		
+		thenSeCanceloLaReserva();
+	}
+	
+	
+	private void thenSeCanceloLaReserva() {
+		assertThat(mav.getViewName()).isEqualTo("redirect:/ver-entradas");
+		
+	}
+
+
+	private void whenSeCancelarUnaReserva(Long entrada) {
+		mav = this.controladorEntrada.cancelarReserva(entrada,mockRequest,redirectAttributes);	
+	}
+
+
 	@Test
 	public void permitirElegirElCineParaComprarUnaEntrada(){
 		
@@ -134,6 +184,7 @@ public class ControladorEntradaDeberia {
 		mocksSessionRequests();
 		
 		//when(this.servicioFuncion.obtenerAsientosDeLaFuncion(datosEntrada.getFuncion().getId()));
+		when(this.servicioFuncion.validarAsientosDisponibles(datosEntrada.getFuncion())).thenReturn(true);
 		
 		mav = this.controladorEntrada.entradaAsientos(datosEntrada,mockRequest,redirectAttributes);	
 		
@@ -169,7 +220,7 @@ public class ControladorEntradaDeberia {
 		
 		when(servicioUsuario.getUsuario(1L)).thenReturn(new Usuario());
 		//when(this.servicioEntrada.comprar(datosEntrada.getFuncion(), datosEntrada.getUsuario(), asientos)).thenReturn()
-		when(this.servicioEntrada.getEntradasCompradasDelUsuario(datosEntrada.getUsuario().getId(),datosEntrada.getFuncion().getId())).thenReturn(entrada);
+		when(this.servicioEntrada.obtenerEntradasVigentes(datosEntrada.getUsuario().getId(),datosEntrada.getFuncion().getId())).thenReturn(entrada);
 		mav = this.controladorEntrada.entradaCompra(datosEntrada,mockRequest,redirectAttributes);	
 	}
 
@@ -277,6 +328,27 @@ public class ControladorEntradaDeberia {
 		return cines;
 	}
 	
+	private List<Entrada> givenEntradas(Integer cantidad) {
+		
+		List<Entrada> entradas = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			entradas.add(givenEntrada());
+			
+		}
+		
+		return entradas;
+		
+	}
+	
+	private Entrada givenEntrada() {
+		Entrada entrada = new Entrada();
+		entrada.setId(new Random().nextLong());
+		return entrada;
+	}
+
+
+
 	private List<Asiento> givenAsientos(Integer cantidad){
 		
 		List<Asiento> asientos = new ArrayList<>();

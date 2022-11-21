@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
+import ar.edu.unlam.tallerweb1.exceptions.FuncionSinAsientosDisponiblesException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
 @Service("servicioFuncion")
@@ -40,7 +41,7 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 		
 		for (Funcion funcion : funciones) {
 			
-			if(validarFechaFuncion(funcion)&&validarAsientosDisponibles(funcion)) {
+			if(validarFechaFuncion(funcion)) {
 				formatFechaFuncion(funcion);
 				siguientesFunciones.add(funcion);
 			}
@@ -106,13 +107,16 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 	}
 
 	@Override
-	public Boolean validarAsientosDisponibles(Funcion funcion) {
-		
-		Integer asientosOcupados = this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
-		if(funcion.getSala().getAsientosTotales()-asientosOcupados>0)
+	public Boolean validarAsientosDisponibles(Funcion funcion) throws FuncionSinAsientosDisponiblesException {
+
+		if(funcion.getSala().getAsientosTotales()-asientosOcupados(funcion)>0)
 			return true;
 		
 		return false;
+	}
+
+	private Integer asientosOcupados(Funcion funcion) {
+		return this.repositorioFuncion.getCantidadAsientosOcupados(funcion.getId());
 	}
 
 	@Override

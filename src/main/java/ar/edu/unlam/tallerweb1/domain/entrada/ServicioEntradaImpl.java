@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.helper.FuncionEntradas;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
@@ -68,13 +70,19 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 	}
 
+	// cambiar a funcionEntradas
 	@Override
-	public List<Entrada> getEntradasCompradasDelUsuario(Long usuario,Long funcion) {
+	public List<Entrada> obtenerEntradasVigentes(Long usuario,Long funcion) {
 		
-		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario,funcion);
+		return obtenerVigentes(obtenerLasEntradasDelUsuarioParaLaFuncion(usuario, funcion));
 		
 	}
-	
+
+	@Override
+	public List<Entrada> obtenerEntradasVigentes(Usuario usuarioLogueado) {
+		
+		return obtenerVigentes(obtenerTodasLasEntradasDelUsuario(usuarioLogueado));
+	}
 
 	@Override
 	public void validarEntrada(Funcion funcion,Usuario usuario,List<Asiento> asientos)throws DatosEntradaInvalidaException {
@@ -85,11 +93,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 		validarAsiento(funcion,asientos);
 		
-	}
-	
-	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
-		
-		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
 	}
 	
 	@Override
@@ -153,6 +156,77 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		}
 		return asientosSeleccionados;
 	}
+	
+	// agregar el disparador de buscar un usuario que quiera esta entrada aca
+	@Override
+	public void cancelarReserva(Long entrada) {
+		this.repositorioEntrada.cancelarReserva(entrada);
+	
+	}
+	
+	// todo, utilizar un metodo para extraer las entradas de cada funcion
+	private List<FuncionEntradas> formatearEntradas(List<Entrada> entradas){
+		
+		List<FuncionEntradas> funcionEntradas = new ArrayList<>();
+		
+		for (Entrada entrada : entradas) {
+			FuncionEntradas funcionEntrada = new FuncionEntradas();
+			
+			funcionEntrada.setFuncion(entrada.getFuncion());
+			funcionEntrada.setEntradas(entradas);
+			
+		}
+		
+		return null;
+	}
+	
+	private List<Entrada> obtenerTodasLasEntradasDelUsuario(Usuario usuarioLogueado) {
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuarioLogueado);
+	}
+	
+	private List<Entrada> obtenerLasEntradasDelUsuarioParaLaFuncion(Long usuario, Long funcion) {
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario,funcion);
+	}
+	
+	private List<Entrada> obtenerVigentes(List<Entrada> entradasDelUsuario) {
+		
+		List<Entrada> entradasVigentes = new ArrayList<>();
+		
+		for (Entrada entrada : entradasDelUsuario) {
+			
+			if (validarEntradaVigente(entrada)) 
+				entradasVigentes.add(entrada);	
+		}
+		
+		return entradasVigentes;
+	}
+	
+	private Boolean validarEntradaVigente(Entrada entrada) {
+		Date hoy = new Date();
+		
+		if (entrada.getFuncion().getFecha().after(hoy)) 
+			return true;
+		
+		return false;
+	}
+	
+	private void comprarEntrada(Funcion funcion, Usuario usuario, Asiento asiento) {
+		
+		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
+	}
+
+	@Override
+	public void agregarAPendientes(Funcion funcion, Usuario usuario) {
+		EntradaPendiente entradaPendiente = new EntradaPendiente();
+		
+		entradaPendiente.setFuncion(funcion);
+		entradaPendiente.setUsuario(usuario);
+		
+		this.repositorioEntrada.agregarAPendientes(entradaPendiente);
+		
+	}
+
+	
 
 
 }
