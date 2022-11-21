@@ -17,7 +17,7 @@ insert into sala (id,asientosTotales,nombreSala,cine_id) values
 				 (1,50,'Sala J',1),
 				 (2,50,'Sala K',1),
 				 (3,50,'Sala L',1);
- 
+                 
 insert into cine (id,locacion,nombreCine) values (2,'Italia 913','Cine Magistral');
  
 insert into sala (id,asientosTotales,nombreSala,cine_id) values                
@@ -38,6 +38,8 @@ insert into sala (id,asientosTotales,nombreSala,cine_id) values
 							(10,50,'Sala X',4),
 							(11,50,'Sala Z',4),
 							(12,50,'Sala Y',4);
+                            
+insert into sala (id,asientosTotales,nombreSala,cine_id) values (13,1,'Sala Test Reserva',4);
 
 
 INSERT INTO genero (id,descripcion)

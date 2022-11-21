@@ -28,9 +28,7 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (95,'2022-10-29 21:00','12:00','Ingles',750.00,true,3,1,6),
                     (96,'2022-10-28 21:00','15:00','Ingles',750.00,false,1,1,7),
                     (97,'2022-10-27 23:00','22:00','Ingles',750.00,true,2,1,8),
-                    (98,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,1,9);
-                    
-insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
+                    (98,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,1,9),
 					(190,'2022-10-27 21:00','21:00','Ingles',750.00,true,2,2,1),
                     (191,'2022-10-28 21:00','21:00','Ingles',750.00,false,3,2,2),
                     (192,'2022-10-29 21:00','21:00','Ingles',750.00,true,1,2,3),
@@ -40,8 +38,13 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (196,'2022-10-28 21:00','15:00','Ingles',750.00,false,1,2,7),
                     (197,'2022-10-27 23:00','22:00','Ingles',750.00,true,2,2,8),
                     (198,'2022-10-27 23:00','22:30','Ingles',750.00,false,3,2,9);
-
- 
+                    
+/* Funcion de test de reserva
+insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
+					(7337,'2022-11-22 23:00','22:30','Ingles',750.00,true,1,2,13);
+                    
+call EP_crearAsientosYEntradasVacias(7337);
+*/
  
 update funcion set fecha='2022-11-11 21:00' where id = 90;
 update funcion set fecha='2022-11-11 21:00' where id = 91;
@@ -62,6 +65,7 @@ update funcion set fecha='2022-11-11 21:00' where id = 195;
 update funcion set fecha='2022-11-12 21:00' where id = 196;
 update funcion set fecha='2022-11-11 21:00' where id = 197;
 update funcion set fecha='2022-11-11 21:00' where id = 198;
+update funcion set fecha='2022-11-11 21:00' where id = 7337;
 
                     
 drop procedure if exists EP_recorrerFunciones;
