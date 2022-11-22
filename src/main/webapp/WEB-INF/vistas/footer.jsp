@@ -1,8 +1,4 @@
-<footer class="fixed-bottom">
-<p class="text-light">CineClub</p>
-<p class="text-light">Dario Orfano</p>
-
-
+<footer >
 
 </footer>
 <script src="js/popper.min.js"></script>
