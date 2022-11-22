@@ -28,5 +28,9 @@ public interface RepositorioEntrada {
 
 	void agregarAPendientes(EntradaPendiente entradaPendiente);
 
+	List<EntradaPendiente> getPendientes(Long entrada);
+
+	void actualizarPendiente(EntradaPendiente entradaPendiente);
+
 	
 }

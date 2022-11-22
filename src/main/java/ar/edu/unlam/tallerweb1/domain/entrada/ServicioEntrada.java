@@ -40,5 +40,7 @@ void comprar(Funcion funcion,Usuario usuario,List<Long> asientos);
 	void cancelarReserva(Long entrada);
 
 	void agregarAPendientes(Funcion funcion, Usuario usuario);
+
+	void actualizarPendientes(Long entrada);
 	
 }

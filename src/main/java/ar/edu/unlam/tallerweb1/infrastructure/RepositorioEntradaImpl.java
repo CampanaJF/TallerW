@@ -142,6 +142,21 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		session.save(entradaPendiente);
 		
 	}
+
+	@Override
+	public List<EntradaPendiente> getPendientes(Long entrada) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void actualizarPendiente(EntradaPendiente entradaPendiente) {
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.update(entradaPendiente);
+		
+	}
 	
 	
 

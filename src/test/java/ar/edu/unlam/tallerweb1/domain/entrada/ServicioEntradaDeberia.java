@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.entrada;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -28,25 +29,29 @@ public class ServicioEntradaDeberia {
 	private ServicioEntradaImpl servicioEntrada = new ServicioEntradaImpl(repositorioEntrada);
 	
 	@Test
-	public void cancelarUnaEntrada() {
+	public void actualizarLasEntradasPendientesParaNotificar() {
 		
-		Long entrada = 5L;
+		List<EntradaPendiente> entradasPendientes = givenEntradasPendientes(5);
 		
-		whenSeCancelaUnaReserva(entrada);
+		Entrada entradaCancelada = givenEntrada();
 		
-		thenSeCancelo(entrada);
+		whenSeActualizanLosDatos(entradaCancelada,entradasPendientes);
+		
+		thenSeActualizaron(entradaCancelada);
 	}
 	
-	private void thenSeCancelo(Long entrada) {
-		verify(this.repositorioEntrada,times(1)).cancelarReserva(entrada);
+	@Test
+	public void cancelarUnaEntrada() {
 		
-	}
-
-	private void whenSeCancelaUnaReserva(Long entrada) {
-		this.servicioEntrada.cancelarReserva(entrada);
+		List<EntradaPendiente> entradasPendientes = givenEntradasPendientes(5);
 		
+		Long entradaCancelada = 5L;
+		
+		whenSeCancelaUnaReserva(entradaCancelada, entradasPendientes);
+		
+		thenSeCancelo(entradaCancelada);
 	}
-
+	
 	@Test
 	public void listarEntradasVigentes() {
 		
@@ -62,20 +67,7 @@ public class ServicioEntradaDeberia {
 		
 		List<Entrada> obtenidas= whenSeListanLasEntradas(usuario,entradas);
 		
-		thenSeObtienenSoloLasVigentes(obtenidas,usuario);
-		
-	}
-	
-	private void thenSeObtienenSoloLasVigentes(List<Entrada> obtenidas,Usuario usuario) {
-		verify(this.repositorioEntrada,times(1)).getEntradasCompradasDelUsuario(usuario);
-		assertThat(obtenidas.size()).isEqualTo(3);
-		
-	}
-
-	private List<Entrada> whenSeListanLasEntradas(Usuario usuario, List<Entrada> entradas) {
-		when(this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario)).thenReturn(entradas);
-		return this.servicioEntrada.obtenerEntradasVigentes(usuario);
-		
+		thenSeObtienenSoloLasVigentes(obtenidas,usuario);	
 	}
 
 	@Test
@@ -93,8 +85,7 @@ public class ServicioEntradaDeberia {
 				
 		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
 		
-		thenSeComproUnaEntrada(funcion,usuario,asientos.get(0));
-			
+		thenSeComproUnaEntrada(funcion,usuario,asientos.get(0));		
 	}
 
 
@@ -113,8 +104,7 @@ public class ServicioEntradaDeberia {
 				
 		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
 		
-		thenSeCompranMultiplesEntradas(funcion,usuario,asientos);
-			
+		thenSeCompranMultiplesEntradas(funcion,usuario,asientos);		
 	}
 
 
@@ -129,8 +119,7 @@ public class ServicioEntradaDeberia {
 		
 		List<Long> numeros = givenNumeros(1);
 		
-		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
-				
+		whenSeCompranEntradas(funcion,usuario,numeros,asientos);		
 	}
 	
 	@Test(expected = DatosEntradaInvalidaException.class)
@@ -146,8 +135,7 @@ public class ServicioEntradaDeberia {
 		
 		List<Long> numeros = givenNumeros(cantidadDeEntradas);
 		
-		whenSeCompranEntradasSinFuncion(funcion,usuario,numeros,asientos);
-				
+		whenSeCompranEntradasSinFuncion(funcion,usuario,numeros,asientos);			
 	}
 
 	@Test(expected = ErrorDeAsientoException.class)
@@ -161,8 +149,7 @@ public class ServicioEntradaDeberia {
 		
 		List<Long> numeros = givenNumeros(0);
 		
-		whenSeCompranEntradas(funcion,usuario,numeros,asientos);
-				
+		whenSeCompranEntradas(funcion,usuario,numeros,asientos);	
 	}
 	
 	@Test(expected = ErrorDeAsientoException.class)
@@ -176,51 +163,74 @@ public class ServicioEntradaDeberia {
 		
 		List<Long> numeros = givenNumeros(5);
 		
-		whenSeCompranEntradasSinSuficientesAsientos(funcion,usuario,numeros,asientos);
-				
+		whenSeCompranEntradasSinSuficientesAsientos(funcion,usuario,numeros,asientos);	
+	}
+	
+	private void thenSeActualizaron(Entrada entrada) {
+		verify(this.repositorioEntrada,times(1)).getPendientes(entrada.getId());
+		verify(this.repositorioEntrada,times(5)).actualizarPendiente(any(EntradaPendiente.class));	
+	}
+
+	private void whenSeActualizanLosDatos(Entrada entrada,List<EntradaPendiente> entradasPendientes) {
+		when(this.repositorioEntrada.getPendientes(entrada.getId())).thenReturn(entradasPendientes);
+		this.servicioEntrada.actualizarPendientes(entrada.getId());	
+	}
+
+	private void thenSeCancelo(Long entrada) {
+		verify(this.repositorioEntrada,times(1)).cancelarReserva(entrada);
+		verify(this.repositorioEntrada,times(1)).getPendientes(entrada);
+		verify(this.repositorioEntrada,times(5)).actualizarPendiente(any(EntradaPendiente.class));	
+	}
+
+	private void whenSeCancelaUnaReserva(Long entrada, List<EntradaPendiente> entradasPendientes) {
+		when(this.repositorioEntrada.getPendientes(entrada)).thenReturn(entradasPendientes);
+		this.servicioEntrada.cancelarReserva(entrada);	
+	}
+
+	private void thenSeObtienenSoloLasVigentes(List<Entrada> obtenidas,Usuario usuario) {
+		verify(this.repositorioEntrada,times(1)).getEntradasCompradasDelUsuario(usuario);
+		assertThat(obtenidas.size()).isEqualTo(3);	
+	}
+
+	private List<Entrada> whenSeListanLasEntradas(Usuario usuario, List<Entrada> entradas) {
+		when(this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario)).thenReturn(entradas);
+		return this.servicioEntrada.obtenerEntradasVigentes(usuario);	
 	}
 	
 	private void whenSeCompranEntradas(Funcion funcion, Usuario usuario, List<Long> numeros, List<Asiento> asientos) {
 		getAsientos(numeros,asientos);
 		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(numeros.size());
-		this.servicioEntrada.comprar(funcion,usuario,numeros);
-		
+		this.servicioEntrada.comprar(funcion,usuario,numeros);	
 	}
 	
 	
 	private void whenSeCompranEntradasSinFuncion(Funcion funcion, Usuario usuario, List<Long> numeros,List<Asiento> asientos) {
 		getAsientos(numeros,asientos);
-		this.servicioEntrada.comprar(funcion,usuario,numeros);
-		
+		this.servicioEntrada.comprar(funcion,usuario,numeros);	
 	}
 	
 	private void whenSeCompranEntradasSinSuficientesAsientos(Funcion funcion, Usuario usuario, List<Long> numeros,List<Asiento> asientos) {
 		getAsientos(numeros,asientos);
 		when(this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId())).thenReturn(3);
-		this.servicioEntrada.comprar(funcion,usuario,numeros);
-		
+		this.servicioEntrada.comprar(funcion,usuario,numeros);	
 	}
 
 	private void thenSeComproUnaEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
 		verify(this.repositorioEntrada,times(1)).comprarEntrada(funcion,usuario,asiento);
 	}
 	
-
 	private void thenSeCompranMultiplesEntradas(Funcion funcion,Usuario usuario,List<Asiento> asientos) {
 		
 		for (int i = 0; i < asientos.size(); i++) {
 			verify(this.repositorioEntrada,times(1)).comprarEntrada(funcion,usuario,asientos.get(i));	
-		}
-		
-		
+		}	
 	}
 	
 	private void getAsientos(List<Long> numeros,List<Asiento> asientos){
 		
 		for (int i = 0; i < numeros.size(); i++) {
 			when(this.repositorioEntrada.getAsiento(numeros.get(i))).thenReturn(asientos.get(i));
-			
-		}			
+			}			
 	}
 	
 	private List<Asiento> givenAsientosVacios(Integer cantidad){
@@ -315,6 +325,37 @@ public class ServicioEntradaDeberia {
 		return dt;
 	}
 	
+	private List<EntradaPendiente> givenEntradasPendientes(Integer cantidad) {
+		
+		List<EntradaPendiente> entradasPendientes = new ArrayList<>();
+		
+		for (int i = 0; i < cantidad; i++) {
+			EntradaPendiente entradaPendiente = givenEntradaPendiente();
+			
+			entradasPendientes.add(entradaPendiente);
+		}
+		
+		return entradasPendientes;
+	}
+	
+	private EntradaPendiente givenEntradaPendiente() {
+		
+		EntradaPendiente entradaPendiente = new EntradaPendiente();
+		
+		entradaPendiente.setFuncion(givenFuncionVigente());
+		
+		return entradaPendiente;
+	}
+	
+	private Entrada givenEntrada() {
+		
+		Entrada entrada = new Entrada();
+		
+		entrada.setFuncion(givenFuncionVigente());
+		
+		return entrada;
+	}
+	
 	private List<Entrada> givenEntradasVigentes(Integer cantidad){
 		
 		List<Entrada> entradas = new ArrayList<>();
@@ -325,10 +366,8 @@ public class ServicioEntradaDeberia {
 			entrada.setFuncion(givenFuncionVigente());
 			
 			entradas.add(entrada);
-		}
-		
-		return entradas;
-		
+		}	
+		return entradas;	
 	}
 	
 	private List<Entrada> givenEntradasNoVigentes(Integer cantidad){

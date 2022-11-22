@@ -58,13 +58,12 @@ public class ControladorEntrada {
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 			
-			- Cancelar reserva de entrada
 			- Notificacion de asiento disponible (funcion que tiene el asiento)
 	 *      - Al apretar la notificacion te manda a la vista de entradas con la opcion de comprar las que esten libres de esa funcion
 	 *      
-	 *     //Las notificaciones deben tener id,usuario,string de descripcion y funcion
-		// se podria hacer una clase abstracta
-		// al apretar la notifiacion te dirige a la lista de entradas disponibles para comprar
+	 *      Las notificaciones deben tener id,usuario,string de descripcion y funcion
+		    se podria hacer una clase abstracta
+		    al apretar la notifiacion te dirige a la lista de entradas disponibles para comprar
 			
 	*/
 	

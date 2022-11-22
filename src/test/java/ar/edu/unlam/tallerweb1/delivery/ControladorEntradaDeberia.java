@@ -47,7 +47,7 @@ public class ControladorEntradaDeberia {
 	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
 	
 	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioEntrada,servicioUsuario,
-																				servicioFuncion,servicioCine,servicioHistorial);
+																				 servicioFuncion,servicioCine,servicioHistorial);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
@@ -62,24 +62,11 @@ public class ControladorEntradaDeberia {
 		
 		thenSeComproLaEntrada();
 	}
-	
-	private void thenSeComproLaEntrada() {
-		assertThat(mav.getViewName()).isEqualTo("redirect:/mis-entradas");
-	}
-
-	private void whenSeCompraLaEntradaDesocupada(Long entrada) {
-		mocksSessionRequests();
-		
-		mav = this.controladorEntrada.comprarEntradaDesocupada(entrada,mockRequest);	
-	}
 
 	@Test
 	public void permitirVerTodasLasEntradasAunVigentes() {
 		
-		List<Entrada> entradas = givenEntradas(5);
-		Usuario usuarioLogueado = givenUsuario();
-		
-		whenSeQuierenVerLasEntradasVigentesDeUnUsuario(1L,entradas,usuarioLogueado);
+		whenSeQuierenVerLasEntradasVigentesDeUnUsuario(1L,givenEntradas(5),givenUsuario());
 		
 		thenSeListanSusEntradas();	
 	}
@@ -87,9 +74,7 @@ public class ControladorEntradaDeberia {
 	@Test
 	public void permitirCancelarUnaReserva() {
 		
-		Long entrada = 5L;
-		
-		whenSeCancelarUnaReserva(entrada);
+		whenSeCancelarUnaReserva(5L);
 		
 		thenSeCanceloLaReserva();
 	}
@@ -107,11 +92,10 @@ public class ControladorEntradaDeberia {
 	@Test
 	public void permitirElegirLaFuncion() {
 		
-		DatosCine datosCine = givenDatosCine();
 		List <Funcion> funciones = new ArrayList<>();
 		funciones.add(givenFuncion());
 		
-		whenSeEligeLaFuncion(datosCine,funciones);
+		whenSeEligeLaFuncion(givenDatosCine(),funciones);
 		
 		thenSePuedenElegirLosAsientos();
 	}
@@ -167,11 +151,19 @@ public class ControladorEntradaDeberia {
 	@Test
 	public void impedirComprarEntradasSiNoSeEstaLogueado(){
 				
-		DatosEntrada datosEntrada = new DatosEntrada();
-				
-    	whenSeIntentaComprarUnaEntradaSinEstarLogueado(datosEntrada);
+    	whenSeIntentaComprarUnaEntradaSinEstarLogueado(new DatosEntrada());
     	
     	thenSeRedireccionaARegistro();
+	}
+	
+	private void thenSeComproLaEntrada() {
+		assertThat(mav.getViewName()).isEqualTo("redirect:/mis-entradas");
+	}
+
+	private void whenSeCompraLaEntradaDesocupada(Long entrada) {
+		mocksSessionRequests();
+		
+		mav = this.controladorEntrada.comprarEntradaDesocupada(entrada,mockRequest);	
 	}
 	
 	private void thenSeListanSusEntradas() {

@@ -42,19 +42,8 @@ public class RepositorioEntradaDeberia extends SpringTest {
 		Integer obtenido = whenSeObtienenLaCantidadDeVacios(funcion);
 		
 		thenSeObtieneLaCantidadDeVacios(obtenido,vacios);
-		
 	}
 	
-	private Integer whenSeObtienenLaCantidadDeVacios(Funcion funcion) {
-		return this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId());
-		
-	}
-
-	private void thenSeObtieneLaCantidadDeVacios(Integer obtenido,Integer vacios) {
-		assertThat(obtenido).isEqualTo(vacios);
-		
-	}
-
 	@Test
 	@Transactional
 	@Rollback
@@ -80,17 +69,6 @@ public class RepositorioEntradaDeberia extends SpringTest {
     	thenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminadaFuncion(entradasObtenidas);
 	}
 	
-	private List<Entrada> whenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminaFuncion(Usuario usuario,Funcion funcion){
-		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario.getId(),funcion.getId());
-		
-	}
-
-	private void thenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminadaFuncion(List<Entrada> entradasObtenidas) {
-		assertThat(entradasObtenidas.size()).isEqualTo(5);
-		assertThat(entradasObtenidas.get(0).getFuncion().getPelicula().getTitulo()).isEqualTo("Indiana Jones");
-	
-	}
-
 	@Test
 	@Transactional
 	@Rollback
@@ -113,21 +91,9 @@ public class RepositorioEntradaDeberia extends SpringTest {
     	
     	Entrada obtenida = whenSeObtieneLaUltimaEntradaCompradaDeUnUsuarioParaUnaFuncionDeterminada(usuario2,funcion);
     	
-    	thenSeObtieneLaUltimaEntradaCompradaDeUnUsuario(obtenida,entrada3);
-		
+    	thenSeObtieneLaUltimaEntradaCompradaDeUnUsuario(obtenida,entrada3);	
 	}
 	
-	private void thenSeObtieneLaUltimaEntradaCompradaDeUnUsuario(Entrada entradaObtenida,Entrada entradaOriginal) {
-		assertThat(entradaObtenida.getId().equals(entradaOriginal.getId()));
-		assertThat(entradaObtenida.getUsuario().equals(entradaOriginal.getUsuario()));
-		assertThat(entradaObtenida.equals(entradaOriginal));		
-	}
-
-	private Entrada whenSeObtieneLaUltimaEntradaCompradaDeUnUsuarioParaUnaFuncionDeterminada(Usuario usuario,Funcion funcion){
-		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario.getId(),funcion.getId()).get(0);
-		
-	}
-
 	@Test
     @Transactional
     @Rollback
@@ -142,18 +108,42 @@ public class RepositorioEntradaDeberia extends SpringTest {
     	whenSeCompraUnaEntrada(funcion,usuario,entrada.getAsiento());
     	
     	thenSeComproLaEntrada(entrada);
- 	
     }
 	
+	private Integer whenSeObtienenLaCantidadDeVacios(Funcion funcion) {
+		return this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId());	
+	}
+
+	private void thenSeObtieneLaCantidadDeVacios(Integer obtenido,Integer vacios) {
+		assertThat(obtenido).isEqualTo(vacios);	
+	}
+
+	private List<Entrada> whenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminaFuncion(Usuario usuario,Funcion funcion){
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario.getId(),funcion.getId());	
+	}
+
+	private void thenSeObtienenTodasLasEntradasDeUnUsuarioParaUnaDeterminadaFuncion(List<Entrada> entradasObtenidas) {
+		assertThat(entradasObtenidas.size()).isEqualTo(5);
+		assertThat(entradasObtenidas.get(0).getFuncion().getPelicula().getTitulo()).isEqualTo("Indiana Jones");
+	}
+
+	private void thenSeObtieneLaUltimaEntradaCompradaDeUnUsuario(Entrada entradaObtenida,Entrada entradaOriginal) {
+		assertThat(entradaObtenida.getId().equals(entradaOriginal.getId()));
+		assertThat(entradaObtenida.getUsuario().equals(entradaOriginal.getUsuario()));
+		assertThat(entradaObtenida.equals(entradaOriginal));		
+	}
+
+	private Entrada whenSeObtieneLaUltimaEntradaCompradaDeUnUsuarioParaUnaFuncionDeterminada(Usuario usuario,Funcion funcion){
+		return this.repositorioEntrada.getEntradasCompradasDelUsuario(usuario.getId(),funcion.getId()).get(0);	
+	}
+
 	private void thenSeComproLaEntrada(Entrada entrada) {
 		assertThat(entrada.getUsuario()).isNotNull();
-		assertThat(entrada.getAsiento().getOcupado()).isTrue();
-		
+		assertThat(entrada.getAsiento().getOcupado()).isTrue();	
 	}
 
 	private void whenSeCompraUnaEntrada(Funcion funcion,Usuario usuario,Asiento asiento) {
-		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
-		
+		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);	
 	}
 	
 	private void givenEntradas(Usuario U1,Funcion F1,Long cantidad){
@@ -178,8 +168,7 @@ public class RepositorioEntradaDeberia extends SpringTest {
 			session().save(entrada);
 			session().save(asiento);
 			
-			return entrada;
-					
+			return entrada;				
 	}
 	
 	private void givenAsientosVaciosYEntradas(Funcion funcion,Integer cantidad) {
@@ -195,10 +184,8 @@ public class RepositorioEntradaDeberia extends SpringTest {
 			asiento.setOcupado(false);
 			
 			session().save(entrada);
-			session().save(asiento);
-					
-		}
-		
+			session().save(asiento);			
+		}	
 	}
 	
 	private void givenAsientosOcupadosYEntradas(Funcion funcion,Integer cantidad) {
@@ -214,10 +201,8 @@ public class RepositorioEntradaDeberia extends SpringTest {
 			asiento.setOcupado(true);
 			
 			session().save(entrada);
-			session().save(asiento);
-					
+			session().save(asiento);			
 		}
-		
 	}
 	
 	private Entrada givenEntrada(Usuario U1,Funcion F1) {
