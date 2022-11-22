@@ -52,14 +52,19 @@ public class ControladorEntrada {
 	 * 		- Agregar validaciones en el html para los formularios
 	 *      - try catch para casos donde no hay funciones (mejorar)
 	 *      - Arreglar la forma de validar al usuario
-
 	 *      
+	 *      - Hacer una clase que devuelva un modelo que contenga el usuario loguedo y sus notificaciones (?
+
 	 *      - Que al terminar de comprar la entrada se muestren los datos de la misma en un PDF
 			- Que al terminar de comprar la entrada se envie un recibo al correo del comprador
 			
 			- Cancelar reserva de entrada
-			- Notificacion de asiento disponible
+			- Notificacion de asiento disponible (funcion que tiene el asiento)
+	 *      - Al apretar la notificacion te manda a la vista de entradas con la opcion de comprar las que esten libres de esa funcion
 	 *      
+	 *     //Las notificaciones deben tener id,usuario,string de descripcion y funcion
+		// se podria hacer una clase abstracta
+		// al apretar la notifiacion te dirige a la lista de entradas disponibles para comprar
 			
 	*/
 	
@@ -153,29 +158,7 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada",model);
 	}
 
-	
-	@RequestMapping(path = "/ver-entrada2", method = RequestMethod.GET)
-	public ModelAndView verEntrada(@RequestParam Long entrada,HttpServletRequest request,
-									final RedirectAttributes redirectAttributes) {
-		
-		ModelMap model = new ModelMap();
-		
-		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
-		
-		if(null==usuarioLogueado) { 
-			redirectAttributes.addFlashAttribute("mensaje","!Registrese Para Comprar sus entradas!");
-			return new ModelAndView("redirect:/registrarme");
-		}
-		
-		Entrada entradaEncontrada = this.servicioEntrada.getEntrada(entrada);
-
-		model.put("usuario", usuarioLogueado);
-		model.put("entrada", entradaEncontrada);
-
-		return new ModelAndView("entrada",model);
-	}
-	
-	@RequestMapping(path = "/ver-entradas", method = RequestMethod.GET)
+	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
 	public ModelAndView verEntradasVigentes(HttpServletRequest request,final RedirectAttributes redirectAttributes) {
 		
 		Usuario usuarioLogueado = obtenerUsuarioLogueado(request);
@@ -189,16 +172,24 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada",model);
 	}
 	
-	@RequestMapping(path = "/entrada-cancelar", method = RequestMethod.POST)
-	public ModelAndView cancelarReserva(@RequestParam  Long entrada,HttpServletRequest request,
+	@RequestMapping(path = "/entrada-cancelar", method = RequestMethod.GET)
+	public ModelAndView cancelarReserva(@RequestParam("entrada") Long entrada,HttpServletRequest request,
 										final RedirectAttributes redirectAttributes) {
 		
-
-		this.servicioEntrada.cancelarReserva(entrada);
+		cancelarReserva(entrada);
 		redirectAttributes.addFlashAttribute("mensaje","!Se Cancelo la reserva exitosamente!");
 		
-		return new ModelAndView("redirect:/ver-entradas");
+		return new ModelAndView("redirect:/mis-entradas");
 	}
+	
+
+	@RequestMapping(path="/entrada-comprar", method = RequestMethod.GET)
+	public ModelAndView comprarEntradaDesocupada(Long entrada, HttpServletRequest mockRequest) {
+
+		return new ModelAndView("redirect:/mis-entradas");
+	}
+
+
 	
 	private ModelAndView validarUsuario(Usuario usuarioLogueado,final RedirectAttributes redirectAttributes) {
 		
@@ -251,11 +242,10 @@ public class ControladorEntrada {
 		return !(this.servicioFuncion.validarAsientosDisponibles(datosEntrada.getFuncion()));
 	}
 
-	
-	
+	private void cancelarReserva(Long entrada) {
+		this.servicioEntrada.cancelarReserva(entrada);
+	}
 
-	
-	
-	
+
 
 }

@@ -25,7 +25,7 @@
 			<h1 class="text-white text-center h3 mb-3 fw-normal">Nuevo Usuario</h1>
 
 			<div class="form-floating">
-			  <form:input type="email" path="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+			  <form:input type="email" path="email" class="form-control" id="floatingInput"/>
 			  <label for="floatingInput">Correo</label>
 			</div>
 			
@@ -35,12 +35,12 @@
 			</div>
             
 	         <div class="form-floating">
-			  <form:input type="password" path="password" class="form-control" id="floatingPassword" placeholder="Password"/>
+			  <form:input type="password" path="password" class="form-control" id="floatingPassword"/>
 			  <label for="floatingPassword">Contraseña</label>
 			</div>
 		
 			<div class="form-floating">
-			  <form:input type="password" path="passwordRe" class="form-control" id="floatingPassword" placeholder="Password"/>
+			  <form:input type="password" path="passwordRe" class="form-control" id="floatingPassword"/>
 			  <label for="floatingPassword">Repetí tu Contraseña</label>
 			</div>
            

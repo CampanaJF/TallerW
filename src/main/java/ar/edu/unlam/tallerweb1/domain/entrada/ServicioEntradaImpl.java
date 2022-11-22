@@ -157,7 +157,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		return asientosSeleccionados;
 	}
 	
-	// agregar el disparador de buscar un usuario que quiera esta entrada aca
+	// agregar el disparador de buscar un usuario que quiera esta entrada aca con la funcion
 	@Override
 	public void cancelarReserva(Long entrada) {
 		this.repositorioEntrada.cancelarReserva(entrada);
