@@ -29,6 +29,28 @@ public class ServicioEntradaDeberia {
 	private ServicioEntradaImpl servicioEntrada = new ServicioEntradaImpl(repositorioEntrada);
 	
 	@Test
+	public void comprarUnaEntradaDesocupada() {
+		
+		Entrada entrada = givenEntrada();
+		Usuario usuario = givenUsuario(5L,"Okarin");
+		
+		whenSeCompraLaEntradaDesocupada(entrada,usuario);
+		
+		thenSeCompro(entrada);
+	}
+	
+	private void thenSeCompro(Entrada entrada) {
+		verify(this.repositorioEntrada,times(1)).comprarPendiente(entrada);
+		
+	}
+
+	private void whenSeCompraLaEntradaDesocupada(Entrada entrada,Usuario usuario) {
+		
+		this.servicioEntrada.comprarPendiente(entrada,usuario);
+		
+	}
+
+	@Test
 	public void actualizarLasEntradasPendientesParaNotificar() {
 		
 		List<EntradaPendiente> entradasPendientes = givenEntradasPendientes(5);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.helper.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Etiqueta;
@@ -28,15 +29,17 @@ public class ControladorHome {
     private ServicioUsuario servicioUsuario;
     private ServicioPelicula servicioPelicula;
     private ServicioHistorial servicioHistorial;
-	  private ServicioRandomizer servicioRandomizer;
+	private ServicioRandomizer servicioRandomizer;
+	private ServicioEntrada servicioEntrada;
 	
 	@Autowired
 	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
-							ServicioHistorial servicioHistorial,ServicioRandomizer servicioRandomizer){
+							ServicioHistorial servicioHistorial,ServicioRandomizer servicioRandomizer,ServicioEntrada servicioEntrada){
 		this.servicioUsuario = servicioUsuario;
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
 		this.servicioRandomizer = servicioRandomizer;
+		this.servicioEntrada = servicioEntrada;
 	}
   
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
@@ -60,6 +63,8 @@ public class ControladorHome {
 			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
 			
 			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
+			
+			model.put("entradasPendientes", this.servicioEntrada.obtenerPendientesActivasDelUsuario(usuario.getId()));
 			
 		}else {
 			 model.put("usuario", usuario);

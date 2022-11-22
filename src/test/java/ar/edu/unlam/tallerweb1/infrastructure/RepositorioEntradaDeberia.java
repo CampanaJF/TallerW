@@ -15,6 +15,7 @@ import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.Cine;
 import ar.edu.unlam.tallerweb1.domain.cine.Sala;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
+import ar.edu.unlam.tallerweb1.domain.entrada.EntradaPendiente;
 import ar.edu.unlam.tallerweb1.domain.entrada.RepositorioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
@@ -25,6 +26,37 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	
 	@Autowired
     private RepositorioEntrada repositorioEntrada;
+	
+	@Test
+	@Transactional
+	@Rollback
+	public void obtenerLaEntradaAcomprarDeLasPendientes() {
+		Funcion funcion = givenFuncion();
+		givenEntrada(funcion);
+		givenEntradaPendiente(funcion);
+		
+		List<Entrada> entradas = whenSeBuscanLasEntradasDeEsaFuncion(funcion);
+		
+		thenSeObtuvieronLasEntradas(entradas);	
+	}
+	
+	@Test
+	@Transactional
+	@Rollback
+	public void obtenerEntradasPendientes() {
+		
+		Funcion funcion = givenFuncion();
+		Funcion funcionB = givenFuncion();
+		Entrada entrada = givenEntrada(funcion);
+		
+		givenEntradasPendientes(funcion);
+		givenEntradasPendientes(funcionB);
+		
+		List<EntradaPendiente> entradasPendientes = whenSeObtienenLasPendientes(entrada);
+		
+		thenSeObtuvieronLasPendientes(entradasPendientes);
+		
+	}
 	
 	@Test
 	@Transactional
@@ -110,6 +142,25 @@ public class RepositorioEntradaDeberia extends SpringTest {
     	thenSeComproLaEntrada(entrada);
     }
 	
+	private void thenSeObtuvieronLasEntradas(List<Entrada> entradas) {
+		assertThat(entradas.size()).isEqualTo(1);
+		assertThat(entradas.get(0).getUsuario()).isNull();;
+		
+	}
+
+	private List<Entrada> whenSeBuscanLasEntradasDeEsaFuncion(Funcion funcion) {
+		return this.repositorioEntrada.getEntradasCanceladas(funcion.getId());
+	}
+	
+	private void thenSeObtuvieronLasPendientes(List<EntradaPendiente> entradasPendientes) {
+		assertThat(entradasPendientes.size()).isEqualTo(5);
+		
+	}
+
+	private List<EntradaPendiente> whenSeObtienenLasPendientes(Entrada entrada) {
+		return this.repositorioEntrada.getPendientes(entrada.getId());
+	}
+	
 	private Integer whenSeObtienenLaCantidadDeVacios(Funcion funcion) {
 		return this.repositorioEntrada.getCantidadAsientosVacios(funcion.getId());	
 	}
@@ -153,6 +204,26 @@ public class RepositorioEntradaDeberia extends SpringTest {
 			cantidad--;
 		}
 		
+	}
+	
+	private void givenEntradasPendientes(Funcion funcion) {
+
+		for (int i = 0; i < 5; i++) {
+			givenEntradaPendiente(funcion);
+			
+		}
+		
+	}
+	
+	private EntradaPendiente givenEntradaPendiente(Funcion funcion) {
+		EntradaPendiente entradaPendiente = new EntradaPendiente();
+		
+		entradaPendiente.setActiva(false);
+		entradaPendiente.setFuncion(funcion);
+		
+		session().save(entradaPendiente);
+		
+		return entradaPendiente;	
 	}
 	
 	private Entrada givenAsientoVacioYEntrada(Funcion funcion) {
@@ -209,6 +280,14 @@ public class RepositorioEntradaDeberia extends SpringTest {
 		Entrada entrada = new Entrada();
 		entrada.setFuncion(F1);
 		entrada.setUsuario(U1);
+		entrada.setId(new Random().nextLong());
+		session().save(entrada);
+		return entrada;
+	}
+	
+	private Entrada givenEntrada(Funcion F1) {
+		Entrada entrada = new Entrada();
+		entrada.setFuncion(F1);
 		entrada.setId(new Random().nextLong());
 		session().save(entrada);
 		return entrada;

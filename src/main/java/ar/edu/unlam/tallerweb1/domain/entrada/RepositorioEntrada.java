@@ -32,5 +32,11 @@ public interface RepositorioEntrada {
 
 	void actualizarPendiente(EntradaPendiente entradaPendiente);
 
+	List<Entrada> getEntradasCanceladas(Long funcion);
+	
+	void comprarPendiente(Entrada entrada);
+
+	List<EntradaPendiente> getPendientesDelUsuario(Long usuario);
+
 	
 }

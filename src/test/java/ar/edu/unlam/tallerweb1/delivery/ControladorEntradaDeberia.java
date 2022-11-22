@@ -55,13 +55,7 @@ public class ControladorEntradaDeberia {
 	
 	private ModelAndView mav = new ModelAndView();
 
-	@Test
-	public void permitirComprarUnaEntradaQueFueDesocupada() {
-
-		whenSeCompraLaEntradaDesocupada(5L);
-		
-		thenSeComproLaEntrada();
-	}
+	
 
 	@Test
 	public void permitirVerTodasLasEntradasAunVigentes() {
@@ -69,14 +63,6 @@ public class ControladorEntradaDeberia {
 		whenSeQuierenVerLasEntradasVigentesDeUnUsuario(1L,givenEntradas(5),givenUsuario());
 		
 		thenSeListanSusEntradas();	
-	}
-	
-	@Test
-	public void permitirCancelarUnaReserva() {
-		
-		whenSeCancelarUnaReserva(5L);
-		
-		thenSeCanceloLaReserva();
 	}
 	
 	@Test
@@ -156,15 +142,7 @@ public class ControladorEntradaDeberia {
     	thenSeRedireccionaARegistro();
 	}
 	
-	private void thenSeComproLaEntrada() {
-		assertThat(mav.getViewName()).isEqualTo("redirect:/mis-entradas");
-	}
-
-	private void whenSeCompraLaEntradaDesocupada(Long entrada) {
-		mocksSessionRequests();
-		
-		mav = this.controladorEntrada.comprarEntradaDesocupada(entrada,mockRequest);	
-	}
+	
 	
 	private void thenSeListanSusEntradas() {
 		assertThat(mav.getViewName()).isEqualTo("entrada");
@@ -178,14 +156,7 @@ public class ControladorEntradaDeberia {
 		mav = this.controladorEntrada.verEntradasVigentes(mockRequest,null);		
 	}
 
-	private void thenSeCanceloLaReserva() {
-		assertThat(mav.getViewName()).isEqualTo("redirect:/mis-entradas");
-		
-	}
 
-	private void whenSeCancelarUnaReserva(Long entrada) {
-		mav = this.controladorEntrada.cancelarReserva(entrada,mockRequest,redirectAttributes);	
-	}
 
 	private void whenSeEligeQuiereElegirElCine(List<CinePelicula> cines) {
 		mocksSessionRequests();

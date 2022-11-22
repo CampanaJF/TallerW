@@ -145,8 +145,25 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 
 	@Override
 	public List<EntradaPendiente> getPendientes(Long entrada) {
-		// TODO Auto-generated method stub
-		return null;
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Entrada entradaLiberada = getEntrada(entrada);
+		
+		Criterion rest1 = Restrictions.eq("funcion", entradaLiberada.getFuncion());
+		Criterion rest2 = Restrictions.eq("activa", false);
+
+		return session.createCriteria(EntradaPendiente.class).add(rest1).add(rest2).list();
+	}
+	
+	@Override
+	public List<EntradaPendiente> getPendientesDelUsuario(Long usuario) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+
+		Criterion rest1 = Restrictions.eq("usuario", usuario);
+		Criterion rest2 = Restrictions.eq("activa", true);
+
+		return session.createCriteria(EntradaPendiente.class).add(rest1).add(rest2).list();
 	}
 
 	@Override
@@ -155,7 +172,29 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		final Session session = sessionFactory.getCurrentSession();
 		
 		session.update(entradaPendiente);
+	}
+
+	@Override
+	public List<Entrada> getEntradasCanceladas(Long funcion) {
+		final Session session = sessionFactory.getCurrentSession();
 		
+		Criterion rest1 = Restrictions.isNull("usuario");
+		Criterion rest2 = Restrictions.eq("funcion.id",funcion);
+		
+		
+		Criteria crit = session.createCriteria(Entrada.class);
+		crit.createAlias("funcion", "funcionJoin");
+		crit.add(rest1);
+		crit.add(rest2);
+				
+		return crit.list();
+	}
+
+	@Override
+	public void comprarPendiente(Entrada entrada) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.update(entrada);	
 	}
 	
 	

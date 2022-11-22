@@ -27,6 +27,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
+
 @Controller
 public class ControladorEntrada {
 	
@@ -171,25 +172,6 @@ public class ControladorEntrada {
 		return new ModelAndView("entrada",model);
 	}
 	
-	@RequestMapping(path = "/entrada-cancelar", method = RequestMethod.GET)
-	public ModelAndView cancelarReserva(@RequestParam("entrada") Long entrada,HttpServletRequest request,
-										final RedirectAttributes redirectAttributes) {
-		
-		cancelarReserva(entrada);
-		redirectAttributes.addFlashAttribute("mensaje","!Se Cancelo la reserva exitosamente!");
-		
-		return new ModelAndView("redirect:/mis-entradas");
-	}
-	
-
-	@RequestMapping(path="/entrada-comprar", method = RequestMethod.GET)
-	public ModelAndView comprarEntradaDesocupada(Long entrada, HttpServletRequest mockRequest) {
-
-		return new ModelAndView("redirect:/mis-entradas");
-	}
-
-
-	
 	private ModelAndView validarUsuario(Usuario usuarioLogueado,final RedirectAttributes redirectAttributes) {
 		
 		if(null==usuarioLogueado) { 
@@ -241,9 +223,6 @@ public class ControladorEntrada {
 		return !(this.servicioFuncion.validarAsientosDisponibles(datosEntrada.getFuncion()));
 	}
 
-	private void cancelarReserva(Long entrada) {
-		this.servicioEntrada.cancelarReserva(entrada);
-	}
 
 
 

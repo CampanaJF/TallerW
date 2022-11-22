@@ -64,7 +64,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 	
 	@Override
-	public Entrada getEntrada(Long entrada) {
+	public Entrada obtenerEntrada(Long entrada) {
 		
 		return this.repositorioEntrada.getEntrada(entrada);
 		
@@ -192,15 +192,26 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		this.repositorioEntrada.comprarEntrada(funcion,usuario,asiento);
 	}
 	
-	// agregar el disparador de buscar un usuario que quiera esta entrada aca con la funcion
-	// buscar todas las pendientes de esta entrada y actualizar sus datos
+
 	@Override
 	public void cancelarReserva(Long entrada) {
 		liberarEntrada(entrada);
 	
 		actualizarPendientes(entrada);
 	}
+	
+	@Override
+	public void comprarPendiente(Entrada entrada, Usuario usuario) {
+		
+		entrada.setUsuario(usuario);
+		
+		comprarPendiente(entrada);
+	}
 
+	private void comprarPendiente(Entrada entrada) {
+		this.repositorioEntrada.comprarPendiente(entrada);
+	}
+	
 	@Override
 	public void agregarAPendientes(Funcion funcion, Usuario usuario) {
 		EntradaPendiente entradaPendiente = new EntradaPendiente();
@@ -223,8 +234,19 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 			
 			notificarPendiente(entradaPendiente);
 		}
+	}
+	
+	@Override	
+	public List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Long usuario) {
 		
-	}	
+		return this.repositorioEntrada.getPendientesDelUsuario(usuario);
+	}
+		
+	@Override
+	public List<Entrada> obtenerEntradasCanceladas(Long funcion){
+		return this.repositorioEntrada.getEntradasCanceladas(funcion);
+	}
+		
 	private void liberarEntrada(Long entrada) {
 		this.repositorioEntrada.cancelarReserva(entrada);
 	}
@@ -237,7 +259,10 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		this.repositorioEntrada.actualizarPendiente(entradaPendiente);
 	}
 	
+	
+	
 	//TODO utilizar un metodo para extraer las entradas de cada funcion
+	@SuppressWarnings("unused")
 	private List<FuncionEntradas> formatearEntradas(List<Entrada> entradas){
 		
 		List<FuncionEntradas> funcionEntradas = new ArrayList<>();
@@ -250,8 +275,10 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 			
 		}
 		
-		return null;
+		return funcionEntradas;
 	}
+
+	
 
 	
 

@@ -23,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.domain.clasificacionPelicula.ServicioClasificacion;
+import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.genero.ServicioGenero;
 import ar.edu.unlam.tallerweb1.domain.helper.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
@@ -40,6 +41,7 @@ public class ControladorHomeTest {
 	ServicioUsuario servicioUsuario;
 	ServicioHistorial servicioHistorial;
 	ServicioRandomizer servicioRandomizer;
+	ServicioEntrada servicioEntrada;
 
 	HttpServletRequest mockRequest;
 	HttpSession mockSession;
@@ -51,9 +53,10 @@ public class ControladorHomeTest {
         servicioHistorial = mock(ServicioHistorial.class);
         servicioRandomizer = mock(ServicioRandomizer.class);
         servicioUsuario = mock(ServicioUsuario.class);
+        servicioEntrada = mock(ServicioEntrada.class);
         mockRequest = mock(HttpServletRequest.class);
     	mockSession = mock(HttpSession.class);
-    	controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer);
+    	controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer,servicioEntrada);
 	}
 	@Autowired
 	private ControladorHome controlador;
@@ -79,7 +82,7 @@ public class ControladorHomeTest {
 
 	private List<PeliculaConEtiquetaDTO> givenCargarHome() {
 
-		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer);
+		controlador=new ControladorHome(servicioUsuario,servicioPelicula,servicioHistorial,servicioRandomizer,servicioEntrada);
 
 		Usuario usuario = givenUsuario();
 
