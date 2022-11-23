@@ -449,10 +449,3 @@ update genero set poster='img/peliculas/nop.jpg' where id = 3;
 update genero set poster='img/peliculas/db-super.jpg' where id = 2;
 update genero set poster='img/peliculas/tren-bala.jpg'where id = 1;
 
-delete from historial;
-
-
-
-select * from historial;
-
-insert into historial (id,etiqueta_id,usuario_id) values (1,16,2),(2,17,2),(3,18,2),(4,19,2),(5,10,2),(6,20,2);

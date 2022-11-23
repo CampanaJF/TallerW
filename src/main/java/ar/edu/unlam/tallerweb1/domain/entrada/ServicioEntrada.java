@@ -45,7 +45,7 @@ public interface ServicioEntrada {
 
 	List<Entrada> obtenerEntradasVigentes(Usuario usuarioLogueado);
 
-	List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Long usuario);
+	List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Usuario usuario);
 
 	List<Entrada> obtenerEntradasCanceladas(Long funcion);
 

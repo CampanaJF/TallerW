@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+import net.bytebuddy.asm.Advice.This;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.domain.entrada.EntradaPendiente;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.helper.ServicioRandomizer;
 import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
@@ -51,6 +54,7 @@ public class ControladorHome {
 
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
 			Integer primerIndice = obtenerIndice(indiceMax(usuario));
+			
 
 			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
 			model.put("historialA", peliculasHistorialA);
@@ -60,11 +64,19 @@ public class ControladorHome {
 			model.put("historialB", peliculasHistorialB);
 			  
 			model.put("usuario", usuario);
-			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = obtenerPeliculasSegunGenero(usuario);
 			
 			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 			
-			model.put("entradasPendientes", this.servicioEntrada.obtenerPendientesActivasDelUsuario(usuario.getId()));
+			if(hayNotificaciones(usuario)) {
+			
+			List<EntradaPendiente> notificaciones = obtenerNotifcaciones(usuario);
+			
+			model.put("notificaciones", notificaciones);
+			
+			model.put("cantidadNotificaciones", obtenerCantidadNotificaciones(notificaciones));
+			
+			}
 			
 		}else {
 			 model.put("usuario", usuario);
@@ -79,6 +91,29 @@ public class ControladorHome {
 		model.put("proximosEstrenos", proximosEstrenos);
 		
 		return new ModelAndView("home",model);
+	}
+
+	private boolean hayNotificaciones(Usuario usuario) {
+		return !(obtenerNotifcaciones(usuario).isEmpty());
+	}
+
+	private List<PeliculaConEtiquetaDTO> obtenerPeliculasSegunGenero(Usuario usuario) {
+		return this.servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+	}
+
+	private List<EntradaPendiente> obtenerNotifcaciones(Usuario usuario) {
+		return this.servicioEntrada.obtenerPendientesActivasDelUsuario(usuario);
+	}
+	
+	private int obtenerCantidadNotificaciones(List<EntradaPendiente> notificaciones) {
+		
+		int total = 0;
+		
+		for (EntradaPendiente entradaPendiente : notificaciones) {
+			total++;
+		}
+		
+		return total;
 	}
 
 	private int indiceMax(Usuario usuario) {

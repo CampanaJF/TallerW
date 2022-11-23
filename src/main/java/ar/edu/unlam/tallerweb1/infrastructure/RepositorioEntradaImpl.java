@@ -156,7 +156,7 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 	}
 	
 	@Override
-	public List<EntradaPendiente> getPendientesDelUsuario(Long usuario) {
+	public List<EntradaPendiente> getPendientesActivasDelUsuario(Usuario usuario) {
 		final Session session = sessionFactory.getCurrentSession();
 		
 

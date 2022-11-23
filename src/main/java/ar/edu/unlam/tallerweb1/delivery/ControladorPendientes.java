@@ -39,11 +39,25 @@ public class ControladorPendientes {
 		return new ModelAndView("redirect:/mis-entradas");
 	}
 	
+	@RequestMapping(path="/mis-notificaciones", method = RequestMethod.GET)
+	public ModelAndView misNotificaciones(HttpServletRequest request) {
+		
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		
+		ModelMap model = new ModelMap();
+		
+		model.put("notificaciones",this.servicioEntrada.obtenerEntradasCanceladas(usuario.getId()));
+		
+		return new ModelAndView("mis-notificaciones",model);
+	}
+	
 
 	@RequestMapping(path="/entradas-pendientes", method = RequestMethod.GET)
 	public ModelAndView entradasPendientes(@RequestParam("funcion") Long funcion, HttpServletRequest request) {
 				
 		ModelMap model = new ModelMap();
+		
+		
 		
 		// cambiar la vista para que reciba esto
 		model.put("entradasCanceladas",this.servicioEntrada.obtenerEntradasCanceladas(funcion));
@@ -61,15 +75,25 @@ public class ControladorPendientes {
 		return new ModelAndView("redirect:/mis-entradas");
 	}
 	
-//	private ModelAndView validarUsuario(Usuario usuarioLogueado,final RedirectAttributes redirectAttributes) {
-//		
-//		if(null==usuarioLogueado) { 
-//			redirectAttributes.addFlashAttribute("mensaje","!Ingrese Antes de seguir!");
-//			return new ModelAndView("redirect:/login");
-//		}
-//		
-//		return null;
-//	}
+	@SuppressWarnings("unused")
+	private ModelAndView validarUsuario(Usuario usuarioLogueado,final RedirectAttributes redirectAttributes) {
+		
+		if(null==usuarioLogueado) { 
+			redirectAttributes.addFlashAttribute("mensaje","!Ingrese Antes de seguir!");
+			return new ModelAndView("redirect:/login");
+		}
+		
+		return null;
+	}
+	
+	private ModelAndView validarUsuario(Usuario usuarioLogueado) {
+		
+		if(null==usuarioLogueado) { 
+			return new ModelAndView("redirect:/login");
+		}
+		
+		return null;
+	}
 	
 	private void cancelarReserva(Long entrada) {
 		this.servicioEntrada.cancelarReserva(entrada);

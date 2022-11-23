@@ -30,6 +30,45 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	@Test
 	@Transactional
 	@Rollback
+	public void obtenerLasPendientesActivasDeUnUsuario() {
+		
+		Usuario usuario = givenUsuario("Okarin");
+		
+		Funcion funcion = givenFuncion();
+		givenEntradasPendientesActivas(usuario,funcion);
+		
+	
+		List<EntradaPendiente> entradas = whenSeBuscanLasPendientesActivasDelUsuario(usuario);
+		
+		thenSeObtuvieronLasPendientes(entradas);	
+	}
+
+	private List<EntradaPendiente> whenSeBuscanLasPendientesActivasDelUsuario(Usuario usuario) {
+		return this.repositorioEntrada.getPendientesActivasDelUsuario(usuario);
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	public void obtenerLasPendientesDeUnaEntradaParaActualizarlas() {
+		
+		Funcion funcion = givenFuncion();
+		Entrada entrada = givenEntrada(funcion);
+		givenEntradasPendientes(funcion);
+		
+	
+		List<EntradaPendiente> entradas = whenSeBuscanLasPendientes(entrada);
+		
+		thenSeObtuvieronLasPendientes(entradas);	
+	}
+	
+	private List<EntradaPendiente> whenSeBuscanLasPendientes(Entrada entrada) {
+		return this.repositorioEntrada.getPendientes(entrada.getId());
+	}
+
+	@Test
+	@Transactional
+	@Rollback
 	public void obtenerLaEntradaAcomprarDeLasPendientes() {
 		Funcion funcion = givenFuncion();
 		givenEntrada(funcion);
@@ -206,12 +245,34 @@ public class RepositorioEntradaDeberia extends SpringTest {
 		
 	}
 	
+	private void givenEntradasPendientesActivas(Usuario usuario,Funcion funcion) {
+		
+		for (int i = 0; i < 5; i++) {
+			givenEntradaPendienteActiva(usuario,funcion);
+			
+		}
+		
+	}
+	
 	private void givenEntradasPendientes(Funcion funcion) {
 
 		for (int i = 0; i < 5; i++) {
 			givenEntradaPendiente(funcion);
 			
 		}
+		
+	}
+	
+	private EntradaPendiente givenEntradaPendienteActiva(Usuario usuario,Funcion funcion) {
+		EntradaPendiente entradaPendiente = new EntradaPendiente();
+		
+		entradaPendiente.setActiva(true);
+		entradaPendiente.setFuncion(funcion);
+		entradaPendiente.setUsuario(usuario);
+		
+		session().save(entradaPendiente);
+		
+		return entradaPendiente;
 		
 	}
 	

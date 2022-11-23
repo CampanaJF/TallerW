@@ -19,7 +19,7 @@ public interface RepositorioEntrada {
 	List<Entrada> getEntradasCompradasDelUsuario(Usuario usuarioLogueado);
 
 	Integer getCantidadAsientosVacios(Long funcion);
-
+	
 	Usuario getUsuario(Long Id);
 	
 	Asiento getAsiento(Long id);
@@ -36,7 +36,7 @@ public interface RepositorioEntrada {
 	
 	void comprarPendiente(Entrada entrada);
 
-	List<EntradaPendiente> getPendientesDelUsuario(Long usuario);
+	List<EntradaPendiente> getPendientesActivasDelUsuario(Usuario usuario);
 
 	
 }

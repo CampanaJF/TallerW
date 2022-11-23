@@ -237,9 +237,9 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	}
 	
 	@Override	
-	public List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Long usuario) {
+	public List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Usuario usuario) {
 		
-		return this.repositorioEntrada.getPendientesDelUsuario(usuario);
+		return this.repositorioEntrada.getPendientesActivasDelUsuario(usuario);
 	}
 		
 	@Override
