@@ -29,6 +29,10 @@ public class ControladorPendientes {
 		this.servicioUsuario = servicioUsuario;
 	}
 	
+	//Que no haya mas de una notificacion para la misma funcion por usuario
+	//Que si no hay nadie a quien notificar simplementa se vuelva a poder comprar regularmente
+	//
+	
 	@RequestMapping(path = "/entrada-cancelar", method = RequestMethod.GET)
 	public ModelAndView cancelarReserva(@RequestParam("entrada") Long entrada,HttpServletRequest request,
 										final RedirectAttributes redirectAttributes) {
@@ -58,8 +62,6 @@ public class ControladorPendientes {
 		ModelMap model = new ModelMap();
 		
 		
-		
-		// cambiar la vista para que reciba esto
 		model.put("entradasCanceladas",this.servicioEntrada.obtenerEntradasCanceladas(funcion));
 		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.addAttribute("datosReserva", new DatosReserva());
@@ -72,7 +74,7 @@ public class ControladorPendientes {
 		
 		this.servicioEntrada.comprarPendiente(datosReserva.getEntrada(), datosReserva.getUsuario());
 		
-		return new ModelAndView("redirect:/mis-entradas");
+		return new ModelAndView("redirect:/home");
 	}
 	
 	@SuppressWarnings("unused")
@@ -86,6 +88,7 @@ public class ControladorPendientes {
 		return null;
 	}
 	
+	@SuppressWarnings("unused")
 	private ModelAndView validarUsuario(Usuario usuarioLogueado) {
 		
 		if(null==usuarioLogueado) { 

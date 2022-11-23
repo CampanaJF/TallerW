@@ -28,15 +28,23 @@ public interface RepositorioEntrada {
 
 	void agregarAPendientes(EntradaPendiente entradaPendiente);
 
-	List<EntradaPendiente> getPendientes(Long entrada);
-
 	void actualizarPendiente(EntradaPendiente entradaPendiente);
-
-	List<Entrada> getEntradasCanceladas(Long funcion);
 	
 	void comprarPendiente(Entrada entrada);
+	
+	void eliminarPendiente(EntradaPendiente entradaPendiente);
+	
+	List<Entrada> getEntradasCanceladas(Long funcion);
 
 	List<EntradaPendiente> getPendientesActivasDelUsuario(Usuario usuario);
+
+	List<EntradaPendiente> getPendientes(Long entrada, Long usuario);
+	
+	List<EntradaPendiente> getPendientes(Long entrada);
+
+	EntradaPendiente obtenerPendiente(Funcion funcion, Usuario usuario);
+
+
 
 	
 }

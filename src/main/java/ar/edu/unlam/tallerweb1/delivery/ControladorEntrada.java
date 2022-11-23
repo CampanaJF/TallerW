@@ -118,7 +118,7 @@ public class ControladorEntrada {
 		ModelMap model = new ModelMap();
 		
 		if(validarAsientosFuncion(datosEntrada)) {
-			this.servicioEntrada.agregarAPendientes(datosEntrada.getFuncion(),datosEntrada.getUsuario());
+			agregarAPendientes(datosEntrada);
 			redirectAttributes.addFlashAttribute("mensaje","No Hay asientos para esa funcion, le avisaremos si se libera uno");
 			return new ModelAndView("redirect:/home");
 		}
@@ -129,6 +129,8 @@ public class ControladorEntrada {
 		
 		return new ModelAndView("entrada-asientos",model);
 	}
+
+
 	
 	@RequestMapping(path = "/entrada-compra", method = RequestMethod.POST)
 	public ModelAndView entradaCompra(@ModelAttribute("datosEntrada") DatosEntrada datosEntrada,
@@ -223,6 +225,9 @@ public class ControladorEntrada {
 		return !(this.servicioFuncion.validarAsientosDisponibles(datosEntrada.getFuncion()));
 	}
 
+	private void agregarAPendientes(DatosEntrada datosEntrada) {
+		this.servicioEntrada.agregarAPendientes(datosEntrada.getFuncion(),datosEntrada.getUsuario());
+	}
 
 
 

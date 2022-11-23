@@ -92,7 +92,7 @@
 			 ${entrada.funcion.precio} $</p>
 		  </div>
 		  <div class="fix"></div>
-		  <form:form action="entradas-pendientes" modelAttribute="datosReserva" method="POST">
+		  <form:form action="comprar-pendientes" modelAttribute="datosReserva" method="POST">
 		  <form:hidden path="usuario.id" value="${usuario.id}" />
     	  <form:hidden path="entrada.id" value="${entrada.id}" />
 		  <button type="submit" class="mt-3 btn-lg btn buttonA">Comprar</button>

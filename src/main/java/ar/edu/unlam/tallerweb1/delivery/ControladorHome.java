@@ -52,23 +52,17 @@ public class ControladorHome {
 	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
 	   
 
-		if(usuario!=null&&validarHistorialExistente(usuario)) {		
-			Integer primerIndice = obtenerIndice(indiceMax(usuario));
-			
-
-			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
-			model.put("historialA", peliculasHistorialA);
-			
-			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario,
-																					obtenerIndice(indiceMax(usuario),primerIndice));
-			model.put("historialB", peliculasHistorialB);
-			  
+		if(usuario!=null) {		
+				
 			model.put("usuario", usuario);
+			
 			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = obtenerPeliculasSegunGenero(usuario);
 			
 			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
 			
-			if(hayNotificaciones(usuario)) {
+		}
+			
+		if(usuario!=null&&hayNotificaciones(usuario)) {
 			
 			List<EntradaPendiente> notificaciones = obtenerNotifcaciones(usuario);
 			
@@ -76,12 +70,20 @@ public class ControladorHome {
 			
 			model.put("cantidadNotificaciones", obtenerCantidadNotificaciones(notificaciones));
 			
-			}
-			
-		}else {
-			 model.put("usuario", usuario);
 		}
-		
+			
+		if(usuario!=null&&validarHistorialExistente(usuario)) {
+				
+			Integer primerIndice = obtenerIndice(indiceMax(usuario));
+				
+			List<PeliculaConEtiquetaDTO> peliculasHistorialA = obtenerPeliculasDelHistorial(usuario,primerIndice);
+			model.put("historialA", peliculasHistorialA);
+				
+			List<PeliculaConEtiquetaDTO> peliculasHistorialB = obtenerPeliculasDelHistorial(usuario,
+																					obtenerIndice(indiceMax(usuario),primerIndice));
+			model.put("historialB", peliculasHistorialB);
+		}
+				
 		
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();

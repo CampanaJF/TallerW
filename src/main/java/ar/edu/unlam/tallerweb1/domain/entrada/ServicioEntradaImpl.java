@@ -203,23 +203,42 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	@Override
 	public void comprarPendiente(Entrada entrada, Usuario usuario) {
 		
-		entrada.setUsuario(usuario);
+		Entrada entradaPendiente = obtenerEntrada(entrada.getId());
 		
-		comprarPendiente(entrada);
-	}
-
-	private void comprarPendiente(Entrada entrada) {
-		this.repositorioEntrada.comprarPendiente(entrada);
+		entradaPendiente.setUsuario(usuario);
+		
+		comprarPendiente(entradaPendiente);
+		
+		eliminarPendientes(entradaPendiente,usuario);
 	}
 	
 	@Override
 	public void agregarAPendientes(Funcion funcion, Usuario usuario) {
+		
+		if(validarPendiente(funcion,usuario)) {
+		
 		EntradaPendiente entradaPendiente = new EntradaPendiente();
 		
 		entradaPendiente.setFuncion(funcion);
 		entradaPendiente.setUsuario(usuario);
 		
-		this.repositorioEntrada.agregarAPendientes(entradaPendiente);	
+		this.repositorioEntrada.agregarAPendientes(entradaPendiente);
+		
+		}
+	}
+
+	private Boolean validarPendiente(Funcion funcion, Usuario usuario) {
+		
+		EntradaPendiente pendientesDelUsuario = obtenerPendiente(funcion,usuario);
+		
+		if(pendientesDelUsuario==null)
+			return true;
+		
+		return false;
+	}
+
+	private EntradaPendiente obtenerPendiente(Funcion funcion, Usuario usuario) {
+		return this.repositorioEntrada.obtenerPendiente(funcion,usuario);
 	}
 
 	@Override
@@ -239,17 +258,43 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		}
 	}
 	
-	@Override	
-	public List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Usuario usuario) {
+	private void eliminarPendientes(Entrada entradaPendiente, Usuario usuario) {
 		
-		return this.repositorioEntrada.getPendientesActivasDelUsuario(usuario);
+		Integer cantidad = obtenerEntradasCanceladas(entradaPendiente.getFuncion().getId()).size();
+		
+		eliminarPendienteDelComprador(entradaPendiente,usuario);
+		
+		if(cantidad==0)
+			eliminarPendientesSiNoHayMasPorVender(entradaPendiente);
+	
 	}
+	
+	public void eliminarPendienteDelComprador(Entrada entrada,Usuario usuario) {
 		
-	@Override
-	public List<Entrada> obtenerEntradasCanceladas(Long funcion){
-		return this.repositorioEntrada.getEntradasCanceladas(funcion);
+		List<EntradaPendiente> aEliminar = obtenerPendientes(entrada.getId(),usuario.getId());
+		
+		for (EntradaPendiente entradaPendiente : aEliminar) {
+			this.repositorioEntrada.eliminarPendiente(entradaPendiente);
+		}
 	}
+	
+	public void eliminarPendientesSiNoHayMasPorVender(Entrada entrada) {
 		
+		List<EntradaPendiente> aEliminar = obtenerPendientes(entrada.getId());
+		
+		for (EntradaPendiente entradaPendiente : aEliminar) {
+			this.repositorioEntrada.eliminarPendiente(entradaPendiente);
+		}
+	}
+
+	private void comprarPendiente(Entrada entrada) {
+		this.repositorioEntrada.comprarPendiente(entrada);
+	}
+	
+	private void notificarPendiente(EntradaPendiente entradaPendiente) {
+		this.repositorioEntrada.actualizarPendiente(entradaPendiente);
+	}	
+	
 	private void liberarEntrada(Long entrada) {
 		this.repositorioEntrada.cancelarReserva(entrada);
 	}
@@ -257,9 +302,20 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	private List<EntradaPendiente> obtenerPendientes(Long entrada) {
 		return this.repositorioEntrada.getPendientes(entrada);
 	}
-
-	private void notificarPendiente(EntradaPendiente entradaPendiente) {
-		this.repositorioEntrada.actualizarPendiente(entradaPendiente);
+	
+	@Override
+	public List<Entrada> obtenerEntradasCanceladas(Long funcion){
+		return this.repositorioEntrada.getEntradasCanceladas(funcion);
+	}
+	
+	@Override	
+	public List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Usuario usuario) {
+		
+		return this.repositorioEntrada.getPendientesActivasDelUsuario(usuario);
+	}
+	
+	private List<EntradaPendiente> obtenerPendientes(Long entrada,Long usuario) {
+		return this.repositorioEntrada.getPendientes(entrada,usuario);
 	}
 	
 	

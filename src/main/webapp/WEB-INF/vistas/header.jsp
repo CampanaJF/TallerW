@@ -51,19 +51,24 @@
 		  <button type="button" class="btn btn-outline-light me-2 position-relative dropdown-toggle"
 		   id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
 		    Notificaciones
+		  
+		  <c:if test="${not empty cantidadNotificaciones}">
 		  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-		  <c:if test="${empty cantidadNotificaciones}">0</c:if>
-		  <c:if test="${not empty cantidadNotificaciones}">${cantidadNotificaciones}</c:if>
+		  ${cantidadNotificaciones}
+		  </c:if>
+		  
 		  </span>
 		  </button>
 		  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+		  
 		  <c:if test="${empty notificaciones}">No tiene notificaciones</c:if>
+		  
 		  <c:forEach items="${notificaciones}" var="noti">
-		    <li><a class="dropdown-item " href="#">${noti.descripcion}</a></li>
+		    <li><a class="nav-link px-2 text-white nav-text" 
+		    href="<c:url value="/entradas-pendientes?funcion=${noti.funcion.id}"/>">${noti.descripcion}</a></li>
 		  </c:forEach>
 		  </ul>
-		
-        
+		  
           <a href="mis-entradas"><button type="button" class="btn btn-outline-light me-2">Mis Entradas</button></a>
           
           <a href="perfil"><button type="button" class="btn btn-outline-light me-2">Mi Perfil</button></a>

@@ -34,8 +34,6 @@ public class ControladorPendientesDeberia {
 	private ModelAndView mav = new ModelAndView();
 	
 	
-	
-	
 	@Test
 	public void permitirComprarUnaEntradaQueFueDesocupada() {
 
