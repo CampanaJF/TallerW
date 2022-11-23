@@ -27,6 +27,7 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	@Autowired
     private RepositorioEntrada repositorioEntrada;
 	
+	
 	@Test
 	@Transactional
 	@Rollback
@@ -41,10 +42,6 @@ public class RepositorioEntradaDeberia extends SpringTest {
 		List<EntradaPendiente> entradas = whenSeBuscanLasPendientesActivasDelUsuario(usuario);
 		
 		thenSeObtuvieronLasPendientes(entradas);	
-	}
-
-	private List<EntradaPendiente> whenSeBuscanLasPendientesActivasDelUsuario(Usuario usuario) {
-		return this.repositorioEntrada.getPendientesActivasDelUsuario(usuario);
 	}
 
 	@Test
@@ -62,9 +59,7 @@ public class RepositorioEntradaDeberia extends SpringTest {
 		thenSeObtuvieronLasPendientes(entradas);	
 	}
 	
-	private List<EntradaPendiente> whenSeBuscanLasPendientes(Entrada entrada) {
-		return this.repositorioEntrada.getPendientes(entrada.getId());
-	}
+
 
 	@Test
 	@Transactional
@@ -181,10 +176,17 @@ public class RepositorioEntradaDeberia extends SpringTest {
     	thenSeComproLaEntrada(entrada);
     }
 	
+	private List<EntradaPendiente> whenSeBuscanLasPendientesActivasDelUsuario(Usuario usuario) {
+		return this.repositorioEntrada.getPendientesActivasDelUsuario(usuario);
+	}
+	
+	private List<EntradaPendiente> whenSeBuscanLasPendientes(Entrada entrada) {
+		return this.repositorioEntrada.getPendientes(entrada.getId());
+	}
+	
 	private void thenSeObtuvieronLasEntradas(List<Entrada> entradas) {
 		assertThat(entradas.size()).isEqualTo(1);
-		assertThat(entradas.get(0).getUsuario()).isNull();;
-		
+		assertThat(entradas.get(0).getUsuario()).isNull();;	
 	}
 
 	private List<Entrada> whenSeBuscanLasEntradasDeEsaFuncion(Funcion funcion) {
@@ -192,8 +194,7 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	}
 	
 	private void thenSeObtuvieronLasPendientes(List<EntradaPendiente> entradasPendientes) {
-		assertThat(entradasPendientes.size()).isEqualTo(5);
-		
+		assertThat(entradasPendientes.size()).isEqualTo(5);	
 	}
 
 	private List<EntradaPendiente> whenSeObtienenLasPendientes(Entrada entrada) {
@@ -279,7 +280,6 @@ public class RepositorioEntradaDeberia extends SpringTest {
 	private EntradaPendiente givenEntradaPendiente(Funcion funcion) {
 		EntradaPendiente entradaPendiente = new EntradaPendiente();
 		
-		entradaPendiente.setActiva(false);
 		entradaPendiente.setFuncion(funcion);
 		
 		session().save(entradaPendiente);

@@ -28,6 +28,7 @@ public class ServicioEntradaDeberia {
 	
 	private ServicioEntradaImpl servicioEntrada = new ServicioEntradaImpl(repositorioEntrada);
 	
+	
 	@Test
 	public void comprarUnaEntradaDesocupada() {
 		

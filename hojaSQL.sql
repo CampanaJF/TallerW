@@ -5,7 +5,9 @@ use cineclub;
 select * from pelicula;
 insert into usuario (email,nombre,password) values
 					('pacofranco45@gmail.com','Franco','1234'),
+                    ('jucampana@alumno.unlam.edu.ar','main','1234'),
                     ('mail@mail.com','main','1234'),
+                    ('mail2@mail.com','main2','1234'),
                     ('admin','admin','admin');
 
 insert into formato (id,tipo) values

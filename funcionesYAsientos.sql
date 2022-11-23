@@ -2,6 +2,7 @@ use cineclub;
 select * from usuario;
 select * from entradapendiente;
 
+select * from entrada;
 call EP_recorrerFuncionesB();
 
 drop procedure if exists EP_recorrerFuncionesB;
@@ -43,9 +44,9 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
 
 /*funcion test reserva */
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
-					(7340,'2022-11-24 23:00','22:30','Ingles',750.00,true,1,2,13);
+					(7344,'2022-11-24 23:00','22:30','Ingles',750.00,true,1,2,13);
                     
-call EP_crearAsientosYEntradasVacias(7340);
+call EP_crearAsientosYEntradasVacias(7344);
 
 
  

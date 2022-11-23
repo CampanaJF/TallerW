@@ -150,7 +150,7 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		Entrada entradaLiberada = getEntrada(entrada);
 		
 		Criterion rest1 = Restrictions.eq("funcion", entradaLiberada.getFuncion());
-		Criterion rest2 = Restrictions.eq("activa", false);
+		Criterion rest2 = Restrictions.isNull("activa");
 
 		return session.createCriteria(EntradaPendiente.class).add(rest1).add(rest2).list();
 	}
@@ -180,7 +180,6 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 		
 		Criterion rest1 = Restrictions.isNull("usuario");
 		Criterion rest2 = Restrictions.eq("funcion.id",funcion);
-		
 		
 		Criteria crit = session.createCriteria(Entrada.class);
 		crit.createAlias("funcion", "funcionJoin");

@@ -227,6 +227,9 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		
 		List<EntradaPendiente> entradasPendientes = obtenerPendientes(entrada);
 		
+		if(entradasPendientes.size()==0)
+			throw new ErrorDeAsientoException();
+		
 		for (EntradaPendiente entradaPendiente : entradasPendientes) {
 			
 			entradaPendiente.setActiva(true);
@@ -258,7 +261,6 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	private void notificarPendiente(EntradaPendiente entradaPendiente) {
 		this.repositorioEntrada.actualizarPendiente(entradaPendiente);
 	}
-	
 	
 	
 	//TODO utilizar un metodo para extraer las entradas de cada funcion
