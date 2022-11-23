@@ -245,10 +245,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	public void actualizarPendientes(Long entrada) {
 		
 		List<EntradaPendiente> entradasPendientes = obtenerPendientes(entrada);
-		
-		if(entradasPendientes.size()==0)
-			throw new ErrorDeAsientoException();
-		
+			
 		for (EntradaPendiente entradaPendiente : entradasPendientes) {
 			
 			entradaPendiente.setActiva(true);
