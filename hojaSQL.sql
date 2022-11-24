@@ -1,7 +1,7 @@
 drop database cineclub;
 create schema cineclub; 
 use cineclub;
-use db;
+
 
 select * from usuario;
 
@@ -167,6 +167,36 @@ insert into pelicula (id,director,duracion,fechaEstreno,poster,protagonista,sino
 		 (2,'Steven Spielberg','120','2022-11-22','img/peliculas/raidersofthelostark.jpg','Harrison Ford','Archaeology professor Indiana Jones ventures to seize a 
 		 biblical artefact known as the Ark of the Covenant. While doing so,
 		 he puts up a fight against Renee and a troop of Nazis.','Indiana Jones: Raiders of the Lost Ark',2,1,5);
+
+update pelicula set fechaEstreno = '2022-12-26' where id = 25;
+update pelicula set fechaEstreno = '2022-12-26' where id = 26;
+
+update pelicula set enCartelera = 0 where id = 1;
+update pelicula set enCartelera = 0 where id = 2;
+update pelicula set enCartelera = 0 where id = 3;
+update pelicula set enCartelera = 0 where id = 4;
+update pelicula set enCartelera = 0 where id = 5;
+update pelicula set enCartelera = 0 where id = 6;
+update pelicula set enCartelera = 0 where id = 7;
+update pelicula set enCartelera = 0 where id = 8;
+update pelicula set enCartelera = 0 where id = 9;
+update pelicula set enCartelera = 0 where id = 10;
+update pelicula set enCartelera = 0 where id = 11;
+update pelicula set enCartelera = 0 where id = 12;
+update pelicula set enCartelera = 0 where id = 13;
+update pelicula set enCartelera = 0 where id = 14;
+update pelicula set enCartelera = 0 where id = 15;
+update pelicula set enCartelera = 0 where id = 16;
+update pelicula set enCartelera = 0 where id = 17;
+update pelicula set enCartelera = 0 where id = 18;
+update pelicula set enCartelera = 0 where id = 19;
+update pelicula set enCartelera = 0 where id = 20;
+update pelicula set enCartelera = 1 where id = 21;
+update pelicula set enCartelera = 1 where id = 22;
+update pelicula set enCartelera = 1 where id = 23;
+update pelicula set enCartelera = 1 where id = 24;
+update pelicula set enCartelera = 1 where id = 25;
+update pelicula set enCartelera = 1 where id = 26;
 
  insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
   (99,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,2,2),

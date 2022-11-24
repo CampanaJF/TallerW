@@ -37,7 +37,6 @@ public class ControladorHome extends ControladorBase{
 	
 	@Autowired
 	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
-
 							ServicioHistorial servicioHistorial,ServicioRandomizer servicioRandomizer,ServicioEntrada servicioEntrada){
 		super(servicioUsuario);
 		this.servicioPelicula = servicioPelicula;
