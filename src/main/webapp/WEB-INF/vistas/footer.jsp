@@ -1,6 +1,13 @@
-<footer >
+
+<%--
+<footer class="fixed-bottom">
+<p class="text-light">CineClub</p>
+<p class="text-light">Dario Orfano</p>
+>>>>>>> e64f32b244c83a1fa5c938828526c81f2e2d1aed
 
 </footer>
+
+ --%>
 <script src="js/popper.min.js"></script>
 <script src="js/jquery-3.6.1.min.js"></script>
 
