@@ -210,9 +210,9 @@
         <h1 class="text-light fw-bolder">${historialB.get(0).descripcionEtiqueta}</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach  var="historial" items="${historialB}">
-            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+           <article class="col-lg-4 col-xl-4 col-xxl-3 mt-4 mb-5 pb-5 ">
                 <div class="fila">
-                <div class="tile">
+                <div class="tile mx-xl-auto">
                 <img class="pelicula" src="${historial.getPelicula().getPoster()}"
                     alt="">
                 <div class="overlay ">
@@ -240,10 +240,11 @@
                          </div>
                          <div class="d-flex justify-content-around">
 									
-							<c:forEach var="etiqueta" items="${historial.getEtiquetas()}">
-								<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
-							</c:forEach>
-						</div>        
+										<c:forEach var="etiqueta" items="${historial.getEtiquetas()}">
+										<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
+										</c:forEach>
+									</div>
+                         
                     </div>
                 </div>
                 </div>
@@ -262,9 +263,9 @@
         <h1 class="text-light fw-bolder">${historialA.get(0).descripcionEtiqueta}</h1>
 		<section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
         <c:forEach  var="historial" items="${historialA}">
-            <article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+            <article class="col-lg-4 col-xl-4 col-xxl-3 mt-4 mb-5 pb-5 ">
                 <div class="fila">
-                <div class="tile">
+                <div class="tile mx-xl-auto">
                 <img class="pelicula" src="${historial.getPelicula().getPoster()}"
                     alt="">
                 <div class="overlay ">
@@ -292,10 +293,11 @@
                          </div>
                          <div class="d-flex justify-content-around">
 									
-							<c:forEach var="etiqueta" items="${historial.getEtiquetas()}">
-								<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
-							</c:forEach>
-						</div>        
+										<c:forEach var="etiqueta" items="${historial.getEtiquetas()}">
+										<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
+										</c:forEach>
+									</div>
+                         
                     </div>
                 </div>
                 </div>
