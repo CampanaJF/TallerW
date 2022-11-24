@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -101,7 +101,7 @@
             </section>
 				</c:if>
 
-            <h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
+            <h1 class="text-light fw-bolder mt-5">PrÃ³ximos estrenos</h1>
 		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${proximosEstrenos}">
             <article class="col-lg-4 col-xl-4 col-xxl-3  mt-4 mb-5 pb-5 ">
@@ -140,10 +140,10 @@
                 </div>
                 </div>
               		<div class="contenedorProximamente mx-auto mx-xl-auto mx-xxl-auto m-auto ">
-                 <p class="text-light">Próximamente</p>    
+                 <p class="text-light">PrÃ³ximamente</p>    
             </div>
             <a href="ver-pelicula?pelicula=${peliculaDTO.getPelicula().id}" class="btn btn-lg text-light mt-2 informacionProximamente">
-            Más información
+            MÃ¡s informaciÃ³n
             </a>
             
             

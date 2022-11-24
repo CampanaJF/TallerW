@@ -15,10 +15,36 @@ public interface RepositorioEntrada {
 	Entrada getEntrada(Long funcion,Long asiento);
 	
 	List<Entrada> getEntradasCompradasDelUsuario(Long id, Long id2);
+	
+	List<Entrada> getEntradasCompradasDelUsuario(Usuario usuarioLogueado);
 
 	Integer getCantidadAsientosVacios(Long funcion);
-
+	
 	Usuario getUsuario(Long Id);
 	
 	Asiento getAsiento(Long id);
+
+	void cancelarReserva(Long entrada);
+
+	void agregarAPendientes(EntradaPendiente entradaPendiente);
+
+	void actualizarPendiente(EntradaPendiente entradaPendiente);
+	
+	void comprarPendiente(Entrada entrada);
+	
+	void eliminarPendiente(EntradaPendiente entradaPendiente);
+	
+	List<Entrada> getEntradasCanceladas(Long funcion);
+
+	List<EntradaPendiente> getPendientesActivasDelUsuario(Usuario usuario);
+
+	List<EntradaPendiente> getPendientes(Long entrada, Long usuario);
+	
+	List<EntradaPendiente> getPendientes(Long entrada);
+
+	EntradaPendiente obtenerPendiente(Funcion funcion, Usuario usuario);
+
+
+
+	
 }

@@ -2,11 +2,14 @@ drop database cineclub;
 create schema cineclub; 
 use cineclub;
 
-select * from pelicula;
-insert into usuario (email,nombre,password) values
-					('pacofranco45@gmail.com','Franco','1234'),
-                    ('mail@mail.com','main','1234'),
-                    ('admin','admin','admin');
+select * from usuario;
+
+insert into usuario (id,email,nombre,password) values
+					(1,'pacofranco45@gmail.com','Franco','1234'),
+                    (2,'jucampana@alumno.unlam.edu.ar','main3','1234'),
+                    (3,'mail@mail.com','main','1234'),
+                    (4,'mail2@mail.com','main2','1234'),
+                    (5,'admin','admin','admin');
 
 insert into formato (id,tipo) values
  (1,'2D'),(2,'3D'),(3,'Realidad Aumentada'); 
@@ -17,7 +20,7 @@ insert into sala (id,asientosTotales,nombreSala,cine_id) values
 				 (1,50,'Sala J',1),
 				 (2,50,'Sala K',1),
 				 (3,50,'Sala L',1);
- 
+                 
 insert into cine (id,locacion,nombreCine) values (2,'Italia 913','Cine Magistral');
  
 insert into sala (id,asientosTotales,nombreSala,cine_id) values                
@@ -38,24 +41,26 @@ insert into sala (id,asientosTotales,nombreSala,cine_id) values
 							(10,50,'Sala X',4),
 							(11,50,'Sala Z',4),
 							(12,50,'Sala Y',4);
+                            
+insert into sala (id,asientosTotales,nombreSala,cine_id) values (13,1,'Sala Test Reserva',4);
 
 
-INSERT INTO genero (id,descripcion)
-VALUES ("1","Acción");
-INSERT INTO genero (id,descripcion)
-VALUES ("2","Anime");
-INSERT INTO genero (id,descripcion)
-VALUES ("3","Suspenso");
-INSERT INTO genero (id,descripcion)
-VALUES ("4","Comedia");
-INSERT INTO genero (id,descripcion)
-VALUES ("5","Drama");
-INSERT INTO genero (id,descripcion)
-VALUES ("6","Terror");
-INSERT INTO genero (id,descripcion)
-VALUES ("7","Biografica");
-INSERT INTO genero (id,descripcion)
-VALUES ("8","Animación");
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("1","Acción",'img/peliculas/tren-bala.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("2","Anime",'img/peliculas/db-super.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("3","Suspenso",'img/peliculas/nop.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("4","Comedia",'img/peliculas/30-noches-con-mi-ex.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("5","Drama",'img/peliculas/carajita.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("6","Terror",'img/peliculas/invitacion-al-infierno.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("7","Biografica",'img/peliculas/elvis.jpg');
+INSERT INTO genero (id,descripcion,poster)
+VALUES ("8","Animación",'img/peliculas/minion.jpg');
 
 INSERT INTO clasificacionpelicula (id,descripcion)
 VALUES ("1","ATP");
@@ -318,35 +323,6 @@ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
 					(77,23,25),
 					(78,26,25);
 
-   insert into etiqueta (id,descripcion) values
-(1,'Susto'),
-(2,'Pelea'),
-(3,'Fascinante'),
-(4,'Tenebroso'),
-(5,'Ciencia Ficción'),
-(6,'Emoción'),
-(7,'Animación'),
-(8,'Informativa'),
-(9,'Descriptiva'),
-(10,'Emotivo'),
-(11,'Impactante'),
-(12,'Tensión'),
-(13,'Para niños'),
-(14,'Historica'),
-(15,'Interesante'),
-(16,'Optimista'),
-(17,'Emocionante'),
-(18,'Viaje'),
-(19,'Tesoro'),
-(20,'Fantasia'),
-(21,'Romantico'),
-(22,'Divertida'),
-(23,'Inquietante'),
-(24,'Adultos'),
-(25,'Acción'),
-(26,'Drama');
-
-
 insert into valoracion(comentario, puntos, pelicula_id, usuario_id)
 values ('Muy buena',4,1,1),
        ('Me gusto',3,1,2),
@@ -418,39 +394,4 @@ values ('Muy buena',4,1,1),
        ('Buena peli',3,23,2),
        ('No me gusto',2,23,3);
 
-select * from historial;
-       
-       
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("1","Acción",'img/peliculas/tren-bala.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("2","Anime",'img/peliculas/db-super.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("3","Suspenso",'img/peliculas/nop.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("4","Comedia",'img/peliculas/30-noches-con-mi-ex.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("5","Drama",'img/peliculas/carajita.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("6","Terror",'img/peliculas/invitacion-al-infierno.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("7","Biografica",'img/peliculas/elvis.jpg');
-INSERT INTO genero (id,descripcion,poster)
-VALUES ("8","Animación",'img/peliculas/minion.jpg');
-
-update genero set poster='img/peliculas/minion.jpg' where id = 8;
-update genero set poster='img/peliculas/elvis.jpg' where id = 7;
-update genero set poster='img/peliculas/invitacion-al-infierno.jpg' where id = 6;
-update genero set poster='img/peliculas/carajita.jpg' where id = 5;
-update genero set poster='img/peliculas/30-noches-con-mi-ex.jpg' where id = 4;
-update genero set poster='img/peliculas/nop.jpg' where id = 3;
-update genero set poster='img/peliculas/db-super.jpg' where id = 2;
-update genero set poster='img/peliculas/tren-bala.jpg'where id = 1;
-
-delete from historial;
-
-
-
-select * from historial;
-
-insert into historial (id,etiqueta_id,usuario_id) values (1,16,2),(2,17,2),(3,18,2),(4,19,2),(5,10,2),(6,20,2);
+	
