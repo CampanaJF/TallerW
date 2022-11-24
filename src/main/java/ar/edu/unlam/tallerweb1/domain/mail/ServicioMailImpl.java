@@ -34,7 +34,7 @@ public class ServicioMailImpl implements ServicioMail{
         props.put("mail.smtp.port", "587");
 
         //create the Session object
-      /*  Session session = Session.getInstance(props,
+        Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
@@ -64,7 +64,7 @@ public class ServicioMailImpl implements ServicioMail{
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
     @Override
     public String getAsuntoConfirmacionCompra() {
@@ -73,23 +73,14 @@ public class ServicioMailImpl implements ServicioMail{
 
     @Override
     public String getMensajeConfirmacionCompra(Usuario usuario, Funcion funcion){
-        String mensaje= "<h2>¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!</h2>\n"
-                + "<h4>Tu compra se realizo con exito"+"</h4><br>"
-                +"<p>Informacion de tu compra</p><br>"
-                +"<table>\n" +
-                "<tr><th>Cine </th>\n" +
-                "    <th>Pelicula</th>\n" +
-                "    <th>Fecha </th>\n" +
-                "    <th>Horario </th>\n" +
-                "    <th>Sala </th>\n" +
-                "  </tr>\n" +
-                "  <tr><td>"+funcion.getSala().getCine().getNombreCine()+"</td>\n" +
-                "      <td>"+funcion.getPelicula().getTitulo()+"</td>\n" +
-                "      <td>"+funcion.getFechaStr()+"</td>\n" +
-                "      <td>"+funcion.getHorario()+"</td>\n" +
-                "      <td>"+funcion.getSala().getNombreSala()+"</td>\n" +
-                "  </tr>\n" +
-                "</table><br>";
+        String mensaje= "¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!\n"
+                + "Tu compra se realizo con exito\n"
+                +"Informacion de tu compra\n"
+                +"Cine      " + funcion.getSala().getCine().getNombreCine()+"\n"+
+                "Pelicula   " + funcion.getPelicula().getTitulo()+"\n"+
+                "Fecha      " +funcion.getFechaStr()+"\n"+
+                "Horario    " +funcion.getHorario()+"\n"+
+                "Sala       " +funcion.getSala().getNombreSala()+"\n";
         return mensaje;
     }
 }
