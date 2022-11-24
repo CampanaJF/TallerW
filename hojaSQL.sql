@@ -45,6 +45,12 @@ insert into sala (id,asientosTotales,nombreSala,cine_id) values
 insert into sala (id,asientosTotales,nombreSala,cine_id) values (13,1,'Sala Test Reserva',4);
 
 
+update cine set latitud = '-34.6617', longitud = '-58.575' where id = 1;
+update cine set latitud = '-34.6848', longitud = '-58.5576' where id = 2;
+update cine set latitud = '-34.6743', longitud = '-58.5596' where id = 3;
+update cine set latitud = '-34.6695', longitud = '-58.5613' where id = 4;
+
+
 INSERT INTO genero (id,descripcion,poster)
 VALUES ("1","Acción",'img/peliculas/tren-bala.jpg');
 INSERT INTO genero (id,descripcion,poster)
