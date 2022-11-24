@@ -108,8 +108,8 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public Boolean validarAsientosDisponibles(Funcion funcion) throws FuncionSinAsientosDisponiblesException {
-
-		if(funcion.getSala().getAsientosTotales()-asientosOcupados(funcion)>0)
+		Funcion funcionEncontrada = getFuncion(funcion.getId());
+		if(funcionEncontrada.getSala().getAsientosTotales()-asientosOcupados(funcionEncontrada)>0)
 			return true;
 		
 		return false;
@@ -121,8 +121,8 @@ public class ServicioFuncionImpl implements ServicioFuncion{
 
 	@Override
 	public Boolean validarFormatoExistente(Funcion funcion) {
-		
-		if(funcion.getFechaStr()==null) 
+		Funcion funcionEncontrada = getFuncion(funcion.getId());
+		if(funcionEncontrada.getFechaStr()==null) 
 			return true;
 		
 		return false;

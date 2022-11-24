@@ -8,6 +8,11 @@
     border: 1.5px solid #b41717 !important;
   }
   
+ .searchBig{
+    width: 150% !important;
+    border: 1.5px solid #b41717 !important;
+}
+  
 .form-signin {
   width: 100%;
   max-width: 330px;
