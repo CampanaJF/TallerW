@@ -7,6 +7,6 @@ public interface ServicioCine {
 	List<Cine> getCines();
 
 	List<CinePelicula> getCines(Long pelicula);
-	String getCinesUbicacion();
+	String getCinesUbicacion(Long idPelicula);
 
 }

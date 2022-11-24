@@ -28,8 +28,8 @@ function initMap() {
 
    // Creamos el servicio PlaceService y enviamos la petición.
 		for(var i = 0; i < data.length; i++){
-			var latLong={ lat: data[i].latitud, lng:  data[i].longitud }
-			var nombre=data[i].nombreCine
+			var latLong={ lat: data[i].cine.latitud, lng:  data[i].cine.longitud }
+			var nombre=data[i].cine.nombreCine
 			crearMarcador(latLong,nombre);
 		}
 

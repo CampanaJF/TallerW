@@ -59,4 +59,11 @@ public class RepositorioGeneroImpl implements RepositorioGenero {
         final Session session = sessionFactory.getCurrentSession();
         return session.get(Genero.class,id);
     }
+    @Override
+    public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuarioExistente) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(GeneroUsuario.class)
+                .add(Restrictions.eq("usuario", usuarioExistente))
+                .list();
+    }
 }

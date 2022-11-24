@@ -249,7 +249,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		for (EntradaPendiente entradaPendiente : entradasPendientes) {
 			
 			entradaPendiente.setActiva(true);
-			entradaPendiente.setDescripcion("¡Un Asiento se desocupo, compralo ahora!");
+			entradaPendiente.setDescripcion("ï¿½Un Asiento se desocupo, compralo ahora!");
 			
 			notificarPendiente(entradaPendiente);
 		}
@@ -304,7 +304,12 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 	public List<Entrada> obtenerEntradasCanceladas(Long funcion){
 		return this.repositorioEntrada.getEntradasCanceladas(funcion);
 	}
-	
+
+	@Override
+	public List<EntradaPendiente> getPendientesParaEnviarMail(Long entrada) {
+		return repositorioEntrada.getPendientesParaEnviarMail(entrada);
+	}
+
 	@Override	
 	public List<EntradaPendiente> obtenerPendientesActivasDelUsuario(Usuario usuario) {
 		

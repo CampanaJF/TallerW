@@ -125,9 +125,9 @@ public class ControladorUsuario {
 			return new ModelAndView("redirect:/home");
 		}
 		
-		Usuario encontrado = obtenerUsuarioLogueado(request);
+
 		
-		model.put("datosUsuario", encontrado);
+		model.put("datosUsuario", obtenerUsuarioLogueado(request));
 		
 		return new ModelAndView("perfil-usuario", model);
 	}

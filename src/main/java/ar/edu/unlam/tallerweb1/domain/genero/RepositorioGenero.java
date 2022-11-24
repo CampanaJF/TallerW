@@ -16,5 +16,6 @@ public interface RepositorioGenero {
     void guardarGeneroElegidoPorUsuario(GeneroUsuario genero);
 
     Genero getGenero(Long asiento);
+    List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuarioExistente);
 
 }

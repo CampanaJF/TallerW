@@ -43,5 +43,6 @@ public interface RepositorioPelicula {
 
     List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
     List<EtiquetaPelicula> obtenerPeliculasPor(Genero genero);
-
+    List<Pelicula> obtenerPeliculasPorGeneroElegidoPorUsuario(Genero genero);
+    List<Genero> obtenerGenerosDePelicula();
 }

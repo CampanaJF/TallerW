@@ -154,7 +154,17 @@ public class RepositorioEntradaImpl implements RepositorioEntrada {
 
 		return session.createCriteria(EntradaPendiente.class).add(rest1).add(rest2).list();
 	}
-	
+	@Override
+	public List<EntradaPendiente> getPendientesParaEnviarMail(Long entrada) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		Entrada entradaLiberada = getEntrada(entrada);
+
+		Criterion rest1 = Restrictions.eq("funcion", entradaLiberada.getFuncion());
+		Criterion rest2 = Restrictions.eq("activa",true);
+
+		return session.createCriteria(EntradaPendiente.class).add(rest1).add(rest2).list();
+	}
 	@Override
 	public List<EntradaPendiente> getPendientesActivasDelUsuario(Usuario usuario) {
 		final Session session = sessionFactory.getCurrentSession();

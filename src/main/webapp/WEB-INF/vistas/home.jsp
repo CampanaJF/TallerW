@@ -54,6 +54,7 @@
   </div>
   
 </div>
+            <c:if test="${not empty peliculasGeneroElegido}">
 		<c:if test="${not empty usuario}">
 		<h1 class="text-light fw-bolder mt-5 mb-2">Recomendadas para vos</h1>
 		
@@ -101,7 +102,10 @@
             </section>
 				</c:if>
 
+            </c:if>
+
             <h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
+
 		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${proximosEstrenos}">
             <article class="col-lg-4 col-xl-4 col-xxl-3  mt-4 mb-5 pb-5 ">

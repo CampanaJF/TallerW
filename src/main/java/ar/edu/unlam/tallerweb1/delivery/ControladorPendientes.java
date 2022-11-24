@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.entrada.EntradaPendiente;
+import ar.edu.unlam.tallerweb1.domain.mail.ServicioMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,17 +18,19 @@ import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
+import java.util.List;
+
 @Controller
-public class ControladorPendientes {
+public class ControladorPendientes extends ControladorBase{
 	
 	private final ServicioEntrada servicioEntrada;
-	private final ServicioUsuario servicioUsuario;
-
+	private final ServicioMail servicioMail;
 	@Autowired
-	public ControladorPendientes(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario) {
-		
+	public ControladorPendientes(ServicioEntrada servicioEntrada, ServicioUsuario servicioUsuario, ServicioMail servicioMail) {
+		super(servicioUsuario);
+
 		this.servicioEntrada = servicioEntrada;
-		this.servicioUsuario = servicioUsuario;
+		this.servicioMail=servicioMail;
 	}
 	
 	//Que no haya mas de una notificacion para la misma funcion por usuario
@@ -39,7 +43,13 @@ public class ControladorPendientes {
 		
 		cancelarReserva(entrada);
 		redirectAttributes.addFlashAttribute("mensaje","!Se Cancelo la reserva exitosamente!");
-		
+		List<EntradaPendiente> pendientesAEnviarMail = this.servicioEntrada.getPendientesParaEnviarMail(entrada);
+		for (EntradaPendiente pendientes: pendientesAEnviarMail) {
+			this.servicioMail.enviarMail(pendientes.getUsuario().getEmail(),
+					servicioMail.getAsuntoEntradasDisponibles(),
+					servicioMail.getMensajeEntradasDisponibles(pendientes.getUsuario().getNombre(),
+							                                 pendientes.getFuncion().getPelicula().getTitulo()));
+		}
 		return new ModelAndView("redirect:/mis-entradas");
 	}
 	
@@ -102,7 +112,5 @@ public class ControladorPendientes {
 		this.servicioEntrada.cancelarReserva(entrada);
 	}
 	
-	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-	}
+
 }
