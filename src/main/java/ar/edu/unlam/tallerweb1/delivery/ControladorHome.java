@@ -22,7 +22,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
 
 @Controller
-public class ControladorHome {
+public class ControladorHome extends ControladorBase{
 
 
     private ServicioUsuario servicioUsuario;
@@ -33,7 +33,7 @@ public class ControladorHome {
 	@Autowired
 	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
 							ServicioHistorial servicioHistorial,ServicioRandomizer servicioRandomizer){
-		this.servicioUsuario = servicioUsuario;
+		super(servicioUsuario);
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
 		this.servicioRandomizer = servicioRandomizer;
@@ -43,7 +43,7 @@ public class ControladorHome {
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
 		ModelMap model = new ModelMap();
-	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	    Usuario usuario = obtenerUsuarioLogueado(request);
 	   
 
 		if(usuario!=null&&validarHistorialExistente(usuario)) {		
@@ -63,15 +63,13 @@ public class ControladorHome {
 			 model.put("usuario", usuario);
 		}
 
-		if (servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario).size() > 0){
+		if (elUsuarioEligioGeneros(usuario)){
 			model.put("peliculasGeneroElegido",servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario));
 		}
-		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
-		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
+
 		
-		
-		model.put("peliculasEstrenos", peliculasEstrenos);
-		model.put("proximosEstrenos", proximosEstrenos);
+		model.put("peliculasEstrenos", servicioPelicula.obtenerPeliculaEstrenos());
+		model.put("proximosEstrenos", servicioPelicula.obtenerProximosEstrenos());
 		
 		return new ModelAndView("home",model);
 	}
@@ -105,7 +103,9 @@ public class ControladorHome {
 		
 	}
 	
-	
+	private boolean elUsuarioEligioGeneros(Usuario usuario){
+		return servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario).size() > 0;
+	}
 
 
 }

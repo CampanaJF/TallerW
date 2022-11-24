@@ -17,7 +17,7 @@
     <link href="css/font.css" rel="stylesheet">
     <link href="css/estilos.css" rel="stylesheet">
 
-    <title>Elegir gustos</title>
+    <title>Cineclub</title>
 </head>
 <body class="bgColor">
 <%@include file="header.jsp"%>

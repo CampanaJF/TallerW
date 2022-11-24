@@ -29,11 +29,10 @@ import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
 import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
 @Controller
-public class ControladorEntrada {
+public class ControladorEntrada extends ControladorBase{
 	
 
 	private final ServicioEntrada servicioEntrada;
-	private final ServicioUsuario servicioUsuario;
 	private final ServicioFuncion servicioFuncion;
 	private final ServicioCine servicioCine;
 	private final ServicioHistorial servicioHistorial;
@@ -42,9 +41,8 @@ public class ControladorEntrada {
 	public ControladorEntrada(ServicioEntrada servicioEntrada, ServicioUsuario servicioUsuario,
 							  ServicioFuncion servicioFuncion, ServicioCine servicioCine
 			                  , ServicioHistorial servicioHistorial, ServicioMail servicioMail) {
-		
+		super(servicioUsuario);
 		this.servicioEntrada = servicioEntrada;
-		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
 		this.servicioHistorial = servicioHistorial;
@@ -237,9 +235,7 @@ public class ControladorEntrada {
 		return this.servicioFuncion.getFuncion(funcion.getId());
 	}
 
-	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-	}
+
 	
 	private void comprarEntrada(DatosEntrada datosEntrada) {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());

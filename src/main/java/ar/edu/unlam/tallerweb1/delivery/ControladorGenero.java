@@ -21,18 +21,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class ControladorGenero {
-    private ServicioUsuario servicioUsuario;
+public class ControladorGenero extends ControladorBase {
     private ServicioGenero servicioGenero;
 
     @Autowired
     public ControladorGenero(ServicioUsuario servicioUsuario, ServicioGenero servicioGenero){
+        super(servicioUsuario);
         this.servicioGenero=servicioGenero;
-        this.servicioUsuario=servicioUsuario;
-    }
-
-    private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-        return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
     }
 
     @RequestMapping(path = "/elegir-gustos", method = RequestMethod.GET)
