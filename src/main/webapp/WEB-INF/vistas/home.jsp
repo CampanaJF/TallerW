@@ -102,7 +102,7 @@
 											<div class="d-flex justify-content-around">
 
 												<c:forEach var="etiqueta"
-													items="${peliculaGenero.getEtiquetas()}">
+													items="${peliculasGenero.getEtiquetas()}">
 													<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
 												</c:forEach>
 											</div>
