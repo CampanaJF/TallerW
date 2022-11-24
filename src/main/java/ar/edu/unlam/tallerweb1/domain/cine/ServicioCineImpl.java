@@ -35,9 +35,9 @@ public class ServicioCineImpl implements ServicioCine{
 	}
 
 	@Override
-	public String getCinesUbicacion() {
+	public String getCinesUbicacion(Long idPelicula) {
 		// TODO Auto-generated method stub
-		List<Cine> cines=this.repositorioCine.getCines();
+		List<CinePelicula> cines=this.repositorioCine.getCines(idPelicula);
 		return new Gson().toJson(cines);
 	}
 

@@ -167,9 +167,9 @@
 	const data=${listadoDeCines}
 	
 	</script>
-	<script async
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkdOr5LUWRDGdX1rrdIzJGr5DN_hXoBUE
+	<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkdOr5LUWRDGdX1rrdIzJGr5DN_hXoBUE
    &libraries=places&callback=initMap">
+
 </script>
 <script src="js/map.js"></script>
 	<%@include file="footer.jsp"%>

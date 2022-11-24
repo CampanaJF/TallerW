@@ -29,6 +29,8 @@ public class RepositorioCineImpl implements RepositorioCine{
 	@Override
 	public List<Cine> getCines() {
 		final Session session = sessionFactory.getCurrentSession();
+		
+				
 		return session.createCriteria(Cine.class).list();
 	}
 
