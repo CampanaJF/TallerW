@@ -54,7 +54,7 @@ public class ControladorPelicula extends ControladorBase{
 	public ModelAndView verPelicula(@RequestParam Long pelicula,HttpServletRequest request){
 
 		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
-		String listadoDeCines=this.servicioCine.getCinesUbicacion();
+		String listadoDeCines=this.servicioCine.getCinesUbicacion(pelicula);
 		ModelMap model = new ModelMap();
 		model.put("pelicula",peliculaBuscada);
 		model.put("similares", this.servicioPelicula.obtenerPeliculasSimilaresPorGenero(peliculaBuscada.getGenero(),peliculaBuscada));
