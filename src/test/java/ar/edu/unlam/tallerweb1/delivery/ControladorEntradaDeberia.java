@@ -48,11 +48,9 @@ public class ControladorEntradaDeberia {
 	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
 	
 	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioEntrada,servicioUsuario,
-<<<<<<< HEAD
+
 																				servicioFuncion,servicioCine,servicioHistorial,servicioMail);
-=======
-																				 servicioFuncion,servicioCine,servicioHistorial);
->>>>>>> e64f32b244c83a1fa5c938828526c81f2e2d1aed
+
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);

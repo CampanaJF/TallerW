@@ -101,13 +101,11 @@
                 </c:forEach>
             </section>
 				</c:if>
-<<<<<<< HEAD
+
             </c:if>
-            <h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
-=======
 
             <h1 class="text-light fw-bolder mt-5">PrÃ³ximos estrenos</h1>
->>>>>>> e64f32b244c83a1fa5c938828526c81f2e2d1aed
+
 		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
         <c:forEach var="peliculaDTO" items="${proximosEstrenos}">
             <article class="col-lg-4 col-xl-4 col-xxl-3  mt-4 mb-5 pb-5 ">

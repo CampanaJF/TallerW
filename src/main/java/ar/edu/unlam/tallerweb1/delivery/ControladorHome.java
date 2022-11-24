@@ -53,7 +53,7 @@ public class ControladorHome extends ControladorBase{
 	    Usuario usuario = obtenerUsuarioLogueado(request);
 	   
 
-
+		model.put("usuario",usuario);
 		if (elUsuarioEligioGeneros(usuario)){
 			model.put("peliculasGeneroElegido",servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario));
 		}
