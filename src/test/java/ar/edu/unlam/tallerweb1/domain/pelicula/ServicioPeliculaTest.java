@@ -21,6 +21,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -182,59 +183,122 @@ public class ServicioPeliculaTest {
 		
 	}
 
-	/*@Test
-	public void verificarQueDevuelvaPeliculasEnBaseAGeneroElegido(){
-
-		Usuario usuario = dadoQueExisteUnUsuario();
-
-		Genero genero = dadoQueExisteUnGenero();
-
-		givenHayPeliculas(usuario,genero);
-
-		dadoQueExisteGenerosDeUnUsuario(usuario);
-
-		List<PeliculaConEtiquetaDTO> peliculas = cuandoConsultoPorPeliculasEnBaseAGenero(usuario);
-
-		thenObtengoPeliculasEnBaseAGeneroElegido(peliculas);
-	}*/
-	private void givenHayPeliculas(Usuario usuario,Genero genero){
-		List<EtiquetaPelicula> etiquetaPeliculas = new ArrayList<>();
-
-		EtiquetaPelicula etiqueta1=new EtiquetaPelicula();
-		Etiqueta etiqueta=new Etiqueta();
-		Pelicula pelicula =new Pelicula();
-		pelicula.setGenero(genero);
-		etiqueta1.setEtiqueta(etiqueta);
-		etiqueta1.setPelicula(pelicula);
-		etiquetaPeliculas.add(etiqueta1);
-
-		when(repositorioPelicula.obtenerPeliculasPor(anyObject())).thenReturn(etiquetaPeliculas);
+	@Test
+	public void verificarQueDevuelvaPeliculasDeUnGeneroElegido(){
+		Usuario usuarioExistente = givenExisteUnUsuario();
+		Genero generoElegido = dadoQueHayUnGenero("Accion");
+		Genero otroGenero = dadoQueHayUnGenero("Terror");
+		dadoQueExistePelicula("Top gun",generoElegido);
+		dadoQueExistePelicula("Bienvenido al infierno",otroGenero);
+		GeneroUsuario generoUsuario = dadoQueUnUsuarioEligeUnGenero(usuarioExistente,generoElegido);
+		List<Pelicula> peliculasDeUnGenero= cuandoConsultoPorPeliculasDeEseGeneroElegido(generoUsuario.getGenero());
+		entoncesObtengoPeliculasDeEseGenero(peliculasDeUnGenero,1);
+	}
+	@Test
+	public void verificaQueNoDevuelvaPeliculasSiNoEligioGeneros(){
+		Usuario usuarioExistente = givenExisteUnUsuario();
+		Genero genero = dadoQueHayUnGenero("Accion");
+		dadoQueExistePelicula("Top gun",genero);
+		GeneroUsuario generoUsuario = dadoQueUnUsuarioEligeUnGenero(usuarioExistente,null);
+		List<Pelicula> peliculasDeUnGenero= cuandoConsultoPorPeliculasDeEseGeneroElegido(generoUsuario.getGenero());
+		entoncesObtengoPeliculasDeEseGenero(peliculasDeUnGenero,0);
+	}
+	@Test
+	public void verificaQueSiEligio2GenerosQueDevuelvaPeliculasDeAmbosGeneros(){
+		Usuario usuarioExistente = givenExisteUnUsuario();
+		List<Genero>generosElegidoLista = dadoQueHayUnaListaDeGeneros();
+		dadoQueHayPeliculasDeVariosGeneros(generosElegidoLista);
+		List<GeneroUsuario> generoUsuario = dadoQueUnUsuarioEligeVariosGeneros(usuarioExistente, generosElegidoLista);
+		List<Pelicula> peliculas = cuandoConsultoPorPeliculasDeVariosGenerosElegido(generoUsuario);
+		entoncesObtengoPeliculasDeVariosGenero(peliculas);
 	}
 
-	private void thenObtengoPeliculasEnBaseAGeneroElegido(List<PeliculaConEtiquetaDTO> peliculas ) {
+	private void entoncesObtengoPeliculasDeVariosGenero(List<Pelicula> peliculas ) {
+		verify(repositorioPelicula, atLeastOnce()).obtenerPeliculasPorGeneroElegidoPorUsuario(anyObject());
 		assertThat(peliculas).isNotNull();
-		verify(repositorioPelicula,times(1)).obtenerGenerosElegidosPorUsuario(anyObject());
+		assertThat(peliculas.size()).isEqualTo(4);
+	}
+	private List<Pelicula> cuandoConsultoPorPeliculasDeVariosGenerosElegido(List<GeneroUsuario> generosUsuario) {
+		List<Pelicula> peliculasLista  = new ArrayList<>();
+		for (GeneroUsuario genero: generosUsuario) {
+			peliculasLista.addAll(this.servicioPelicula.obtenerPeliculasPorGenero(genero.getGenero()));
+		}
+		return peliculasLista;
+	}
+
+	private List<GeneroUsuario> dadoQueUnUsuarioEligeVariosGeneros(Usuario usuario, List<Genero> generosElegidoLista) {
+		List<GeneroUsuario> generos = new ArrayList<>();
+
+		for (Genero genero: generosElegidoLista) {
+			GeneroUsuario generoUsuario = new GeneroUsuario();
+			generoUsuario.setUsuario(usuario);
+			generoUsuario.setGenero(genero);
+			generos.add(generoUsuario);
+
+		}
+		when(repositorioPelicula.obtenerGenerosElegidosPorUsuario(usuario)).thenReturn(generos);
+		return generos;
+	}
+	private List<Pelicula> dadoQueHayPeliculasDeVariosGeneros(List<Genero> generosElegidoLista) {
+		List<Pelicula> peliculas = new ArrayList<>();
+
+		for (Genero genero: generosElegidoLista) {
+			Pelicula pelicula= new Pelicula();
+			pelicula.setId(new Random().nextLong());
+			pelicula.setGenero(genero);
+			peliculas.add(pelicula);
+			when(repositorioPelicula.obtenerPeliculasPorGeneroElegidoPorUsuario(genero)).thenReturn(peliculas);
+		}
+		return peliculas;
+	}
+	private List<Genero> dadoQueHayUnaListaDeGeneros() {
+		List<Genero> generoLista = new ArrayList<>();
+
+
+		Genero generoElegido = new Genero();
+		generoElegido.setId(new Random().nextLong());
+		generoLista.add(generoElegido);
+
+		Genero otroGeneroElegido = new Genero();
+		otroGeneroElegido.setId(new Random().nextLong());
+		generoLista.add(otroGeneroElegido);
+		when(repositorioPelicula.obtenerGenerosDePelicula()).thenReturn(generoLista);
+		return generoLista;
+	}
+
+	private List<Pelicula> cuandoConsultoPorPeliculasDeEseGeneroElegido(Genero genero) {
+		return servicioPelicula.obtenerPeliculasPorGenero(genero);
+	}
+
+	private void entoncesObtengoPeliculasDeEseGenero(List<Pelicula> peliculasDeUnGenero, int cantidadEsperada) {
+		assertThat(peliculasDeUnGenero).hasSize(cantidadEsperada);
 
 	}
 
-
-	private void dadoQueExisteGenerosDeUnUsuario(Usuario usuario) {
-		List<GeneroUsuario> generoUsuarios = new ArrayList<>();
-		when((repositorioPelicula.obtenerGenerosElegidosPorUsuario(usuario))).thenReturn(generoUsuarios);
+	private void dadoQueExistePelicula(String titulo, Genero genero) {
+		List<Pelicula> peliculasLista = new ArrayList<>();
+		Pelicula pelicula = new Pelicula();
+		pelicula.setTitulo(titulo);
+		pelicula.setGenero(genero);
+		peliculasLista.add(pelicula);
+		when(repositorioPelicula.obtenerPeliculasPorGeneroElegidoPorUsuario(genero)).thenReturn(peliculasLista);
 	}
 
-	private List<PeliculaConEtiquetaDTO> cuandoConsultoPorPeliculasEnBaseAGenero(Usuario usuario) {
-		return servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
+	private GeneroUsuario dadoQueUnUsuarioEligeUnGenero(Usuario usuarioExistente, Genero genero) {
+		GeneroUsuario generoUsuario= new GeneroUsuario();
+		generoUsuario.setUsuario(usuarioExistente);
+		generoUsuario.setGenero(genero);
+		return generoUsuario;
 	}
-	private Usuario dadoQueExisteUnUsuario(){
-		Usuario usuario = new Usuario();
-		return usuario;
-	}
-	private Genero dadoQueExisteUnGenero(){
-		Genero genero = new Genero();
+
+	private Genero dadoQueHayUnGenero(String descripcion) {
+		Genero genero= new Genero();
+		genero.setDescripcion(descripcion);
 		return genero;
 	}
-
-
-
+	private Usuario givenExisteUnUsuario() {
+		Usuario nuevoUsuario = new Usuario();
+		nuevoUsuario.setId(new Random().nextLong());
+		return nuevoUsuario;
+	}
 }

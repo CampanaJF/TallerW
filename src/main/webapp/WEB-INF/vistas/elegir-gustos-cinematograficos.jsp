@@ -26,9 +26,7 @@
         <h5 class="text-center text-white">${mensaje}</h5>
     </div>
 </c:if>
-<h1 class="text-center text-white mt-3 mb-2"> Elige tus generos favoritos para una mejor experiencia</h1>
-<!--d-flex flex-row flex-wrap
-<div class="d-flex flex-row flex-wrap p-5 text-white text-center justify-content-center">-->
+<h1 class="text-center text-white mt-3 mb-2"> Eleg&iacute;  tus generos favoritos para una mejor experiencia</h1>
 
  <form:form action="procesar-elegir-gustos" method="post" modelAttribute="datosGenero">
        <section class="pt-4 pb-5 mb-5 d-flex flex-wrap text-center">
@@ -44,8 +42,13 @@
               </article>
           </c:forEach>
            <form:hidden path="usuario.id" value="${usuario.id}"></form:hidden>
-           <div style="margin-left: 50%">
+           <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center mt-3" >
+           <div class="text-center justify-content-center ">
                <form:button class="buttonA mt-3 " >Continuar</form:button>
+           </div>
+               <div class="text-center">
+                   <a href="home" class="btn btn-secondary">En otro momento</a>
+               </div>
            </div>
 </form:form>
     </section>

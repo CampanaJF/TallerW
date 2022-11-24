@@ -14,5 +14,6 @@ public interface ServicioGenero {
 
     List<Genero> obtenerDescrpcionesGeneroPorId(Long idGenero);
     void guardarGeneroElegidoPorUsuario(List<Long> generos, Usuario usuario);
+    List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuarioExistente);
 
 }

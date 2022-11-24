@@ -37,6 +37,7 @@ public interface ServicioPelicula {
 	List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuario);
 
 	List<EtiquetaPelicula> obtenerPeliculasPorGeneroElegido(Usuario usuario);
-	List<PeliculaConEtiquetaDTO> obtenerPeliculasEnBaseAGeneroElegido(Usuario usuario);
+	List<PeliculaConEtiquetaDTO> obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(Usuario usuario);
+	List<Pelicula> obtenerPeliculasPorGenero(Genero genero);
 
 }

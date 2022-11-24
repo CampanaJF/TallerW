@@ -57,15 +57,15 @@ public class ControladorHome {
 			model.put("historialB", peliculasHistorialB);
 			  
 			model.put("usuario", usuario);
-			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
-			
-			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
+
 			
 		}else {
 			 model.put("usuario", usuario);
 		}
-		
-		
+
+		if (servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario).size() > 0){
+			model.put("peliculasGeneroElegido",servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario));
+		}
 		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
 		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
 		

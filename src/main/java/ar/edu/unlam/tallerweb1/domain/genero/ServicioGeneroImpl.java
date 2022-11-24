@@ -5,6 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.Pelicula;
 import ar.edu.unlam.tallerweb1.domain.usuario.GeneroUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
+import ar.edu.unlam.tallerweb1.exceptions.GeneroNoElegidoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,9 @@ public class ServicioGeneroImpl implements ServicioGenero {
 
     @Override
     public void guardarGeneroElegidoPorUsuario(List<Long> genero, Usuario usuario) {
-
+        if(genero == null){
+            throw new GeneroNoElegidoException();
+        }
         List<Genero> generos = getGeneros(genero);
 
         for (Genero genero1 : generos) {
@@ -57,7 +60,10 @@ public class ServicioGeneroImpl implements ServicioGenero {
             repositorioGenero.guardarGeneroElegidoPorUsuario(generoUsuario1);
         }
     }
-
+    @Override
+    public List<GeneroUsuario> obtenerGenerosElegidosPorUsuario(Usuario usuarioExistente) {
+        return repositorioGenero.obtenerGenerosElegidosPorUsuario(usuarioExistente);
+    }
     private List<Genero> getGeneros(List<Long> generos) {
         List<Genero> generosElegidos = new ArrayList<>();
 

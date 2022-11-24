@@ -34,7 +34,7 @@ public class ServicioMailImpl implements ServicioMail{
         props.put("mail.smtp.port", "587");
 
         //create the Session object
-        Session session = Session.getInstance(props,
+      /*  Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
@@ -64,7 +64,7 @@ public class ServicioMailImpl implements ServicioMail{
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
     @Override
     public String getAsuntoConfirmacionCompra() {
