@@ -150,7 +150,7 @@ public class ControladorEntrada extends ControladorBase{
 		}
 		
 		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
-		this.servicioMail.enviarMail(datosEntrada.getUsuario().getEmail(), servicioMail.getAsuntoConfirmacionCompra(),servicioMail.getMensajeConfirmacionCompra(datosEntrada.getUsuario(), datosEntrada.getFuncion()));
+		enviarMail(entradaComprada);
 		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
 		
 		ModelMap model = new ModelMap();
@@ -159,6 +159,16 @@ public class ControladorEntrada extends ControladorBase{
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
+	}
+
+	private void enviarMail(List<Entrada> entradaComprada) {
+		for (Entrada entrada : entradaComprada) {
+			this.servicioMail.enviarMail(entrada.getUsuario().getEmail(),
+					servicioMail.getAsuntoConfirmacionCompra(),
+					servicioMail.getMensajeConfirmacionCompra(entrada.getUsuario(),
+							entrada.getFuncion()));
+		}
+		
 	}
 
 	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)

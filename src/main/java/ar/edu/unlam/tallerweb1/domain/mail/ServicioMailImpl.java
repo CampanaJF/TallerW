@@ -20,9 +20,10 @@ public class ServicioMailImpl implements ServicioMail{
         //provide sender's email ID
         String from = "cineclub.tallerweb@gmail.com";
         //provide Mailtrap's username
-        final String username = "Cineclub";
+        final String username = "Cineclub Taller";
         //provide Mailtrap's password
-        final String password = "lrhxyerzktgedzaq";
+        //final String password = "lrhxyerzktgedzaq"; contraseña gmail
+        final String password = "hnfkwjeeupjqnrcb";
 
         //provide Mailtrap's host address
         String host = "smtp.gmail.com";
@@ -34,7 +35,7 @@ public class ServicioMailImpl implements ServicioMail{
         props.put("mail.smtp.port", "587");
 
         //create the Session object
-      /*  Session session = Session.getInstance(props,
+        Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
@@ -64,7 +65,7 @@ public class ServicioMailImpl implements ServicioMail{
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     }
     @Override
     public String getAsuntoConfirmacionCompra() {

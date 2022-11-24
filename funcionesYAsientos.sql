@@ -26,9 +26,9 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
 
 /*funcion test reserva */
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
-					(7344,'2022-11-24 23:00','22:30','Ingles',750.00,true,1,2,13);
+					(7350,'2022-11-25 23:00','22:30','Ingles',750.00,true,1,1,13);
                     
-call EP_crearAsientosYEntradasVacias(7344);
+call EP_crearAsientosYEntradasVacias(7350);
 
 update funcion set fecha='2022-11-11 21:00' where id = 90;
 update funcion set fecha='2022-11-11 21:00' where id = 91;
