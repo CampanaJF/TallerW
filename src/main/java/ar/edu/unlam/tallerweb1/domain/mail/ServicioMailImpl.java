@@ -22,7 +22,7 @@ public class ServicioMailImpl implements ServicioMail{
 //        //provide Mailtrap's username
 //        final String username = "Cineclub Taller";
 //        //provide Mailtrap's password
-//        //final String password = "lrhxyerzktgedzaq"; contraseña gmail
+//        //final String password = "lrhxyerzktgedzaq"; contraseï¿½a gmail
 //        final String password = "hnfkwjeeupjqnrcb";
         
       //provide sender's email ID
@@ -78,7 +78,10 @@ public class ServicioMailImpl implements ServicioMail{
     public String getAsuntoConfirmacionCompra() {
         return "Confirmacion de compra";
     }
-
+    @Override
+    public String getAsuntoEntradasDisponibles() {
+        return "Entradas disponibles";
+    }
     @Override
     public String getMensajeConfirmacionCompra(Usuario usuario, Funcion funcion){
         String mensaje= "Â¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!\n"
@@ -89,6 +92,11 @@ public class ServicioMailImpl implements ServicioMail{
                 "Fecha      " +funcion.getFechaStr()+"\n"+
                 "Horario    " +funcion.getHorario()+"\n"+
                 "Sala       " +funcion.getSala().getNombreSala()+"\n";
+        return mensaje;
+    }
+    public String getMensajeEntradasDisponibles(String nombreUsuario, String tituloPelicula){
+        String mensaje="Hola, " + nombreUsuario+ "!\n"
+                     + "Te informamos que la pelicula " + tituloPelicula + " ya cuenta con entradas disponibles.";
         return mensaje;
     }
 }

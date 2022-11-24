@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.mail.ServicioMail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -23,10 +24,10 @@ public class ControladorPendientesDeberia {
 
 	private final ServicioEntrada servicioEntrada = mock(ServicioEntrada.class);
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
-	
+	private final ServicioMail servicioMail = mock(ServicioMail.class);
 	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
 	
-	private final ControladorPendientes controladorPendientes = new ControladorPendientes(servicioEntrada,servicioUsuario);
+	private final ControladorPendientes controladorPendientes = new ControladorPendientes(servicioEntrada,servicioUsuario,servicioMail);
 	
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
