@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import ar.edu.unlam.tallerweb1.domain.historial.Historial;
 
-public class DateTest {
+public class GeneralTest {
 	
 //	@Test
 //	public void WW() {

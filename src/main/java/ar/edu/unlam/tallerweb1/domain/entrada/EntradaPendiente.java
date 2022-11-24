@@ -21,6 +21,26 @@ public class EntradaPendiente {
 	
 	@ManyToOne
 	private Funcion funcion;
+	
+	private String descripcion;
+	
+	private Boolean activa;
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public Boolean getActiva() {
+		return activa;
+	}
+
+	public void setActiva(Boolean activa) {
+		this.activa = activa;
+	}
 
 	public Long getId() {
 		return id;
