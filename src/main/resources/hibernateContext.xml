@@ -11,8 +11,6 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/cineclub?serverTimezone=UTC" />
 		<property name="username" value="root" />
 		<property name="password" value="11037" />
-
-
 	</bean>
 
 
