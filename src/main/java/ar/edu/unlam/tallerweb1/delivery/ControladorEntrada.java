@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.mail.ServicioMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,16 +37,18 @@ public class ControladorEntrada {
 	private final ServicioFuncion servicioFuncion;
 	private final ServicioCine servicioCine;
 	private final ServicioHistorial servicioHistorial;
-	
+	private final ServicioMail servicioMail;
 	@Autowired
-	public ControladorEntrada(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario,
-							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioHistorial servicioHistorial) {
+	public ControladorEntrada(ServicioEntrada servicioEntrada, ServicioUsuario servicioUsuario,
+							  ServicioFuncion servicioFuncion, ServicioCine servicioCine
+			                  , ServicioHistorial servicioHistorial, ServicioMail servicioMail) {
 		
 		this.servicioEntrada = servicioEntrada;
 		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
 		this.servicioHistorial = servicioHistorial;
+		this.servicioMail=servicioMail;
 	}
 	
 	/*TO DO 
@@ -142,7 +145,7 @@ public class ControladorEntrada {
 		}
 		
 		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
-		
+		this.servicioMail.enviarMail(datosEntrada.getUsuario().getEmail(), servicioMail.getAsuntoConfirmacionCompra(),servicioMail.getMensajeConfirmacionCompra(datosEntrada.getUsuario(), datosEntrada.getFuncion()));
 		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
 		
 		ModelMap model = new ModelMap();

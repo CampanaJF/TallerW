@@ -1,14 +1,20 @@
 package ar.edu.unlam.tallerweb1.domain.mail;
 
+import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-
+@Service("servicioMail")
+@Transactional
 public class ServicioMailImpl implements ServicioMail{
 
     @Override
-    public void mandarMailDeRegistracion(String mail, String asunto, String mensaje) {
+    public void enviarMail(String mail, String asunto, String mensaje) {
 
         String to = mail;
         //provide sender's email ID
@@ -60,5 +66,30 @@ public class ServicioMailImpl implements ServicioMail{
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public String getAsuntoConfirmacionCompra() {
+        return "Confirmacion de compra";
+    }
 
+    @Override
+    public String getMensajeConfirmacionCompra(Usuario usuario, Funcion funcion){
+        String mensaje= "<h2>¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!</h2>\n"
+                + "<h4>Tu compra se realizo con exito"+"</h4><br>"
+                +"<p>Informacion de tu compra</p><br>"
+                +"<table>\n" +
+                "<tr><th>Cine </th>\n" +
+                "    <th>Pelicula</th>\n" +
+                "    <th>Fecha </th>\n" +
+                "    <th>Horario </th>\n" +
+                "    <th>Sala </th>\n" +
+                "  </tr>\n" +
+                "  <tr><td>"+funcion.getSala().getCine().getNombreCine()+"</td>\n" +
+                "      <td>"+funcion.getPelicula().getTitulo()+"</td>\n" +
+                "      <td>"+funcion.getFechaStr()+"</td>\n" +
+                "      <td>"+funcion.getHorario()+"</td>\n" +
+                "      <td>"+funcion.getSala().getNombreSala()+"</td>\n" +
+                "  </tr>\n" +
+                "</table><br>";
+        return mensaje;
+    }
 }

@@ -11,6 +11,7 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.unlam.tallerweb1.domain.mail.ServicioMail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -43,11 +44,11 @@ public class ControladorEntradaDeberia {
 	private final ServicioFuncion servicioFuncion = mock(ServicioFuncion.class);
 	private final ServicioCine servicioCine = mock(ServicioCine.class);
 	private final ServicioHistorial servicioHistorial = mock(ServicioHistorial.class);
-	
+	private final ServicioMail servicioMail = mock(ServicioMail.class);
 	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
 	
 	private final ControladorEntrada controladorEntrada = new ControladorEntrada(servicioEntrada,servicioUsuario,
-																				servicioFuncion,servicioCine,servicioHistorial);
+																				servicioFuncion,servicioCine,servicioHistorial,servicioMail);
 
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
