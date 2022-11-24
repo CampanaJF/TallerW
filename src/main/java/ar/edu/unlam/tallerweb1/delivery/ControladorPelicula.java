@@ -26,7 +26,6 @@ import java.util.List;
 public class ControladorPelicula extends ControladorBase{
 	
 	private ServicioPelicula servicioPelicula;
-	private ServicioUsuario servicioUsuario;
 	private ServicioCine servicioCine;
 	@Autowired
 
@@ -35,10 +34,6 @@ public class ControladorPelicula extends ControladorBase{
 		this.servicioPelicula = servicioPelicula;
 		this.servicioCine=servicioCine;
 
-	}
-	@Override
-	public Usuario obtenerUsuarioLogueado(HttpServletRequest request){
-		return super.obtenerUsuarioLogueado(request);
 	}
 
     @RequestMapping(path = "/busqueda", method = RequestMethod.GET)
@@ -78,11 +73,11 @@ public class ControladorPelicula extends ControladorBase{
 											HttpServletRequest request){
 
 		Pelicula pelicula = this.servicioPelicula.buscarPeliculaPorId(datosValoracion.getPelicula().getId());
-		Usuario usuario = obtenerUsuarioLogueado(request);
-		this.servicioPelicula.guardarValoracionPelicula(datosValoracion.getPuntos(),pelicula,datosValoracion.getComentarios(),usuario);
+
+		this.servicioPelicula.guardarValoracionPelicula(datosValoracion.getPuntos(), pelicula, datosValoracion.getComentarios(), datosValoracion.getUsuario());
 		ModelMap model = new ModelMap();
 		model.put("comentario", datosValoracion.getComentarios());
-		model.put("usuario",usuario);
+		model.put("usuario", obtenerUsuarioLogueado(request));
 		model.put("pelicula",pelicula);
 		model.put("puntos", datosValoracion.getPuntos());
 
@@ -90,10 +85,10 @@ public class ControladorPelicula extends ControladorBase{
 	}
 	@RequestMapping(path="/ver-opiniones", method=RequestMethod.GET)
 	public ModelAndView verOpiniones(@RequestParam Long pelicula,HttpServletRequest request){
-		Pelicula pelicula1 = this.servicioPelicula.buscarPeliculaPorId(pelicula);
-		List<Valoracion> valoraciones = this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(pelicula1);
+		Pelicula peliculaBuscada = this.servicioPelicula.buscarPeliculaPorId(pelicula);
+		List<Valoracion> valoraciones = this.servicioPelicula.obtenerCalificacionesDeUnaPelicula(peliculaBuscada);
 		ModelMap model = new ModelMap();
-		model.put("pelicula",pelicula1);
+		model.put("pelicula",peliculaBuscada);
 		model.put("valoraciones",valoraciones);
 		model.put("usuario",obtenerUsuarioLogueado(request));
 		if(noHayValoraciones(valoraciones))

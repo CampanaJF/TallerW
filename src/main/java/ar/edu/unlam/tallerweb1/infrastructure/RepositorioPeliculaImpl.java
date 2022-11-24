@@ -196,6 +196,19 @@ public class RepositorioPeliculaImpl implements RepositorioPelicula {
 				.list();
 	}
 
-	
+	@Override
+	public List<Pelicula> obtenerPeliculasPorGeneroElegidoPorUsuario(Genero genero) {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Pelicula.class)
+				.add(eq("genero", genero))
+				.list();
+	}
+
+	@Override
+	public List<Genero> obtenerGenerosDePelicula() {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Genero.class)
+				.list();
+	}
 
 }

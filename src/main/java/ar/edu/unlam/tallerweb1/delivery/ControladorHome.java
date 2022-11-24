@@ -26,7 +26,7 @@ import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
 
 @Controller
-public class ControladorHome {
+public class ControladorHome extends ControladorBase{
 
 
     private ServicioUsuario servicioUsuario;
@@ -37,8 +37,9 @@ public class ControladorHome {
 	
 	@Autowired
 	public ControladorHome(ServicioUsuario servicioUsuario,ServicioPelicula servicioPelicula,
+
 							ServicioHistorial servicioHistorial,ServicioRandomizer servicioRandomizer,ServicioEntrada servicioEntrada){
-		this.servicioUsuario = servicioUsuario;
+		super(servicioUsuario);
 		this.servicioPelicula = servicioPelicula;
 		this.servicioHistorial = servicioHistorial;
 		this.servicioRandomizer = servicioRandomizer;
@@ -49,18 +50,18 @@ public class ControladorHome {
 	public ModelAndView irAHome(HttpServletRequest request,@ModelAttribute("error") String mensaje) {
 		
 		ModelMap model = new ModelMap();
-	    Usuario usuario = servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
+	    Usuario usuario = obtenerUsuarioLogueado(request);
 	   
 
-		if(usuario!=null) {		
-				
-			model.put("usuario", usuario);
-			
-			List<PeliculaConEtiquetaDTO> peliculasGeneroElegido = obtenerPeliculasSegunGenero(usuario);
-			
-			model.put("peliculasGeneroElegido", peliculasGeneroElegido);
-			
+		model.put("usuario",usuario);
+		if (elUsuarioEligioGeneros(usuario)){
+			model.put("peliculasGeneroElegido",servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario));
 		}
+
+		
+		model.put("peliculasEstrenos", servicioPelicula.obtenerPeliculaEstrenos());
+		model.put("proximosEstrenos", servicioPelicula.obtenerProximosEstrenos());
+
 			
 		if(usuario!=null&&hayNotificaciones(usuario)) {
 			
@@ -85,12 +86,7 @@ public class ControladorHome {
 		}
 				
 		
-		List<PeliculaConEtiquetaDTO>peliculasEstrenos=servicioPelicula.obtenerPeliculaEstrenos();
-		List<PeliculaConEtiquetaDTO>proximosEstrenos=servicioPelicula.obtenerProximosEstrenos();
-		
-		
-		model.put("peliculasEstrenos", peliculasEstrenos);
-		model.put("proximosEstrenos", proximosEstrenos);
+
 		
 		return new ModelAndView("home",model);
 	}
@@ -99,9 +95,6 @@ public class ControladorHome {
 		return !(obtenerNotifcaciones(usuario).isEmpty());
 	}
 
-	private List<PeliculaConEtiquetaDTO> obtenerPeliculasSegunGenero(Usuario usuario) {
-		return this.servicioPelicula.obtenerPeliculasEnBaseAGeneroElegido(usuario);
-	}
 
 	private List<EntradaPendiente> obtenerNotifcaciones(Usuario usuario) {
 		return this.servicioEntrada.obtenerPendientesActivasDelUsuario(usuario);
@@ -147,7 +140,9 @@ public class ControladorHome {
 		
 	}
 	
-	
+	private boolean elUsuarioEligioGeneros(Usuario usuario){
+		return servicioPelicula.obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(usuario).size() > 0;
+	}
 
 
 }

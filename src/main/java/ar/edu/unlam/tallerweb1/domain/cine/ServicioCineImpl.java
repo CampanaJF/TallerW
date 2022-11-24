@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+
 
 
 @Service("servicioCine")
@@ -39,6 +39,7 @@ public class ServicioCineImpl implements ServicioCine{
 		// TODO Auto-generated method stub
 		List<CinePelicula> cines=this.repositorioCine.getCines(idPelicula);
 		return new Gson().toJson(cines);
+
 	}
 
 }

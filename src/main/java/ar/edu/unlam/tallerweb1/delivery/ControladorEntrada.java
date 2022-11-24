@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.mail.ServicioMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,24 +30,24 @@ import ar.edu.unlam.tallerweb1.exceptions.NoSeEncontraronFuncionesException;
 
 
 @Controller
-public class ControladorEntrada {
+public class ControladorEntrada extends ControladorBase{
 	
 
 	private final ServicioEntrada servicioEntrada;
-	private final ServicioUsuario servicioUsuario;
 	private final ServicioFuncion servicioFuncion;
 	private final ServicioCine servicioCine;
 	private final ServicioHistorial servicioHistorial;
-	
+	private final ServicioMail servicioMail;
 	@Autowired
-	public ControladorEntrada(ServicioEntrada servicioEntrada,ServicioUsuario servicioUsuario,
-							  ServicioFuncion servicioFuncion,ServicioCine servicioCine,ServicioHistorial servicioHistorial) {
-		
+	public ControladorEntrada(ServicioEntrada servicioEntrada, ServicioUsuario servicioUsuario,
+							  ServicioFuncion servicioFuncion, ServicioCine servicioCine
+			                  , ServicioHistorial servicioHistorial, ServicioMail servicioMail) {
+		super(servicioUsuario);
 		this.servicioEntrada = servicioEntrada;
-		this.servicioUsuario = servicioUsuario;
 		this.servicioFuncion = servicioFuncion;
 		this.servicioCine = servicioCine;
 		this.servicioHistorial = servicioHistorial;
+		this.servicioMail=servicioMail;
 	}
 	
 	/*TO DO 
@@ -149,7 +150,7 @@ public class ControladorEntrada {
 		}
 		
 		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
-		
+		enviarMail(entradaComprada);
 		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
 		
 		ModelMap model = new ModelMap();
@@ -158,6 +159,16 @@ public class ControladorEntrada {
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
+	}
+
+	private void enviarMail(List<Entrada> entradaComprada) {
+		for (Entrada entrada : entradaComprada) {
+			this.servicioMail.enviarMail(entrada.getUsuario().getEmail(),
+					servicioMail.getAsuntoConfirmacionCompra(),
+					servicioMail.getMensajeConfirmacionCompra(entrada.getUsuario(),
+							entrada.getFuncion()));
+		}
+		
 	}
 
 	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
@@ -208,9 +219,7 @@ public class ControladorEntrada {
 		return this.servicioFuncion.getFuncion(funcion.getId());
 	}
 
-	private Usuario obtenerUsuarioLogueado(HttpServletRequest request) {
-		return this.servicioUsuario.getUsuario((Long)request.getSession().getAttribute("ID"));
-	}
+
 	
 	private void comprarEntrada(DatosEntrada datosEntrada) {
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());

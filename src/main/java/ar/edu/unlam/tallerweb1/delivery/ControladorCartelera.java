@@ -26,7 +26,7 @@ import ar.edu.unlam.tallerweb1.domain.pelicula.dto.PeliculaConEtiquetaDTO;
 import ar.edu.unlam.tallerweb1.domain.session.ServicioSession;
 
 @Controller
-public class ControladorCartelera {
+public class ControladorCartelera{
 
 	
 	ServicioGenero servicioGenero;
@@ -37,7 +37,8 @@ public class ControladorCartelera {
 	@Autowired
 	public ControladorCartelera(ServicioGenero servicioGenero,ServicioClasificacion servicioClasificacion,
 			ServicioPelicula servicioPelicula,ServicioSession servicioSession) {
-		this.servicioGenero=servicioGenero;
+
+        this.servicioGenero=servicioGenero;
 		this.servicioClasificacion=servicioClasificacion;
 		this.servicioPelicula=servicioPelicula;
 		this.servicioSession=servicioSession;

@@ -44,7 +44,7 @@ public interface RepositorioEntrada {
 
 	EntradaPendiente obtenerPendiente(Funcion funcion, Usuario usuario);
 
+	List<EntradaPendiente> getPendientesParaEnviarMail(Long entrada);
 
 
-	
 }

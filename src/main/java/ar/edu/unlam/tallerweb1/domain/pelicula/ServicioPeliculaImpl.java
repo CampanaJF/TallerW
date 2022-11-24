@@ -202,11 +202,24 @@ public class ServicioPeliculaImpl implements ServicioPelicula {
 		return peliculas;
 	}
 	@Override
-	public List<PeliculaConEtiquetaDTO> obtenerPeliculasEnBaseAGeneroElegido(Usuario usuario) {
+	public List<PeliculaConEtiquetaDTO> obtenerPeliculasConEtiquetaDTOEnBaseAGeneroElegido(Usuario usuario) {
 		List<EtiquetaPelicula> etiquetasPeliculas = obtenerPeliculasPorGeneroElegido(usuario);
 		Collections.shuffle(etiquetasPeliculas);
-		return mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas.subList(0,3));
-	}
 
+		//List<PeliculaConEtiquetaDTO> peliculasMapeadas =  mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas.subList(0,4));
+		List<PeliculaConEtiquetaDTO> resultado = mapeoPeliculaConEtiquetaDTO(etiquetasPeliculas);
+		List<PeliculaConEtiquetaDTO> auxiliar = new ArrayList<>();
+
+		for (int i = 0; i < resultado.size(); i++) {
+			if (i < 3) {
+				auxiliar.add(resultado.get(i));
+			}
+		}
+		return auxiliar;
+	}
+	@Override
+	public List<Pelicula> obtenerPeliculasPorGenero(Genero genero) {
+		return repositorioPelicula.obtenerPeliculasPorGeneroElegidoPorUsuario(genero);
+	}
 
 }

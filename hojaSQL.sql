@@ -1,6 +1,7 @@
 drop database cineclub;
 create schema cineclub; 
 use cineclub;
+use db;
 
 select * from usuario;
 

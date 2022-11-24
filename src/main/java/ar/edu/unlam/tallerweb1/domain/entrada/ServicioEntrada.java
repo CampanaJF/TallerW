@@ -49,6 +49,6 @@ public interface ServicioEntrada {
 
 	List<Entrada> obtenerEntradasCanceladas(Long funcion);
 
-	
-	
+	List<EntradaPendiente> getPendientesParaEnviarMail(Long entrada);
+
 }
