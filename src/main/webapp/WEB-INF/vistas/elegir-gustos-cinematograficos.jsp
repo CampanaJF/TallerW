@@ -42,14 +42,15 @@
               </article>
           </c:forEach>
            <form:hidden path="usuario.id" value="${usuario.id}"></form:hidden>
-           <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center mt-3" >
-           <div class="text-center justify-content-center ">
-               <form:button class="buttonA mt-3 " >Continuar</form:button>
-           </div>
+           <div class="d-flex  flex-row flex-wrap align-items-center justify-content-center mt-3" style="position: relative; margin-left: 45%">
                <div class="text-center">
-                   <a href="home" class="btn btn-secondary">En otro momento</a>
+                   <a href="home" class="btn btn-secondary" style="margin-right: 6px">En otro momento</a>
+               </div>
+               <div class="text-center justify-content-center ">
+                   <input type="submit" class="btn buttonA text-white boton-calif " value="Continuar"  >
                </div>
            </div>
+
 </form:form>
     </section>
 </body>
