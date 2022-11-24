@@ -18,12 +18,19 @@ public class ServicioMailImpl implements ServicioMail{
 
         String to = mail;
         //provide sender's email ID
-        String from = "cineclub.tallerweb@gmail.com";
+//        String from = "cineclub.tallerweb@gmail.com";
+//        //provide Mailtrap's username
+//        final String username = "Cineclub Taller";
+//        //provide Mailtrap's password
+//        //final String password = "lrhxyerzktgedzaq"; contraseña gmail
+//        final String password = "hnfkwjeeupjqnrcb";
+        
+      //provide sender's email ID
+        String from = "gauchorocket30@gmail.com";
         //provide Mailtrap's username
-        final String username = "Cineclub Taller";
+        final String username = "gauchorocket30";
         //provide Mailtrap's password
-        //final String password = "lrhxyerzktgedzaq"; contraseña gmail
-        final String password = "hnfkwjeeupjqnrcb";
+        final String password = "tnfeghestzihwnnp";
 
         //provide Mailtrap's host address
         String host = "smtp.gmail.com";
