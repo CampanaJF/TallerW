@@ -70,7 +70,7 @@ public class ControladorPendientesDeberia {
 	private void whenSeCompraLaEntradaDesocupada(Long entrada) {
 		mocksSessionRequests();
 		
-		mav = this.controladorPendientes.entradasPendientes(entrada,mockRequest);	
+		mav = this.controladorPendientes.entradasPendientes(entrada,mockRequest,redirectAttributes);	
 	}
 	
 	

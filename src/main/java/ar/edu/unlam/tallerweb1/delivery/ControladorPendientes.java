@@ -70,13 +70,22 @@ public class ControladorPendientes extends ControladorBase{
 	
 
 	@RequestMapping(path="/entradas-pendientes", method = RequestMethod.GET)
-	public ModelAndView entradasPendientes(@RequestParam("funcion") Long funcion, HttpServletRequest request) {
-				
+	public ModelAndView entradasPendientes(@RequestParam("funcion") Long funcion, HttpServletRequest request,
+											final RedirectAttributes redirectAttributes) {
+		
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		
+		//validarUsuario(usuario,redirectAttributes);
+		
+		if(null==usuario) { 
+			redirectAttributes.addFlashAttribute("mensaje","!Ingrese Antes de seguir!");
+			return new ModelAndView("redirect:/login");
+		}
+		
 		ModelMap model = new ModelMap();
 		
-		
 		model.put("entradasCanceladas",this.servicioEntrada.obtenerEntradasCanceladas(funcion));
-		model.put("usuario", obtenerUsuarioLogueado(request));
+		model.put("usuario", usuario);
 		model.addAttribute("datosReserva", new DatosReserva());
 		return new ModelAndView("entrada",model);
 	}
@@ -99,26 +108,6 @@ public class ControladorPendientes extends ControladorBase{
 		this.servicioHistorial.guardarEnElHistorial(entrada.getUsuario(),entrada.getFuncion().getPelicula());
 	}
 
-	@SuppressWarnings("unused")
-	private ModelAndView validarUsuario(Usuario usuarioLogueado,final RedirectAttributes redirectAttributes) {
-		
-		if(null==usuarioLogueado) { 
-			redirectAttributes.addFlashAttribute("mensaje","!Ingrese Antes de seguir!");
-			return new ModelAndView("redirect:/login");
-		}
-		
-		return null;
-	}
-	
-	@SuppressWarnings("unused")
-	private ModelAndView validarUsuario(Usuario usuarioLogueado) {
-		
-		if(null==usuarioLogueado) { 
-			return new ModelAndView("redirect:/login");
-		}
-		
-		return null;
-	}
 	
 	private void cancelarReserva(Long entrada) {
 		this.servicioEntrada.cancelarReserva(entrada);

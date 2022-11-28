@@ -106,8 +106,7 @@ public class ServicioMailImpl implements ServicioMail{
     public String getMensajeEntradasDisponiblesHTML(String nombreUsuario, String tituloPelicula,Long funcionId){
         String mensaje="<h2>¡Hola, " + nombreUsuario + "!</h2> </br> "
         				+"<h4>Te informamos que la pelicula " + tituloPelicula + " ya cuenta con entradas disponibles.</h4></br>"
-        				+"<a href='http://localhost:8080/proyecto-limpio-spring/mis-entradas'> <h4>¡Comprala Ya!</h4> </a>"
-        +"<a href='http://localhost:8080/proyecto-limpio-spring/entradas-pendientes?funcion=" + funcionId +   "'>"
+        				+"<a href='http://localhost:8080/proyecto-limpio-spring/entradas-pendientes?funcion=" + funcionId +   "'>"
         				+ "<h4>¡Comprala Ya!</h4>" ;
         		
         return mensaje;
