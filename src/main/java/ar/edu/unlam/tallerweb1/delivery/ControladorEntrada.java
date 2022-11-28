@@ -149,9 +149,9 @@ public class ControladorEntrada extends ControladorBase{
 			return new ModelAndView("redirect:/home");	
 		}
 		
-		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
+		List <Entrada> entradaComprada = obtenerEntradasVigentesDeLaFuncion(datosEntrada);
 		enviarMail(entradaComprada);
-		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
+		guardarEnElHistorial(datosEntrada, entradaComprada);
 		
 		ModelMap model = new ModelMap();
 		model.put("usuario", obtenerUsuarioLogueado(request));
@@ -159,16 +159,6 @@ public class ControladorEntrada extends ControladorBase{
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
-	}
-
-	private void enviarMail(List<Entrada> entradaComprada) {
-		for (Entrada entrada : entradaComprada) {
-			this.servicioMail.enviarMail(entrada.getUsuario().getEmail(),
-					servicioMail.getAsuntoConfirmacionCompra(),
-					servicioMail.getMensajeConfirmacionCompra(entrada.getUsuario(),
-							entrada.getFuncion()));
-		}
-		
 	}
 
 	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
@@ -206,6 +196,21 @@ public class ControladorEntrada extends ControladorBase{
 		return null;
 	}
 	
+	
+	private void guardarEnElHistorial(DatosEntrada datosEntrada, List<Entrada> entradaComprada) {
+		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
+	}
+
+	private void enviarMail(List<Entrada> entradaComprada) {
+		for (Entrada entrada : entradaComprada) {
+			this.servicioMail.enviarMail(entrada.getUsuario().getEmail(),
+					servicioMail.getAsuntoConfirmacionCompra(),
+					servicioMail.getMensajeConfirmacionCompra(entrada.getUsuario(),
+							entrada.getFuncion()));
+		}
+		
+	}
+	
 	private List<Asiento> obtenerAsientosDeLaFuncion(Long funcion){
 		
 		return this.servicioFuncion.obtenerAsientosDeLaFuncion(funcion);
@@ -225,7 +230,7 @@ public class ControladorEntrada extends ControladorBase{
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
 	
-	private List<Entrada> obtenerEntradasDeLaFuncion(DatosEntrada datosEntrada) {
+	private List<Entrada> obtenerEntradasVigentesDeLaFuncion(DatosEntrada datosEntrada) {
 		return this.servicioEntrada.obtenerEntradasVigentes(datosEntrada.getUsuario().getId(),
 																  	datosEntrada.getFuncion().getId());
 	}

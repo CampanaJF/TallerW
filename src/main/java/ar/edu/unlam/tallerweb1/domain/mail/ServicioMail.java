@@ -9,4 +9,5 @@ public interface ServicioMail {
     String getMensajeConfirmacionCompra(Usuario usuario, Funcion funcion);
     String getAsuntoEntradasDisponibles();
     String getMensajeEntradasDisponibles(String nombreUsuario, String tituloPelicula);
+    String getMensajeEntradasDisponiblesHTML(String nombreUsuario, String tituloPelicula,Long funcionId);
 }

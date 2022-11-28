@@ -55,16 +55,18 @@ public class ServicioMailImpl implements ServicioMail{
 
             //set From email field
             message.setFrom(new InternetAddress(from));
-
+            
             //set To email field
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
 
             //set email subject field
             message.setSubject(asunto);
+            
+            message.setContent(mensaje,"text/html; charset=utf-8");
 
             //set the content of the email message
-            message.setText(mensaje);
+            //message.setText(mensaje);
 
             //send the email message
             Transport.send(message);
@@ -84,7 +86,7 @@ public class ServicioMailImpl implements ServicioMail{
     }
     @Override
     public String getMensajeConfirmacionCompra(Usuario usuario, Funcion funcion){
-        String mensaje= "Â¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!\n"
+        String mensaje= "¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!\n"
                 + "Tu compra se realizo con exito\n"
                 +"Informacion de tu compra\n"
                 +"Cine      " + funcion.getSala().getCine().getNombreCine()+"\n"+
@@ -94,9 +96,21 @@ public class ServicioMailImpl implements ServicioMail{
                 "Sala       " +funcion.getSala().getNombreSala()+"\n";
         return mensaje;
     }
+    
     public String getMensajeEntradasDisponibles(String nombreUsuario, String tituloPelicula){
         String mensaje="Hola, " + nombreUsuario+ "!\n"
                      + "Te informamos que la pelicula " + tituloPelicula + " ya cuenta con entradas disponibles.";
         return mensaje;
     }
+    @Override
+    public String getMensajeEntradasDisponiblesHTML(String nombreUsuario, String tituloPelicula,Long funcionId){
+        String mensaje="<h2>¡Hola, " + nombreUsuario + "!</h2> </br> "
+        				+"<h4>Te informamos que la pelicula " + tituloPelicula + " ya cuenta con entradas disponibles.</h4></br>"
+        				+"<a href='http://localhost:8080/proyecto-limpio-spring/mis-entradas'> <h4>¡Comprala Ya!</h4> </a>"
+        +"<a href='http://localhost:8080/proyecto-limpio-spring/entradas-pendientes?funcion=" + funcionId +   "'>"
+        				+ "<h4>¡Comprala Ya!</h4>" ;
+        		
+        return mensaje;
+    }
+    
 }

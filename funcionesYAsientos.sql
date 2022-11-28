@@ -22,17 +22,17 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
 
 /*funcion test reserva */
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
-					(738,'2022-11-25 3:00','22:30','Ingles',850.00,true,1,1,13);
+					(888,'2022-11-29 3:00','22:30','Ingles',850.00,true,1,1,13);
                     
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
-					(739,'2022-11-25 3:00','22:30','Ingles',850.00,true,3,1,13);
+					(889,'2022-11-29 3:00','22:30','Ingles',850.00,true,3,1,13);
                     
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
-					(740,'2022-11-25 3:00','22:30','Ingles',850.00,false,2,1,13);
+					(890,'2022-11-29 3:00','22:30','Ingles',850.00,false,2,1,13);
                     
-call EP_crearAsientosYEntradasVacias(738);
-call EP_crearAsientosYEntradasVacias(739);
-call EP_crearAsientosYEntradasVacias(740);
+call EP_crearAsientosYEntradasVacias(888);
+call EP_crearAsientosYEntradasVacias(890);
+call EP_crearAsientosYEntradasVacias(889);
 
 call EP_crearAsientosYEntradasVacias(90);
 call EP_crearAsientosYEntradasVacias(91);

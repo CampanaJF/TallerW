@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
 import ar.edu.unlam.tallerweb1.domain.entrada.EntradaPendiente;
 import ar.edu.unlam.tallerweb1.domain.mail.ServicioMail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
+import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 
@@ -25,12 +27,16 @@ public class ControladorPendientes extends ControladorBase{
 	
 	private final ServicioEntrada servicioEntrada;
 	private final ServicioMail servicioMail;
+	private final ServicioHistorial servicioHistorial;
+	
 	@Autowired
-	public ControladorPendientes(ServicioEntrada servicioEntrada, ServicioUsuario servicioUsuario, ServicioMail servicioMail) {
+	public ControladorPendientes(ServicioEntrada servicioEntrada, ServicioUsuario servicioUsuario,
+								 ServicioHistorial servicioHistorial, ServicioMail servicioMail) {
 		super(servicioUsuario);
 
 		this.servicioEntrada = servicioEntrada;
 		this.servicioMail=servicioMail;
+		this.servicioHistorial = servicioHistorial;
 	}
 	
 	//Que no haya mas de una notificacion para la misma funcion por usuario
@@ -42,14 +48,11 @@ public class ControladorPendientes extends ControladorBase{
 										final RedirectAttributes redirectAttributes) {
 		
 		cancelarReserva(entrada);
+		
 		redirectAttributes.addFlashAttribute("mensaje","!Se Cancelo la reserva exitosamente!");
-		List<EntradaPendiente> pendientesAEnviarMail = this.servicioEntrada.getPendientesParaEnviarMail(entrada);
-		for (EntradaPendiente pendientes: pendientesAEnviarMail) {
-			this.servicioMail.enviarMail(pendientes.getUsuario().getEmail(),
-					servicioMail.getAsuntoEntradasDisponibles(),
-					servicioMail.getMensajeEntradasDisponibles(pendientes.getUsuario().getNombre(),
-							                                 pendientes.getFuncion().getPelicula().getTitulo()));
-		}
+		
+		enviarMailsPendientes(entrada);
+		
 		return new ModelAndView("redirect:/mis-entradas");
 	}
 	
@@ -82,11 +85,20 @@ public class ControladorPendientes extends ControladorBase{
 	public ModelAndView comprarEntradaPendiente(@ModelAttribute("datosReserva") DatosReserva datosReserva,
 												HttpServletRequest request) {
 		
-		this.servicioEntrada.comprarPendiente(datosReserva.getEntrada(), datosReserva.getUsuario());
+		comprarPendiente(datosReserva);
+		guardarEnElHistorial(obtenerEntrada(datosReserva));
 		
-		return new ModelAndView("redirect:/home");
+		return new ModelAndView("redirect:/mis-entradas");
 	}
 	
+	private Entrada obtenerEntrada(DatosReserva datosReserva) {
+		return this.servicioEntrada.obtenerEntrada(datosReserva.getEntrada().getId());
+	}
+
+	private void guardarEnElHistorial(Entrada entrada) {
+		this.servicioHistorial.guardarEnElHistorial(entrada.getUsuario(),entrada.getFuncion().getPelicula());
+	}
+
 	@SuppressWarnings("unused")
 	private ModelAndView validarUsuario(Usuario usuarioLogueado,final RedirectAttributes redirectAttributes) {
 		
@@ -110,6 +122,40 @@ public class ControladorPendientes extends ControladorBase{
 	
 	private void cancelarReserva(Long entrada) {
 		this.servicioEntrada.cancelarReserva(entrada);
+	}
+	
+	public void enviarMailsPendientes(Long entrada) {
+		
+		List<EntradaPendiente> pendientesAEnviarMail = this.servicioEntrada.getPendientesParaEnviarMail(entrada);
+		
+		for (EntradaPendiente pendientes: pendientesAEnviarMail) {
+			enviarMail(pendientes);
+		}
+	}
+	
+	private void comprarPendiente(DatosReserva datosReserva) {
+		this.servicioEntrada.comprarPendiente(datosReserva.getEntrada(), datosReserva.getUsuario());
+	}
+	
+	private void enviarMail(EntradaPendiente pendiente) {
+		
+		this.servicioMail.enviarMail(obtenerMail(pendiente),obtenerAsunto(),obtenerMensaje(pendiente));
+		
+	}
+
+	private String obtenerMensaje(EntradaPendiente pendiente) {
+		return this.servicioMail.getMensajeEntradasDisponiblesHTML(pendiente.getUsuario().getNombre(),
+				                                 			  pendiente.getFuncion().getPelicula().getTitulo(),
+				                                 			  pendiente.getFuncion().getId());
+		
+	}
+
+	private String obtenerAsunto() {
+		return servicioMail.getAsuntoEntradasDisponibles();
+	}
+
+	private String obtenerMail(EntradaPendiente pendiente) {
+		return pendiente.getUsuario().getEmail();
 	}
 	
 
