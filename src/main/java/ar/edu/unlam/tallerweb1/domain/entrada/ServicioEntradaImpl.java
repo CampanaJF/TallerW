@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
+
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
@@ -243,7 +244,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		for (EntradaPendiente entradaPendiente : entradasPendientes) {
 
 			entradaPendiente.setActiva(true);
-			entradaPendiente.setDescripcion("¡Un Asiento se desocupo, compralo ahora!");
+			entradaPendiente.setDescripcion("Â¡Un Asiento se desocupo, compralo ahora!");
 
 			notificarPendiente(entradaPendiente);
 		}

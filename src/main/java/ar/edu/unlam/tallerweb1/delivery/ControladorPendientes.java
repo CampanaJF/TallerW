@@ -48,8 +48,8 @@ public class ControladorPendientes extends ControladorBase{
 										final RedirectAttributes redirectAttributes) {
 		
 		cancelarReserva(entrada);
-		
-		redirectAttributes.addFlashAttribute("mensaje","!Se Cancelo la reserva exitosamente!");
+
+		redirectAttributes.addFlashAttribute("mensaje","¡Se Canceló la reserva exitosamente! <i class=\"bi bi-emoji-frown\"></i>");
 		
 		enviarMailsPendientes(entrada);
 		

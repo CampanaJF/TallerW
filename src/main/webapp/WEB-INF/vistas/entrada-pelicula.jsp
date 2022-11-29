@@ -14,7 +14,7 @@
 	<%@include file="header.jsp"%>
 	
 	<c:if test="${not empty error}">
-			<div class="p-1 alertbg">
+			<div class="p-5 alertbg">
 				<h5 class="text-center text-white">${error}</h5> 	
 			</div>
 	 	</c:if>
