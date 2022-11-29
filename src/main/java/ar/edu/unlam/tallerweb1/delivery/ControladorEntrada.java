@@ -19,6 +19,7 @@ import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.cine.CinePelicula;
 import ar.edu.unlam.tallerweb1.domain.cine.ServicioCine;
 import ar.edu.unlam.tallerweb1.domain.entrada.Entrada;
+import ar.edu.unlam.tallerweb1.domain.entrada.EntradaPendiente;
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
 import ar.edu.unlam.tallerweb1.domain.funcion.ServicioFuncion;
@@ -69,6 +70,8 @@ public class ControladorEntrada extends ControladorBase{
 			
 	*/
 	
+
+	
 	@RequestMapping(path = "/entrada-pelicula", method = RequestMethod.GET)
 	public ModelAndView entradaPelicula(HttpServletRequest request,@RequestParam("peliculaId") Long peliculaId) {
 		
@@ -78,7 +81,19 @@ public class ControladorEntrada extends ControladorBase{
 		// que puede venir null y genera excepcion
 		ModelMap model = new ModelMap();
 		
-		model.put("usuario", obtenerUsuarioLogueado(request));
+		Usuario usuario = obtenerUsuarioLogueado(request);
+		
+		if(usuario!=null&&hayNotificaciones(usuario)) {
+			
+			List<EntradaPendiente> notificaciones = obtenerNotifcaciones(usuario);
+			
+			model.put("notificaciones", notificaciones);
+			
+			model.put("cantidadNotificaciones", obtenerCantidadNotificaciones(notificaciones));
+			
+		}
+		
+		model.put("usuario", usuario);
 		model.put("cines", obtenerCines(peliculaId));
 		model.put("pelicula",cines.get(0).getPelicula());
 
@@ -149,9 +164,9 @@ public class ControladorEntrada extends ControladorBase{
 			return new ModelAndView("redirect:/home");	
 		}
 		
-		List <Entrada> entradaComprada = obtenerEntradasDeLaFuncion(datosEntrada);
+		List <Entrada> entradaComprada = obtenerEntradasVigentesDeLaFuncion(datosEntrada);
 		enviarMail(entradaComprada);
-		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
+		guardarEnElHistorial(datosEntrada, entradaComprada);
 		
 		ModelMap model = new ModelMap();
 		model.put("usuario", obtenerUsuarioLogueado(request));
@@ -159,16 +174,6 @@ public class ControladorEntrada extends ControladorBase{
 		model.put("mensaje", "Entrada Comprada Exitosamente");
 		
 		return new ModelAndView("entrada",model);
-	}
-
-	private void enviarMail(List<Entrada> entradaComprada) {
-		for (Entrada entrada : entradaComprada) {
-			this.servicioMail.enviarMail(entrada.getUsuario().getEmail(),
-					servicioMail.getAsuntoConfirmacionCompra(),
-					servicioMail.getMensajeConfirmacionCompra(entrada.getUsuario(),
-							entrada.getFuncion()));
-		}
-		
 	}
 
 	@RequestMapping(path = "/mis-entradas", method = RequestMethod.GET)
@@ -206,6 +211,21 @@ public class ControladorEntrada extends ControladorBase{
 		return null;
 	}
 	
+	
+	private void guardarEnElHistorial(DatosEntrada datosEntrada, List<Entrada> entradaComprada) {
+		this.servicioHistorial.guardarEnElHistorial(datosEntrada.getUsuario(),entradaComprada.get(0).getFuncion().getPelicula());
+	}
+
+	private void enviarMail(List<Entrada> entradaComprada) {
+		for (Entrada entrada : entradaComprada) {
+			this.servicioMail.enviarMail(entrada.getUsuario().getEmail(),
+					servicioMail.getAsuntoConfirmacionCompra(),
+					servicioMail.getMensajeConfirmacionCompra(entrada.getUsuario(),
+							entrada.getFuncion()));
+		}
+		
+	}
+	
 	private List<Asiento> obtenerAsientosDeLaFuncion(Long funcion){
 		
 		return this.servicioFuncion.obtenerAsientosDeLaFuncion(funcion);
@@ -225,7 +245,7 @@ public class ControladorEntrada extends ControladorBase{
 		this.servicioEntrada.comprar(datosEntrada.getFuncion(),datosEntrada.getUsuario(),datosEntrada.getAsientos());
 	}
 	
-	private List<Entrada> obtenerEntradasDeLaFuncion(DatosEntrada datosEntrada) {
+	private List<Entrada> obtenerEntradasVigentesDeLaFuncion(DatosEntrada datosEntrada) {
 		return this.servicioEntrada.obtenerEntradasVigentes(datosEntrada.getUsuario().getId(),
 																  	datosEntrada.getFuncion().getId());
 	}
@@ -236,6 +256,27 @@ public class ControladorEntrada extends ControladorBase{
 
 	private void agregarAPendientes(DatosEntrada datosEntrada) {
 		this.servicioEntrada.agregarAPendientes(datosEntrada.getFuncion(),datosEntrada.getUsuario());
+	}
+	
+	private boolean hayNotificaciones(Usuario usuario) {
+		return !(obtenerNotifcaciones(usuario).isEmpty());
+	}
+
+
+	private List<EntradaPendiente> obtenerNotifcaciones(Usuario usuario) {
+		return this.servicioEntrada.obtenerPendientesActivasDelUsuario(usuario);
+	}
+	
+
+	private int obtenerCantidadNotificaciones(List<EntradaPendiente> notificaciones) {
+		
+		int total = 0;
+		
+		for (EntradaPendiente entradaPendiente : notificaciones) {
+			total++;
+		}
+		
+		return total;
 	}
 
 
