@@ -1,8 +1,4 @@
 use cineclub;
-select * from usuario;
-select * from entradapendiente;
-
-select * from entrada;
 
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
 					(90,'2022-11-26 21:00','21:00','Ingles',750.00,true,2,1,1),
@@ -26,9 +22,18 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
 
 /*funcion test reserva */
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
-					(7377,'2022-11-24 23:00','22:30','Ingles',750.00,true,1,2,13);
+					(738,'2022-11-25 3:00','22:30','Ingles',850.00,true,1,1,13);
                     
-call EP_crearAsientosYEntradasVacias(7377);
+insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
+					(739,'2022-11-25 3:00','22:30','Ingles',850.00,true,3,1,13);
+                    
+insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values                    
+					(740,'2022-11-25 3:00','22:30','Ingles',850.00,false,2,1,13);
+                    
+call EP_crearAsientosYEntradasVacias(738);
+call EP_crearAsientosYEntradasVacias(739);
+call EP_crearAsientosYEntradasVacias(740);
+
 call EP_crearAsientosYEntradasVacias(90);
 call EP_crearAsientosYEntradasVacias(91);
 call EP_crearAsientosYEntradasVacias(92);
