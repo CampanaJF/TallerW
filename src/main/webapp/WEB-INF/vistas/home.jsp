@@ -13,7 +13,7 @@
 
 
 	<c:if test="${not empty mensaje}">
-		<div class="p-1 alertbg">
+		<div class="p-3 alertbg">
 			<h5 class="text-center text-white">${mensaje}</h5>
 		</div>
 	</c:if>
@@ -69,7 +69,7 @@
 
 				<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
 					<c:forEach var="peliculasGenero" items="${peliculasGeneroElegido}">
-						<article class="col-lg-4 col-xl-3 mt-4 mb-5 pb-5 ">
+						<article class="col-lg-4 col-xl-3 mt-4 mb-2 pb-5 ">
 							<div class="fila">
 								<div class="tile mx-xl-auto">
 									<img class="pelicula" src="${peliculasGenero.pelicula.poster}"
@@ -112,7 +112,9 @@
 								</div>
 							</div>
 
-
+							<a href="ver-pelicula?pelicula=${peliculasGenero.getPelicula().id}"
+						class="btn btn-lg text-light" id="comprarEntradas">Comprar
+						Entradas</a>
 
 						</article>
 
@@ -124,7 +126,7 @@
 
 		<h1 class="text-light fw-bolder mt-5">Próximos estrenos</h1>
 
-		<section class="pt-4 pb-2 mb-2 d-flex flex-wrap text-center">
+		<section class="pt-2 pb-2 mb-2 d-flex flex-wrap text-center">
 			<c:forEach var="peliculaDTO" items="${proximosEstrenos}">
 				<article class="col-lg-4 col-xl-4 col-xxl-3  mt-4 mb-5 pb-5 ">
 					<div class="fila">
@@ -213,9 +215,8 @@
 									</div>
 									<div class="d-flex justify-content-around">
 
-										<c:forEach var="etiqueta"
-											items="${peliculaDTO.getEtiquetas()}">
-											<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
+										<c:forEach var="etiqueta" items="${peliculaDTO.getEtiquetas()}">
+										<p class="text-light etiquetaDescripcion">${etiqueta.getDescripcion()}</p>
 										</c:forEach>
 									</div>
 

@@ -42,7 +42,7 @@ public class ControladorPendientes extends ControladorBase{
 										final RedirectAttributes redirectAttributes) {
 		
 		cancelarReserva(entrada);
-		redirectAttributes.addFlashAttribute("mensaje","!Se Cancelo la reserva exitosamente!");
+		redirectAttributes.addFlashAttribute("mensaje","¡Se Canceló la reserva exitosamente! <i class=\"bi bi-emoji-frown\"></i>");
 		List<EntradaPendiente> pendientesAEnviarMail = this.servicioEntrada.getPendientesParaEnviarMail(entrada);
 		for (EntradaPendiente pendientes: pendientesAEnviarMail) {
 			this.servicioMail.enviarMail(pendientes.getUsuario().getEmail(),

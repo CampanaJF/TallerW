@@ -16,12 +16,11 @@ function initMap() {
    var mapOptions = {
      center: myLatlng,
      zoom: 11,
-     
    };
    const ubicacionActual = { lat: lat, lng: lon };
-   
+   const image="https://upload.wikimedia.org/wikipedia/commons/b/bc/House_image_icon.png";
    map = new google.maps.Map(document.getElementById("map"),  mapOptions);
-	crearMarcador(ubicacionActual,"Mi posición")
+	crearMarcador(ubicacionActual,"Mi posición",image)
 	
    // Creamos el infowindow
    infowindow = new google.maps.InfoWindow();
@@ -30,19 +29,40 @@ function initMap() {
 		for(var i = 0; i < data.length; i++){
 			var latLong={ lat: data[i].cine.latitud, lng:  data[i].cine.longitud }
 			var nombre=data[i].cine.nombreCine
-			crearMarcador(latLong,nombre);
+			crearMarcador(latLong,nombre,null);
 		}
 
  });
  
- function crearMarcador(latLong,nombre)
+ function crearMarcador(latLong,nombre,image)
  {
-   // Creamos un marcador
-   var marker = new google.maps.Marker({
+	
+	if(image!=null){
+		   var marker = new google.maps.Marker({
      map: map,
      position: latLong,
-     title:nombre
+     title:nombre,
+     icon:{
+	 url:image,
+	 scaledSize: new google.maps.Size(35,35),
+	 origin : new google.maps.Point(0,0),
+	 anchor: new google.maps.Point(0,32)
+	 }
+     
    });
+	}else{
+		
+	var marker = new google.maps.Marker({
+     map: map,
+     position: latLong,
+     title:nombre,
+     
+   });
+		
+	}
+	
+   // Creamos un marcador
+
 
  // Asignamos el evento click del marcador
    google.maps.event.addListener(marker, 'click', function() {
@@ -52,20 +72,7 @@ function initMap() {
    }
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
   /*
  
   var ubicacionPredeterminada= new google.maps.LatLng(-34.669804627948, -58.56286420843934);
