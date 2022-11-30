@@ -25,7 +25,7 @@
 
 	<div class="movie-container">
       <h1>${funcion.pelicula.titulo} - ${funcion.sala.cine.nombreCine}</h1>
-      <h3 class="text-center">$ ${funcion.precio} - ${funcion.fechaStr} - ${funcion.horario}</h3>
+      <h3 class="text-center">$ ${funcion.precio} - ${funcion.fechaStr} - ${funcion.horario} hs</h3>
       <input type="hidden" id="movie" value="${funcion.precio}">
     </div>
 

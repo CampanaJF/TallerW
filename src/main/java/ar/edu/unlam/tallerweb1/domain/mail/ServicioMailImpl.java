@@ -86,14 +86,14 @@ public class ServicioMailImpl implements ServicioMail{
     }
     @Override
     public String getMensajeConfirmacionCompra(Usuario usuario, Funcion funcion){
-        String mensaje= "¡GRACIAS POR ELEGIRNOS, " + usuario.getNombre()+"!\n"
-                + "Tu compra se realizo con exito\n"
-                +"Informacion de tu compra\n"
-                +"Cine      " + funcion.getSala().getCine().getNombreCine()+"\n"+
-                "Pelicula   " + funcion.getPelicula().getTitulo()+"\n"+
-                "Fecha      " +funcion.getFechaStr()+"\n"+
-                "Horario    " +funcion.getHorario()+"\n"+
-                "Sala       " +funcion.getSala().getNombreSala()+"\n";
+        String mensaje= "¡Gracias por elegirnos, " + usuario.getNombre()+"!</br>"
+                + "Tu compra se realizo con exito</br>"
+                +"Informacion de tu compra</br>"
+                +"Cine      " + funcion.getSala().getCine().getNombreCine()+"</br>"+
+                "Pelicula   " + funcion.getPelicula().getTitulo()+"</br>"+
+                "Fecha      " +funcion.getFechaStr()+"</br>"+
+                "Horario    " +funcion.getHorario()+"</br>"+
+                "Sala       " +funcion.getSala().getNombreSala()+"</br>";
         return mensaje;
     }
     
