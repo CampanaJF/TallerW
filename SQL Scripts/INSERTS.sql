@@ -150,8 +150,227 @@ Pero cuando llega tarde en la noche,descubre que la casa fue reservada a dos per
  Laurie vive con su nieta Allyson y está terminando de escribir su novela autobiográfica.','Halloween la noche final',3,6,1),
 (26,'Natalia Beristáin',105,'2022-11-22 00:00:00','img/peliculas/ruido.jpg','Julieta Egurrola',
 'En pleno siglo 21 y en uno de los países más violentos para con sus mujeres, 
-RUIDO narra el viaje y el dolor de una madre ante la desaparición de su hija y de su propia vida.','Ruido',2,5,2);
+RUIDO narra el viaje y el dolor de una madre ante la desaparición de su hija y de su propia vida.','Ruido',2,5,2),
+(27,5,'Parker Finn',105,0,'2022-12-1 00:00:00','img/peliculas/sonrie.jpg','Sosie Bacon',
+'Después de ser testigo de un extraño y traumático accidente que involucró a una paciente, la Dr. Rose Cotter
+ empieza a experimentar sucesos aterradores que no puede explicarse.','Sonrie',3,3),
+ (28,5,' Jaume Collet-Serra',105,0,'2022-12-02 00:00:00','img/peliculas/black-adam.jpg','Dwayne Johnson',
+'Casi 5,000 años después de obtener los poderes supremos de los antiguos dioses –y de ser encarcelado igual de rápido–,
+ Black Adam (Johnson) se libera de su tumba terrenal','Black Adam',1,1),
+ (29,3,'Chris Weitz',125,0,'2022-12-02 00:00:00','img/peliculas/crepusculo.jpg',' Kristen Stewart',
+'Edward Cullen decide abandonar a Bella Swan para mantenerla alejada de los peligros del mundo vampírico. Con la ayuda de Jacob Black,
+ su amigo de la infancia y miembro de la misteriosa tribu Quileute','Crepusculo',2,3),
+ (30,4,'Daniel Stamm',125,0,'2022-12-02 00:00:00','img/peliculas/luz-diablo.jpg','Virginia Madsen',
+'Según informes reales del Vaticano, los casos de posesión demoníaca han aumentado significativamente en los últimos años. 
+','La luz del diablo',3,6),
+ (31,4,'Josh Gordon',125,0,'2022-12-02 00:00:00','img/peliculas/cocodrilo.jpg','Javier Bardem',
+'Basada en la serie de libros best-seller de Bernard Waber.Cuando la familia Primm se traslada a la ciudad de Nueva York.','Lilo cocodrilo',1,8),
+ 
+ (32,4,'Ryan Coogler',125,0,'2022-12-02 00:00:00','img/peliculas/pantera-negra.jpg','Angela Bassett',
+'Mientras los habitantes de Wakanda se esfuerzan embarcarse en un nuevo capítulo,
+ los héroes deben unirse con la ayuda de War Dog Nakia y Everett Ross  y forjar un nuevo camino para el reino de Wakanda.','Pantera negra Wakanda por siempre',3,1),
 
+(33,4,'Timo Vuorensola',90,0,'2022-12-02 00:00:00','img/peliculas/jeepers.jpg','Sydney Craven',
+'Obligada a viajar con su novio, Laine, comienza a experimentar premoniciones asociadas con el mito urbano de The Creeper.
+ ','Jeepers Creepers: La recarnacion del demonio',3,3),
+
+  (34,4,' Néstor Mazzini',130,0,'2022-12-02 00:00:00','img/peliculas/cuando-oscurece.jpg','César Troncoso',
+'Los padres de Flor están separados y ella reparte su tiempo entre ambas casas.','Cuando oscurece',5,3),
+ 
+  (35,4,'Charlotte Wells',102,0,'2022-12-02 00:00:00','img/peliculas/aftersun.jpg','Paul Mescan',
+'En un decadente complejo vacacional a fines de la década de 1990, Sophie, de 11 años, atesora el escaso tiempo junto con su cariñoso e idealista padre, Calum. ',
+ 'Aftersun',2,3),
+ 
+  (36,4,'Tommy Wirkola',90,0,'2022-12-02 00:00:00','img/peliculas/noche-sin-paz.jpg',' David Harbour',
+'Cuando un equipo de mercenarios irrumpe durante Nochebuena en la casa de una familia adinerada, 
+tomando a todos los que están dentro como rehenes','Noche sin paz',3,4),
+ 
+  (37,4,'James Cameron',192,0,'2022-12-02 00:00:00','img/peliculas/avatar-camino-del-agua.jpg','Sam Worthington',
+'Narra la historia de la familia Sully (Jake, Neytiri y sus hijos), el peligro que los persigue,
+ los esfuerzos que hacen para mantenerse a salvo.','Avatar el camino del agua',1,3),
+ 
+  (38,4,'Luca Guadagnino',131,0,'2022-12-02 00:00:00','img/peliculas/hasta-huesos.jpg','Timothée Chalamet',
+'La película, del aclamado director Luca Guadagnino, está protagonizada por Timothée Chalamet y Taylor Russell;
+ y cuenta la historia de amor entre Maren, una joven que está aprendiendo a sobrevivir al margen de la sociedad.','Hasta los huesos',3,5),
+ 
+ (39,4,' Santiago Fillol',150,0,'2022-12-02 00:00:00','img/peliculas/matadero.jpg','Julio Perillán',
+'Un cineasta americano llega a la pampa argentina para rodar Matadero:
+ una fábula fundacional sobre la lucha de clases entre un grupo de trabajadores asesinados por sus jefes.','Matadero',3,5),
+ 
+ (40,4,'Fabian Forte',88,0,'2022-12-02 00:00:00','img/peliculas/legiones.jpg','German De Silva',
+'Antonio Poyju es un chaman que pertenece a un linaje de sangre poderosa. Antonio se encuentra recluído en un manicomio contra su voluntad.','Legiones',3,5);
+
+INSERT INTO `pelicula`(id,calificacion,director,duracion,enCartelera,fechaEstreno,poster,protagonista,sinopsis,titulo,clasificacionPelicula_id,genero_id) VALUES
+(27,5,'Parker Finn',105,0,'2022-12-1 00:00:00','img/peliculas/sonrie.jpg','Sosie Bacon',
+'Después de ser testigo de un extraño y traumático accidente que involucró a una paciente, la Dr. Rose Cotter
+ empieza a experimentar sucesos aterradores que no puede explicarse.','Sonrie',3,3),
+ (28,5,' Jaume Collet-Serra',105,0,'2022-12-02 00:00:00','img/peliculas/black-adam.jpg','Dwayne Johnson',
+'Casi 5,000 años después de obtener los poderes supremos de los antiguos dioses –y de ser encarcelado igual de rápido–,
+ Black Adam (Johnson) se libera de su tumba terrenal','Black Adam',1,1),
+ (29,3,'Chris Weitz',125,0,'2022-12-02 00:00:00','img/peliculas/crepusculo.jpg',' Kristen Stewart',
+'Edward Cullen decide abandonar a Bella Swan para mantenerla alejada de los peligros del mundo vampírico. Con la ayuda de Jacob Black,
+ su amigo de la infancia y miembro de la misteriosa tribu Quileute','Crepusculo',2,3),
+ (30,4,'Daniel Stamm',125,0,'2022-12-02 00:00:00','img/peliculas/luz-diablo.jpg','Virginia Madsen',
+'Según informes reales del Vaticano, los casos de posesión demoníaca han aumentado significativamente en los últimos años. 
+','La luz del diablo',3,6),
+ (31,4,'Josh Gordon',125,0,'2022-12-02 00:00:00','img/peliculas/cocodrilo.jpg','Javier Bardem',
+'Basada en la serie de libros best-seller de Bernard Waber.Cuando la familia Primm se traslada a la ciudad de Nueva York.','Lilo cocodrilo',1,8),
+ 
+ (32,4,'Ryan Coogler',125,0,'2022-12-02 00:00:00','img/peliculas/pantera-negra.jpg','Angela Bassett',
+'Mientras los habitantes de Wakanda se esfuerzan embarcarse en un nuevo capítulo,
+ los héroes deben unirse con la ayuda de War Dog Nakia y Everett Ross  y forjar un nuevo camino para el reino de Wakanda.','Pantera negra Wakanda por siempre',3,1),
+
+(33,4,'Timo Vuorensola',90,0,'2022-12-02 00:00:00','img/peliculas/jeepers.jpg','Sydney Craven',
+'Obligada a viajar con su novio, Laine, comienza a experimentar premoniciones asociadas con el mito urbano de The Creeper.
+ ','Jeepers Creepers: La recarnacion del demonio',3,3),
+
+  (34,4,' Néstor Mazzini',130,0,'2022-12-02 00:00:00','img/peliculas/cuando-oscurece.jpg','César Troncoso',
+'Los padres de Flor están separados y ella reparte su tiempo entre ambas casas.','Cuando oscurece',5,3),
+ 
+  (35,4,'Charlotte Wells',102,0,'2022-12-02 00:00:00','img/peliculas/aftersun.jpg','Paul Mescan',
+'En un decadente complejo vacacional a fines de la década de 1990, Sophie, de 11 años, atesora el escaso tiempo junto con su cariñoso e idealista padre, Calum. ',
+ 'Aftersun',2,3),
+ 
+  (36,4,'Tommy Wirkola',90,0,'2022-12-02 00:00:00','img/peliculas/noche-sin-paz.jpg',' David Harbour',
+'Cuando un equipo de mercenarios irrumpe durante Nochebuena en la casa de una familia adinerada, 
+tomando a todos los que están dentro como rehenes','Noche sin paz',3,4),
+ 
+  (37,4,'James Cameron',192,0,'2022-12-02 00:00:00','img/peliculas/avatar-camino-del-agua.jpg','Sam Worthington',
+'Narra la historia de la familia Sully (Jake, Neytiri y sus hijos), el peligro que los persigue,
+ los esfuerzos que hacen para mantenerse a salvo.','Avatar el camino del agua',1,3),
+ 
+  (38,4,'Luca Guadagnino',131,0,'2022-12-02 00:00:00','img/peliculas/hasta-huesos.jpg','Timothée Chalamet',
+'La película, del aclamado director Luca Guadagnino, está protagonizada por Timothée Chalamet y Taylor Russell;
+ y cuenta la historia de amor entre Maren, una joven que está aprendiendo a sobrevivir al margen de la sociedad.','Hasta los huesos',3,5),
+ 
+ (39,4,' Santiago Fillol',150,0,'2022-12-02 00:00:00','img/peliculas/matadero.jpg','Julio Perillán',
+'Un cineasta americano llega a la pampa argentina para rodar Matadero:
+ una fábula fundacional sobre la lucha de clases entre un grupo de trabajadores asesinados por sus jefes.','Matadero',3,5),
+ 
+ (40,4,'Fabian Forte',88,0,'2022-12-02 00:00:00','img/peliculas/legiones.jpg','German De Silva',
+'Antonio Poyju es un chaman que pertenece a un linaje de sangre poderosa. Antonio se encuentra recluído en un manicomio contra su voluntad.','Legiones',3,5);
+
+
+ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
+ (79,4,27),
+ (80,12,27),
+ (81,23,27),
+ (82,5,28),
+ (83,20,28),
+ (84,17,28),
+ (85,17,29),
+ (86,21,29),
+ (87,20,29),
+ (88,4,30),
+ (89,11,30),
+ (90,15,30),
+ (91,5,31),
+ (92,7,31),
+ (93,13,31),
+ (94,25,32),
+ (95,2,32),
+ (96,3,32),
+ (97,4,33),
+ (98,11,33),
+ (99,15,33),
+ (100,12,34),
+ (101,1,34),
+ (102,4,34),
+ (103,21,35),
+ (104,10,35),
+ (105,3,35),
+ (106,3,36),
+ (107,22,36),
+ (108,6,36),
+ (109,18,37),
+ (110,23,37),
+ (111,20,37),
+ (112,10,38),
+ (113,15,38),
+ (114,21,38),
+ (115,14,39),
+ (116,16,39),
+ (117,15,39),
+ (118,1,40),
+ (119,4,40),
+ (120,5,40);
+
+insert into cinepelicula (id,cine_id,pelicula_id) values
+(38,1,27),
+(39,2,27),
+(40,1,28),
+(41,2,28),
+(42,1,29),
+(43,2,29),
+(44,1,30),
+(45,2,30),
+(46,1,31),
+(47,2,31),
+(48,1,32),
+(49,2,32),
+(50,1,33),
+(51,2,33),
+(52,1,34),
+(53,2,34),
+(54,1,35),
+(55,2,35),
+(56,1,36),
+(57,2,36),
+(58,1,37),
+(59,2,37),
+(60,1,38),
+(61,2,38),
+(62,1,39),
+(63,2,39),
+(64,1,40),
+(65,2,40);
+
+
+/*
+ insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
+ (79,4,27),
+ (80,12,27),
+ (81,23,27),
+ (82,5,28),
+ (83,20,28),
+ (84,17,28),
+ (85,17,29),
+ (86,21,29),
+ (87,20,29),
+ (88,4,30),
+ (89,11,30),
+ (90,15,30),
+ (91,5,31),
+ (92,7,31),
+ (93,13,31),
+ (94,25,32),
+ (95,2,32),
+ (96,3,32),
+ (97,4,33),
+ (98,11,33),
+ (99,15,33),
+ (100,12,34),
+ (101,1,34),
+ (102,4,34),
+ (103,21,35),
+ (104,10,35),
+ (105,3,35),
+ (106,3,36),
+ (107,22,36),
+ (108,6,36),
+ (109,18,37),
+ (110,23,37),
+ (111,20,37),
+ (112,10,38),
+ (113,15,38),
+ (114,21,38),
+ (115,14,39),
+ (116,16,39),
+ (117,15,39),
+ (118,1,40),
+ (119,4,40),
+ (120,5,40);
+ */
 insert into pelicula (id,director,duracion,fechaEstreno,poster,protagonista,sinopsis,titulo,clasificacionPelicula_id,genero_id,calificacion) values
 		 (1,'Robert Zemeckis','120','2022-11-22','img/peliculas/backtothefuture.jpg','Michael J. Fox','Marty McFly, a 17-year-old high school student,
 		 is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend,
