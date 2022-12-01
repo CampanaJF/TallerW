@@ -244,7 +244,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		for (EntradaPendiente entradaPendiente : entradasPendientes) {
 
 			entradaPendiente.setActiva(true);
-			entradaPendiente.setDescripcion("Â¡Un Asiento se desocupo, compralo ahora!");
+			entradaPendiente.setDescripcion("¡Un Asiento se desocupo, compralo ahora!");
 
 			notificarPendiente(entradaPendiente);
 		}

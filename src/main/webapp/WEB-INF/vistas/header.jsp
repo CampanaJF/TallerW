@@ -8,7 +8,6 @@
 
         <ul class="ps-3 nav col-12 col-lg-auto me-lg-3 mb-2 justify-content-center mb-md-0">
           <li><a href="cartelera" class="nav-link px-2 text-white nav-text">Cartelera</a></li>
-          <li><a href="#" class="nav-link px-2 text-white nav-text">Goloton</a></li>
         </ul>
 
        
@@ -18,7 +17,7 @@
             <input type="search"  class="form-control searchBeeg form-control-dark"
              placeholder="Buscar..." name="titulo" id="buscador" path="titulo" >
         </form>
-
+ 
         <div class="text-end">
         
           <a href="login"><button type="button" class="btn btn-outline-light me-2">Ingresar</button></a>
@@ -71,8 +70,6 @@
 		  
           <a href="mis-entradas"><button type="button" class="btn btn-outline-light me-2">Mis Entradas</button></a>
           
-          <a href="perfil"><button type="button" class="btn btn-outline-light me-2">Mi Perfil</button></a>
-         
           <a href="logout"><button type="button" class="btn buttonA">Salir</button></a>
           
 

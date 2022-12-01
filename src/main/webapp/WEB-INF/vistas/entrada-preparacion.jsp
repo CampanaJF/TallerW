@@ -37,64 +37,59 @@
 		<form:form action="entrada-asientos" modelAttribute="datosEntrada" method="POST">
                 
 
-			<c:forEach items="${funciones}" var="funcion">
-			<c:if test="${funcion.formato.tipo == '2D' }">
-					
-				<h4>Horarios para funcion 2D</h4>
-                <div class="container">
-                <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
-                
+			<c:if test="${not empty funciones2D}">
+			<h4>Horarios para funcion 2D</h4>
+              <div class="container">
+              <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
+			<c:forEach items="${funciones2D}" var="funcion">
+
                     <div class="col p-0"> 
                     <form:radiobutton class="btn-check " id="${funcion.id}"
                      path="funcion.id" value="${funcion.id}" autocomplete="off"/>  
                     <label class="btn btn-outline-primary" for="${funcion.id}">${funcion.fechaStr} ${funcion.horario}</label>
                     </div>
-                    
-                </div>
+
+              </c:forEach> 
+              
+               </div>
                 </div>
                 
-              </c:if>
-              </c:forEach> 
+             </c:if>
 
-
-			 <c:forEach items="${funciones}" var="funcion">	
-			 <c:if test="${funcion.formato.tipo == '3D' }">
-					
-				<h4>Horarios para funcion 3D</h4>
+			 <c:if test="${not empty funciones3D}">
+			 	<h4>Horarios para funcion 3D</h4>
                 <div class="container">
                 <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
-                
+			 <c:forEach items="${funciones3D}" var="funcion">	
+
+
                     <div class="col p-0"> 
                     <form:radiobutton class="btn-check" id="${funcion.id}"
                      path="funcion.id" value="${funcion.id}" autocomplete="off"/>  
                     <label class="btn btn-outline-primary" for="${funcion.id}">${funcion.fechaStr} ${funcion.horario}</label>
                     </div>
                     
-                </div>
-                </div>
-                
-               </c:if>
                </c:forEach> 
+               </div>
+                </div>
+			   </c:if>
 
+				 <c:if test="${not empty funcionesRA}">
+			 	<h4>Horarios para funcion Realidad Aumentada</h4>
+                <div class="container">
+                <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
+			  <c:forEach items="${funcionesRA}" var="funcion">	
 
-				<c:forEach items="${funciones}" var="funcion">
-				<c:if test="${funcion.formato.tipo == 'Realidad Aumentada' }">
-					
-				 <h4>Horarios funcion de Realidad Aumentada</h4>
-                 <div class="container">
-               	 <div class="row row-cols-3" role="group" aria-label="Basic radio toggle button group">
-					
                     <div class="col p-0"> 
                     <form:radiobutton class="btn-check" id="${funcion.id}"
                      path="funcion.id" value="${funcion.id}" autocomplete="off"/>  
                     <label class="btn btn-outline-primary" for="${funcion.id}">${funcion.fechaStr} ${funcion.horario}</label>
                     </div>
-                    
-                 </div>
-                 </div>
-                
-                </c:if>
-                </c:forEach> 
+
+               </c:forEach> 
+               </div>
+                </div>
+			   </c:if>
 
                 	<form:hidden path="usuario.id" value="${usuario.id}" />
           	

@@ -1,9 +1,5 @@
 use cineclub;
 
-select * from funcion;
-
-select * from historial;
-
 insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
 					(90,'2022-12-1 23:00','23:00','Castellano',850,false,2,1,1);
 
@@ -17,7 +13,7 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (97,'2022-12-2 12:00','12:00','Ingles',850,true,2,1,8),
                     (98,'2022-12-3 8:00','8:00','Castellano',950,false,3,1,9),
 					(99,'2022-12-1 3:00','3:00','Castellano',850,false,2,1,1),
-                    (100,'2022-12-1 21:45','21:45','Ingles',950,true,3,1,2),
+                    (100,'2022-12-1 21:45','21:45','Ingles',950,true,3,1,3),
                     (101,'2022-12-2 16:00','16:00','Castellano',750,false,1,1,11),
                     (102,'2022-12-2 21:00','21:00','Castellano',750,false,1,1,4),
                     (103,'2022-12-1 21:50','21:50','Ingles',850,true,2,1,5),
@@ -56,14 +52,33 @@ insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,peli
                     (22,'2022-12-2 17:15','17:15','Ingles',750,true,3,23,10),
                     (23,'2022-12-2 15:00','15:00','Ingles',750,false,1,24,11),
                     (24,'2022-12-1 23:30','23:30','Ingles',750,true,2,25,12),
-                    (25,'2022-12-1 23:30','23:30','Ingles',750,true,2,2,12),
-                    (26,'2022-12-2 12:00','12:00','Ingles',750,false,3,26,9);
+                    (25,'2022-12-1 23:30','23:30','Ingles',750,true,2,26,12),
+					(26,'2022-12-3 21:45','21:45','Ingles',750,false,3,27,2),
+                    (27,'2022-12-2 16:00','16:00','Ingles',750,true,1,28,11),
+                    (28,'2022-12-2 21:00','21:00','Ingles',750,false,1,29,4),
+                    (29,'2022-12-2 21:50','21:50','Ingles',750,true,2,30,5),
+                    (30,'2022-12-3 17:15','17:15','Ingles',750,true,3,31,6),
+                    (31,'2022-12-2 15:00','15:00','Ingles',750,false,1,32,7),
+                    (32,'2022-12-1 23:30','23:30','Ingles',750,true,2,33,10),
+					(33,'2022-12-2 16:00','16:00','Ingles',750,true,1,34,11),
+                    (34,'2022-12-2 21:00','21:00','Ingles',750,false,1,35,12),
+                    (35,'2022-12-2 21:50','21:50','Ingles',750,true,2,36,10),
+                    (36,'2022-12-2 17:15','17:15','Ingles',750,true,3,37,10),
+                    (37,'2022-12-2 15:00','15:00','Ingles',750,false,1,38,11),
+                    (38,'2022-12-1 23:30','23:30','Ingles',750,true,2,39,12),
+                    (39,'2022-12-1 23:30','23:30','Ingles',750,true,2,40,12);
 
 
 call EP_ocuparAsientos(90);
 
 update asiento set ocupado = 0 where id = 30;
 update asiento set ocupado = 0 where id = 31;
+
+update entrada set usuario_id = null where asiento_id = 30; 
+update entrada set usuario_id = null where asiento_id = 31; 
+
+select * from entrada;
+select * from asiento;
 
 call EP_crearAsientosYEntradasVacias(2);
 call EP_crearAsientosYEntradasVacias(3);
@@ -90,6 +105,19 @@ call EP_crearAsientosYEntradasVacias(23);
 call EP_crearAsientosYEntradasVacias(24);
 call EP_crearAsientosYEntradasVacias(25);
 call EP_crearAsientosYEntradasVacias(26);
+call EP_crearAsientosYEntradasVacias(27);
+call EP_crearAsientosYEntradasVacias(28);
+call EP_crearAsientosYEntradasVacias(29);
+call EP_crearAsientosYEntradasVacias(30);
+call EP_crearAsientosYEntradasVacias(31);
+call EP_crearAsientosYEntradasVacias(32);
+call EP_crearAsientosYEntradasVacias(33);
+call EP_crearAsientosYEntradasVacias(34);
+call EP_crearAsientosYEntradasVacias(35);
+call EP_crearAsientosYEntradasVacias(36);
+call EP_crearAsientosYEntradasVacias(37);
+call EP_crearAsientosYEntradasVacias(38);
+call EP_crearAsientosYEntradasVacias(39);
 
 
 

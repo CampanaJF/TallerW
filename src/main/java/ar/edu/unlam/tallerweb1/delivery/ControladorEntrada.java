@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -120,6 +121,9 @@ public class ControladorEntrada extends ControladorBase{
 		ModelMap model = new ModelMap();
 		
 		model.put("usuario", obtenerUsuarioLogueado(request));
+		model.put("funciones2D" , funciones2D(obtenerFuncionesPor(datos)));
+		model.put("funciones3D" , funciones3D(obtenerFuncionesPor(datos)));
+		model.put("funcionesRA" , funcionesRA(obtenerFuncionesPor(datos)));
 		model.put("funciones",  obtenerFuncionesPor(datos));
 		
 		model.addAttribute("datosEntrada", new DatosEntrada());
@@ -233,6 +237,49 @@ public class ControladorEntrada extends ControladorBase{
 	
 	private List<Funcion> obtenerFuncionesPor(DatosCine datos) {
 		return this.servicioFuncion.obtenerLasFuncionesDeLosProximosTresDias(datos.getCine(),datos.getPelicula());
+	}
+	
+	private List<Funcion> funciones2D(List<Funcion> funciones){
+		
+		List<Funcion> funciones2D = new ArrayList<Funcion>();
+		
+		for (Funcion funcion : funciones) {
+			if (funcion.getFormato().getId()==1) {
+				funciones2D.add(funcion);
+			}
+			
+		}
+		
+		return funciones2D;
+	}
+	
+	private List<Funcion> funciones3D(List<Funcion> funciones){
+			
+		List<Funcion> funciones3D = new ArrayList<Funcion>();
+
+		for (Funcion funcion : funciones) {
+			if (funcion.getFormato().getId()==2) {
+				funciones3D.add(funcion);
+			}
+			
+		}
+		
+		return funciones3D;
+	}
+
+	private List<Funcion> funcionesRA(List<Funcion> funciones){
+		
+		List<Funcion> funcionesRA = new ArrayList<Funcion>();
+		
+		for (Funcion funcion : funciones) {
+			if (funcion.getFormato().getId()==3) {
+				funcionesRA.add(funcion);
+			}
+			
+		}
+		
+		return funcionesRA;
+		
 	}
 	
 	private Funcion obtenerFuncion(Funcion funcion) {
