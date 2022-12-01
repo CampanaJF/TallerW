@@ -344,28 +344,28 @@ public class RepositorioPeliculaTest extends SpringTest {
 
 
 
-	@Test
-	@Transactional
-	@Rollback
-	public void consultaQueDevuelveLosEstrenosDelMes() {
-		givenQueHayPeliculasEstrenosCargadas();
-		List<EtiquetaPelicula> peliculas= whenConsultoPorLosEstrenos();
-	
-		thenObtengoEstrenos(peliculas,2);
-		
-		
-		
-	}
-
-	private void thenObtengoEstrenos(List<EtiquetaPelicula> peliculas, int i) {
-		assertEquals(i,peliculas.size());
-		
-	}
-
-	private List<EtiquetaPelicula> whenConsultoPorLosEstrenos() {
-		
-		return repositorioPelicula.getEstrenosDelMes();
-	}
+//	@Test
+//	@Transactional
+//	@Rollback
+//	public void consultaQueDevuelveLosEstrenosDelMes() {
+//		givenQueHayPeliculasEstrenosCargadas();
+//		List<EtiquetaPelicula> peliculas= whenConsultoPorLosEstrenos();
+//	
+//		thenObtengoEstrenos(peliculas,2);
+//		
+//		
+//		
+//	}
+//
+//	private void thenObtengoEstrenos(List<EtiquetaPelicula> peliculas, int i) {
+//		assertEquals(i,peliculas.size());
+//		
+//	}
+//
+//	private List<EtiquetaPelicula> whenConsultoPorLosEstrenos() {
+//		
+//		return repositorioPelicula.getEstrenosDelMes();
+//	}
 
 	private void givenQueHayPeliculasEstrenosCargadas() {
 		Pelicula peli1=new Pelicula();
