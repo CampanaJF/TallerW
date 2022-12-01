@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ar.edu.unlam.tallerweb1.domain.entrada.ServicioEntrada;
+import ar.edu.unlam.tallerweb1.domain.historial.ServicioHistorial;
 import ar.edu.unlam.tallerweb1.domain.usuario.ServicioUsuario;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,10 +25,12 @@ public class ControladorPendientesDeberia {
 
 	private final ServicioEntrada servicioEntrada = mock(ServicioEntrada.class);
 	private final ServicioUsuario servicioUsuario = mock(ServicioUsuario.class);
+	private final ServicioHistorial servicioHistorial = mock(ServicioHistorial.class);
 	private final ServicioMail servicioMail = mock(ServicioMail.class);
 	private final RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
 	
-	private final ControladorPendientes controladorPendientes = new ControladorPendientes(servicioEntrada,servicioUsuario,servicioMail);
+	private final ControladorPendientes controladorPendientes = new ControladorPendientes(servicioEntrada,servicioUsuario,
+																							servicioHistorial,servicioMail);
 	
 	private final HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 	private final HttpSession mockSession = mock(HttpSession.class);
@@ -67,7 +70,7 @@ public class ControladorPendientesDeberia {
 	private void whenSeCompraLaEntradaDesocupada(Long entrada) {
 		mocksSessionRequests();
 		
-		mav = this.controladorPendientes.entradasPendientes(entrada,mockRequest);	
+		mav = this.controladorPendientes.entradasPendientes(entrada,mockRequest,redirectAttributes);	
 	}
 	
 	

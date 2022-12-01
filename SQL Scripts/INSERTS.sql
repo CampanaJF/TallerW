@@ -2,15 +2,10 @@ drop database cineclub;
 create schema cineclub; 
 use cineclub;
 
-
-select * from usuario;
-
 insert into usuario (id,email,nombre,password) values
 					(1,'pacofranco45@gmail.com','Franco','1234'),
-                    (2,'jucampana@alumno.unlam.edu.ar','main3','1234'),
-                    (3,'mail@mail.com','main','1234'),
-                    (4,'mail2@mail.com','main2','1234'),
-                    (5,'admin','admin','admin');
+                    (2,'jucampana@alumno.unlam.edu.ar','Juan','1234'),
+                    (3,'mail@mail.com','main','1234');
 
 insert into formato (id,tipo) values
  (1,'2D'),(2,'3D'),(3,'Realidad Aumentada'); 
@@ -18,34 +13,31 @@ insert into formato (id,tipo) values
 insert into cine (id,locacion,nombreCine) values (1,'Calle Falsa 123','CineClub');
 
 insert into sala (id,asientosTotales,nombreSala,cine_id) values
-				 (1,50,'Sala J',1),
-				 (2,50,'Sala K',1),
-				 (3,50,'Sala L',1);
+				 (1,66,'Sala J',1),
+				 (2,66,'Sala K',1),
+				 (3,66,'Sala L',1);
                  
 insert into cine (id,locacion,nombreCine) values (2,'Italia 913','Cine Magistral');
  
 insert into sala (id,asientosTotales,nombreSala,cine_id) values                
-				 (4,50,'Sala A',2),
-                 (5,50,'Sala B',2),
-                 (6,50,'Sala C',2);
+				 (4,66,'Sala A',2),
+                 (5,66,'Sala B',2),
+                 (6,66,'Sala C',2);
                  
  insert into cine (id,locacion,nombreCine) values (3,'Etiopia 1865','Grand');
                   
 insert into sala (id,asientosTotales,nombreSala,cine_id) values                
-				 (7,50,'Sala 1',3),
-                 (8,50,'Sala 2',3),
-                 (9,50,'Sala 3',3);
+				 (7,66,'Sala 1',3),
+                 (8,66,'Sala 2',3),
+                 (9,66,'Sala 3',3);
                  
 insert into cine (id,locacion,nombreCine) values (4,'Irlanda 993','Sunshine');          
       
 insert into sala (id,asientosTotales,nombreSala,cine_id) values                
-							(10,50,'Sala X',4),
-							(11,50,'Sala Z',4),
-							(12,50,'Sala Y',4);
+							(10,66,'Sala X',4),
+							(11,66,'Sala Z',4),
+							(12,66,'Sala Y',4);
                             
-insert into sala (id,asientosTotales,nombreSala,cine_id) values (13,1,'Sala Test Reserva',4);
-
-
 update cine set latitud = '-34.6617', longitud = '-58.575' where id = 1;
 update cine set latitud = '-34.6848', longitud = '-58.5576' where id = 2;
 update cine set latitud = '-34.6743', longitud = '-58.5596' where id = 3;
@@ -198,58 +190,6 @@ update pelicula set enCartelera = 1 where id = 24;
 update pelicula set enCartelera = 1 where id = 25;
 update pelicula set enCartelera = 1 where id = 26;
 
- insert into funcion (id,fecha,horario,lenguaje,precio,subtitulos,formato_id,pelicula_id,sala_id) values
-  (99,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,2,2),
-  (100,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,2,3),
-  (101,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,3,4),
-  (102,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,3,5),
-  (103,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,4,6),
-  (104,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,4,7),
-  (105,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,5,8),
-  (106,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,5,1),
-  (107,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,6,2),
-  (108,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,6,3),
-  (110,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,7,4),
-  (111,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,7,5),
-  (112,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,8,6),
-  (113,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,8,7),
-  (114,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,9,8),
-  (115,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,9,1),
-  (116,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,10,2),
-  (117,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,10,3),
-  (118,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,11,4),
-  (119,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,11,5),
-  (120,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,12,6),
-  (121,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,12,7),
-  (122,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,13,8),
-  (123,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,13,9),
-  (124,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,14,1),
-  (125,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,14,2),
-  (126,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,15,3),
-  (127,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,15,4),
-  (128,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,16,5),
-  (129,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,16,6),
-  (130,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,17,7),
-  (131,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,17,8),
-  (132,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,18,9),
-  (133,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,18,8),
-  (134,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,19,7),
-  (135,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,19,6),
-  (136,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,20,8),
-  (137,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,20,9),
-  (138,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,21,8),
-  (139,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,21,7),
-  (140,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,22,6),
-  (141,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,22,8),
-  (142,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,23,9),
-  (143,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,23,8),
-  (144,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,24,7),
-  (145,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,24,6),
-  (146,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,25,7),
-  (147,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,25,6),
-  (148,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,26,7),
-  (149,'2022-11-27 23:00','22:30','Ingles',750.00,false,3,26,6);
-
 insert into etiqueta (id,descripcion) values
 (1,'Susto'),
 (2,'Pelea'),
@@ -279,6 +219,13 @@ insert into etiqueta (id,descripcion) values
 (26,'Drama');  
 
 
+select * from etiquetapelicula where etiqueta_id = 16;
+select * from etiquetapelicula where etiqueta_id = 17;
+select * from etiquetapelicula where etiqueta_id = 18;
+
+select * from etiquetapelicula where etiqueta_id = 19;
+select * from etiquetapelicula where etiqueta_id = 20;
+select * from etiquetapelicula where etiqueta_id = 10;
 
 insert into etiquetapelicula (id,etiqueta_id,pelicula_id) values
                     (1,16,1),

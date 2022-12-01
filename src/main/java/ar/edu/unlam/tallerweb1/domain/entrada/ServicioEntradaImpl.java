@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.domain.cine.Asiento;
 import ar.edu.unlam.tallerweb1.domain.funcion.Funcion;
-import ar.edu.unlam.tallerweb1.domain.helper.FuncionEntradas;
+
 import ar.edu.unlam.tallerweb1.domain.usuario.Usuario;
 import ar.edu.unlam.tallerweb1.exceptions.AsientoSinIdException;
 import ar.edu.unlam.tallerweb1.exceptions.DatosEntradaInvalidaException;
@@ -244,7 +244,7 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		for (EntradaPendiente entradaPendiente : entradasPendientes) {
 
 			entradaPendiente.setActiva(true);
-			entradaPendiente.setDescripcion("�Un Asiento se desocupo, compralo ahora!");
+			entradaPendiente.setDescripcion("¡Un Asiento se desocupo, compralo ahora!");
 
 			notificarPendiente(entradaPendiente);
 		}
@@ -315,21 +315,5 @@ public class ServicioEntradaImpl implements ServicioEntrada {
 		return this.repositorioEntrada.getPendientes(entrada, usuario);
 	}
 
-	// TODO utilizar un metodo para extraer las entradas de cada funcion
-	@SuppressWarnings("unused")
-	private List<FuncionEntradas> formatearEntradas(List<Entrada> entradas) {
-
-		List<FuncionEntradas> funcionEntradas = new ArrayList<>();
-
-		for (Entrada entrada : entradas) {
-			FuncionEntradas funcionEntrada = new FuncionEntradas();
-
-			funcionEntrada.setFuncion(entrada.getFuncion());
-			funcionEntrada.setEntradas(entradas);
-
-		}
-
-		return funcionEntradas;
-	}
 
 }
